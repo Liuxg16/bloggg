@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Scala Kernel Note | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="work," />
+  
+
+  <meta name="description" content="DocumentAuxiliary statesAuxiliary states are special states of symbols that do not corresponds to an argument, and do not have gradient. But still be useful for the specific operations. A common examp">
+<meta name="keywords" content="work">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scala Kernel Note">
+<meta property="og:url" content="http://lemonman.net/2016/12/28/BrainMatrix/scalaKernel/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="DocumentAuxiliary statesAuxiliary states are special states of symbols that do not corresponds to an argument, and do not have gradient. But still be useful for the specific operations. A common examp">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.653Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Scala Kernel Note">
+<meta name="twitter:description" content="DocumentAuxiliary statesAuxiliary states are special states of symbols that do not corresponds to an argument, and do not have gradient. But still be useful for the specific operations. A common examp">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Document"><span class="toc-text">Document</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Auxiliary-states"><span class="toc-text">Auxiliary states</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shape"><span class="toc-text">shape</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#API"><span class="toc-text">API</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#clip"><span class="toc-text">clip</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BatchNorm"><span class="toc-text">BatchNorm</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Parameters"><span class="toc-text">Parameters</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#可视化"><span class="toc-text">可视化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JNI"><span class="toc-text">JNI</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#生成JNI文件步骤"><span class="toc-text">生成JNI文件步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#生成thu-brainmatrix-LibInfo-h"><span class="toc-text">生成thu_brainmatrix_LibInfo.h</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-BrainMatrix/scalaKernel" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Scala Kernel Note</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.12.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Document"><a href="#Document" class="headerlink" title="Document"></a>Document</h1><h2 id="Auxiliary-states"><a href="#Auxiliary-states" class="headerlink" title="Auxiliary states"></a>Auxiliary states</h2><p>Auxiliary states are special states of symbols that do not corresponds to an argument, and do not have gradient. But still be useful for the specific operations. A common example of auxiliary state is the moving_mean and moving_variance in BatchNorm. Most operators do not have Auxiliary states.</p>
+<h2 id="shape"><a href="#shape" class="headerlink" title="shape"></a>shape</h2><p>在BrainMatrix的shape默认是[batchSize,kernelSize,wide,height].</p>
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><h2 id="clip"><a href="#clip" class="headerlink" title="clip"></a>clip</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> nda2 = <span class="type">NDArray</span>.range(<span class="number">0</span>, <span class="number">5</span>,<span class="number">3</span>)</div><div class="line">println(nda2)</div><div class="line">println(<span class="type">NDArray</span>.clip(nda2, <span class="number">0</span>, <span class="number">3</span>))</div></pre></td></tr></table></figure>
+<blockquote>
+<p>the value is(two dimention):<br>0.0  1.0  2.0  3.0  4.0<br>0.0  1.0  2.0  3.0  4.0<br>0.0  1.0  2.0  3.0  4.0  </p>
+<p>the value is(two dimention):<br>0.0  1.0  2.0  3.0  3.0<br>0.0  1.0  2.0  3.0  3.0<br>0.0  1.0  2.0  3.0  3.0  </p>
+</blockquote>
+<h1 id="BatchNorm"><a href="#BatchNorm" class="headerlink" title="BatchNorm"></a>BatchNorm</h1><p>Apply batch normalization to input.</p>
+<h2 id="Parameters"><a href="#Parameters" class="headerlink" title="Parameters"></a>Parameters</h2><p>data : Symbol<br>Input data to batch normalization<br>eps : float, optional, default=0.001<br>Epsilon to prevent div 0<br>momentum : float, optional, default=0.9<br>Momentum for moving average<br>fix_gamma : boolean, optional, default=True<br>Fix gamma while training<br>use_global_stats : boolean, optional, default=False<br>Whether use global moving statistics instead of local batch-norm. This will force change batch-norm into a scale shift operator.</p>
+<p>symbol: data,bn_gamma,bn_beta  $rightarrow$  (5,9,4,4), (9), (9)<br>Auxiliary symbol:bn_moving_mean,bn_moving_var  $rightarrow$ (9),(9)<br>output:(5,9,4,4)</p>
+<p>更加详细的介绍参见<a href="/2017/01/16/neuralnetwork/Batch-Normalization/">Batch Normalization</a></p>
+<h1 id="可视化"><a href="#可视化" class="headerlink" title="可视化"></a>可视化</h1><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> in_args = <span class="type">Map</span>(<span class="string">"t_onehot"</span>-&gt;t_onehot) ++ <span class="keyword">this</span>.model.symbolMap ++ <span class="keyword">this</span>.model.getInitialMap() ++ <span class="type">Config</span>.<span class="type">MAP</span></div><div class="line">		<span class="keyword">val</span>  shape_init = in_args.map(arg =&gt; (arg._1,arg._2.shape)) </div><div class="line">		<span class="keyword">val</span> dot = <span class="type">Visualization</span>.plotNetwork(symbol = sym,</div><div class="line">          title =netName , shape = shape_init,</div><div class="line">          nodeAttrs = <span class="type">Map</span>(<span class="string">"shape"</span> -&gt; <span class="string">"rect"</span>, <span class="string">"fixedsize"</span> -&gt; <span class="string">"false"</span>))          </div><div class="line">        dot.render(engine = <span class="string">"dot"</span>, format = <span class="string">"pdf"</span>, fileName = netName, path = <span class="string">"output/"</span>)</div></pre></td></tr></table></figure>
+<h1 id="JNI"><a href="#JNI" class="headerlink" title="JNI"></a>JNI</h1><h2 id="生成JNI文件步骤"><a href="#生成JNI文件步骤" class="headerlink" title="生成JNI文件步骤"></a>生成JNI文件步骤</h2><h3 id="生成thu-brainmatrix-LibInfo-h"><a href="#生成thu-brainmatrix-LibInfo-h" class="headerlink" title="生成thu_brainmatrix_LibInfo.h"></a>生成thu_brainmatrix_LibInfo.h</h3><p>1、在eclipse下建立简单scala project，编译文件放在./bin文件夹那种<br>2、解压的org.scala-lang.scala-library_2.11.8.v20160304-115712-1706a37eb8.jar文件，将其中子文件scala放在./bin文件夹下，这样javah才能找到。<br>3、javah -classpath ./bin thu.brainmatrix.LibInfo</p>
+<p>[0]<a href="https://github.com/dmlc/mshadow/tree/master/guide" target="_blank" rel="external">mshadow</a><br>[1]<a href="https://github.com/zhubuntu/MXNet-Learning-Note/blob/master/%E7%BC%96%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84Operator.md" target="_blank" rel="external">mxnet-note</a><br>[2]<a href="https://github.com/dmlc/mshadow/tree/master/guide" target="_blank" rel="external">mshadow guide</a><br>[3]<a href="https://github.com/dmlc/mshadow/blob/master/guide/defop.cpp" target="_blank" rel="external">example</a><br>[4]<a href="https://zhuanlan.zhihu.com/p/21341440" target="_blank" rel="external">Computer Vision 2016</a><br>[5]<a href="https://github.com/nativelibs4java/ScalaCL" target="_blank" rel="external">ScalaCL</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

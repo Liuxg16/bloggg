@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Naive Bayes | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="ml,bayes," />
+  
+
+  <meta name="description" content="Naive Bayes for Spam E-mail垃圾邮件分类有个很常见的现象是，特征有可能是连续的，需要将它分成离散量。$\alpha$    $\lt 500$ 500-1000 1001-2000 2001-3000 $\ge 3000$     1 2 3 4 5    因此这里的$x^i$不仅仅是一个0/1变量了，这里用$x_j$代表单词的索引，在贝叶斯算法中，没有考虑单词的位置关系">
+<meta name="keywords" content="ml,bayes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Naive Bayes">
+<meta property="og:url" content="http://lemonman.net/2017/01/29/ml/Naive-Bayes/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="Naive Bayes for Spam E-mail垃圾邮件分类有个很常见的现象是，特征有可能是连续的，需要将它分成离散量。$\alpha$    $\lt 500$ 500-1000 1001-2000 2001-3000 $\ge 3000$     1 2 3 4 5    因此这里的$x^i$不仅仅是一个0/1变量了，这里用$x_j$代表单词的索引，在贝叶斯算法中，没有考虑单词的位置关系">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.231Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Naive Bayes">
+<meta name="twitter:description" content="Naive Bayes for Spam E-mail垃圾邮件分类有个很常见的现象是，特征有可能是连续的，需要将它分成离散量。$\alpha$    $\lt 500$ 500-1000 1001-2000 2001-3000 $\ge 3000$     1 2 3 4 5    因此这里的$x^i$不仅仅是一个0/1变量了，这里用$x_j$代表单词的索引，在贝叶斯算法中，没有考虑单词的位置关系">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Naive-Bayes-for-Spam-E-mail"><span class="toc-text">Naive Bayes for Spam E-mail</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#垃圾邮件分类"><span class="toc-text">垃圾邮件分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Parameters"><span class="toc-text">Parameters</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Estimation"><span class="toc-text">Estimation</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ml/Naive-Bayes" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Naive Bayes</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.01.29</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Naive-Bayes-for-Spam-E-mail"><a href="#Naive-Bayes-for-Spam-E-mail" class="headerlink" title="Naive Bayes for Spam E-mail"></a>Naive Bayes for Spam E-mail</h1><h2 id="垃圾邮件分类"><a href="#垃圾邮件分类" class="headerlink" title="垃圾邮件分类"></a>垃圾邮件分类</h2><p>有个很常见的现象是，特征有可能是连续的，需要将它分成离散量。<br>$\alpha$</p>
+<table>
+<thead>
+<tr>
+<th>$\lt 500$</th>
+<th>500-1000</th>
+<th style="text-align:center">1001-2000</th>
+<th style="text-align:right">2001-3000</th>
+<th>$\ge 3000$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2</td>
+<td style="text-align:center">3</td>
+<td style="text-align:right">4</td>
+<td>5</td>
+</tr>
+</tbody>
+</table>
+<p>因此这里的$x^i$不仅仅是一个0/1变量了，这里用$x_j$代表单词的索引，在贝叶斯算法中，没有考虑单词的位置关系，仅仅注重单词出现的次数和频率。<br>对于一个邮件的所有words(x_j)来说的Maximum Likelihood Estimation(MLE)是：</p>
+<p>$$<br>\mathcal{L} = P(y) \prod _{j=1}^M P(x_j|y)<br>$$</p>
+<h3 id="Parameters"><a href="#Parameters" class="headerlink" title="Parameters"></a>Parameters</h3><p>$$<br>\phi_{k|y=1} = P(x_j=k|y=1) \\<br>\phi_{k|y=0} = P(x_j=k|y=0)<br>$$</p>
+<h3 id="Estimation"><a href="#Estimation" class="headerlink" title="Estimation"></a>Estimation</h3><p>其中ni是$x_j$可以取的值，也就是单词索引。<br>$$<br>\phi_{k|y=1} = \frac{\sum_{i=1}^M 1 \lbrace y^i=1 \rbrace \sum_{j=1}^{ni} 1 \lbrace x_j^i=k \rbrace}{\sum_{i=1}^M 1 \lbrace y^i=1 \rbrace \cdot ni}<br>$$</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

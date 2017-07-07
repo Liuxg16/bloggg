@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Probability Basis | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Math,Matrix," />
+  
+
+  <meta name="description" content="先拜一拜数学众神 数学众神代数上帝：亚历山大·格罗滕迪克（Alexander Grothendieck）20世纪的代数几何天才很多，可上帝只有格罗腾迪克一个“他改变了整个数学的全貌”，1958年8月，格罗滕迪克在爱丁堡举行的国际数学家大会上作了一个报告。他的这场报告不是对他过去已得成果的验收，而仿佛是未来十年工作的预告，而他的目标就是要证明韦伊猜想，这一猜想揭示了代数簇构成的离散世界和拓扑形成的连">
+<meta name="keywords" content="Math,Matrix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Probability Basis">
+<meta property="og:url" content="http://lemonman.net/2016/10/22/math/math-ProbabilityBasis/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="先拜一拜数学众神 数学众神代数上帝：亚历山大·格罗滕迪克（Alexander Grothendieck）20世纪的代数几何天才很多，可上帝只有格罗腾迪克一个“他改变了整个数学的全貌”，1958年8月，格罗滕迪克在爱丁堡举行的国际数学家大会上作了一个报告。他的这场报告不是对他过去已得成果的验收，而仿佛是未来十年工作的预告，而他的目标就是要证明韦伊猜想，这一猜想揭示了代数簇构成的离散世界和拓扑形成的连">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.497Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Probability Basis">
+<meta name="twitter:description" content="先拜一拜数学众神 数学众神代数上帝：亚历山大·格罗滕迪克（Alexander Grothendieck）20世纪的代数几何天才很多，可上帝只有格罗腾迪克一个“他改变了整个数学的全貌”，1958年8月，格罗滕迪克在爱丁堡举行的国际数学家大会上作了一个报告。他的这场报告不是对他过去已得成果的验收，而仿佛是未来十年工作的预告，而他的目标就是要证明韦伊猜想，这一猜想揭示了代数簇构成的离散世界和拓扑形成的连">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#数学众神"><span class="toc-text">数学众神</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#代数上帝：亚历山大·格罗滕迪克（Alexander-Grothendieck）"><span class="toc-text">代数上帝：亚历山大·格罗滕迪克（Alexander Grothendieck）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数学王子"><span class="toc-text">数学王子</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#统计中的方差概念"><span class="toc-text">统计中的方差概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Multinomial-Distribution"><span class="toc-text">Multinomial Distribution</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Probability-mass-function-2"><span class="toc-text">Probability mass function[2]</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#泊松分布Possion"><span class="toc-text">泊松分布Possion</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#波尔兹曼因子-Boltzmann-factors"><span class="toc-text">波尔兹曼因子 Boltzmann factors</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#生存分析-Survival-analysis"><span class="toc-text">生存分析(Survival analysis)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EWMA-Exponentially-Weighted-Moving-Average"><span class="toc-text">EWMA(Exponentially Weighted Moving Average)</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-math/math-ProbabilityBasis" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Probability Basis</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.10.22</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>先拜一拜数学众神</p>
+<h1 id="数学众神"><a href="#数学众神" class="headerlink" title="数学众神"></a>数学众神</h1><h2 id="代数上帝：亚历山大·格罗滕迪克（Alexander-Grothendieck）"><a href="#代数上帝：亚历山大·格罗滕迪克（Alexander-Grothendieck）" class="headerlink" title="代数上帝：亚历山大·格罗滕迪克（Alexander Grothendieck）"></a>代数上帝：亚历山大·格罗滕迪克（Alexander Grothendieck）</h2><p>20世纪的代数几何天才很多，可上帝只有格罗腾迪克一个<br>“他改变了整个数学的全貌”，1958年8月，格罗滕迪克在爱丁堡举行的国际数学家大会上作了一个报告。他的这场报告不是对他过去已得成果的验收，而仿佛是未来十年工作的预告，而他的目标就是要证明韦伊猜想，这一猜想揭示了代数簇构成的离散世界和拓扑形成的连续世界的丰富联系。</p>
+<h2 id="数学王子"><a href="#数学王子" class="headerlink" title="数学王子"></a>数学王子</h2><p>高斯和阿基米德、牛顿并列世界三大数学家之一。1795年高斯进入哥廷根大学。1796年，19岁的高斯得到了一个数学史上极重要的结果，就是《正十七边形尺规作图之理论与方法》，话说多边形的尺规作图本身是一个小问题，但是后来成为了法国数学家炫耀智商的问题，正十七边形。。。泥煤！不带这样玩人的！<br>我印象中有两个数学家搞过大地测量，另一个是Cholesky，（法国人，对称正定阵的Cholesky分解还是蛮有用的）不过这货去跑到别的国家（北非和科威特）搞大地测量，被弄死了。。。看来做科研也要遵守基本法。。</p>
+<h1 id="统计中的方差概念"><a href="#统计中的方差概念" class="headerlink" title="统计中的方差概念"></a>统计中的方差概念</h1><p>总方差:<br>$$Var(X) = \sum_{k=1}^{N}(X_k-\mu)^2$$<br>类内方差：<br>$$\sum_{k=1}^{K}\sum_{i=1}^{N_k}(x_i-\mu_k)^2$$</p>
+<h2 id="Multinomial-Distribution"><a href="#Multinomial-Distribution" class="headerlink" title="Multinomial Distribution"></a>Multinomial Distribution</h2><p>In probability theory, the multinomial distribution is a generalization of the binomial distribution. For example, it models the probability of counts for rolling a k sided dice n times. For n independent trials each of which leads to a success for exactly one of k categories, with each category having a given fixed success probability, the multinomial distribution gives the probability of any particular combination of numbers of successes for the various categories.<br>When n is 1 and k is 2 the multinomial distribution is the Bernoulli distribution. When k is 2 and number of trials are more than 1 it is the Binomial distribution. When n is 1 it is the categorical distribution.<br>The Bernoulli distribution is the probability distribution of whether a Bernoulli trial is a success. In other words, it models the number of heads from flipping a coin one time[1].</p>
+<h3 id="Probability-mass-function-2"><a href="#Probability-mass-function-2" class="headerlink" title="Probability mass function[2]"></a>Probability mass function[2]</h3><p>Suppose one does an experiment of extracting n balls of k different colours from a bag, replacing the extracted ball after each draw. Balls from the same colour are equivalent. Denote the variable which is the number of extracted balls of colour i (i = 1, …, k) as Xi, and denote as pi the probability that a given extraction will be in colour i. The probability mass function of this multinomial distribution is:<br>$$f(x_1,\cdots,x_k;n,p_1,\cdots,p_k)=Pr(X_1=x_1,\cdots,X_k=x_k)=\begin{cases}<br>\frac{n!}{x_1!\cdots x_k!}p_1^{x_1}\cdots p_k^{x_k},  &amp; \text{$\Sigma_{i=1}^k x_i=n$} \\<br>0,  &amp; \text{otherwise}  \<br>\end{cases}$$<br>需要实践的同学可以到Numpy.random 库中找<a href="">Multimnomial函数</a></p>
+<h2 id="泊松分布Possion"><a href="#泊松分布Possion" class="headerlink" title="泊松分布Possion"></a>泊松分布Possion</h2><p>泊松分布由二项分布演进而来。二项分布十分好理解，给你n次机会抛硬币，硬币正面向上的概率为p，问在这n次机会中有k次（k&lt;=n）硬币朝上的概率为多少？<br>$$P(X)=\frac{n!}{(n-k)!k!} p^k(1-p)^{n-k}$$</p>
+<p>在这n次抛硬币中，硬币朝上的次数的期望有多少？<br>$$E[X] = pn$$<br>如果现在我能根据n的大小来控制p，从而控制这个期望，即无论n为多大，硬币朝上的次数的期望不变(恒为lambda）：<br>$$p=\frac{\lambda}{n}\\<br>E[X] = pn = \lambda$$<br>那么当n趋于无穷的时候，P(K_heads)将趋于泊松分布，即：<br>$$P(X) \to e^{-\lambda}\frac{\lambda^k}{k!}$$<br>推到过程点<a href="Introduction To Probability p307：https://www.dropbox.com/s/mrss8wg5yvmf7kw/Introduction%20to%20Probability.pdf">这里</a><br>所以，实验结果满足泊松分布的实验即为泊松过程。泊松过程把离散的伯努利过程变得连续化了：原来是抛n次硬币，现在变成了无穷多次抛硬币；原来某次抛硬币得到正面的概率是p，而现在p无限接近于0（p=lambda/n），即：非常难抛出正面朝上的硬币；但是n次实验中硬币朝上的次数的期望不变，即lambda恒定。在泊松过程中，我们把抛出硬币正面这样的事件叫做到达（Arrival）。把单位时间内到达的数量，叫做到达率（Arrival Rate）。[1]<br>[1]<a href="http://maider.blog.sohu.com/304621504.html" target="_blank" rel="external">如何理解泊松分布和泊松过程</a></p>
+<h1 id="波尔兹曼因子-Boltzmann-factors"><a href="#波尔兹曼因子-Boltzmann-factors" class="headerlink" title="波尔兹曼因子 Boltzmann factors"></a>波尔兹曼因子 Boltzmann factors</h1><p>在物理学中，玻尔兹曼因子是一个权重因子，它决定了在温度 T时处于热力学平衡的多状态系统中状态  i的相对概率：<br>$$e^{-{\frac{E_i}{k_B T}}}$$</p>
+<p>其中 $ k_{B}$是玻尔兹曼常数， $E_{i}$是状态i的能量。两个状态的概率之比，由它们的玻尔兹曼因子的比给出。玻尔兹曼因子本身并不是一个概率，因为它还没有归一化。为了把玻尔兹曼因子归一化，使其成为一个概率，我们把它除以系统所有可能的状态的玻尔兹曼因子之和Z，称为配分函数。这便给出了玻尔兹曼分布。<br>In statistical mechanics, the Boltzmann distribution is a probability distribution that gives the probability that a system will be in a certain state as a function of that state’s energy and the temperature of the system. It is given as $$p_{i}={\frac{e^{-{\epsilon}_{i}/kT}}{\sum_{j=1}^{M}{e^{-{\epsilon}_{j}/kT} }}}$$<br>where pi is the probability of state i, $\epsilon _i$ the energy of state i, k the Boltzmann constant, T the temperature of the system and M is the number of states accessible to the system.</p>
+<h2 id="生存分析-Survival-analysis"><a href="#生存分析-Survival-analysis" class="headerlink" title="生存分析(Survival analysis)"></a>生存分析(Survival analysis)</h2><p>生存分析(Survival analysis)是指根据试验或调查得到的数据对生物或人的生存时间进行分析和推断，研究生存时间和结局与众多影响因素间关系及其程度大小的方法，也称生存率分析或存活率分析。<br>生存分析涉及有关疾病的愈合、死亡,或者器官的生长发育等时效性指标。<br>某些研究虽然与生存无关，但由于研究中随访资料常因失访等原因造成某些数据观察不完全,要用专门方法进行统计处理,这类方法起源于对寿命资料的统计分析,故也称为生存分析。<br>关于生存函数（survival function）： S(t)=Pr(T &gt; t) t 表示某个时间，T表示生存的时间（寿命），Pr表示表示概率。生存函数就是寿命T大于t的概率。举例来说，人群中寿命超过50（t）岁的人在所有人中的概率是多少，就是生存函数要描述的。假定t=0时，也就是寿命超过0的概率为1；t趋近于无穷大，生存概率为0，没有人有永恒的生命。如果不符合这些前提假定，则不适应Survival analysis，而使用其他的方法。 由上可以推导：生存函数是一个单调非增函数。t越大，S(t)值越小。<br>衍生函数： Lifetime distribution function F(t) = 1-S(t) = Pr(T &lt;= t)<br>概率密度函数： f(t) = d(F(t))/dt 又叫event density，单位时间事件event（可以是死亡或者机器失效）的概率，是生存函数的导数。<br>f(t) 的性质： f(t)总是非负的（没有人可以再生）。函数曲线下方面积（从0到无穷大积分）为1。 s(t) = d(S(t))/dt = -f(t)</p>
+<h2 id="EWMA-Exponentially-Weighted-Moving-Average"><a href="#EWMA-Exponentially-Weighted-Moving-Average" class="headerlink" title="EWMA(Exponentially Weighted Moving Average)"></a>EWMA(Exponentially Weighted Moving Average)</h2><p>指数加权移动平均，是一种常用的序列数据处理方式。<br>    在t时刻，根据实际的观测值可以求取EWMA(t)：EWMA(t) = aY(t) + (1-a)EWMA(t-1)，t = 1,2,…..,n；其中，EWMA(t)  t时刻的估计值；Y(t) t时刻的测量值；n 所观察的总的时间；a(0 &lt; a &lt;1)表示对于历史测量值权重系数。之所以称之为指数加权，是因为加权系数a是以指数式递减的，即各指数随着时间而指数式递减。用n表示为a = 2/(n+1)。<br>    物理意义：系数a越接近1表示对当前抽样值的权重越高，对过去测量值得权重越低，估计值(器)的时效性就越强，反之，越弱；另外，EWMA还有一定的吸收瞬间突发的能力，也即平稳性，显然随着a减小，参考过去测量值的程度更多一些，平稳性增强，反之则降低。</p>
+<p>[1]<a href="https://en.wikipedia.org/wiki/Multinomial_distribution" target="_blank" rel="external">Multinomial distribution</a><br>[2] PDF（probability density function）是概率密度函数，针对连续型随机变量而言，一般写法是一个函数，如$f(x)=e^{(-x)}$,积分得到$f(x)dx=1$;PMF(probability mass function）是概率质量函数，是针对离散型随机变量而言。一般写法是写成对应每一个特定取值的概率，如$P{x=x_i}=1/15$.</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Unsupervised Learning | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="dl,work,ml," />
+  
+
+  <meta name="description" content="K-means Clustering input {$x^1$,\cdots,$x^m$},where $x^i \in \mathcal{R}^n$ Initialize (cluster centoids)$\mu_1,\cdots,\mu_K \in \mathcal{R}^n$ Repear until converence:   set $c^i = arg \min \limits_{">
+<meta name="keywords" content="dl,work,ml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unsupervised Learning">
+<meta property="og:url" content="http://lemonman.net/2016/12/20/ml/unsupervisedLearning/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="K-means Clustering input {$x^1$,\cdots,$x^m$},where $x^i \in \mathcal{R}^n$ Initialize (cluster centoids)$\mu_1,\cdots,\mu_K \in \mathcal{R}^n$ Repear until converence:   set $c^i = arg \min \limits_{">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.184Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Unsupervised Learning">
+<meta name="twitter:description" content="K-means Clustering input {$x^1$,\cdots,$x^m$},where $x^i \in \mathcal{R}^n$ Initialize (cluster centoids)$\mu_1,\cdots,\mu_K \in \mathcal{R}^n$ Repear until converence:   set $c^i = arg \min \limits_{">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#K-means-Clustering"><span class="toc-text">K-means Clustering</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#思考一：k-means算法是否一定收敛？"><span class="toc-text">思考一：k-means算法是否一定收敛？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#思考二：如何选择类的数量？"><span class="toc-text">思考二：如何选择类的数量？</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ml/unsupervisedLearning" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Unsupervised Learning</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.12.20</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="K-means-Clustering"><a href="#K-means-Clustering" class="headerlink" title="K-means Clustering"></a>K-means Clustering</h1><ul>
+<li>input {$x^1$,\cdots,$x^m$},where $x^i \in \mathcal{R}^n$</li>
+<li>Initialize (cluster centoids)<br>$\mu_1,\cdots,\mu_K \in \mathcal{R}^n$</li>
+<li>Repear until converence:</li>
+</ul>
+<ol>
+<li>set $c^i = arg \min \limits_{j} ||x^i-\mu_j||$<br>对每一个$X^i$,选择一个中心$c^i$</li>
+<li>将属于同一个聚类中心的$x^i$一起重新估计中心$\mu_j$。<br>$$<br>\mu_j= \frac{\sum_{i=1}^M 1 \lbrace c^i=j \rbrace x^i}{\sum_{i=1}^M 1 \lbrace c^i=j \rbrace}<br>$$</li>
+</ol>
+<h3 id="思考一：k-means算法是否一定收敛？"><a href="#思考一：k-means算法是否一定收敛？" class="headerlink" title="思考一：k-means算法是否一定收敛？"></a>思考一：k-means算法是否一定收敛？</h3><p>是的!但不一定会到全局最优。<br>事实上，定义失真函数：<br>$$<br>J(c,\mu) = \sum||x^i-\mu_{c_i}||^2<br>$$<br>是一个coordinate ascent algorithm.</p>
+<h3 id="思考二：如何选择类的数量？"><a href="#思考二：如何选择类的数量？" class="headerlink" title="思考二：如何选择类的数量？"></a>思考二：如何选择类的数量？</h3><p>随便搞+_+</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

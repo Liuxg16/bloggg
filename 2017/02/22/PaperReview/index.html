@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Paper Review | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="dl,nn," />
+  
+
+  <meta name="description" content="DNC: Differentiable Neural Computerpaper:Hybrid computing using a neural network with dynamic external memorylinkdeep mind blog[Quora 讨论]https://www.quora.com/How-does-the-Deepmind-DNC-Differentiable">
+<meta name="keywords" content="dl,nn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Paper Review">
+<meta property="og:url" content="http://lemonman.net/2017/02/22/PaperReview/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="DNC: Differentiable Neural Computerpaper:Hybrid computing using a neural network with dynamic external memorylinkdeep mind blog[Quora 讨论]https://www.quora.com/How-does-the-Deepmind-DNC-Differentiable">
+<meta property="og:image" content="http://lemonman.net/images/science/science.png">
+<meta property="og:updated_time" content="2017-07-07T06:34:36.478Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Paper Review">
+<meta name="twitter:description" content="DNC: Differentiable Neural Computerpaper:Hybrid computing using a neural network with dynamic external memorylinkdeep mind blog[Quora 讨论]https://www.quora.com/How-does-the-Deepmind-DNC-Differentiable">
+<meta name="twitter:image" content="http://lemonman.net/images/science/science.png">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DNC-Differentiable-Neural-Computer"><span class="toc-text">DNC: Differentiable Neural Computer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstraction"><span class="toc-text">Abstraction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interaction-between-the-heads-and-the-memory"><span class="toc-text">Interaction between the heads and the memory</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NTM-Neural-Turing-Machine"><span class="toc-text">NTM:Neural Turing Machine</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction-1"><span class="toc-text">Introduction</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generative-Temporal-Models-with-Memory"><span class="toc-text">Generative Temporal Models with Memory</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#the-review-for-reasoning"><span class="toc-text">the review for reasoning</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#description-of-rnn"><span class="toc-text">description of rnn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Learning-Graphical-state-transitions"><span class="toc-text">Learning Graphical state transitions</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-PaperReview" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Paper Review</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.02.22</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><img src="/images/science/science.png" alt="science"></p>
+<h1 id="DNC-Differentiable-Neural-Computer"><a href="#DNC-Differentiable-Neural-Computer" class="headerlink" title="DNC: Differentiable Neural Computer"></a>DNC: Differentiable Neural Computer</h1><p>paper:Hybrid computing using a neural network with dynamic external memory<br><a href="http://web.stanford.edu/class/psych209/Readings/GravesWayne16DNC.pdf" target="_blank" rel="external">link</a><br><a href="https://deepmind.com/blog/differentiable-neural-computers/" target="_blank" rel="external">deep mind blog</a><br>[Quora 讨论]<a href="https://www.quora.com/How-does-the-Deepmind-DNC-Differentiable-Neural-Computer-compare-to-LSTMs-and-RNNs" target="_blank" rel="external">https://www.quora.com/How-does-the-Deepmind-DNC-Differentiable-Neural-Computer-compare-to-LSTMs-and-RNNs</a></p>
+<h2 id="Abstraction"><a href="#Abstraction" class="headerlink" title="Abstraction"></a>Abstraction</h2><p>Here we introduce a machine learning model called a differentiable neural computer (DNC), which consists of a neural network that can read from and write to an external memory matrix, analogous to the random-access memory in a conventional computer. </p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>[0]We aim to combine the advantages of neural and computational processing by providing a neural network with  read–write access to external memory.<br>[1]A DNC is a neural network coupled to an external memory matrix. (The behaviour of the network is independent of the memory size as long as the memory is not filled to capacity, which is why we view the memory as ‘external’.) </p>
+<h2 id="Interaction-between-the-heads-and-the-memory"><a href="#Interaction-between-the-heads-and-the-memory" class="headerlink" title="Interaction between the heads and the memory"></a>Interaction between the heads and the memory</h2><h1 id="NTM-Neural-Turing-Machine"><a href="#NTM-Neural-Turing-Machine" class="headerlink" title="NTM:Neural Turing Machine"></a>NTM:Neural Turing Machine</h1><p><a href="https://arxiv.org/pdf/1410.5401.pdf" target="_blank" rel="external">link</a></p>
+<h2 id="Introduction-1"><a href="#Introduction-1" class="headerlink" title="Introduction"></a>Introduction</h2><p>[0]An NTM bears another close resemblance to models of working memory since the<br>NTM architecture uses an attentional process to read from and write to memory selectively<br>[1]We then describe our basic contribution, a memory architecture and attentional controller that we believe is well-suited to the performance of tasks that require the induction and execution of simple programs.</p>
+<h1 id="Generative-Temporal-Models-with-Memory"><a href="#Generative-Temporal-Models-with-Memory" class="headerlink" title="Generative Temporal Models with Memory"></a>Generative Temporal Models with Memory</h1><h1 id="the-review-for-reasoning"><a href="#the-review-for-reasoning" class="headerlink" title="the review for reasoning"></a>the review for reasoning</h1><p>Symbolic approaches to artificial intelligence are inherently relational [32, 11]. Practitioners define the relations between symbols using the language of logic and mathematics, and then reason about these relations using a multitude of powerful methods, including deduction, arithmetic, and algebra. But symbolic approaches suffer from the symbol grounding problem and are not robust to small task and input variations [11]. Other approaches, such as those based on statistical learning, build representations from raw data and often generalize across diverse and noisy conditions [25]. However, a number of these approaches, such as deep learning, often struggle in data-poor problems where the underlying structure is characterized by sparse but complex relations. [a simple neural network module for relational reasoning]</p>
+<h1 id="description-of-rnn"><a href="#description-of-rnn" class="headerlink" title="description of rnn"></a>description of rnn</h1><p>To get the question embedding q, we used the final state of an LSTM that processed question words. Question words were assigned unique integers, which were then used to index a learnable lookup table that provided embeddings to the LSTM. At each time-step, the LSTM received a single word embedding as input, according to the syntax of the English-encoded question.</p>
+<h1 id="Learning-Graphical-state-transitions"><a href="#Learning-Graphical-state-transitions" class="headerlink" title="Learning Graphical state transitions"></a>Learning Graphical state transitions</h1><p><a href="http://www.hexahedria.com/files/2017learninggraphical.pdf" target="_blank" rel="external">link</a><br><a href="http://mp.weixin.qq.com/s/arSKKs7oEJLGrEwMn8_xww" target="_blank" rel="external">review1</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

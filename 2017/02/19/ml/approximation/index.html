@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Approximation | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="ml,approximation,mle,map," />
+  
+
+  <meta name="description" content="点估计、边估计、MLE,MAP,EM点估计、边估计和点估计相对应的是区间估计，这个一般入门的统计教材里都会讲。直观说，点估计一般就是要找概率密度曲线上值最大的那个点，区间估计则要寻找该曲线上满足某种条件的一个曲线段。 MLE、MAPMLE最大似然和最大后验是最常用的两种点估计方法。$$\theta \rightarrow P(x|\theta)$$是likelihood function.于是我们">
+<meta name="keywords" content="ml,approximation,mle,map">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Approximation">
+<meta property="og:url" content="http://lemonman.net/2017/02/19/ml/approximation/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="点估计、边估计、MLE,MAP,EM点估计、边估计和点估计相对应的是区间估计，这个一般入门的统计教材里都会讲。直观说，点估计一般就是要找概率密度曲线上值最大的那个点，区间估计则要寻找该曲线上满足某种条件的一个曲线段。 MLE、MAPMLE最大似然和最大后验是最常用的两种点估计方法。$$\theta \rightarrow P(x|\theta)$$是likelihood function.于是我们">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.434Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Approximation">
+<meta name="twitter:description" content="点估计、边估计、MLE,MAP,EM点估计、边估计和点估计相对应的是区间估计，这个一般入门的统计教材里都会讲。直观说，点估计一般就是要找概率密度曲线上值最大的那个点，区间估计则要寻找该曲线上满足某种条件的一个曲线段。 MLE、MAPMLE最大似然和最大后验是最常用的两种点估计方法。$$\theta \rightarrow P(x|\theta)$$是likelihood function.于是我们">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#点估计、边估计、MLE-MAP-EM"><span class="toc-text">点估计、边估计、MLE,MAP,EM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#点估计、边估计"><span class="toc-text">点估计、边估计</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MLE、MAP"><span class="toc-text">MLE、MAP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MLE"><span class="toc-text">MLE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MAP"><span class="toc-text">MAP</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EM"><span class="toc-text">EM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-text">参考</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ml/approximation" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Approximation</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.02.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="点估计、边估计、MLE-MAP-EM"><a href="#点估计、边估计、MLE-MAP-EM" class="headerlink" title="点估计、边估计、MLE,MAP,EM"></a>点估计、边估计、MLE,MAP,EM</h1><h2 id="点估计、边估计"><a href="#点估计、边估计" class="headerlink" title="点估计、边估计"></a>点估计、边估计</h2><p>和点估计相对应的是区间估计，这个一般入门的统计教材里都会讲。直观说，点估计一般就是要找概率密度曲线上值最大的那个点，区间估计则要寻找该曲线上满足某种条件的一个曲线段。</p>
+<h2 id="MLE、MAP"><a href="#MLE、MAP" class="headerlink" title="MLE、MAP"></a>MLE、MAP</h2><h3 id="MLE"><a href="#MLE" class="headerlink" title="MLE"></a>MLE</h3><p>最大似然和最大后验是最常用的两种点估计方法。<br>$$<br>\theta \rightarrow P(x|\theta)<br>$$<br>是likelihood function.于是我们可以对参数$\theta$进行估计：<br>$$<br>\hat{\theta} = arg \max\limits_{\theta}{P(x|theta)}<br>$$<br>是最大化似然函数对$\theta$的估计。<br>不过当样本比较少或者先验信息很重要的时候，直接用MLE得到的结果可能不可信。以最简单的扔硬币游戏为例，一枚硬币扔了五次，有一次是正面。用最大似然估计，就是以这五次结果为依据，判断这枚硬币每次落地时正面朝上的概率（期望值）是多少时，最有可能得到四次反面一次正面的结果。不难计算得到期望概率0.2。</p>
+<h3 id="MAP"><a href="#MAP" class="headerlink" title="MAP"></a>MAP</h3><p>假如我们知道先验信息e.g.$P(\theta)$,即：<br>$$<br>P(x=1|\theta) = \theta<br>$$<br>先验是：$\theta$的概率密度函数。<br>则后验估计为：<br>$$<br>P(\theta|x) = \frac{P(x|\theta)P(\theta)}{\int_{\theta’}P(x|\theta’)P(\theta’)d\theta’}<br>$$<br>于是我们最大化后验估计$arg\max\limits_{\theta}{P(\theta|x)}$,又因为分母是x的边缘概率，与$\theta$无关，所以可以忽略。当$\theta$的概率密度是uniform的时候，MAP与MLE等价。</p>
+<p>举个栗子，假如硬币都是来自同一个机器的，造币厂官方参考是：他们厂造正面朝上概率是0.3的硬币的机器有三台，造正面朝上概率是0.5的硬币的机器有4台。这个时候，我们可以引入先验估计：<br>$$<br>P(0.3) = 3/7 \\<br>p(0.5) = 4/7<br>$$<br>那么<br>$$<br>P(0.3) \propto 0.3*0.7^4* 3/7 = 0.216 \\<br>P(0.5) \propto 0.5*0.5^4* 4/7 = 0.125<br>$$<br>所以$\theta=5$</p>
+<h1 id="EM"><a href="#EM" class="headerlink" title="EM"></a>EM</h1><p>EM方法是在有缺失值时进行估计的一种方法，这是一个迭代方法，每个迭代有求期望(E)和最大化(M)两个步骤。其中M可以是MLE或者MAP。一般需要先为缺失值赋值（E步骤初始化），然后重复下面的步骤：<br>1）用MLE或MAP构造模型(M步骤)；<br>2） 用所得模型估计缺失值，为缺失值重新赋值(E步骤)</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p>[知友陈义]<br><a href="https://en.wikipedia.org/wiki/Maximum_a_posteriori_estimation" target="_blank" rel="external">wiki</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Spiking Neural Network | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="work," />
+  
+
+  <meta name="description" content="Concept前突触神经元（presynapse neurons）后突触神经元（postsynapse neurons）神经元的静息电位（resting potential）:-70mV神经元的激发电位（spiking potential）:-55mV神经元的组成：核（soma），树突（dendrites）,轴突（axon）,突触（synapse）：多见于轴突上。神经元的活动：每个神经元的轴突突触">
+<meta name="keywords" content="work">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spiking Neural Network">
+<meta property="og:url" content="http://lemonman.net/2016/09/16/neuralcomputation/Spiking-Neural-Network/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="Concept前突触神经元（presynapse neurons）后突触神经元（postsynapse neurons）神经元的静息电位（resting potential）:-70mV神经元的激发电位（spiking potential）:-55mV神经元的组成：核（soma），树突（dendrites）,轴突（axon）,突触（synapse）：多见于轴突上。神经元的活动：每个神经元的轴突突触">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spiking Neural Network">
+<meta name="twitter:description" content="Concept前突触神经元（presynapse neurons）后突触神经元（postsynapse neurons）神经元的静息电位（resting potential）:-70mV神经元的激发电位（spiking potential）:-55mV神经元的组成：核（soma），树突（dendrites）,轴突（axon）,突触（synapse）：多见于轴突上。神经元的活动：每个神经元的轴突突触">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Concept"><span class="toc-text">Concept</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#冲击响应模型（Spiking-Response-Model-SRM）"><span class="toc-text">冲击响应模型（Spiking Response Model:SRM）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#SRM-demo"><span class="toc-text">SRM demo</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#STDP"><span class="toc-text">STDP</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-neuralcomputation/Spiking-Neural-Network" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Spiking Neural Network</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.09.16</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h1><p>前突触神经元（presynapse neurons）<br>后突触神经元（postsynapse neurons）<br>神经元的静息电位（resting potential）:-70mV<br>神经元的激发电位（spiking potential）:-55mV<br>神经元的组成：核（soma），树突（dendrites）,轴突（axon）,突触（synapse）：多见于轴突上。<br>神经元的活动：每个神经元的轴突突触与其它神经元的树突、或者神经细胞相接，由细胞</p>
+<h1 id="冲击响应模型（Spiking-Response-Model-SRM）"><a href="#冲击响应模型（Spiking-Response-Model-SRM）" class="headerlink" title="冲击响应模型（Spiking Response Model:SRM）"></a>冲击响应模型（Spiking Response Model:SRM）</h1><p>冲击响应模型的任务是把输入神经元的冲击脉冲序列加工，产生新的冲击脉冲序列并且输出神经元。<br>在冲击响应模型中，神经元j在时间t的状态是它的电（势）压uj(t)，当电压uj(t)超过或者等于常量域值theta，神经元j通过突触发出冲击脉冲。在Spiking神经网络中，冲击脉冲一般不考虑它的振幅和波型，只记录它发生的时间t(f)。f是脉冲的序号。<br>神经元j的输出一般标记为：<br>Fj:神经元j发出的冲击脉冲时间序列；t:冲击脉冲发出的时间；f:冲击脉冲的序号；n:冲击脉冲的数量。<br>如果，则神经元j的突触前神经元序列集合标记为：<br>如果神经元j的突触前神经元i在时间发出一个冲击脉冲，神经元j收到这个脉冲，此时，神经元j就要对这个脉冲进行加工，加工后的电压公式<br>Wji:j神经元与i神经元突触连接权重；：冲击响应函数，描述了冲击脉冲电压随时间变化的波型</p>
+<h2 id="SRM-demo"><a href="#SRM-demo" class="headerlink" title="SRM demo"></a>SRM demo</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"><span class="keyword">from</span> neurons <span class="keyword">import</span> spiking</div><div class="line"><span class="comment"># This sets up a model of 3 neurons. A neuron generates a new spike if it exceeds the threshold of 1mV. The variables t_current, t_membrane are time constants used in the SRM model, and eta_reset resets the membrane potential after a spike (repolarization).</span></div><div class="line">model = spiking.SRM(neurons=<span class="number">3</span>, threshold=<span class="number">1</span>, t_current=<span class="number">0.3</span>, t_membrane=<span class="number">20</span>, eta_reset=<span class="number">5</span>)</div><div class="line"></div><div class="line"><span class="comment"># there is a map where is no hierarchical concept.It just means weight between the i-th neuron and the j-th neuron</span></div><div class="line">weights = np.array([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">1.2</span>],</div><div class="line">                    [<span class="number">0</span>, <span class="number">0</span>, <span class="number">1.2</span>],</div><div class="line">                    [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0.</span>]])</div><div class="line"><span class="comment"># there is a sequence of spike</span></div><div class="line">spiketrain = np.array([[<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],</div><div class="line">                       [<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],</div><div class="line">                       [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]])</div><div class="line"><span class="comment"># simulate the spike</span></div><div class="line"><span class="keyword">for</span> time <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">    total_potential = model.check_spikes(spiketrain, weights, time)</div><div class="line">print(<span class="string">"Spiketrain:"</span>)</div><div class="line">print(spiketrain)</div></pre></td></tr></table></figure>
+<h1 id="STDP"><a href="#STDP" class="headerlink" title="STDP"></a>STDP</h1><ul>
+<li>The idea of the STDP model is:<br>if a spike arrives at a synapse, and shortly after the post-synaptic neuron fires, then the weight goes up<br>if a spike arrives at a synapse, but the post-synaptic neuron has fired shortly before, then the weight goes down</li>
+</ul>
+<p>[0]<a href="http://neuronaldynamics.epfl.ch/online/Ch6.S4.html" target="_blank" rel="external">6.4 Spike response model (SRM)</a><br>[1]<a href="http://neurons.readthedocs.io/en/latest/intro/learn.html" target="_blank" rel="external">Tutorial: Learning the weights</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

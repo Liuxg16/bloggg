@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Generative Networks | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="nn,Bengio," />
+  
+
+  <meta name="description" content="GAN 过程1.每次随机一个生成矩阵2.生成模型根据矩阵生成图片3.判别模型学习此图片 note现在设置的label都是每隔batch一个label，粗粒度效果是这样，那细粒度呢？得试试。 Plug &amp;amp; Play Generative Networks:Conditional Iterative Generation of Images in Latent Space[][pdf]http">
+<meta name="keywords" content="nn,Bengio">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Generative Networks">
+<meta property="og:url" content="http://lemonman.net/2016/12/13/neuralnetwork/generative-networks/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="GAN 过程1.每次随机一个生成矩阵2.生成模型根据矩阵生成图片3.判别模型学习此图片 note现在设置的label都是每隔batch一个label，粗粒度效果是这样，那细粒度呢？得试试。 Plug &amp;amp; Play Generative Networks:Conditional Iterative Generation of Images in Latent Space[][pdf]http">
+<meta property="og:image" content="http://lemonman.net/images/cnn/dgnam.png">
+<meta property="og:updated_time" content="2017-07-07T06:34:37.581Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Generative Networks">
+<meta name="twitter:description" content="GAN 过程1.每次随机一个生成矩阵2.生成模型根据矩阵生成图片3.判别模型学习此图片 note现在设置的label都是每隔batch一个label，粗粒度效果是这样，那细粒度呢？得试试。 Plug &amp;amp; Play Generative Networks:Conditional Iterative Generation of Images in Latent Space[][pdf]http">
+<meta name="twitter:image" content="http://lemonman.net/images/cnn/dgnam.png">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GAN-过程"><span class="toc-text">GAN 过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#note"><span class="toc-text">note</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Plug-amp-Play-Generative-Networks-Conditional-Iterative-Generation-of-Images-in-Latent-Space"><span class="toc-text">Plug & Play Generative Networks:Conditional Iterative Generation of Images in Latent Space[]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstract"><span class="toc-text">Abstract</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Synthesizing-the-preferred-inputs-for-neurons-in-neural-networks-via-deep-generator-networks-1"><span class="toc-text">Synthesizing the preferred inputs for neurons in neural networks via deep generator networks[1]</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#activation-maximization-AM"><span class="toc-text">activation maximization(AM)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#multifaceted-neuron"><span class="toc-text">multifaceted neuron</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#latent-code"><span class="toc-text">latent code</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generating-Images-with-Perceptual-Similarity-Metrics-based-on-Deep-Networks"><span class="toc-text">Generating Images with Perceptual Similarity Metrics based on Deep Networks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Understanding-Deep-Image-Representations-by-Inverting-Them"><span class="toc-text">Understanding Deep Image Representations by Inverting Them</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#转载-附录一0"><span class="toc-text">转载 附录一0</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VAEGAN"><span class="toc-text">VAEGAN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#特点"><span class="toc-text">特点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#附录二：论文链接"><span class="toc-text">附录二：论文链接</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-neuralnetwork/generative-networks" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Generative Networks</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.12.13</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="GAN-过程"><a href="#GAN-过程" class="headerlink" title="GAN 过程"></a>GAN 过程</h1><p>1.每次随机一个生成矩阵<br>2.生成模型根据矩阵生成图片<br>3.判别模型学习此图片</p>
+<h2 id="note"><a href="#note" class="headerlink" title="note"></a>note</h2><p>现在设置的label都是每隔batch一个label，粗粒度效果是这样，那细粒度呢？得试试。</p>
+<h1 id="Plug-amp-Play-Generative-Networks-Conditional-Iterative-Generation-of-Images-in-Latent-Space"><a href="#Plug-amp-Play-Generative-Networks-Conditional-Iterative-Generation-of-Images-in-Latent-Space" class="headerlink" title="Plug &amp; Play Generative Networks:Conditional Iterative Generation of Images in Latent Space[]"></a>Plug &amp; Play Generative Networks:Conditional Iterative Generation of Images in Latent Space[]</h1><p>[pdf]<a href="https://arxiv.org/pdf/1612.00005v1.pdf" target="_blank" rel="external">https://arxiv.org/pdf/1612.00005v1.pdf</a></p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>Anh Nguyen之前介绍了一个有趣的工作<sup>[1]</sup>，用梯度上升方法在一个独立的分类器网络中最大化一个或者多个neurons的激活值来合成全新的图片。本片文章将此方法进行扩展，引入先验信息(latent code是什么鬼)，增加了采样质量和采样丰富型，在生成高质量高分辨率图像任务上做到了其它生成模型中的最好。同时，我们也提供了一个统一的与activation maximization 类似的概率差值方法，取名为：Plug &amp; Play Generative Networks。PPGN由两部分组成，1)一个可以抽取大范围图像的生成网络G，2)一个可替代的指示G如何生成图像的条件网络C。我们认为该生成网络需基于类别(当C是i个ImageNet或者MIT Places classification network)和主题（当C是一个图像捕捉网络）的。我们提供的方法也提高了多脸特征显示的性能，可以生成一系列合成的输入来激活一个神经元来更好的理解深度神经网络是如何运作的。最后，我们展示了我们的模型也可以完成图像修补的工作。</p>
+<h1 id="Synthesizing-the-preferred-inputs-for-neurons-in-neural-networks-via-deep-generator-networks-1"><a href="#Synthesizing-the-preferred-inputs-for-neurons-in-neural-networks-via-deep-generator-networks-1" class="headerlink" title="Synthesizing the preferred inputs for neurons in neural networks via deep generator networks[1]"></a>Synthesizing the preferred inputs for neurons in neural networks via deep generator networks[1]</h1><p><a href="http://lmb.informatik.uni-freiburg.de/Publications/2016/DB16d/main_text.pdf" target="_blank" rel="external">DGN-AM</a><br><a href="https://github.com/Evolving-AI-Lab/synthesizing" target="_blank" rel="external">SOURCE</a></p>
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>[1]之前的一些研究发现如果没有bias，生成的图像会不真实和很难解释。因为一个集合中可能的图像太多以至于完全有可能”欺骗”到管理某个图片的神经元。<br>[2]争取将自然图像先验知识加入目标函数是被证明可以提高生成图像的认可度。也有很多手工设计的图像先验比如Gaussian blur，$\alpha-norm$,total vatiation,jitter,data-driven patch priors, center-bias regulatization,和均值图像初始化。相对与手工设计的先验，我们提出可以用优越的、学习得到的类似于生成模型的图像先验</p>
+<p>我们用作先验的图像生成器DNN的输入是一个向量编码(latent code)，输出和ImageNet数据集真实图片尽可能类似的图片。要产生一个比较好的可以用给定DNN可视化的图片，我们对图片生成器DNN的输入空间进行优化，以至于输出的图片可以让特定的神经元兴奋。我们的方法限了生成图片的搜索来源是有prior先验提供，这样对于可视化来说提供了坚实的基础。</p>
+<p><img src="/images/cnn/dgnam.png" alt=""></p>
+<h2 id="activation-maximization-AM"><a href="#activation-maximization-AM" class="headerlink" title="activation maximization(AM)"></a>activation maximization(AM)</h2><p>which synthesizes an input (e.g. an image) that highly activates a neuron</p>
+<h2 id="multifaceted-neuron"><a href="#multifaceted-neuron" class="headerlink" title="multifaceted neuron"></a>multifaceted neuron</h2><p>for example, the “Halle Berry neuron” responds to very different stimuli related to the actress—from pictures of her face, to pictures of her in costume, to the word “Halle Berry” printed as text.</p>
+<h2 id="latent-code"><a href="#latent-code" class="headerlink" title="latent code"></a>latent code</h2><p>我们拿来做先验的生成图片的DNN输入是一向量code，输出是看起来尽可能像ImageNet集中图像的综合图像。<br>hidden code input</p>
+<h1 id="Generating-Images-with-Perceptual-Similarity-Metrics-based-on-Deep-Networks"><a href="#Generating-Images-with-Perceptual-Similarity-Metrics-based-on-Deep-Networks" class="headerlink" title="Generating Images with Perceptual Similarity Metrics based on Deep Networks"></a>Generating Images with Perceptual Similarity Metrics based on Deep Networks</h1><p>referrence [11] in DGN-AM<br>This is especially the case when there is inherent uncertainty in the prediction. For example, suppose we aim to reconstruct an image from its feature representation. The precise location of all details is not preserved in the features. A loss in image space leads to averaging all likely locations of details, hence the reconstruction looks blurry.<br>在这个问题上一直都存在这预测模糊的情况。举个例子，加入我们要利用特征来重构一个图片，那个特定位置的细节是在特征中无法保存的。在图像空间的loss可以平均所有可能位置的细节，所以重建看起来很模糊。</p>
+<h1 id="Understanding-Deep-Image-Representations-by-Inverting-Them"><a href="#Understanding-Deep-Image-Representations-by-Inverting-Them" class="headerlink" title="Understanding Deep Image Representations by Inverting Them"></a>Understanding Deep Image Representations by Inverting Them</h1><p>source code : <a href="https://github.com/aravindhm/deep-goggle" target="_blank" rel="external">https://github.com/aravindhm/deep-goggle</a></p>
+<p>[1]<a href="http://blog.csdn.net/bea_tree/article/details/51589547" target="_blank" rel="external">caffeNet</a></p>
+<h1 id="转载-附录一0"><a href="#转载-附录一0" class="headerlink" title="转载 附录一0"></a>转载 <a href="http://chuansong.me/n/2812809" target="_blank" rel="external">附录一0</a></h1><p>今天介绍另一篇图像生成的文章[1]，其提出的 DeePSiM 已经开始被 Fei-Fei Li 等 Vision 大组用了起来。这篇文章，可以看做两位作者对于之前自己的另一份很有影响力的工作《Inverting Convolutional Networks with Convolutional Networks》[2]的延续。</p>
+<p>在上一篇 Invert 的工作[2]中，两位作者主要想探讨的是通过 CNN 学出来的 image feature 是否可以用来 re-generate (invert) 原始的 natural images。通过大量的实验和分析，两位作者得到了一些很重要的观察和结论。其中一个观察是，他们发现尽管这些 feature 确实可以在一定程度上 invert 出 image 来，并且在 high-level layer 的 feature 里仍然能保留一些 color 等重要信息——可是 re-generated 出来的 image 都比较 blurry。这里可以分析出两个事情，一个事情是，尽管 feature space-image space 之间的映射不是一对一的，也就是说不同的 image（无论 natural 与否）都可能得到同样的 feature mapping，但是却仍然可以 invert 出看起来不错的 natural image——也就是说 invert reconstruction 是有局限性的，只会倾向于生成 natural image（这个结论在 DeePSiM 中没有出现，而是在 invert 论文[2]中提到了）。另一个事情是，得出的 image 虽然 natural 但很 blurry，那么具体的 values of features 是没什么用的，而且说明即使是在 feature space 的 reconstruction loss 可能也不适合做 image generation——常用的 squared Euclidean 会 average detail 信息，得到模糊的图片。</p>
+<p>所以，只是从 image space 的 per-pixel loss 走到 feature space loss 也是不够的。于是就有了这篇 DeePSiM 的工作[1]。所谓的 DeePSiM 是“a class of losses”，其实就是几个 loss 的 weighted sum，具体可以见公式（1）。用 feature loss 替代 element-wise loss（per-pixel） 的思想和把多个 loss 结合在一起的思想并不新鲜——在之前已有人提出了将 AutoEncoder 和 GAN 结合在一起的工作[3]。但是，这篇工作的贡献（和区别）在于，他们将这种多个 loss 结合的方式提炼到了更 general 的框架层面，从而 comparator 不再必须是 discriminator 的一部分——使得这种 loss 不再局限于 VAE 模型和单向 image generation 应用。</p>
+<p>具体来看公式（1）中的几种 loss。最重要的就是 feature loss，L_feat。这个 loss 实现了将 image space 转到 feature space，可是就像之前分析的单有 feature loss 是不行的——只会得到很多 artifacts。为此，他们继续加入了 GAN 的 adversarial loss 来为生成的 image 提供一种 trained prior。最后，也是他们的一个小创新，就是第三种 loss。他们并没有完全抛弃 image space information，而是将 class information 作为 image loss，L_img 加入到了 DeePSiM 中来。这一点上很像 conditional GAN，而且过去的实验表明，class of image 这个信息对于 generation 从 nonsense 变到 sensible 是很重要的[4]。所以最后，这三种 loss 对应的三个框架 component 就是，一个 generator 用于实现 generation function，L_feat 对应于 comparator 计算 feature space 的 information，L_adv 对应 GAN 中的 discriminator 用于 training objective，而 L_img 作为辅助去 stable 整个 training 过程。</p>
+<p>那么，在实验部分他们也是做的比较 extensive。实验的重点肯定是验证新的 loss DeePSiM 更有效：</p>
+<p>为此，他们用了很多种 CNN 结构，并设计了三种 application：image autoencoder，image generation with (modified) VAE，invert image generation（iterative re-encoding）。比较有趣的是 interative re-encoding，就是反复进行 image-&gt;encode-&gt;feature-&gt;invert image generation-&gt;encode-&gt;feature…这样的过程。只不过，实验中个人不太理解和希望改进的点是：（1）image generation with modified VAE 中，VAE 改造的方法不是很 straightforward，他们将 VAE 中的目标逼近 latent vector z，变成了两个更细致的 \mu 和 \sigma，这样改造出的 KL divergence 是否会过于 favor to CNN；（2）image inversion 的过程主要是为了看学到的 feature 到底多大程度的保留了 image properties。在作者之前的工作[2]中，就有 imply 其实 top-5 的 activations 可能就能非常好的做好 reconstruction——希望能做这样的实验，像 knowledge distillation 一样。</p>
+<p>最后总结一下，这篇论文中提出的 Perceptual Loss 并不能说是一个非常新的想法，但是这篇文章整体上的各种分析还是比较有深度，作为了解这边工作的一个突破口是很好的。另一方面，Fei-Fei Li 组最近也有一篇将 Perceptual Loss generalized 到 image transformation 这个 general task 上的工作[5]。大家有兴趣也可以看看。</p>
+<p>[1] Alexey Dosovitskiy, Thomas Brox. Generating Images with Perceptual Similarity Metrics based on Deep Networks. 2016. arXiv preprint: 1602.02644.<br>[2] Alexey Dosovitskiy, Thomas Brox. Inverting Convolutional Networks with Convolutional Networks. CVPR 2016.<br>[3] Anders Boesen Lindbo Larsen et al. Autoencoding beyond pixels using a learned similarity metric. 2015. arXiv preprint: 1512.09300.<br>[4] Emily Denton et al. Deep Generative Image Models using a Laplacian Pyramid of Adversarial Networks. 2015. arXiv preprint: 1506.05751.<br>[5] Justin Johnson, Alexandre Alahi, Li Fei-Fei. Perceptual Losses for Real-Time Style Transfer and Super-Resolution. 2016. arXiv preprint: 1603.08155.</p>
+<h2 id="VAEGAN"><a href="#VAEGAN" class="headerlink" title="VAEGAN"></a>VAEGAN</h2><p><a href="https://arxiv.org/pdf/1512.09300v2.pdf" target="_blank" rel="external">Autoencoding beyond pixels using a learned similarity metric</a><br>当用像变分自编码器(VAE<sup>[0,1]</sup>)学习时,属性相似度的衡量是核心选择是通过重建误差来提供训练信号完成的。针对这个任务，像平方误差这样的元素级的衡量是默认方法。元素级特征比较简单但是不太适合图像数据，因为它们不是对人类视觉细胞建模。比如，一个微小的图像转换可以导致非常大的像素级误差，尽管人注意不到这样的变化。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><p>用GAN训练的discriminator来衡量样本相似度。这个通过将VAE和GAN结合来实现。我们将VAE decoder和GAN generator融合在一起，实现参数共享和同步训练。对于VAE训练目标，我们将经典的元素级重建属性用特征属性discriminator代替。</p>
+<p>[0]Kingma,  Diederik  P.  and  Welling,Max. Auto-encoding variational Bayes.   In Proceedings of the International Conference on Learning Representations, 2014.<br>[1]Rezende, Danilo Jimenez, Mohamed, Shakir, and Wierstra,Daan. Stochastic backpropagation and approximate inference  in  deep  generative  models.   In Proceedings  of The  31st  International  Conference  on  Machine  Learning, pp. 1278–1286, 2014.<br>[2]<a href="https://zhuanlan.zhihu.com/p/22464760" target="_blank" rel="external">VAE（1）——从KL说起</a></p>
+<h1 id="附录二：论文链接"><a href="#附录二：论文链接" class="headerlink" title="附录二：论文链接"></a>附录二：论文链接</h1><p>[0]<a href="https://arxiv.org/pdf/1612.00005v1.pdf" target="_blank" rel="external">ppgn</a><br>[1]<a href="https://papers.nips.cc/paper/6519-synthesizing-the-preferred-inputs-for-neurons-in-neural-networks-via-deep-generator-networks.pdf" target="_blank" rel="external">Synthesizing the preferred inputs for neurons in neural networks via deep generator networks</a><br>[2]<a href="https://research.googleblog.com/2015/06/inceptionism-going-deeper-into-neural.html" target="_blank" rel="external">Inceptionism: Going Deeper into Neural Networks</a><br>[3]<a href="http://chuansong.me/n/1427079451973" target="_blank" rel="external">ppgn讲解</a><br>[4]<a href="https://www.robots.ox.ac.uk/~vedaldi/assets/pubs/mahendran15understanding.pdf" target="_blank" rel="external">Understanding Deep Image Representations by Inverting Them</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

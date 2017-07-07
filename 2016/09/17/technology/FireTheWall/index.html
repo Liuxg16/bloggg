@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>DeepCurious 科学上网配置指南 | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="work," />
+  
+
+  <meta name="description" content="Windows 1.下载shadowsocks[0]:解压，双击打开，如下图：在其中输入: 1234ip:139.59.160.89端口:8388密码:微信上告诉你加密：aes-256-cfb  2.设置好后，点”确定”，在图标右击，弹出窗口选”系统代理”  3.用谷歌浏览器（用其它浏览器也可以，不过配置会麻烦一些），下载扩展工具：SwitchySharp.crx 文件http://pan.bai">
+<meta name="keywords" content="work">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DeepCurious 科学上网配置指南">
+<meta property="og:url" content="http://lemonman.net/2016/09/17/technology/FireTheWall/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="Windows 1.下载shadowsocks[0]:解压，双击打开，如下图：在其中输入: 1234ip:139.59.160.89端口:8388密码:微信上告诉你加密：aes-256-cfb  2.设置好后，点”确定”，在图标右击，弹出窗口选”系统代理”  3.用谷歌浏览器（用其它浏览器也可以，不过配置会麻烦一些），下载扩展工具：SwitchySharp.crx 文件http://pan.bai">
+<meta property="og:image" content="http://pic.downcc.com/upload/2015-6/20156184427653750.jpg">
+<meta property="og:image" content="http://www.enjoydiy.com/wp-content/uploads/2014/05/2.png">
+<meta property="og:image" content="http://pic.downcc.com/upload/2015-6/20156184427653750.jpg">
+<meta property="og:image" content="http://lemonman.net/images/other/putty.png">
+<meta property="og:updated_time" content="2017-07-07T06:34:37.128Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DeepCurious 科学上网配置指南">
+<meta name="twitter:description" content="Windows 1.下载shadowsocks[0]:解压，双击打开，如下图：在其中输入: 1234ip:139.59.160.89端口:8388密码:微信上告诉你加密：aes-256-cfb  2.设置好后，点”确定”，在图标右击，弹出窗口选”系统代理”  3.用谷歌浏览器（用其它浏览器也可以，不过配置会麻烦一些），下载扩展工具：SwitchySharp.crx 文件http://pan.bai">
+<meta name="twitter:image" content="http://pic.downcc.com/upload/2015-6/20156184427653750.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Windows"><span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MAC"><span class="toc-text">MAC</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其它"><span class="toc-text">其它</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VPS连不上"><span class="toc-text">VPS连不上</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#连上shadowsocks"><span class="toc-text">连上shadowsocks</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其它设备科学上网"><span class="toc-text">其它设备科学上网</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#注"><span class="toc-text">[注]</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#升华革命友情，分担经济压力！"><span class="toc-text">升华革命友情，分担经济压力！</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-technology/FireTheWall" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">DeepCurious 科学上网配置指南</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.09.17</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h1><ul>
+<li><p>1.下载shadowsocks<sup>[0]</sup>:<br>解压，双击打开，如下图：<br><img src="http://pic.downcc.com/upload/2015-6/20156184427653750.jpg" alt=""><br>在其中输入:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ip:139.59.160.89</div><div class="line">端口:8388</div><div class="line">密码:微信上告诉你</div><div class="line">加密：aes-256-cfb</div></pre></td></tr></table></figure>
+</li>
+<li><p>2.设置好后，点”确定”，在图标右击，弹出窗口选”系统代理”</p>
+</li>
+<li>3.用谷歌浏览器（用其它浏览器也可以，不过配置会麻烦一些），下载扩展工具：SwitchySharp.crx 文件<br><code>http://pan.baidu.com/s/1gdrfuRh 密码: wdtr</code><br>下载完成后在设置 &gt;&gt; 扩展，直接把该 .crx 文件拖入窗口然后安装即可(如果不会可以百度:chrome 安装crx文件）<br>然后打开 Proxy SwitchySharp 的设置，新建一个情景，命名为 SS，并设置好端口，如图：<br><img src="http://www.enjoydiy.com/wp-content/uploads/2014/05/2.png" alt=""><br>把图中socks代理填入的内容，填在第一行http代理中，勾上“对所有协议……”</li>
+<li>4.点保存</li>
+<li>5.打开一个新网页，点击右上角的圆圈，选择ss，然后在地址栏输入google.com即可科学上网。<br>[完]</li>
+</ul>
+<h1 id="MAC"><a href="#MAC" class="headerlink" title="MAC"></a>MAC</h1><p>非常简单，<br>1.下载<a href="https://github.com/shadowsocks/shadowsocks-iOS/releases/" target="_blank" rel="external">shadowsocks</a><sup>[0]</sup>，选择<code>.dmg</code>格式下载<br>2.安装<br>3.设置如下：<br><img src="http://pic.downcc.com/upload/2015-6/20156184427653750.jpg" alt=""><br>在其中输入:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ip:139.59.160.89</div><div class="line">端口:8388</div><div class="line">密码:微信上告诉你</div><div class="line">加密：aes-256-cfb</div></pre></td></tr></table></figure></p>
+<p>4.设置好后，点”确定”，在图标右击，弹出窗口选择全局代理模式即可。</p>
+<h1 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h1><p>VPS服务端我已经配好了，不用管，只需要配好自己的机器就可以科学上网了，也就是要通过配置我们的机器，使得我们的请求传到那台机器上去，当然这没有什么平台限制，mac,windows,android,iphone都可以配置成功。</p>
+<h2 id="VPS连不上"><a href="#VPS连不上" class="headerlink" title="VPS连不上"></a>VPS连不上</h2><p>需要重新在服务器上启动shadowsocks。</p>
+<h2 id="连上shadowsocks"><a href="#连上shadowsocks" class="headerlink" title="连上shadowsocks"></a>连上shadowsocks</h2><ol>
+<li>下载[putty]（<a href="http://rj.baidu.com/soft/detail/15699.html?ald" target="_blank" rel="external">http://rj.baidu.com/soft/detail/15699.html?ald</a>)</li>
+<li>用putty连vps,输入ip和port,如下图:<br><img src="/images/other/putty.png" alt=""><br>在弹出来的命令行中输入用户名:lemonman,敲回车<br>再输密码:<a href="">都是那个密码</a></li>
+<li>进入欢迎界面后输入:<br><code>nohup ssserver -c ～/config.json &gt; /dev/null 2&gt;&amp;1 &amp;</code><br>或者:<br><code>ssserver -c /home/lemonman/config.json</code></li>
+<li>重新打开网页科学上网，科学上网完毕，关掉putty即可。</li>
+</ol>
+<h1 id="其它设备科学上网"><a href="#其它设备科学上网" class="headerlink" title="其它设备科学上网"></a>其它设备科学上网</h1><p>理论上都是可以的，大家自己搜一下如何配置，然后可以联系我，我把它分享到这里。</p>
+<h1 id="注"><a href="#注" class="headerlink" title="[注]"></a>[注]</h1><p>还有很多玩法，我会把账号告诉大家，大家随意玩。可以在这个帖子后面留言，解决的问题，大家共享，谢谢！<br>我们买的是一个服务器，系统是Ubuntu,大家可以ssh上去看下之类的，例如：<br><code>ssh lemonman@139.59.160.89</code><br>passwd:微信上告诉你</p>
+<h1 id="升华革命友情，分担经济压力！"><a href="#升华革命友情，分担经济压力！" class="headerlink" title="升华革命友情，分担经济压力！"></a>升华革命友情，分担经济压力！</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[0]<a href="https://sourceforge.net/projects/shadowsocksgui/files/dist/" target="_blank" rel="external">ShadowSocks客户端下载</a><br>[1]<a href="http://www.zxcv.info/?p=18" target="_blank" rel="external">教程</a><br>[2]<a href="http://www.91vpnw.com/vpnhelp/ss/ss_set_chrome.htm" target="_blank" rel="external">教程</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

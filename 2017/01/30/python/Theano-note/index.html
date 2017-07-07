@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Theano Note | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="dl,work,theano," />
+  
+
+  <meta name="description" content="dimshuffleA few words on dimshuffle :   dimshuffle is a powerful tool in reshaping a tensor;   what it allows you to do is to shuffle dimension around   but also to insert new ones along which the ten">
+<meta name="keywords" content="dl,work,theano">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Theano Note">
+<meta property="og:url" content="http://lemonman.net/2017/01/30/python/Theano-note/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="dimshuffleA few words on dimshuffle :   dimshuffle is a powerful tool in reshaping a tensor;   what it allows you to do is to shuffle dimension around   but also to insert new ones along which the ten">
+<meta property="og:updated_time" content="2017-07-07T06:34:37.269Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Theano Note">
+<meta name="twitter:description" content="dimshuffleA few words on dimshuffle :   dimshuffle is a powerful tool in reshaping a tensor;   what it allows you to do is to shuffle dimension around   but also to insert new ones along which the ten">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#dimshuffle"><span class="toc-text">dimshuffle</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Theano-stack"><span class="toc-text">Theano stack</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mutlinomial-scan"><span class="toc-text">mutlinomial+ scan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#instantiate-4D-tensor-for-input"><span class="toc-text">instantiate 4D tensor for input</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sigmoid"><span class="toc-text">sigmoid</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#flatten"><span class="toc-text">flatten</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ones-like"><span class="toc-text">ones_like</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#shared-variables"><span class="toc-text">shared variables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#onehot"><span class="toc-text">onehot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Printing"><span class="toc-text">Printing</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Numpy"><span class="toc-text">Numpy</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#reshape"><span class="toc-text">reshape</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#broadcast"><span class="toc-text">broadcast</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rand-number"><span class="toc-text">rand number</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#打印数组全部"><span class="toc-text">打印数组全部</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#gpu"><span class="toc-text">gpu</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#function-demo"><span class="toc-text">function demo</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Exception"><span class="toc-text">Exception</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GPU-报错"><span class="toc-text">GPU 报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ValueError-When-compiling-the-inner-function-of-scan-the-following-error-has-been-encountered-The-initial-state-outputs-info-in-scan-nomenclature-of-variable-IncSubtensor-Set-int64-0-argument-number-3-has-dtype-int64-while-the-result-of-the-inner-function-fn-has-dtype-float64-This-can-happen-if-the-inner-function-of-scan-results-in-an-upcast-or-downcast"><span class="toc-text">ValueError: When compiling the inner function of scan the following error has been encountered: The initial state (outputs_info in scan nomenclature) of variable IncSubtensor{Set;:int64:}.0 (argument number 3) has dtype int64, while the result of the inner function (fn) has dtype float64. This can happen if the inner function of scan results in an upcast or downcast.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#theano-exception"><span class="toc-text">theano  exception</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#theano-gof-fg-MissingInputError-A-variable-that-is-an-input-to-the-graph-was-neither-provided-as-an-input-to-the-function-nor-given-a-value-A-chain-of-variables-leading-from-this-input-to-an-output-is-DimShuffle-0-x-0-Subtensor-0-Elemwise-mul-no-inplace-0-Elemwise-add-no-inplace-0-Elemwise-Cast-float32-0-dot-0-Elemwise-add-no-inplace-0-Elemwise-add-no-inplace-0-dot-0-Elemwise-add-no-inplace-0-Softmax-0-Subtensor-int64-0-Shape-0-Elemwise-mul-no-inplace-0-mrg-uniform-TensorType-float32-vector-no-inplace-0-This-chain-may-not-be-unique-Backtrace-when-the-variable-is-created"><span class="toc-text">theano.gof.fg.MissingInputError: A variable that is an input to the graph was neither provided as an input to the function nor given a value. A chain of variables leading from this input to an output is [, DimShuffle{0,x}.0, Subtensor{::, ::}.0, Elemwise{mul,no_inplace}.0, Elemwise{add,no_inplace}.0, Elemwise{Cast{float32}}.0, dot.0, Elemwise{add,no_inplace}.0, Elemwise{add,no_inplace}.0, dot.0, Elemwise{add,no_inplace}.0, Softmax.0, Subtensor{::, int64}.0, Shape.0, Elemwise{mul,no_inplace}.0, mrg_uniform{TensorType(float32, vector),no_inplace}.0]. This chain may not be unique Backtrace when the variable is created:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#‘An-update-must-have-the-same-type-as-the-original-shared-variable-shared-var-shared-var-type-TensorType-float32-matrix-update-val-Elemwise-add-no-inplace-0-update-val-type-TensorType-float64-matrix-’-‘If-the-difference-is-related-to-the-broadcast-pattern-you-can-call-the-tensor-unbroadcast-var-axis-to-unbroadcast-…-function-to-remove-broadcastable-dimensions-’"><span class="toc-text">‘An update must have the same type as the original shared variable (shared_var=, shared_var.type=TensorType(float32, matrix), update_val=Elemwise{add,no_inplace}.0, update_val.type=TensorType(float64, matrix)).’, ‘If the difference is related to the broadcast pattern, you can call the tensor.unbroadcast(var, axis_to_unbroadcast[, …]) function to remove broadcastable dimensions.’)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#scan-mulnomial-theano-gof-fg-MissingInputError"><span class="toc-text">scan+mulnomial theano.gof.fg.MissingInputError:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ValueError-The-return-value-of-your-scan-lambda-expression-may-only-be-made-of-lists-tuples-or-dictionaries-containing-Theano-variables-or-theano-scan-module-until-objects-for-conditions-In-particular-if-you-need-to-use-constant-values-you-can-use-tensor-constant-to-turn-them-into-Theano-variables"><span class="toc-text">ValueError: The return value of your scan lambda expression may only be made of lists, tuples, or dictionaries containing Theano variables (or theano.scan_module.until objects for conditions). In particular if you need to use constant values, you can use tensor.constant to turn them into Theano variables.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ValueError-When-compiling-the-inner-function-of-scan-the-following-error-has-been-encountered-The-initial-state-outputs-info-in-scan-nomenclature-of-variable-IncSubtensor-Set-int64-0-argument-number-2-has-dtype-float32-while-the-result-of-the-inner-function-fn-has-dtype-float64-This-can-happen-if-the-inner-function-of-scan-results-in-an-upcast-or-downcast"><span class="toc-text">ValueError: When compiling the inner function of scan the following error has been encountered: The initial state (outputs_info in scan nomenclature) of variable IncSubtensor{Set;:int64:}.0 (argument number 2) has dtype float32, while the result of the inner function (fn) has dtype float64. This can happen if the inner function of scan results in an upcast or downcast.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#theano-gof-fg-MissingInputError-“An-input-of-the-graph-used-to-compute-DimShuffle-x-0-was-not-provided-and-not-given-a-value-Use-the-Theano-flag-exception-verbosity-’high’-for-more-information-on-this-error-”"><span class="toc-text">theano.gof.fg.MissingInputError: (“An input of the graph, used to compute DimShuffle{x,0}(), was not provided and not given a value.Use the Theano flag exception_verbosity=’high’,for more information on this error.”, )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#theano-gof-fg-MissingInputError-“An-input-of-the-graph-used-to-compute-XXXXXXX-was-not-provided-and-not-given-a-value-Use-the-Theano-flag-exception-verbosity-’high’-for-more-information-on-this-error-”"><span class="toc-text">theano.gof.fg.MissingInputError: (“An input of the graph, used to compute XXXXXXX(), was not provided and not given a value.Use the Theano flag exception_verbosity=’high’,for more information on this error.”, )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TypeError-‘NoneType’-object-is-not-iterable"><span class="toc-text">TypeError: ‘NoneType’ object is not iterable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TypeError-‘NoneType’-object-has-no-attribute-‘getitem‘"><span class="toc-text">TypeError: ‘NoneType’ object has no attribute ‘getitem‘</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-python/Theano-note" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Theano Note</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.01.30</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="dimshuffle"><a href="#dimshuffle" class="headerlink" title="dimshuffle"></a>dimshuffle</h2><p>A few words on <code>dimshuffle</code> :<br>   <code>dimshuffle</code> is a powerful tool in reshaping a tensor;<br>   what it allows you to do is to shuffle dimension around<br>   but also to insert new ones along which the tensor will be<br>   broadcastable;<br>   dimshuffle(‘x’, 2, ‘x’, 0, 1)<br>   This will work on 3d tensors with no broadcastable<br>   dimensions. The first dimension will be broadcastable,<br>   then we will have the third dimension of the input tensor as<br>   the second of the resulting tensor, etc. If the tensor has<br>   shape (20, 30, 40), the resulting tensor will have dimensions<br>   (1, 40, 1, 20, 30). (AxBxC tensor is mapped to 1xCx1xAxB tensor)<br>   More examples:<br>    dimshuffle(‘x’) -&gt; make a 0d (scalar) into a 1d vector<br>    dimshuffle(0, 1) -&gt; identity<br>    dimshuffle(1, 0) -&gt; inverts the first and second dimensions<br>    dimshuffle(‘x’, 0) -&gt; make a row out of a 1d vector (N to 1xN)<br>    dimshuffle(0, ‘x’) -&gt; make a column out of a 1d vector (N to Nx1)<br>    dimshuffle(2, 0, 1) -&gt; AxBxC to CxAxB<br>    dimshuffle(0, ‘x’, 1) -&gt; AxB to Ax1xB<br>    dimshuffle(1, ‘x’, 0) -&gt; AxB to Bx1xA</p>
+<h2 id="Theano-stack"><a href="#Theano-stack" class="headerlink" title="Theano stack"></a>Theano stack</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">import theano</div><div class="line">import numpy as np</div><div class="line">import theano.tensor as T</div><div class="line">ones = theano.shared(np.float32([[1,2,3],[4,5,6],[7,8,9]]))</div><div class="line"></div><div class="line">print(ones.get_value())</div><div class="line"></div><div class="line">result = T.stack([ones,ones],axis=0)</div><div class="line"></div><div class="line">print(result.eval())</div><div class="line"></div><div class="line">result = T.stack([ones,ones],axis=1)</div><div class="line"></div><div class="line">print(result.eval())</div><div class="line"></div><div class="line">result = T.stack([ones,ones],axis=2)</div><div class="line"></div><div class="line">print(result.eval())</div></pre></td></tr></table></figure>
+<p>结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">[[ 1. 2. 3.] </div><div class="line">[ 4. 5. 6.] </div><div class="line">[ 7. 8. 9.]]</div><div class="line"></div><div class="line">[[[ 1. 2. 3.] </div><div class="line">[ 4. 5. 6.] </div><div class="line">[ 7. 8. 9.]] </div><div class="line">[[ 1. 2. 3.] </div><div class="line">[ 4. 5. 6.] </div><div class="line">[ 7. 8. 9.]]]</div><div class="line"></div><div class="line">[[[ 1. 2. 3.] </div><div class="line">[ 1. 2. 3.]] </div><div class="line">[[ 4. 5. 6.] </div><div class="line">[ 4. 5. 6.]] </div><div class="line">[[ 7. 8. 9.] </div><div class="line">[ 7. 8. 9.]]]</div><div class="line"></div><div class="line">[[[ 1. 1.] </div><div class="line">[ 2. 2.] </div><div class="line">[ 3. 3.]] </div><div class="line">[[ 4. 4.] </div><div class="line">[ 5. 5.] </div><div class="line">[ 6. 6.]] </div><div class="line">[[ 7. 7.] </div><div class="line">[ 8. 8.] </div><div class="line">[ 9. 9.]]]</div></pre></td></tr></table></figure></p>
+<h2 id="mutlinomial-scan"><a href="#mutlinomial-scan" class="headerlink" title="mutlinomial+ scan"></a>mutlinomial+ scan</h2><p>theano.gof.fg.MissingInputError: (‘An input of the graph, used to compute DimShuffle{0}(probs[t]), was not provided and not given a value’, probs[t])<br>Solution: add updates in the function<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">scan_mutli_sample</span><span class="params">()</span>:</span>                                                         </div><div class="line">    probability = T.matrix(<span class="string">'probability'</span>)                                        </div><div class="line">    numpyRng = np.random.RandomState(<span class="number">134</span>)                                        </div><div class="line">    trng = T.shared_randomstreams.RandomStreams(numpyRng.randint(<span class="number">2</span> ** <span class="number">30</span>))       </div><div class="line">    seq = T.arange(<span class="number">10000</span>)                                                        </div><div class="line">                                                                                 </div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_mutlinomial</span><span class="params">(prob)</span>:</span>                                                   </div><div class="line">                                                                                 </div><div class="line">        <span class="keyword">return</span> trng.multinomial(size=[<span class="number">1</span>], n=<span class="number">1</span>, pvals=prob, dtype=theano.config.fl</div><div class="line">        <span class="comment"># return trng.binomial(size = prob.shape, n=1, p=prob, dtype=theano.confi</span></div><div class="line">                                                                                 </div><div class="line">    results, updates = theano.scan(fn=get_mutlinomial,                           </div><div class="line">                                   sequences=[probability],strict = <span class="keyword">True</span>)        </div><div class="line">                                                                                 </div><div class="line">    calc_multinomial = theano.function(inputs=[probability], outputs=results,upda</div><div class="line">    <span class="keyword">print</span> calc_multinomial(np.array([[<span class="number">0.7</span>, <span class="number">0.2</span>,<span class="number">0.1</span>], [<span class="number">0.3</span>, <span class="number">0.3</span>,<span class="number">0.4</span>]]))</div></pre></td></tr></table></figure></p>
+<h2 id="instantiate-4D-tensor-for-input"><a href="#instantiate-4D-tensor-for-input" class="headerlink" title="instantiate 4D tensor for input"></a>instantiate 4D tensor for input</h2><p>input  = T.tensor4(name=’input’,dtype=’float64’)  # (1,1,28,28)</p>
+<h2 id="sigmoid"><a href="#sigmoid" class="headerlink" title="sigmoid"></a>sigmoid</h2><p>T.nnet.sigmoid(conv_1) </p>
+<h2 id="flatten"><a href="#flatten" class="headerlink" title="flatten"></a>flatten</h2><p>保留batchsize<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pool_2 = pool.pool_2d(act_2,pool_2_shape,ignore_border=<span class="keyword">True</span>)  <span class="comment"># (batch_size,kernel_2_filters,2,2)</span></div><div class="line">flatten_1 = pool_2.flatten(<span class="number">2</span>) <span class="comment"># (batch_size,200)</span></div></pre></td></tr></table></figure></p>
+<h2 id="ones-like"><a href="#ones-like" class="headerlink" title="ones_like"></a>ones_like</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">theano.tensor.zeros_like(a):输入和a一样大小的，但是每个元素被<span class="number">0</span>填充的tensor</div><div class="line">theano.tensor.ones_like(a):输入和a一样大小的，但是每个元素被<span class="number">1</span>填充的tensor</div><div class="line">theano.tensor.fill(a,b):输入和a一样大小的，但是每个元素被b填充的tensor</div></pre></td></tr></table></figure>
+<h2 id="shared-variables"><a href="#shared-variables" class="headerlink" title="shared variables"></a>shared variables</h2><p>print self.rec[0].eval()</p>
+<h2 id="onehot"><a href="#onehot" class="headerlink" title="onehot"></a>onehot</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> theano.tensor.extra_ops <span class="keyword">as</span> Ops</div><div class="line">label_pmf = Ops.to_one_hot(label,<span class="number">10</span>)</div></pre></td></tr></table></figure>
+<h2 id="Printing"><a href="#Printing" class="headerlink" title="Printing"></a>Printing</h2><p><code>return_rl = theano.printing.Print(&#39;XXXXXXX&#39;)(return_rl)</code></p>
+<h1 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h1><h2 id="reshape"><a href="#reshape" class="headerlink" title="reshape"></a>reshape</h2><p>array.reshape(1,1,28,28)</p>
+<h2 id="broadcast"><a href="#broadcast" class="headerlink" title="broadcast"></a>broadcast</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">function_test</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment"># declare variables</span></div><div class="line">    X = T.dmatrix(<span class="string">"X"</span>)</div><div class="line">    X = T.addbroadcast(X,<span class="number">1</span>)</div><div class="line">    w = theano.shared(np.ones((<span class="number">3</span>,<span class="number">4</span>))*<span class="number">2.0</span>)</div><div class="line"></div><div class="line">    result = w*X</div><div class="line">    fn = function([X], result)</div><div class="line"></div><div class="line">    <span class="comment"># test function</span></div><div class="line">    arr = np.random.rand(<span class="number">3</span>,<span class="number">1</span>)</div><div class="line">    <span class="keyword">print</span> arr</div><div class="line">    <span class="keyword">print</span> fn(arr)</div></pre></td></tr></table></figure>
+<h2 id="rand-number"><a href="#rand-number" class="headerlink" title="rand number"></a>rand number</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy  </div><div class="line">a = numpy.random.randint(low=<span class="number">0</span>, high=<span class="number">2</span>, size=(<span class="number">10</span>,<span class="number">4</span>))</div></pre></td></tr></table></figure>
+<h2 id="打印数组全部"><a href="#打印数组全部" class="headerlink" title="打印数组全部"></a>打印数组全部</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">numpy.set_printoptions(threshold=numpy.nan)</div></pre></td></tr></table></figure>
+<h2 id="gpu"><a href="#gpu" class="headerlink" title="gpu"></a>gpu</h2><p>THEANO_FLAGS=mode=FAST_RUN,device=cpu,floatX=float32 python xxx.py</p>
+<h1 id="function-demo"><a href="#function-demo" class="headerlink" title="function demo"></a>function demo</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">row_op_test</span><span class="params">()</span>:</span></div><div class="line">    <span class="comment"># declare variables</span></div><div class="line">    X = T.dmatrix(<span class="string">"X"</span>)</div><div class="line">    X = T.addbroadcast(X,<span class="number">1</span>)</div><div class="line">    w = theano.shared(np.ones((<span class="number">3</span>,<span class="number">4</span>))*<span class="number">2.0</span>)</div><div class="line"></div><div class="line">    result = w*X <span class="comment"># change the each row</span></div><div class="line">    <span class="comment"># result = X * w  # change the each column</span></div><div class="line">    <span class="comment"># select = np.zeros((3,4))</span></div><div class="line">    <span class="comment"># select[:,1] = 1</span></div><div class="line">    <span class="comment"># selectW = theano.shared(select)</span></div><div class="line">    <span class="comment"># result =result+ result*selectW</span></div><div class="line">    fn = function([X], result)</div><div class="line"></div><div class="line">    <span class="comment"># test function</span></div><div class="line">    arr = np.random.rand(<span class="number">3</span>,<span class="number">1</span>)</div><div class="line">    <span class="keyword">print</span> arr</div><div class="line">    <span class="keyword">print</span> fn(arr)</div></pre></td></tr></table></figure>
+<h1 id="Exception"><a href="#Exception" class="headerlink" title="Exception"></a>Exception</h1><h2 id="GPU-报错"><a href="#GPU-报错" class="headerlink" title="GPU 报错"></a>GPU 报错</h2><p><code>sudo theano-cache clear</code></p>
+<h2 id="ValueError-When-compiling-the-inner-function-of-scan-the-following-error-has-been-encountered-The-initial-state-outputs-info-in-scan-nomenclature-of-variable-IncSubtensor-Set-int64-0-argument-number-3-has-dtype-int64-while-the-result-of-the-inner-function-fn-has-dtype-float64-This-can-happen-if-the-inner-function-of-scan-results-in-an-upcast-or-downcast"><a href="#ValueError-When-compiling-the-inner-function-of-scan-the-following-error-has-been-encountered-The-initial-state-outputs-info-in-scan-nomenclature-of-variable-IncSubtensor-Set-int64-0-argument-number-3-has-dtype-int64-while-the-result-of-the-inner-function-fn-has-dtype-float64-This-can-happen-if-the-inner-function-of-scan-results-in-an-upcast-or-downcast" class="headerlink" title="ValueError: When compiling the inner function of scan the following error has been encountered: The initial state (outputs_info in scan nomenclature) of variable IncSubtensor{Set;:int64:}.0 (argument number 3) has dtype int64, while the result of the inner function (fn) has dtype float64. This can happen if the inner function of scan results in an upcast or downcast."></a>ValueError: When compiling the inner function of scan the following error has been encountered: The initial state (<code>outputs_info</code> in scan nomenclature) of variable IncSubtensor{Set;:int64:}.0 (argument number 3) has dtype int64, while the result of the inner function (<code>fn</code>) has dtype float64. This can happen if the inner function of scan results in an upcast or downcast.</h2><p><code>result= T.cast(result,&#39;int64&#39;)</code></p>
+<h2 id="theano-exception"><a href="#theano-exception" class="headerlink" title="theano  exception"></a>theano  exception</h2><p>An input of the graph, used to compute Elemwise{eq,no_inplace}(Reshape{2}.0, yy), was not provided and not given a value.Use the Theano flag exception_verbosity=’high’,for more information on this error.”, yy)<br><code>solution：input 中我没有加入yy</code></p>
+<h2 id="theano-gof-fg-MissingInputError-A-variable-that-is-an-input-to-the-graph-was-neither-provided-as-an-input-to-the-function-nor-given-a-value-A-chain-of-variables-leading-from-this-input-to-an-output-is-DimShuffle-0-x-0-Subtensor-0-Elemwise-mul-no-inplace-0-Elemwise-add-no-inplace-0-Elemwise-Cast-float32-0-dot-0-Elemwise-add-no-inplace-0-Elemwise-add-no-inplace-0-dot-0-Elemwise-add-no-inplace-0-Softmax-0-Subtensor-int64-0-Shape-0-Elemwise-mul-no-inplace-0-mrg-uniform-TensorType-float32-vector-no-inplace-0-This-chain-may-not-be-unique-Backtrace-when-the-variable-is-created"><a href="#theano-gof-fg-MissingInputError-A-variable-that-is-an-input-to-the-graph-was-neither-provided-as-an-input-to-the-function-nor-given-a-value-A-chain-of-variables-leading-from-this-input-to-an-output-is-DimShuffle-0-x-0-Subtensor-0-Elemwise-mul-no-inplace-0-Elemwise-add-no-inplace-0-Elemwise-Cast-float32-0-dot-0-Elemwise-add-no-inplace-0-Elemwise-add-no-inplace-0-dot-0-Elemwise-add-no-inplace-0-Softmax-0-Subtensor-int64-0-Shape-0-Elemwise-mul-no-inplace-0-mrg-uniform-TensorType-float32-vector-no-inplace-0-This-chain-may-not-be-unique-Backtrace-when-the-variable-is-created" class="headerlink" title="theano.gof.fg.MissingInputError: A variable that is an input to the graph was neither provided as an input to the function nor given a value. A chain of variables leading from this input to an output is [, DimShuffle{0,x}.0, Subtensor{::, ::}.0, Elemwise{mul,no_inplace}.0, Elemwise{add,no_inplace}.0, Elemwise{Cast{float32}}.0, dot.0, Elemwise{add,no_inplace}.0, Elemwise{add,no_inplace}.0, dot.0, Elemwise{add,no_inplace}.0, Softmax.0, Subtensor{::, int64}.0, Shape.0, Elemwise{mul,no_inplace}.0, mrg_uniform{TensorType(float32, vector),no_inplace}.0]. This chain may not be unique Backtrace when the variable is created:"></a>theano.gof.fg.MissingInputError: A variable that is an input to the graph was neither provided as an input to the function nor given a value. A chain of variables leading from this input to an output is [<tensortype(float32, vector)="">, DimShuffle{0,x}.0, Subtensor{::, ::}.0, Elemwise{mul,no_inplace}.0, Elemwise{add,no_inplace}.0, Elemwise{Cast{float32}}.0, dot.0, Elemwise{add,no_inplace}.0, Elemwise{add,no_inplace}.0, dot.0, Elemwise{add,no_inplace}.0, Softmax.0, Subtensor{::, int64}.0, Shape.0, Elemwise{mul,no_inplace}.0, mrg_uniform{TensorType(float32, vector),no_inplace}.0]. This chain may not be unique Backtrace when the variable is created:</tensortype(float32,></h2><p><code>Solution：没有把update放到function里面</code></p>
+<h2 id="‘An-update-must-have-the-same-type-as-the-original-shared-variable-shared-var-shared-var-type-TensorType-float32-matrix-update-val-Elemwise-add-no-inplace-0-update-val-type-TensorType-float64-matrix-’-‘If-the-difference-is-related-to-the-broadcast-pattern-you-can-call-the-tensor-unbroadcast-var-axis-to-unbroadcast-…-function-to-remove-broadcastable-dimensions-’"><a href="#‘An-update-must-have-the-same-type-as-the-original-shared-variable-shared-var-shared-var-type-TensorType-float32-matrix-update-val-Elemwise-add-no-inplace-0-update-val-type-TensorType-float64-matrix-’-‘If-the-difference-is-related-to-the-broadcast-pattern-you-can-call-the-tensor-unbroadcast-var-axis-to-unbroadcast-…-function-to-remove-broadcastable-dimensions-’" class="headerlink" title="‘An update must have the same type as the original shared variable (shared_var=, shared_var.type=TensorType(float32, matrix), update_val=Elemwise{add,no_inplace}.0, update_val.type=TensorType(float64, matrix)).’, ‘If the difference is related to the broadcast pattern, you can call the tensor.unbroadcast(var, axis_to_unbroadcast[, …]) function to remove broadcastable dimensions.’)"></a>‘An update must have the same type as the original shared variable (shared_var=<tensortype(float32, matrix)="">, shared_var.type=TensorType(float32, matrix), update_val=Elemwise{add,no_inplace}.0, update_val.type=TensorType(float64, matrix)).’, ‘If the difference is related to the broadcast pattern, you can call the tensor.unbroadcast(var, axis_to_unbroadcast[, …]) function to remove broadcastable dimensions.’)</tensortype(float32,></h2><p><code>solution:datatype 不一致，如果里面有int64，程序默认是float32，会报错。也就是int32可以转成float32，int64转成float64，因此报错。</code></p>
+<h2 id="scan-mulnomial-theano-gof-fg-MissingInputError"><a href="#scan-mulnomial-theano-gof-fg-MissingInputError" class="headerlink" title="scan+mulnomial theano.gof.fg.MissingInputError:"></a>scan+mulnomial theano.gof.fg.MissingInputError:</h2><p>theano.gof.fg.MissingInputError: (“An input of the graph, used to compute DimShuffle{x,0}(<tensortype(float32, vector)="">), was not provided and not given a value.Use the Theano flag exception_verbosity=’high’,for more information on this error.”, <tensortype(float32, vector)="">)<br><code>Solution:scan中函数用到的变量都需要放在函数参数里面</code></tensortype(float32,></tensortype(float32,></p>
+<h2 id="ValueError-The-return-value-of-your-scan-lambda-expression-may-only-be-made-of-lists-tuples-or-dictionaries-containing-Theano-variables-or-theano-scan-module-until-objects-for-conditions-In-particular-if-you-need-to-use-constant-values-you-can-use-tensor-constant-to-turn-them-into-Theano-variables"><a href="#ValueError-The-return-value-of-your-scan-lambda-expression-may-only-be-made-of-lists-tuples-or-dictionaries-containing-Theano-variables-or-theano-scan-module-until-objects-for-conditions-In-particular-if-you-need-to-use-constant-values-you-can-use-tensor-constant-to-turn-them-into-Theano-variables" class="headerlink" title="ValueError: The return value of your scan lambda expression may only be made of lists, tuples, or dictionaries containing Theano variables (or theano.scan_module.until objects for conditions). In particular if you need to use constant values, you can use tensor.constant to turn them into Theano variables."></a>ValueError: The return value of your scan lambda expression may only be made of lists, tuples, or dictionaries containing Theano variables (or <code>theano.scan_module.until</code> objects for conditions). In particular if you need to use constant values, you can use <code>tensor.constant</code> to turn them into Theano variables.</h2><p>the input-function have no return</p>
+<h2 id="ValueError-When-compiling-the-inner-function-of-scan-the-following-error-has-been-encountered-The-initial-state-outputs-info-in-scan-nomenclature-of-variable-IncSubtensor-Set-int64-0-argument-number-2-has-dtype-float32-while-the-result-of-the-inner-function-fn-has-dtype-float64-This-can-happen-if-the-inner-function-of-scan-results-in-an-upcast-or-downcast"><a href="#ValueError-When-compiling-the-inner-function-of-scan-the-following-error-has-been-encountered-The-initial-state-outputs-info-in-scan-nomenclature-of-variable-IncSubtensor-Set-int64-0-argument-number-2-has-dtype-float32-while-the-result-of-the-inner-function-fn-has-dtype-float64-This-can-happen-if-the-inner-function-of-scan-results-in-an-upcast-or-downcast" class="headerlink" title="ValueError: When compiling the inner function of scan the following error has been encountered: The initial state (outputs_info in scan nomenclature) of variable IncSubtensor{Set;:int64:}.0 (argument number 2) has dtype float32, while the result of the inner function (fn) has dtype float64. This can happen if the inner function of scan results in an upcast or downcast."></a>ValueError: When compiling the inner function of scan the following error has been encountered: The initial state (<code>outputs_info</code> in scan nomenclature) of variable IncSubtensor{Set;:int64:}.0 (argument number 2) has dtype float32, while the result of the inner function (<code>fn</code>) has dtype float64. This can happen if the inner function of scan results in an upcast or downcast.</h2><p><code>Solution, add:THEANO_FLAGS=floatX=float32</code></p>
+<h2 id="theano-gof-fg-MissingInputError-“An-input-of-the-graph-used-to-compute-DimShuffle-x-0-was-not-provided-and-not-given-a-value-Use-the-Theano-flag-exception-verbosity-’high’-for-more-information-on-this-error-”"><a href="#theano-gof-fg-MissingInputError-“An-input-of-the-graph-used-to-compute-DimShuffle-x-0-was-not-provided-and-not-given-a-value-Use-the-Theano-flag-exception-verbosity-’high’-for-more-information-on-this-error-”" class="headerlink" title="theano.gof.fg.MissingInputError: (“An input of the graph, used to compute DimShuffle{x,0}(), was not provided and not given a value.Use the Theano flag exception_verbosity=’high’,for more information on this error.”, )"></a>theano.gof.fg.MissingInputError: (“An input of the graph, used to compute DimShuffle{x,0}(<tensortype(float64, vector)="">), was not provided and not given a value.Use the Theano flag exception_verbosity=’high’,for more information on this error.”, <tensortype(float64, vector)="">)</tensortype(float64,></tensortype(float64,></h2><p><code>check scan funtion whether have option: strict=True, if  there is ,delete it</code></p>
+<h2 id="theano-gof-fg-MissingInputError-“An-input-of-the-graph-used-to-compute-XXXXXXX-was-not-provided-and-not-given-a-value-Use-the-Theano-flag-exception-verbosity-’high’-for-more-information-on-this-error-”"><a href="#theano-gof-fg-MissingInputError-“An-input-of-the-graph-used-to-compute-XXXXXXX-was-not-provided-and-not-given-a-value-Use-the-Theano-flag-exception-verbosity-’high’-for-more-information-on-this-error-”" class="headerlink" title="theano.gof.fg.MissingInputError: (“An input of the graph, used to compute XXXXXXX(), was not provided and not given a value.Use the Theano flag exception_verbosity=’high’,for more information on this error.”, )"></a>theano.gof.fg.MissingInputError: (“An input of the graph, used to compute XXXXXXX(<tensortype(float64, vector)="">), was not provided and not given a value.Use the Theano flag exception_verbosity=’high’,for more information on this error.”, <tensortype(float64, vector)="">)</tensortype(float64,></tensortype(float64,></h2><p><code>check scan funtion whether have option: strict=True, if  there is , and the scan function are not allowed to new note when computing . That is, The following operator is not allowed: T.copy</code></p>
+<h2 id="TypeError-‘NoneType’-object-is-not-iterable"><a href="#TypeError-‘NoneType’-object-is-not-iterable" class="headerlink" title="TypeError: ‘NoneType’ object is not iterable"></a>TypeError: ‘NoneType’ object is not iterable</h2><p>根据经验，as usual, it may happens when one variable assigned to multi-variables</p>
+<h2 id="TypeError-‘NoneType’-object-has-no-attribute-‘getitem‘"><a href="#TypeError-‘NoneType’-object-has-no-attribute-‘getitem‘" class="headerlink" title="TypeError: ‘NoneType’ object has no attribute ‘getitem‘"></a>TypeError: ‘NoneType’ object has no attribute ‘<strong>getitem</strong>‘</h2><p>because your function has no return</p>
+<p>[0]<a href="http://deeplearning.net/software/theano/library/tensor/basic.html#tensor._tensor_py_operators.dimshuffle" target="_blank" rel="external">Basic Tensor Functionality</a><br>[1]<a href="http://www.cnblogs.com/shouhuxianjian/p/4594517.html" target="_blank" rel="external">Theano2.1.3-基础知识之更多的例子</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

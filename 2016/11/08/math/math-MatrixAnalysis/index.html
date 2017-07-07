@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Matrix Analysis | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Reinforce Learning, Neural Computation" />
+  
+
+  <meta name="description" content="顺序主子式$$\begin{bmatrix}{a}&amp;amp;{b}&amp;amp;{c} \\{d}&amp;amp;{e}&amp;amp;{f}\\{g}&amp;amp;{h}&amp;amp;{i}\\end{bmatrix}$$它的顺序主子式就是：一阶顺序主子式$a $二阶顺序主子式：$$det\begin{bmatrix}a&amp;amp; b\\d&amp;amp;e\end{bmatrix}$$三阶顺序主子式其本身的行列式。对于n阶">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Matrix Analysis">
+<meta property="og:url" content="http://lemonman.net/2016/11/08/math/math-MatrixAnalysis/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="顺序主子式$$\begin{bmatrix}{a}&amp;amp;{b}&amp;amp;{c} \\{d}&amp;amp;{e}&amp;amp;{f}\\{g}&amp;amp;{h}&amp;amp;{i}\\end{bmatrix}$$它的顺序主子式就是：一阶顺序主子式$a $二阶顺序主子式：$$det\begin{bmatrix}a&amp;amp; b\\d&amp;amp;e\end{bmatrix}$$三阶顺序主子式其本身的行列式。对于n阶">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.528Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Matrix Analysis">
+<meta name="twitter:description" content="顺序主子式$$\begin{bmatrix}{a}&amp;amp;{b}&amp;amp;{c} \\{d}&amp;amp;{e}&amp;amp;{f}\\{g}&amp;amp;{h}&amp;amp;{i}\\end{bmatrix}$$它的顺序主子式就是：一阶顺序主子式$a $二阶顺序主子式：$$det\begin{bmatrix}a&amp;amp; b\\d&amp;amp;e\end{bmatrix}$$三阶顺序主子式其本身的行列式。对于n阶">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#顺序主子式"><span class="toc-text">顺序主子式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#正定矩阵"><span class="toc-text">正定矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#特征多项式"><span class="toc-text">特征多项式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#矩阵逻辑链"><span class="toc-text">矩阵逻辑链</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#最优化"><span class="toc-text">最优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Variance"><span class="toc-text">Variance</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#covariance"><span class="toc-text">covariance</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#covariance-matrix"><span class="toc-text">covariance matrix</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Variance-1"><span class="toc-text">Variance</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Matrix-notation-for-the-variance-of-a-linear-combination"><span class="toc-text">Matrix notation for the variance of a linear combination</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#层次分析法"><span class="toc-text">层次分析法</span></a>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-math/math-MatrixAnalysis" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Matrix Analysis</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.11.08</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h2 id="顺序主子式"><a href="#顺序主子式" class="headerlink" title="顺序主子式"></a>顺序主子式</h2><p>$$\begin{bmatrix}<br>{a}&amp;{b}&amp;{c} \\<br>{d}&amp;{e}&amp;{f}\\<br>{g}&amp;{h}&amp;{i}\<br>\end{bmatrix}$$<br>它的顺序主子式就是：<br>一阶顺序主子式$a $<br>二阶顺序主子式：<br>$$det\begin{bmatrix}<br>a&amp; b\\<br>d&amp;e<br>\end{bmatrix}$$<br>三阶顺序主子式其本身的行列式。<br>对于n阶矩阵A的k阶主子式,顺序取A的前k行前k列构成的矩阵</p>
+<h2 id="正定矩阵"><a href="#正定矩阵" class="headerlink" title="正定矩阵"></a>正定矩阵</h2><p>若A是n阶正定矩阵,则方程组AX=0的解只有0解。<br>实对称矩阵A是正定矩阵的充分必要条件为A的所有主子式全大于零<br>对角元素大于0<br>$||A||_2=\rho(A)$</p>
+<ul>
+<li>对称正定矩阵的Cholesky方法<h2 id="特征多项式"><a href="#特征多项式" class="headerlink" title="特征多项式"></a>特征多项式</h2>$A \in \mathbb{R}$,多项式$p(\lambda)=det(\lambda I-A)$称为A的特征多项式（Characteristic polynomial），方程$p(\lambda)=0$称为特征方程（Characteristic equation），若$\lambda$是$p$的根，则$\lambda$是A的特征值，若v是满足$Av = \lambda v$的非零列向量，则v是A的一个特征值。<br>p(A)有啥性质来着，想起来再补充。。。</li>
+</ul>
+<p>n阶方阵A，如果其主对角线元素的绝对值大于同行其他元素的绝对值之和，则称A是严格行对角占优阵。</p>
+<h2 id="矩阵逻辑链"><a href="#矩阵逻辑链" class="headerlink" title="矩阵逻辑链"></a>矩阵逻辑链</h2><ol>
+<li>$||B||&lt;1$ ，则$I+B$非奇异。如果$I+B$奇异，则存在非0向量$x$,使$(I+B)x=0$, 这样$B$就有一个特征值为-1，故$\rho(B) \ge 1$，而与$||B||\ge \rho(B)\ge 1$ 矛盾。</li>
+<li>A非奇异 $\Leftrightarrow$ $det(A) \neq 0 \Leftrightarrow Ax = 0,x=0$</li>
+<li>A是正定矩阵，那么$(Ax,y)=(x,Ay)$</li>
+<li>范德蒙矩阵=&gt;非奇异<h1 id="最优化"><a href="#最优化" class="headerlink" title="最优化"></a>最优化</h1>$$(\sum_{j=1}^{n}a_j x_j)^2 \\<br>\leq \sum_{j=1}^{n}|a_j|^2 \sum_{j=1}^n |x_j|^2$$</li>
+</ol>
+<h1 id="Variance"><a href="#Variance" class="headerlink" title="Variance"></a>Variance</h1><h2 id="covariance"><a href="#covariance" class="headerlink" title="covariance"></a>covariance</h2><p>In probability theory and statistics, covariance is a measure of the joint variability of two random variables,which is suitable both for scalar and matrix and vector.<br>$$<br>cov(X,Y) = E[X-E[X])(Y-E[y])=E[XY]-E[X]E[Y]<br>$$</p>
+<h2 id="covariance-matrix"><a href="#covariance-matrix" class="headerlink" title="covariance matrix"></a>covariance matrix</h2><p>if the entries in the collumn vector are random variables,then we have:<br>$$<br>\bf{X} = [X_1,\cdots,X_n]^T \<br>\Sigma_ij = cov(X_i,X_j)<br>$$</p>
+<h2 id="Variance-1"><a href="#Variance-1" class="headerlink" title="Variance"></a>Variance</h2><p>It’s a scalar. In probability theory and statistics, variance is the expectation of the squared deviation of a random variable from its mean, and it informally measures how far a set of (random) numbers are spread out from their mean.<br>$$<br>Var(X) = E[(X-\mu)^2] = Cov(X,X)<br>$$</p>
+<h2 id="Matrix-notation-for-the-variance-of-a-linear-combination"><a href="#Matrix-notation-for-the-variance-of-a-linear-combination" class="headerlink" title="Matrix notation for the variance of a linear combination"></a>Matrix notation for the variance of a linear combination</h2><p>\blod{c} is a column vector of n scalars $c_1,\cdots,c_n$.Then we have:<br>$$<br>Var(c^TX) = c^T\Sigma c<br>$$<br>where $\Sigma$ is the covariance matrix of $X$.</p>
+<h1 id="层次分析法"><a href="#层次分析法" class="headerlink" title="层次分析法"></a>层次分析法</h1><p><a href="http://www.docin.com/p-691012665.html" target="_blank" rel="external">层次分析法</a><br><a href="http://blog.sina.com.cn/s/blog_4070911c0102x1p3.html" target="_blank" rel="external">http://blog.sina.com.cn/s/blog_4070911c0102x1p3.html</a></p>
+<p>j</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

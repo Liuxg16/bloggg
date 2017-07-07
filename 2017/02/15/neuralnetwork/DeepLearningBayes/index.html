@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Deep Learning And Bayes | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="dl,bayes," />
+  
+
+  <meta name="description" content="人类可以处理各种复杂的感知推理任务，从图像的目标识别到语音信号的音素理解，尽管有各种不同的变量因素，例如位置、方向、物体的尺度以及发音习惯、音高、音量等等。实际上，在图像、语音、和自然语言处理上的智能感知任务的主要挑战来自于有大量的隐变量。隐变量会将用少量变量影响的统计推理问题隐射到高维问题上，从而是问题更加复杂。其中的关键是如何将输入的所有的因变量做解够，即将隐变量去相关性。 VAE 干货 |">
+<meta name="keywords" content="dl,bayes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning And Bayes">
+<meta property="og:url" content="http://lemonman.net/2017/02/15/neuralnetwork/DeepLearningBayes/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="人类可以处理各种复杂的感知推理任务，从图像的目标识别到语音信号的音素理解，尽管有各种不同的变量因素，例如位置、方向、物体的尺度以及发音习惯、音高、音量等等。实际上，在图像、语音、和自然语言处理上的智能感知任务的主要挑战来自于有大量的隐变量。隐变量会将用少量变量影响的统计推理问题隐射到高维问题上，从而是问题更加复杂。其中的关键是如何将输入的所有的因变量做解够，即将隐变量去相关性。 VAE 干货 |">
+<meta property="og:updated_time" content="2017-07-07T06:34:37.644Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deep Learning And Bayes">
+<meta name="twitter:description" content="人类可以处理各种复杂的感知推理任务，从图像的目标识别到语音信号的音素理解，尽管有各种不同的变量因素，例如位置、方向、物体的尺度以及发音习惯、音高、音量等等。实际上，在图像、语音、和自然语言处理上的智能感知任务的主要挑战来自于有大量的隐变量。隐变量会将用少量变量影响的统计推理问题隐射到高维问题上，从而是问题更加复杂。其中的关键是如何将输入的所有的因变量做解够，即将隐变量去相关性。 VAE 干货 |">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-neuralnetwork/DeepLearningBayes" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Deep Learning And Bayes</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.02.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>人类可以处理各种复杂的感知推理任务，从图像的目标识别到语音信号的音素理解，尽管有各种不同的变量因素，例如位置、方向、物体的尺度以及发音习惯、音高、音量等等。实际上，在图像、语音、和自然语言处理上的智能感知任务的主要挑战来自于有大量的隐变量。隐变量会将用少量变量影响的统计推理问题隐射到高维问题上，从而是问题更加复杂。其中的关键是如何将输入的所有的因变量做解够，即将隐变量去相关性。</p>
+<p><a href="http://www.dengfanxin.cn/?p=334&amp;sukey=72885186ae5c357d85d72afd35935fd5253f8a4e53d4ad672d5321379584a6b6e02e9713966e5f908dd7020bfa0c555f" target="_blank" rel="external">VAE</a></p>
+<p><a href="http://girlswhocode.thenew123.com/news_668347.htm" target="_blank" rel="external">干货 | NIPS 2015 Reasoning, Attention, Memory Workshop</a></p>
+<p><a href="https://arxiv.org/pdf/1701.04722.pdf" target="_blank" rel="external">Adversarial Variational Bayes: Unifying Variational Autoencoders and Generative Adversarial Networks</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

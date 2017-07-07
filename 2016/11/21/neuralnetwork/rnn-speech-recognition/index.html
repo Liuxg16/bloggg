@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Speech Recognition | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="dl,lstm,rnn,beam search," />
+  
+
+  <meta name="description" content="Alex Graves 男神专场 Learning Precise Timing with LSTM Recurrent NetworksFelix A. Gers, Nicol N.Schraudolph,Jurgen SchmidhuberEditor: Michael I. Jordan Abstraction事件之间的时间长度可以传递大量序列任务（例如自动控制或者韵律探测等）的重要信息。然">
+<meta name="keywords" content="dl,lstm,rnn,beam search">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Speech Recognition">
+<meta property="og:url" content="http://lemonman.net/2016/11/21/neuralnetwork/rnn-speech-recognition/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="Alex Graves 男神专场 Learning Precise Timing with LSTM Recurrent NetworksFelix A. Gers, Nicol N.Schraudolph,Jurgen SchmidhuberEditor: Michael I. Jordan Abstraction事件之间的时间长度可以传递大量序列任务（例如自动控制或者韵律探测等）的重要信息。然">
+<meta property="og:image" content="http://lemonman.net/images/rnn/lattice.png">
+<meta property="og:image" content="http://lemonman.net/images/rnn/beam-search.png">
+<meta property="og:updated_time" content="2017-07-07T06:34:37.519Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Speech Recognition">
+<meta name="twitter:description" content="Alex Graves 男神专场 Learning Precise Timing with LSTM Recurrent NetworksFelix A. Gers, Nicol N.Schraudolph,Jurgen SchmidhuberEditor: Michael I. Jordan Abstraction事件之间的时间长度可以传递大量序列任务（例如自动控制或者韵律探测等）的重要信息。然">
+<meta name="twitter:image" content="http://lemonman.net/images/rnn/lattice.png">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Learning-Precise-Timing-with-LSTM-Recurrent-Networks"><span class="toc-text">Learning Precise Timing with LSTM Recurrent Networks</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstraction"><span class="toc-text">Abstraction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Experiments"><span class="toc-text">Experiments</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Measuring-spike-delays-MSD"><span class="toc-text">Measuring spike delays(MSD)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#网络拓扑结构和实验参数"><span class="toc-text">网络拓扑结构和实验参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MSD-Analysis"><span class="toc-text">MSD Analysis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Connectionist-Temporal-Classification-Labelling-Unsegmented-Sequence-Data-with-Recurrent-Neural-Networks"><span class="toc-text">Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sequence-Transduction-with-Recurrent-Neural-Networks"><span class="toc-text">Sequence Transduction with Recurrent Neural Networks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Testing"><span class="toc-text">Testing</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Speech-recognition-with-deep-recurrent-neural-networks"><span class="toc-text">Speech recognition with deep recurrent neural networks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#背景，问题"><span class="toc-text">背景，问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#ABSTRACT"><span class="toc-text">ABSTRACT</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#模型"><span class="toc-text">模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RNN-Recurrent-neural-networks"><span class="toc-text">RNN:Recurrent neural networks</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#CTC"><span class="toc-text">CTC</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Prediction-Network"><span class="toc-text">Prediction Network</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Transcription-Network"><span class="toc-text">Transcription Network</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Output-Distribution"><span class="toc-text">Output Distribution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Forward-Backward-Algorithm"><span class="toc-text">Forward-Backward Algorithm</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Testing-1"><span class="toc-text">Testing</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#beam-search"><span class="toc-text">beam search</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-neuralnetwork/rnn-speech-recognition" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Speech Recognition</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.11.21</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><a href="http://www.cs.toronto.edu/~graves/" target="_blank" rel="external">Alex Graves</a> 男神专场</p>
+<h1 id="Learning-Precise-Timing-with-LSTM-Recurrent-Networks"><a href="#Learning-Precise-Timing-with-LSTM-Recurrent-Networks" class="headerlink" title="Learning Precise Timing with LSTM Recurrent Networks"></a>Learning Precise Timing with LSTM Recurrent Networks</h1><p>Felix A. Gers, Nicol N.Schraudolph,Jurgen Schmidhuber<br>Editor: Michael I. Jordan</p>
+<h2 id="Abstraction"><a href="#Abstraction" class="headerlink" title="Abstraction"></a>Abstraction</h2><p>事件之间的时间长度可以传递大量序列任务（例如自动控制或者韵律探测等）的重要信息。然而HMM模型倾向于忽略此类信息，RNNs可以利用这些信息。由于LSTM在长时[连接]<sup>[3]</sup>任务上表现优于RNNs，我们重点关注LSTM。从内部cells到乘法gates的peephole connections可以在50\49个时间片长度上进行学习而不需要任何短期的训练帮助。在没有外部重置和教师指导的情况下，LSTM变种可以生成稳定精确的脉冲流和其它高度非相关的parterns。这将使LSTM在准确衡量和生成时间序列上成为备受期待的方法。</p>
+<h2 id="Experiments"><a href="#Experiments" class="headerlink" title="Experiments"></a>Experiments</h2><p>我们详细研究了LSTM模型在精确衡量、生成时延、和传统RNN解决不了的三类问题。同时，比较了传统的LSTM和peephole LSTM,分析其方法和实验结果。</p>
+<h3 id="Measuring-spike-delays-MSD"><a href="#Measuring-spike-delays-MSD" class="headerlink" title="Measuring spike delays(MSD)"></a>Measuring spike delays(MSD)</h3><h3 id="网络拓扑结构和实验参数"><a href="#网络拓扑结构和实验参数" class="headerlink" title="网络拓扑结构和实验参数"></a>网络拓扑结构和实验参数</h3><p>我们发现一个小型SLTM网络就可以胜任上述任务。一个和隐藏层全相连的简单的input unit由一个简单存储单元构成。cell的output和cell的input，三个gates，一个简单ouput unit相连。所有的gates和cell本身，output unit 都会与一个偏置unit相连。在input gate、forget gate和output gate分别初始化为0，2，-2。（经验之谈，不过感觉很有效）所有的权重都在[-0.1,0.1]之间归一化的随机取。此外，peephole 连接那儿有14个可变权重：9个 unit to unit连接和5个偏置连接。模型输入压缩函数$g$为恒等函数，MSD、GTS输出的压缩函数是sigmoid函数，PFG的是恒等函数。<br>我们的网络可以处理连续的输入流，将权重固定可以生成测试流。训练流和测试流的生成遵循同一个流程。</p>
+<h2 id="MSD-Analysis"><a href="#MSD-Analysis" class="headerlink" title="MSD Analysis"></a>MSD Analysis</h2><p>LSTM学习着去衡量时间有两种方法。第一种可以在每一步轻微的增加cell state $S_c$,因此$S_c$$S_c$可以指示流逝的时间。第二种方法是</p>
+<h2 id="Connectionist-Temporal-Classification-Labelling-Unsegmented-Sequence-Data-with-Recurrent-Neural-Networks"><a href="#Connectionist-Temporal-Classification-Labelling-Unsegmented-Sequence-Data-with-Recurrent-Neural-Networks" class="headerlink" title="Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks"></a>Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks</h2><p>Alex Graves,Santiago Fernandez,Faustino Gomez,Jurgen Schmidhuber<br>IDSIA,Switzerland<br>2006.1</p>
+<ol>
+<li>Temporal Classification</li>
+</ol>
+<p>Let $S$ be a set of training examples drawn from a fixed distribution $D_{X\times Z}$ . The input space $X=(R^m)^{*}$ is the set of all sequences of m dimensional real valued vectors. The target space $Z = (L^m)^{*}$ is the set of all sequences over the (finite) alphabet L of labels. In general, we refer to elements of $L^*$ as label sequences or labellings. Each example in S consists of a pair of sequences $(x, z)$. The target sequence $z = (z_1 , z_2 ,\cdots, z_U)$ is at most as long as the input sequence $x = (x_1 , x_2 , \dots, x_T )$, i.e $U ≤ T$ . Since the input and target sequences are not generally the same length, there is no a priori way of aligning them.</p>
+<p>The aim is to use $S$ to train a temporal classifier $h:X \rightarrow Z$ to classify previously unseen input sequences in a way that minimises some task specific error measure.</p>
+<h2 id="Sequence-Transduction-with-Recurrent-Neural-Networks"><a href="#Sequence-Transduction-with-Recurrent-Neural-Networks" class="headerlink" title="Sequence Transduction with Recurrent Neural Networks"></a>Sequence Transduction with Recurrent Neural Networks</h2><p>Alex Graves<br>Department of Computer Science, University of Toronto, Canada<br>2012.12</p>
+<h3 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h3><p>When  the  transducer  is  evaluated  on  test  data,  we seek the mode of the output sequence distribution induced by the input sequence.  Unfortunately,  finding the mode is much harder than determining the probability of a single sequence.  The complication is that the prediction function $g(y_{[1:u]})$  (and  hence  the  output distribution $Pr(k|t,u))$ may depend on all previous outputs emitted by the model.  The method employed in  this  paper is a fixed-width beam search through the tree of output sequences.The advantage of beam search  is that  it scales  to arbitrarily long  sequences, and allows computational cost to be traded off against search accuracy.</p>
+<h2 id="Speech-recognition-with-deep-recurrent-neural-networks"><a href="#Speech-recognition-with-deep-recurrent-neural-networks" class="headerlink" title="Speech recognition with deep recurrent neural networks"></a>Speech recognition with deep recurrent neural networks</h2><h3 id="背景，问题"><a href="#背景，问题" class="headerlink" title="背景，问题"></a>背景，问题</h3><h4 id="ABSTRACT"><a href="#ABSTRACT" class="headerlink" title="ABSTRACT"></a>ABSTRACT</h4><p>RNN网络模型在处理时序问题上有非常强大的功能。同时end2end方法比如CTC可以处理不定长的输入输出的问题。结合LSTM RNN 框架的处理手写体识别的方法被证明是有效的。但是对于语音识别则差强人意。本篇文章用deep rnn，其可以灵活处理长范围文本来在不同层次上的表达。</p>
+<h3 id="模型"><a href="#模型" class="headerlink" title="模型"></a>模型</h3><h4 id="RNN-Recurrent-neural-networks"><a href="#RNN-Recurrent-neural-networks" class="headerlink" title="RNN:Recurrent neural networks"></a>RNN:Recurrent neural networks</h4><p>对于输入序列$x = (x_1 , x_2 , \cdots, x_T )$,一个标准的RNN计算hidden 序列$h = (h_1 , h_2 , \cdots, h_T)$和通过下列方程导出输出序列$x = (y_1 , y_2 , \cdots, y_T)$:<br>$$<br>h_t = \mathcal{H}(W_{xh}x_t+W_{hh}h_{t-1}+b_h)\\<br>y_t = W_{hy}h_t+b_y<br>$$<br>$\mathcal{H}$通常是elementwise的激发函数，比如sigmoid function。同时我们发现可以用LSTM来存储上下文信息(context)。传统RNN只能够利用前文的信息。在语音识别过程中，很明显的直觉是需要利用全文信息来推测每个发音。因此，Bidirectional RNNs来处理两个不同的hidden layers,最后输出到同一个输出层：<br>$$<br>\overrightarrow{h_t} = \mathcal{H}(W_{x\overrightarrow{h}}x_t+W_{\overrightarrow{h}\overrightarrow{h}}\overrightarrow{h_{t-1}}+b_{\overrightarrow{h}})\\<br>\overleftarrow{h_t} = \mathcal{H}(W_{x\overleftarrow{h}}x_t+W_{\overleftarrow{h}\overleftarrow{h}}\overleftarrow{h_{t-1}}+b_{\overleftarrow{h}})\\<br>y_t=W_{\overrightarrow{h}y}\overrightarrow{h_t}+W_{\overleftarrow{h}y}\overleftarrow{h_t}+b_y<br>$$<br>最近在用HMM变种方法在语音识别取得的进展中，很重要的一个原因是引入了深度结构，它可以对语音数据在更高的维度表示。Deep RNNs则可以达到这样的效果。假设N层的网络都是用的同一个layer function，第n层的hidden nodes可以表示为：<br>$$<br>h_t^n = \mathcal{H}(W_{h^{n-1}h^n}h_t^{n-1}+W_{h^n h^n}h_{t-1}^{n}+b_h^n)\\<br>$$<br>相应的输入$y_t$为：<br>$$y_t = W_{hN_y}h_t^N+b_y$$</p>
+<p>#### </p>
+<h5 id="CTC"><a href="#CTC" class="headerlink" title="CTC"></a>CTC</h5><p>Connectionist Temporal Classification用softmax层来定义每个timestep的输出类别的分布$Pr(k|t)$。整体上来说，就是对输入序列X进行整合，对于每个timestep(t)进行分类，计算$Pr(k|t)$，剔除掉$\phi$,得到目标序列$Z$。CTC用forward-backward算法对可能的alignments求概率和，以及对输入序列求归一化的$Pr(z|x)$。<br>而本文中，RNN训练的CTC是双向的，来保证每个$Pr(k|t)$都参考了整个输入序列，并不是像传统的CTC那样只考虑当前t时刻状态。<br>$$ y_t=W_{\overrightarrow{h},N_y}\overrightarrow{h_t^N}+W_{\overleftarrow{h},N_y}\overleftarrow{h_t^N}+b_y \\<br>Pr(k|t) = \frac{e^{y_t [k]}}{\sum_{k’=1}^K e^{y_t [k’]}}<br>$$<br>$y_t [k]$表示长度为K+1的数组$y_t$第k个元素的值。N是BLSTM的层数。</p>
+<h4 id="Prediction-Network"><a href="#Prediction-Network" class="headerlink" title="Prediction Network"></a>Prediction Network</h4><p>Prediction Network $\mathcal{G}$是一个RNN，由输入层、输出层、和一个隐藏层组成。输入序列长 $U+1$ : $\hat{y}=(\varnothing,\cdots,y_U)$，隐藏层和输出层长度一致。输入层用one-hot编码，$y_u=k$表示第k个分量为1，其它均为0。$U+1$是序列长度，$K$是标签类别数。<br>所以，prediction 序列的计算公式为：<br>$$<br>h_u = \mathcal{H}(W_{ih}\hat{y_u}+W_{hh}h_{u-1}+b_h) \\<br>g_u = W_ho h_u + b_o<br>$$<br>当然 $\mathcal{H}$采用LSTM模型。</p>
+<h4 id="Transcription-Network"><a href="#Transcription-Network" class="headerlink" title="Transcription Network"></a>Transcription Network</h4><p>转义网络，就是前面提到的双向deep LSTM网络。输入序列为$x_t$,输出序列为$f_t$,$f_t$称为transcription vectors，长度为$K+1$。</p>
+<h4 id="Output-Distribution"><a href="#Output-Distribution" class="headerlink" title="Output Distribution"></a>Output Distribution</h4><p>对于给定的transcription vectors $f_t$，where $1\le t\le T$,和给定的prediction vector $g_u$,where $0\le u \le U$,我们可以定义输出密度函数:<br>$$h(k,t,u)=e^{f_t^k+g_u^k}\\<br>k \in \overline{y} \\<br>\overline{y} = y \cup \varnothing<br>$$<br>其中，上标(superscript)k表示vector中的第k个分量。$y$ 是标签空间。<br>转化成条件概率为：<br>$$Pr(k \in \overline{y}|t,u)=\frac{h(k,t,u)}{\sum_{k’\in \overline{y} h(k’,t,u)}}$$<br>为简便起见，定义：<br>$$<br>y(t,u) = Pr(y_{u+1}|t,u)\\<br>\varnothing(t,u) = Pr(\varnothing|t,u)<br>$$<br>这是一个非常巧妙的问题转化，将对语音字母的推测，转化成了在坐标$(u,t)$下满足下列约束的分类问题：</p>
+<div align="center"><br><img src="/images/rnn/lattice.png" width="300" alt="图片名称" align="center"><br></div>
+
+<p>约束可以由上图表示，即从(0,0)出发到(T,U)的一个上升<sup>[1]</sup>路径,对应了一个从$x \rightarrow y$校正识别的完全子集，比如，是一个子集$\overline{y*} \cap \mathcal{B^{-1}}(y)$。<br>where $\mathcal{B}:\overline{y*} \rightarrow y*$ 是一个函数，将$\overline{y*}$中的$\varnothing$去掉。因此$Pr(y|x)$对应着很多中”路径”，所以，输出$Pr(y|x)$等于所有可能情况的概率和。$Pr(k|t,u)$指在所有可能的输出结果中的一种”路径”。而用晶格采用常规方法计算 $Pr(y|x)$是不可达到的，这里采用Forward-Backward Algorithm.</p>
+<h4 id="Forward-Backward-Algorithm"><a href="#Forward-Backward-Algorithm" class="headerlink" title="Forward-Backward Algorithm"></a>Forward-Backward Algorithm</h4><p>定义forward variable $\alpha(t,u)$为在$f_[1:t]$中输出$y[1:u]$的可能性：<br>$$<br>\alpha(t,u) = \alpha(t-1,u)\varnothing(t-1,u)+\alpha(t,u-1)y(t,u-1) \\<br>\alpha(1,0) = 1<br>$$<br>如何理解这个forward variable呢？它表示的是一种类似动态规划的思想，在$f_[1:t]$中输出$y[1:u]$的可能性等于在$f_[1:t]$中输出$y[1:u-1]$乘以$(t,u-1)$时刻输出第$y$个字符的概率 加上在$f_[1:t-1]$中输出$y[1:u]$乘以$(t,u-1)$时刻输出$\varnothing$的概率。因此总的输出序列的概率等于forward variable 在终止节点的情况：<br>$$<br>Pr(y|x) = \alpha(T,U)\varnothing(T,U)<br>$$</p>
+<p>定义backward variable $\beta(t,u)$表示在$f_[t:T]$中输出$y_[u+1:U]$的概率，即：<br>$$<br>\beta(t,u) = \beta(t+1,u)\varnothing(t,u)+\beta(t,u+1)y(t,u)<br>\beta(T,U) = \varnothing(T,U)<br>$$<br>backward variable的理解与forward variable一样，同时两者相乘$\alpha(t,u)\beta(t,u)$表示在$f_[1:T]$中输出$y[1:U]$，其中，在特定的transcription时刻t输出了$y_u$的可能性。<br>因此，对于给定的输入序列x和输出目标序列$y^*$，自然的会用最小化目标序列的log-loss:$\mathcal{L}=-ln Pr(y^*|x)$。因此我们可以通过计算更新$\mathcal{L}$对网络权重的导数来实现梯度下降。经过上述分析，$Pr(y^*|x)$的值等于晶格点阵从右下到左上的所有上升路径的概率总和，表示为:</p>
+<p>$$<br>Pr(y^*|x) = \sum_{(t,u):t+u=n}\alpha(t,u)\beta(t,u)\\<br>1 \le n \le U+T<br>$$</p>
+<h4 id="Testing-1"><a href="#Testing-1" class="headerlink" title="Testing"></a>Testing</h4><p>当转义网络(transducer network)训练好后，需要对每个输入序列得出一个输出序列，但是给出单一输入的输出分布是非常困难的，因为预测网络$g(y_{[1:u]})$依赖与模型以前的输出，这里采用beam seearch算法构建一个输出序列的树状结构，其优势在于可以扩展到任意宽度的序列，是计算和搜索正确率的一种折中。</p>
+<h5 id="beam-search"><a href="#beam-search" class="headerlink" title="beam search"></a>beam search</h5><p>$Pr(y)$是对输出序列$y$的估计概率(由搜索方法局限)。$Pr(k|y,t)$指在第t步，将$y$用标签k扩展一步的概率。$pref(y)$是序列$y$的一个前缀。对于$\hat{y}\in pref(y)$,定义$Pr(y|\hat{y},t) = \prod_{u=|\hat{y}|+1}^{|y|}Pr(y_u|y_{[0:u-1]},t)$, 则下列伪代码是求k个最高概率的输出。</p>
+<div align="center"><br><img src="/images/rnn/beam-search.png" width="400" height="200" alt="图片名称" align="center"><br></div>
+
+<p>3）模型的应用案例，分析结果与性能评价<br>鉴于deep rnn能非常好的表征能力，此模型后来被广泛的应用与language model中，而此处，为了解决语音识别中输入输出不定长度的情况，还用到了forward-backward算法与beam search算法。<br>用TIMIT数据集进行音素识别的实验。其中，一共有462个speaker和分离的50个speaker作为前期训练。最后用另外24个speakers作为测试。音频信息通过傅里叶变换到mel-scale<suo>[2]。模型的输入序列长度为123，这是被归一化的数据，使其有0的平均值和1的方差。61个音素映射到39个类别中去评价。下表罗列了9个RNNs模型在TIMI上的测试，考虑以下几个方面的测试：训练方法（CTC，Transducer, pretrained Transducer）,隐藏层层数，LSTM单元(cell)在隐藏层的数量。在实验中，除了用tanhCTC-31-500h-tanh<br>4）模型的优点与不足<br>5）模型的最新进展与应用</suo></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] 这里的上升指的是延路径的坐标值不减。<br>[2] 待查<br>[3] 这里没想好怎么翻译-_-</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

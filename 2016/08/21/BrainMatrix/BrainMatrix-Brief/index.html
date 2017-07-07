@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>BranMatrix Brief | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="work," />
+  
+
+  <meta name="description" content="简介　　随着计算机机器学习领域的突飞猛进，市场对人工智能的热情也越来越高，产出一个灵活性高、扩展性强的机器学习框架是相关从业者的心声。　　开源项目MXNET是由百度IDL深度学习实验室李沐、卡耐基梅隆大学陈天奇组织开发的一个深度学习框架，基于CXXNET, 用mshadow来做具体的数据计算，C++保证运行效率的轻量级开源平台。 在其它各种开源平台中综合性能突出，现在也在飞速发展中。　　而我们">
+<meta name="keywords" content="work">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BranMatrix Brief">
+<meta property="og:url" content="http://lemonman.net/2016/08/21/BrainMatrix/BrainMatrix-Brief/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="简介　　随着计算机机器学习领域的突飞猛进，市场对人工智能的热情也越来越高，产出一个灵活性高、扩展性强的机器学习框架是相关从业者的心声。　　开源项目MXNET是由百度IDL深度学习实验室李沐、卡耐基梅隆大学陈天奇组织开发的一个深度学习框架，基于CXXNET, 用mshadow来做具体的数据计算，C++保证运行效率的轻量级开源平台。 在其它各种开源平台中综合性能突出，现在也在飞速发展中。　　而我们">
+<meta property="og:image" content="http://lemonman.net/images/BrainMatrix/BrainMatrix.jpg">
+<meta property="og:image" content="http://lemonman.net/images/BrainMatrix/architecture_2.jpg">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.762Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BranMatrix Brief">
+<meta name="twitter:description" content="简介　　随着计算机机器学习领域的突飞猛进，市场对人工智能的热情也越来越高，产出一个灵活性高、扩展性强的机器学习框架是相关从业者的心声。　　开源项目MXNET是由百度IDL深度学习实验室李沐、卡耐基梅隆大学陈天奇组织开发的一个深度学习框架，基于CXXNET, 用mshadow来做具体的数据计算，C++保证运行效率的轻量级开源平台。 在其它各种开源平台中综合性能突出，现在也在飞速发展中。　　而我们">
+<meta name="twitter:image" content="http://lemonman.net/images/BrainMatrix/BrainMatrix.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#简介"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MXNET特点"><span class="toc-text">MXNET特点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#BrainMatrix特点"><span class="toc-text">BrainMatrix特点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#组织结构"><span class="toc-text">组织结构</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-BrainMatrix/BrainMatrix-Brief" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">BranMatrix Brief</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.08.21</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <div align="center"><br><img src="/images/BrainMatrix/BrainMatrix.jpg" width="500" height="200" alt="图片名称" align="center"><br></div>
+
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>　　随着计算机机器学习领域的突飞猛进，市场对人工智能的热情也越来越高，产出一个灵活性高、扩展性强的机器学习框架是相关从业者的心声。<br>　　开源项目MXNET是由百度IDL深度学习实验室李沐、卡耐基梅隆大学陈天奇组织开发的一个深度学习框架，基于CXXNET, 用mshadow来做具体的数据计算，C++保证运行效率的轻量级开源平台。 在其它各种开源平台中综合性能突出，现在也在飞速发展中。<br>　　而我们开发的BrainMatrix项目基于MXNET，不仅是深度学习，而且集成机器学习算法都适用的scala语言计算平台。</p>
+<h1 id="MXNET特点"><a href="#MXNET特点" class="headerlink" title="MXNET特点"></a>MXNET特点</h1><p>1、轻量级调度引擎。<br>2、符号计算支持。<br>3、混合执行引擎。<br>4、支持多GPU运算和分布式计算（核心竞争力）<br>5、代码简洁高效。</p>
+<h1 id="BrainMatrix特点"><a href="#BrainMatrix特点" class="headerlink" title="BrainMatrix特点"></a>BrainMatrix特点</h1><p>1.具有MXNET以上的所有特点，而且对使用者提供了更多自定义的可能。<br>2.Scala语言一方面吸收继承了多种语言中的优秀特性，一方面右没有抛弃Java这个强大的平台，运行在JVM之上，轻松实现和Java类互联互通。它既是纯面对对象语言，又支持函数式编程，并且它确是严格意义上的静态语言。<br>3.相对于C++而言，Scala更加易于机器学习从业者学习和使用，提供更多DIY（自定义）操作。<br>4.Scala 语言也是分布式框架Spark的原生语言，易于和Spark完成对接工作。<br>5.将提供其它机器学习接口，比如ladder Network, Spiking等。</p>
+<h1 id="组织结构"><a href="#组织结构" class="headerlink" title="组织结构"></a>组织结构</h1><p>　　MXNET主要分为三个层次：Symbol Graph , Computational Graph，Operator。这三个层次依次递减，Symbol Graph负责抽象计算图，提供接口。Computational Graph 负责生成节点计算图和优化计算图，分配GPU和内存空间。Operator提供具体的运算。分工明确，组织合理。<br>　　MXNET-Scala框架则是将Symbol Graph部分，用Scala实现并改进，使Scala部分有了更多的操作范围和空间。</p>
+<div align="center"><br><img src="/images/BrainMatrix/architecture_2.jpg" alt="jpg"><br></div>
+
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

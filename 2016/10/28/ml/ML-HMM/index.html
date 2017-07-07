@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>About HMM | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="work,ml," />
+  
+
+  <meta name="description" content="Homework1.1. 生成观测序列，见程序simulation方法。1.2.（1）重新估计参数，用train方法。以一次估计举例，当程序收敛时，即$|log(P(X|\theta))-log(P(X|\theta^0))|&amp;lt;\epsilon$,估计参数如下：转移概率T为：0.6692734  0.2804886  0.0502375740.4106452  0.33692813  0.2">
+<meta name="keywords" content="work,ml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="About HMM">
+<meta property="og:url" content="http://lemonman.net/2016/10/28/ml/ML-HMM/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="Homework1.1. 生成观测序列，见程序simulation方法。1.2.（1）重新估计参数，用train方法。以一次估计举例，当程序收敛时，即$|log(P(X|\theta))-log(P(X|\theta^0))|&amp;lt;\epsilon$,估计参数如下：转移概率T为：0.6692734  0.2804886  0.0502375740.4106452  0.33692813  0.2">
+<meta property="og:image" content="http://lemonman.net/images/ml/gibbsestimate.png">
+<meta property="og:image" content="http://lemonman.net/images/ml/gibbsestimate.png">
+<meta property="og:image" content="http://lemonman.net/images/ml/gibbssampler.png">
+<meta property="og:image" content="http://lemonman.net/images/ml/memm.png">
+<meta property="og:image" content="http://lemonman.net/images/ml/compare_hmm_memm.png">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.294Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="About HMM">
+<meta name="twitter:description" content="Homework1.1. 生成观测序列，见程序simulation方法。1.2.（1）重新估计参数，用train方法。以一次估计举例，当程序收敛时，即$|log(P(X|\theta))-log(P(X|\theta^0))|&amp;lt;\epsilon$,估计参数如下：转移概率T为：0.6692734  0.2804886  0.0502375740.4106452  0.33692813  0.2">
+<meta name="twitter:image" content="http://lemonman.net/images/ml/gibbsestimate.png">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Homework"><span class="toc-text">Homework</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-生成观测序列，见程序simulation方法。"><span class="toc-text">1.1. 生成观测序列，见程序simulation方法。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2"><span class="toc-text">1.2.</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#（1）重新估计参数，用train方法。"><span class="toc-text">（1）重新估计参数，用train方法。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#（2）用Viterbi-algorithm方法，估计隐藏序列，见程序viterbiAlgorithm方法。"><span class="toc-text">（2）用Viterbi algorithm方法，估计隐藏序列，见程序viterbiAlgorithm方法。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-对于不同的chains，计算估计方差，见下表："><span class="toc-text">1.3 对于不同的chains，计算估计方差，见下表：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-用Gibbs-sampling-采样来估计参数和生成隐藏序列"><span class="toc-text">2.1 用Gibbs sampling 采样来估计参数和生成隐藏序列</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Gibbs-采样伪代码"><span class="toc-text">(1)Gibbs 采样伪代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-参数估计"><span class="toc-text">(2)参数估计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-Gibbs-采样更加准确"><span class="toc-text">2.2 Gibbs 采样更加准确</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-MEMM根据Gibbs-Sampling的参数估计"><span class="toc-text">2.3 MEMM根据Gibbs Sampling的参数估计</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Markov-Network"><span class="toc-text">Markov Network</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-Independences-in-MNs"><span class="toc-text">The Independences in MNs</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基于隐马尔科夫模型的推理-HMM"><span class="toc-text">基于隐马尔科夫模型的推理(HMM)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#推断隐藏变量"><span class="toc-text">推断隐藏变量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#估计参数-Baum-Welch-Algorithm"><span class="toc-text">估计参数(Baum-Welch Algorithm)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#基于HMM的Gibbs-Sampling"><span class="toc-text">基于HMM的Gibbs Sampling</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Max-Entropy-Markov-Models"><span class="toc-text">Max Entropy Markov Models</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#用Gibbs-采样估计隐变量"><span class="toc-text">用Gibbs 采样估计隐变量</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Baum-Welch-algorithm-0"><span class="toc-text">Baum-Welch algorithm[0]</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ml/ML-HMM" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">About HMM</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.10.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Homework"><a href="#Homework" class="headerlink" title="Homework"></a>Homework</h1><h2 id="1-1-生成观测序列，见程序simulation方法。"><a href="#1-1-生成观测序列，见程序simulation方法。" class="headerlink" title="1.1. 生成观测序列，见程序simulation方法。"></a>1.1. 生成观测序列，见程序simulation方法。</h2><h2 id="1-2"><a href="#1-2" class="headerlink" title="1.2."></a>1.2.</h2><h3 id="（1）重新估计参数，用train方法。"><a href="#（1）重新估计参数，用train方法。" class="headerlink" title="（1）重新估计参数，用train方法。"></a>（1）重新估计参数，用train方法。</h3><p>以一次估计举例，当程序收敛时，即$|log(P(X|\theta))-log(P(X|\theta^0))|&lt;\epsilon$,估计参数如下：<br>转移概率T为：<br>0.6692734  0.2804886  0.050237574<br>0.4106452  0.33692813  0.25242496<br>0.03333236  0.11409876  0.8525671  </p>
+<p>条件概率为：<br>0.9450572  0.73851436  0.14033586<br>0.054942586  0.26148474  0.8596627<br>评价：参数估计效果较差</p>
+<h3 id="（2）用Viterbi-algorithm方法，估计隐藏序列，见程序viterbiAlgorithm方法。"><a href="#（2）用Viterbi-algorithm方法，估计隐藏序列，见程序viterbiAlgorithm方法。" class="headerlink" title="（2）用Viterbi algorithm方法，估计隐藏序列，见程序viterbiAlgorithm方法。"></a>（2）用Viterbi algorithm方法，估计隐藏序列，见程序viterbiAlgorithm方法。</h3><p>估计的隐藏序列与真实序列做对比，正确率是：<br>0.364</p>
+<h2 id="1-3-对于不同的chains，计算估计方差，见下表："><a href="#1-3-对于不同的chains，计算估计方差，见下表：" class="headerlink" title="1.3 对于不同的chains，计算估计方差，见下表："></a>1.3 对于不同的chains，计算估计方差，见下表：</h2><p>1000  - 0.5   0.6</p>
+<h2 id="2-1-用Gibbs-sampling-采样来估计参数和生成隐藏序列"><a href="#2-1-用Gibbs-sampling-采样来估计参数和生成隐藏序列" class="headerlink" title="2.1 用Gibbs sampling 采样来估计参数和生成隐藏序列"></a>2.1 用Gibbs sampling 采样来估计参数和生成隐藏序列</h2><h3 id="1-Gibbs-采样伪代码"><a href="#1-Gibbs-采样伪代码" class="headerlink" title="(1)Gibbs 采样伪代码"></a>(1)Gibbs 采样伪代码</h3><ol>
+<li>初始化，用先验概率生成潜变量序列Y,然后根据转移概率生成X序列。</li>
+<li>对Y序列进行采样，生成方式与HMM Gibbs sampling 一致，计算公式如下：</li>
+<li>重复10次步骤二</li>
+</ol>
+<h3 id="2-参数估计"><a href="#2-参数估计" class="headerlink" title="(2)参数估计"></a>(2)参数估计</h3><ol>
+<li>根据Gibbs采样的X,Y序列，对转移概率T和条件概率$P(X|Y)$，计算公式如下：<br><img src="/images/ml/gibbsestimate.png" alt=""><br>T:the value is(two dimension):<br>0.6399612  0.3600387  0.0<br>0.09630858  0.72006637  0.18338858<br>0.31112087  0.0  0.68887335  </li>
+</ol>
+<p>obspi:the value is(two dimension):<br>0.1081328  0.8918672<br>0.49550402  0.504496<br>0.900843  0.09915697 </p>
+<ol>
+<li>再用Viterbi algorithm方法，估计隐藏序列，序列估计平均正确率是0.504</li>
+</ol>
+<h2 id="2-2-Gibbs-采样更加准确"><a href="#2-2-Gibbs-采样更加准确" class="headerlink" title="2.2 Gibbs 采样更加准确"></a>2.2 Gibbs 采样更加准确</h2><h2 id="2-3-MEMM根据Gibbs-Sampling的参数估计"><a href="#2-3-MEMM根据Gibbs-Sampling的参数估计" class="headerlink" title="2.3 MEMM根据Gibbs Sampling的参数估计"></a>2.3 MEMM根据Gibbs Sampling的参数估计</h2><ol>
+<li>初始化，用先验概率生成潜变量序列Y,然后根据转移概率生成X序列。</li>
+<li>对Y序列进行采样，生成方式与HMM Gibbs sampling 一致，计算公式有差别，如下：<br>$$<br>P(y_t|Y,X,\theta) = P(y_t|y_{t-1},y_{t+1},x_t,\theta) \\<br>= \frac{P(y_{t+1}|y_{t-1},y_{t},x_t,\theta) P(y_t|y_{t-1},x_t,\theta)}{P(y_{t+1}|y_{t-1},x_t,\theta)} \\<br>= \frac{P(y_{t+1}|y_{t-1},y_{t},x_t,\theta) P(y_t|y_{t-1},x_t,\theta)}{ \sum \limits_{y_{t}} P(y_{t+1}|y_{t-1},y_{t},x_t,\theta)}  \\<br>= \frac{P(y_{t+1}|y_{t},\theta) P(y_t|y_{t-1},x_t,\theta)}{ \sum \limits_{y_{t}} P(y_{t+1}|y_{t},\theta)}<br>$$</li>
+<li>对步骤二重复若干次</li>
+<li>根据生成的数据X序列和Y序列进行建模<br>根据multinomial logistic 回归MaxEnt方法，我们用以下公式来估计$P(y_{t+1}|y_{t},\theta)$:<br>$$P(y_{t+1}|y_{t},\theta) = \frac{e^{\sum_{i=0}^N w_{ci} f_i}}{\sum_{c’\in C} e^{\sum_{i=0}^N w_{ci}f_i }}<br>$$<br>其中$f_i$是indicator function,取值0/1。最后估计的w如下求出：<br>$$<br>\hat{w} = argmax \sum_i^MlogP(y_i|x_i) - \sum_{j=1}^N w_j^2<br>$$</li>
+</ol>
+<p><img src="/images/ml/gibbsestimate.png" alt=""></p>
+<h1 id="Markov-Network"><a href="#Markov-Network" class="headerlink" title="Markov Network"></a>Markov Network</h1><p>MN:Markov Network</p>
+<h2 id="The-Independences-in-MNs"><a href="#The-Independences-in-MNs" class="headerlink" title="The Independences in MNs"></a>The Independences in MNs</h2><p>• Markov blanket<br>– For X, all the directly connected variables form the<br>Markov blanket of X, denoted as $MB_H(X)$<br>• X are independent with other variables if the<br>corresponding$MB_H(X)$is given</p>
+<h1 id="基于隐马尔科夫模型的推理-HMM"><a href="#基于隐马尔科夫模型的推理-HMM" class="headerlink" title="基于隐马尔科夫模型的推理(HMM)"></a>基于隐马尔科夫模型的推理(HMM)</h1><h2 id="推断隐藏变量"><a href="#推断隐藏变量" class="headerlink" title="推断隐藏变量"></a>推断隐藏变量</h2><p>Viterbi algorithm<br>t=1时，联合概率P(x_1,y_1=i)为:</p>
+<p>$$\delta _{1,i} = P(x_1,y_1=i) = \pi_i e_{i,x_1}$$<br>$\delta_{t,i}$递推公式为：</p>
+<h1 id="估计参数-Baum-Welch-Algorithm"><a href="#估计参数-Baum-Welch-Algorithm" class="headerlink" title="估计参数(Baum-Welch Algorithm)"></a>估计参数(Baum-Welch Algorithm)</h1><p>$$<br>\beta_t(i) = P(x_{t+1},x_{t+2},\cdots,x_T|y_{t+1}=i,\theta)  \\<br>$$</p>
+<p>由HMM的模型图结构和概率基础知识，得：<br>$$<br>P(A|B,C)p(B|C) = p(A,B|C)  \\<br>\beta_{t+1}(i) = P(x_{t+2},\cdots,x_T|y_{t+1}=i,y_{t+2}=j,\theta)  \\<br>$$<br>因此，可得到$\beta_{t}(i)$的递推公式如下：</p>
+<p>$$<br>\beta_t(i) = P(x_{t+1},x_{t+2},\cdots,x_T|y_{t}=i,\theta)  \\<br>=\sum  P(x_{t+2},\cdots,x_T|y_{t+2}=j,y_{t+1},\theta) P(x_{t+1}|y_{t+1}=j,y_{t+2}=j,\theta) P(y_{t+2}|y_{t+1}) \\<br>= \sum_j \beta_{t+1}(j) t_{i,j} e_{x_{t+1},j}<br>$$</p>
+<p>$$<br>\xi_t(i,j) = \frac{\alpha_t(i)t_{i,j}e_{j,x_{t+1}}\beta_{t+1}(j)}{\sum_{i=1}^{i=Y} \sum_{j=1}^{j=Y} \alpha_t(i)t_{i,j}e_{j,x_{t+1}}\beta_{t+1}(j) }<br>$$</p>
+<h2 id="基于HMM的Gibbs-Sampling"><a href="#基于HMM的Gibbs-Sampling" class="headerlink" title="基于HMM的Gibbs Sampling"></a>基于HMM的Gibbs Sampling</h2><p>采样过程：<br><img src="/images/ml/gibbssampler.png" alt=""></p>
+<h1 id="Max-Entropy-Markov-Models"><a href="#Max-Entropy-Markov-Models" class="headerlink" title="Max Entropy Markov Models"></a>Max Entropy Markov Models</h1><p>In machine learning, a maximum-entropy Markov model (MEMM), or conditional Markov model (CMM), is a graphical model for sequence labeling that combines features of hidden Markov models (HMMs) and maximum entropy (MaxEnt) models. An MEMM is a discriminative model that extends a standard maximum entropy classifier(Maxent<sup>[2]</sup>，也是为什么叫最大熵模型的原因) by assuming that the unknown values to be learned are connected in a Markov chain rather than being conditionally independent of each other.<br><img src="/images/ml/memm.png" alt=""><br>根据上图的结构，我们可以得到下面这张对比表格：<br><img src="/images/ml/compare_hmm_memm.png" alt=""><br>第一行代表了求前向传导的情况，第二栏代表了隐变量s的推断过程。其中,在MEMM中，变量表示含义如下所示：<br>$$<br>\alpha_{t}(s) = P(s|o_1,\cdots,o_t) \\<br>P_(s’)(s|o_{t+1}) = P(s|s’,o_{t+1}) \\<br>\delta_{t+1}(s): \text{选一个最好的s’，在t+1时刻到达s}<br>$$</p>
+<h2 id="用Gibbs-采样估计隐变量"><a href="#用Gibbs-采样估计隐变量" class="headerlink" title="用Gibbs 采样估计隐变量"></a>用Gibbs 采样估计隐变量</h2><ol>
+<li>初始化，用先验概率生成潜变量序列Y,然后根据转移概率生成X序列。</li>
+<li>对Y序列进行采样，生成方式与HMM Gibbs sampling 一致，计算公式有差别，如下：<br>$$<br>P(y_t|Y,X,\theta) = P(y_t|y_{t-1},y_{t+1},x_t,\theta) \\<br>= \frac{P(y_{t+1}|y_{t-1},y_{t},x_t,\theta) P(y_t|y_{t-1},x_t,\theta)}{P(y_{t+1}|y_{t-1},x_t,\theta)} \\<br>= \frac{P(y_{t+1}|y_{t-1},y_{t},x_t,\theta) P(y_t|y_{t-1},x_t,\theta)}{ \sum \limits_{y_{t}} P(y_{t+1}|y_{t-1},y_{t},x_t,\theta)}  \\<br>= \frac{P(y_{t+1}|y_{t},\theta) P(y_t|y_{t-1},x_t,\theta)}{ \sum \limits_{y_{t}} P(y_{t+1}|y_{t},\theta)}<br>$$</li>
+</ol>
+<h1 id="Baum-Welch-algorithm-0"><a href="#Baum-Welch-algorithm-0" class="headerlink" title="Baum-Welch algorithm[0]"></a>Baum-Welch algorithm<sup>[0]</sup></h1><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div><div class="line">284</div><div class="line">285</div><div class="line">286</div><div class="line">287</div><div class="line">288</div><div class="line">289</div><div class="line">290</div><div class="line">291</div><div class="line">292</div><div class="line">293</div><div class="line">294</div><div class="line">295</div><div class="line">296</div><div class="line">297</div><div class="line">298</div><div class="line">299</div><div class="line">300</div><div class="line">301</div><div class="line">302</div><div class="line">303</div><div class="line">304</div><div class="line">305</div><div class="line">306</div><div class="line">307</div><div class="line">308</div><div class="line">309</div><div class="line">310</div><div class="line">311</div><div class="line">312</div><div class="line">313</div><div class="line">314</div><div class="line">315</div><div class="line">316</div><div class="line">317</div><div class="line">318</div><div class="line">319</div><div class="line">320</div><div class="line">321</div><div class="line">322</div><div class="line">323</div><div class="line">324</div><div class="line">325</div><div class="line">326</div><div class="line">327</div><div class="line">328</div><div class="line">329</div><div class="line">330</div><div class="line">331</div><div class="line">332</div><div class="line">333</div><div class="line">334</div><div class="line">335</div><div class="line">336</div><div class="line">337</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> thu.brainmatrix.ml</div><div class="line"><span class="keyword">import</span> scala.util.control.<span class="type">Breaks</span></div><div class="line"><span class="keyword">import</span> thu.brainmatrix.<span class="type">NDArray</span></div><div class="line"><span class="keyword">import</span> thu.brainmatrix.<span class="type">Context</span></div><div class="line"><span class="keyword">import</span> thu.brainmatrix.<span class="type">Shape</span></div><div class="line"><span class="keyword">import</span> thu.brainmatrix.<span class="type">Random</span></div><div class="line"><span class="keyword">import</span> thu.brainmatrix.util.mathTool</div><div class="line"><span class="comment">/**</span></div><div class="line"> * </div><div class="line"> * </div><div class="line"> * properties</div><div class="line"> * pi:</div><div class="line"> * T: the transfer probabilities matrix (K,K)</div><div class="line"> * Obs_pi: the probabilities of the observations,(K,D)</div><div class="line"> * this model has K hidden different states and D observed states</div><div class="line"> * </div><div class="line"> */</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">HMM</span>(<span class="params">val pi:<span class="type">NDArray</span>,val <span class="type">T</span>:<span class="type">NDArray</span>,val <span class="type">Obs_pi</span>:<span class="type">NDArray</span></span>) </span>&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">simulation</span></span>(nSteps:<span class="type">Int</span>):(<span class="type">Array</span>[<span class="type">Int</span>],<span class="type">Array</span>[<span class="type">Int</span>]) =  &#123;</div><div class="line">		</div><div class="line">		<span class="keyword">val</span> observations = <span class="type">Array</span>.fill[<span class="type">Int</span>](nSteps)(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> states = <span class="type">Array</span>.fill[<span class="type">Int</span>](nSteps)(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> sampleStates = mathTool.<span class="type">SampleByPro1D</span>(<span class="keyword">this</span>.pi)</div><div class="line">		<span class="keyword">val</span> sampleObs    = mathTool.<span class="type">SampleByPro1D</span>(<span class="keyword">this</span>.<span class="type">Obs_pi</span>.slice(states(<span class="number">0</span>)))</div><div class="line">		</div><div class="line">		</div><div class="line">		<span class="keyword">for</span>(t&lt;<span class="number">-1</span> until nSteps)&#123;</div><div class="line">			states(t) = mathTool.<span class="type">SampleByPro1D</span>(<span class="keyword">this</span>.<span class="type">T</span>.slice(states(t<span class="number">-1</span>)))</div><div class="line">			observations(t) = mathTool.<span class="type">SampleByPro1D</span>(<span class="keyword">this</span>.<span class="type">Obs_pi</span>.slice(states(t<span class="number">-1</span>)))</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		(states,observations)</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">train</span></span>(observations:<span class="type">Array</span>[<span class="type">Int</span>]):<span class="type">Array</span>[<span class="type">NDArray</span>] = &#123;</div><div class="line">		<span class="keyword">val</span> ctx = <span class="type">Context</span>.cpu(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> criterion = <span class="number">0.5</span></div><div class="line">		</div><div class="line">		<span class="keyword">val</span> obs_T = <span class="type">NDArray</span>.transpose(<span class="keyword">this</span>.<span class="type">Obs_pi</span>)</div><div class="line">		</div><div class="line">		<span class="keyword">var</span> pi_est = <span class="type">NDArray</span>.<span class="type">Normalize</span>(<span class="type">NDArray</span>.ones(<span class="keyword">this</span>.pi.shape,ctx)) </div><div class="line">		<span class="keyword">var</span> <span class="type">T_est</span>  = <span class="type">NDArray</span>.<span class="type">Normalize</span>(<span class="type">NDArray</span>.ones(<span class="keyword">this</span>.<span class="type">T</span>.shape, ctx))</div><div class="line"><span class="comment">//		var obs_pi_est_T  = NDArray.transpose(NDArray.array(Array(0.3f,0.3f,0.4f,0.2f,0.5f,0.3f,0.3f,0.3f,0.4f),this.Obs_pi.shape,ctx))</span></div><div class="line">		<span class="keyword">var</span> obs_pi_est_T  = <span class="type">NDArray</span>.<span class="type">Normalize</span>(<span class="type">NDArray</span>.transpose(<span class="type">Random</span>.uniform(<span class="number">0</span>, <span class="number">1</span>, <span class="keyword">this</span>.<span class="type">Obs_pi</span>.shape,ctx)))</div><div class="line">		</div><div class="line">		<span class="keyword">val</span> nsamples = observations.length</div><div class="line">		<span class="keyword">val</span> nstates  = <span class="keyword">this</span>.pi.size </div><div class="line">		<span class="keyword">val</span> nhiddenstates = <span class="keyword">this</span>.<span class="type">Obs_pi</span>.shape(<span class="number">1</span>)</div><div class="line">		</div><div class="line">		<span class="keyword">var</span> iter = <span class="number">0</span></div><div class="line">		<span class="keyword">var</span> done:<span class="type">Boolean</span> = <span class="literal">false</span></div><div class="line">		<span class="keyword">while</span>(!done)&#123;</div><div class="line">			<span class="keyword">val</span> alpha = <span class="type">NDArray</span>.zeros(<span class="type">Shape</span>(nsamples,nstates),ctx)</div><div class="line">			<span class="keyword">val</span> alpha_theta = <span class="type">NDArray</span>.zeros(<span class="type">Shape</span>(nsamples,nstates),ctx) <span class="comment">// model probability</span></div><div class="line">			<span class="keyword">val</span> alpha_real = <span class="type">NDArray</span>.zeros(<span class="type">Shape</span>(nsamples,nstates),ctx)  <span class="comment">// estimated probability</span></div><div class="line">			</div><div class="line">			</div><div class="line">			</div><div class="line">			<span class="keyword">val</span> c = <span class="type">Array</span>.fill[<span class="type">Float</span>](nsamples)(<span class="number">0</span>f)</div><div class="line">			<span class="comment">// calculate  alpha_0</span></div><div class="line">			<span class="keyword">val</span> alpha_0  = pi_est *  obs_pi_est_T.slice(observations(<span class="number">0</span>))</div><div class="line">			c(<span class="number">0</span>) = <span class="number">1</span>f/<span class="type">NDArray</span>.sum(alpha_0).toScalar</div><div class="line">			<span class="comment">// and normalize</span></div><div class="line">			(alpha_0*c(<span class="number">0</span>)).copyTo(alpha.slice(<span class="number">0</span>))</div><div class="line"></div><div class="line">			(<span class="keyword">this</span>.pi * obs_T.slice(observations(<span class="number">0</span>))).copyTo(alpha_theta.slice(<span class="number">0</span>))</div><div class="line">			alpha_0.copyTo(alpha_real.slice(<span class="number">0</span>))</div><div class="line">			</div><div class="line"><span class="comment">//			println(this.pi * obs_T.slice(observations(0)))</span></div><div class="line"><span class="comment">//			println(alpha_theta.slice(0))</span></div><div class="line">			</div><div class="line">			</div><div class="line">			<span class="keyword">for</span>(t &lt;- <span class="number">1</span> until nsamples)&#123;</div><div class="line">				<span class="comment">// \alpha_&#123;t&#125;(i) = P(x_1\cdots,x_t,y_t=i|\theta) = \Sigma_j \&#123;\alpha_&#123;t-1&#125;(j)t_&#123;j,i&#125;\&#125; e_&#123;i,x_t&#125;</span></div><div class="line">				<span class="keyword">val</span> alpha_t = <span class="type">NDArray</span>.dot(alpha.slice(t<span class="number">-1</span>),<span class="type">T_est</span>) * obs_pi_est_T.slice(observations(t))</div><div class="line">				c(t) = 	<span class="number">1</span>f/<span class="type">NDArray</span>.sum(alpha_t).toScalar</div><div class="line">				(alpha_t*c(t)).copyTo(alpha.slice(t))</div><div class="line">				</div><div class="line">				<span class="keyword">val</span> alpha_theta_tmp = <span class="type">NDArray</span>.dot(alpha_theta.slice(t<span class="number">-1</span>),<span class="keyword">this</span>.<span class="type">T</span>) * obs_T.slice(observations(t))</div><div class="line">				<span class="keyword">val</span> max = <span class="number">1</span>f/(<span class="type">NDArray</span>.max(alpha_theta_tmp).toScalar)</div><div class="line">				(alpha_theta_tmp*max).copyTo(alpha_theta.slice(t))</div><div class="line">				(<span class="type">NDArray</span>.dot(alpha_real.slice(t<span class="number">-1</span>),<span class="type">T_est</span>) * obs_pi_est_T.slice(observations(t))*max).copyTo(alpha_real.slice(t))</div><div class="line"><span class="comment">//				println(alpha_theta.slice(t))</span></div><div class="line"><span class="comment">//				println(alpha_real.slice(t))</span></div><div class="line">				alpha_theta_tmp.dispose()</div><div class="line">				alpha_t.dispose()</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			<span class="comment">// beta_t(i) = (x_&#123;t+1&#125;,\cdots,x_T,y_&#123;t+1&#125;|\theta) = </span></div><div class="line">			<span class="keyword">val</span> beta = <span class="type">NDArray</span>.zeros(<span class="type">Shape</span>(nsamples,nstates),ctx)</div><div class="line">			(<span class="type">NDArray</span>.ones(<span class="type">Shape</span>(<span class="number">1</span>,nstates),ctx)*c(nsamples<span class="number">-1</span>)).copyTo(beta.slice(nsamples<span class="number">-1</span>))</div><div class="line">			</div><div class="line">			<span class="comment">// update beta backwards from end of sequence</span></div><div class="line">			<span class="keyword">for</span>(t&lt;- (<span class="number">1</span> until nsamples).reverse )&#123;</div><div class="line">				</div><div class="line">				<span class="keyword">val</span> beta_t_minus = <span class="type">NDArray</span>.dot(obs_pi_est_T.slice(observations(t))*beta.slice(t),<span class="type">NDArray</span>.transpose(<span class="type">T_est</span>))</div><div class="line">				(beta_t_minus*c(t<span class="number">-1</span>)).copyTo(beta.slice(t<span class="number">-1</span>))</div><div class="line">				beta_t_minus.dispose()</div><div class="line">			&#125;</div><div class="line">			</div><div class="line">			<span class="comment">// \xi_t(i,j)</span></div><div class="line"><span class="comment">//			val xi = NDArray.zeros(Shape(nsamples,nstates,nstates),ctx)</span></div><div class="line">			</div><div class="line">			<span class="keyword">val</span> xi = <span class="type">Array</span>.fill[<span class="type">NDArray</span>](nsamples)(<span class="type">NDArray</span>.zeros(<span class="type">Shape</span>(nstates,nstates),ctx))</div><div class="line">			</div><div class="line">			<span class="keyword">for</span>(t&lt;- (<span class="number">0</span> until nsamples<span class="number">-1</span>))&#123;</div><div class="line"><span class="comment">//				val denom = NDArray.dot(NDArray.dot(alpha.slice(t), T_est)*obs_pi_est_T.slice(observations(t+1)),NDArray.transpose(beta.slice(t+1))).toScalar</span></div><div class="line">				<span class="keyword">val</span> denom = (<span class="type">NDArray</span>.sum(<span class="type">NDArray</span>.dot(alpha.slice(t),<span class="type">T_est</span>) * obs_pi_est_T.slice(observations(t+<span class="number">1</span>)) *beta.slice(t+<span class="number">1</span>))).toScalar</div><div class="line">				</div><div class="line"><span class="comment">//				println(denom-denom1)</span></div><div class="line">				<span class="keyword">for</span>(i &lt;- <span class="number">0</span> until nstates)&#123;</div><div class="line">					<span class="keyword">val</span> numer =<span class="type">T_est</span>.slice(i) * obs_pi_est_T.slice(observations(t+<span class="number">1</span>)) *beta.slice(t+<span class="number">1</span>) * alpha(t,i)</div><div class="line">					(numer/denom).copyTo(xi(t).slice(i))</div><div class="line"><span class="comment">//					tmp += numer</span></div><div class="line">					numer.dispose()</div><div class="line">				&#125;</div><div class="line">				</div><div class="line"><span class="comment">//				xi(t) /= NDArray.sum(tmp).toScalar</span></div><div class="line">			&#125;			</div><div class="line">			<span class="keyword">var</span> gamma_arr = xi.map(xij =&gt; &#123;</div><div class="line">				(<span class="number">0</span> until nstates).map&#123;i =&gt;&#123;</div><div class="line"><span class="comment">//					sum_gamma1(i) += NDArray.sum(xij.slice(i)).toScalar</span></div><div class="line">					<span class="type">NDArray</span>.sum(xij.slice(i)).toScalar</div><div class="line">				&#125;&#125;</div><div class="line">			&#125;).flatten </div><div class="line">			</div><div class="line">			<span class="keyword">var</span> gamma = <span class="type">NDArray</span>.array(gamma_arr, <span class="type">Shape</span>(nsamples,nstates), ctx)</div><div class="line">			</div><div class="line">			<span class="comment">//</span></div><div class="line">			<span class="keyword">val</span> newpi = gamma.slice(<span class="number">0</span>)</div><div class="line">			<span class="keyword">var</span> gamma_t = <span class="type">NDArray</span>.transpose(gamma)</div><div class="line">			<span class="keyword">val</span> newT  = xi.reduceRight(_+_)</div><div class="line">			<span class="keyword">var</span> sum_gamma = (<span class="number">0</span> until nstates).map(i =&gt; <span class="type">NDArray</span>.sum(gamma_t.slice(i)).toScalar).toArray</div><div class="line"><span class="comment">//			println(sum_gamma)</span></div><div class="line">			(<span class="number">0</span> until nstates).map(i =&gt; &#123;</div><div class="line">				newT.slice(i) /= sum_gamma(i)</div><div class="line">			&#125;)</div><div class="line">			</div><div class="line">			<span class="keyword">val</span> tmp1 = alpha.slice(nsamples<span class="number">-1</span>)*beta.slice(nsamples<span class="number">-1</span>)</div><div class="line">			(tmp1/<span class="type">NDArray</span>.sum(tmp1).toScalar).copyTo(gamma.slice(nsamples<span class="number">-1</span>))</div><div class="line">			</div><div class="line">			<span class="comment">//beta</span></div><div class="line">			<span class="type">NDArray</span>.transpose(gamma).copyTo(gamma_t)</div><div class="line">			sum_gamma = (<span class="number">0</span> until nstates).map(i =&gt; <span class="type">NDArray</span>.sum(gamma_t.slice(i)).toScalar).toArray</div><div class="line">			<span class="keyword">val</span> sum_gamma_nda = <span class="type">NDArray</span>.array(sum_gamma, <span class="type">Shape</span>(<span class="number">1</span>,nstates), ctx)</div><div class="line">			</div><div class="line">			<span class="keyword">val</span> newObs_pi_T = <span class="type">NDArray</span>.zeros(obs_pi_est_T.shape,ctx)</div><div class="line">			observations.indices.foreach(id =&gt;&#123;</div><div class="line">				<span class="keyword">val</span> obs = observations(id)</div><div class="line">				newObs_pi_T.slice(obs) +=  gamma.slice(id)</div><div class="line">			&#125;)</div><div class="line">			</div><div class="line">			(<span class="number">0</span> until nhiddenstates).map(id=&gt;&#123;</div><div class="line">				newObs_pi_T.slice(id) /= sum_gamma_nda</div><div class="line">			&#125;)</div><div class="line">					</div><div class="line"><span class="comment">//			println(newpi)</span></div><div class="line"><span class="comment">//			println(newT)</span></div><div class="line"><span class="comment">//			println(newObs_pi_T)</span></div><div class="line"><span class="comment">//			println(alpha_real.slice(nsamples-1))</span></div><div class="line"><span class="comment">//			println(alpha_theta.slice(nsamples-1))</span></div><div class="line">			</div><div class="line">			</div><div class="line"><span class="comment">//			if(NDArray.norm(pi_est-newpi).toScalar&lt;criterion &amp;&amp; NDArray.norm(T_est-newT).toScalar&lt;criterion &amp;&amp; NDArray.norm(obs_pi_est_T-newObs_pi_T).toScalar&lt;criterion)</span></div><div class="line">			<span class="keyword">if</span>(math.abs(<span class="type">NDArray</span>.sum(alpha_theta.slice(nsamples<span class="number">-1</span>)-alpha_real.slice(nsamples<span class="number">-1</span>)).toScalar) &lt; criterion || iter&gt;<span class="number">100</span>)</div><div class="line">				done = !done	</div><div class="line">			</div><div class="line">				</div><div class="line">				</div><div class="line">			newObs_pi_T.copyTo(obs_pi_est_T)</div><div class="line">			newpi.copyTo(pi_est)</div><div class="line">			newT.copyTo(<span class="type">T_est</span>)</div><div class="line">			</div><div class="line">			alpha_real.dispose()</div><div class="line">			alpha_theta.dispose()</div><div class="line">			alpha_0.dispose()</div><div class="line">			alpha.dispose()</div><div class="line">			beta.dispose()</div><div class="line">			gamma.dispose()</div><div class="line">			gamma_t.dispose()</div><div class="line">			xi.foreach(_.dispose())</div><div class="line">			</div><div class="line">			iter += <span class="number">1</span></div><div class="line">			</div><div class="line">		&#125;</div><div class="line">		<span class="type">Array</span>(pi_est,<span class="type">T_est</span>,obs_pi_est_T)</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">viterbiAlgorithm</span></span>(pi_est:<span class="type">NDArray</span>,<span class="type">T_est</span>:<span class="type">NDArray</span>,obs_pi_est_T:<span class="type">NDArray</span>,x:<span class="type">Array</span>[<span class="type">Int</span>]):<span class="type">Array</span>[<span class="type">Int</span>] = &#123;</div><div class="line">		<span class="keyword">val</span> ctx = <span class="type">Context</span>.cpu(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> nsamples = x.length </div><div class="line">		<span class="keyword">val</span> nstates  = <span class="type">T_est</span>.shape(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> sobservations = obs_pi_est_T.shape(<span class="number">0</span>)</div><div class="line">		</div><div class="line">		<span class="keyword">val</span> delta  =  <span class="type">NDArray</span>.zeros(<span class="type">Shape</span>(nsamples,nstates), ctx)</div><div class="line">		<span class="keyword">val</span> phi  =  <span class="type">NDArray</span>.zeros(<span class="type">Shape</span>(nsamples,nstates), ctx)</div><div class="line">		</div><div class="line">		<span class="keyword">val</span> <span class="type">T_est_T</span> = <span class="type">NDArray</span>.transpose(<span class="type">T_est</span>)</div><div class="line">		</div><div class="line">		</div><div class="line">		(pi_est*<span class="type">T_est</span>.slice(x(<span class="number">0</span>))).copyTo(delta.slice(<span class="number">0</span>))</div><div class="line">		</div><div class="line">		delta.slice(<span class="number">0</span>)</div><div class="line">		</div><div class="line">		<span class="keyword">for</span>(t &lt;<span class="number">-0</span> until nsamples<span class="number">-1</span>)&#123;</div><div class="line">			<span class="keyword">val</span> nda = pi_est*obs_pi_est_T.slice(x(t))			</div><div class="line">			<span class="keyword">for</span>(i&lt;- <span class="number">0</span> until nstates)&#123;</div><div class="line">				delta(t+<span class="number">1</span>,i) += (<span class="type">NDArray</span>.max(nda * <span class="type">T_est_T</span>.slice(i))*obs_pi_est_T(x(t+<span class="number">1</span>),i)).toScalar</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">val</span> boardcast_nda = <span class="type">NDArray</span>.concatenate(nda,nda,nda)</div><div class="line">			(<span class="type">NDArray</span>.argmaxChannel(boardcast_nda* <span class="type">T_est_T</span>).reshape(<span class="type">Array</span>(<span class="number">1</span>,nstates))).copyTo(phi.slice(t+<span class="number">1</span>))</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		<span class="keyword">val</span> y = <span class="type">Array</span>.fill[<span class="type">Int</span>](nsamples)(<span class="number">0</span>)</div><div class="line">		y(nsamples<span class="number">-1</span>) = <span class="type">NDArray</span>.argmaxChannel(delta.slice(nsamples<span class="number">-1</span>)).toScalar.toInt</div><div class="line">		</div><div class="line">		</div><div class="line">		<span class="keyword">for</span>(t &lt;- (nsamples<span class="number">-2</span> to <span class="number">0</span> by <span class="number">-1</span>))&#123;</div><div class="line">			y(t) = <span class="type">NDArray</span>.argmaxChannel(delta.slice(t)*<span class="type">T_est_T</span>.slice(y(t+<span class="number">1</span>))).toScalar.toInt</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		y</div><div class="line">	&#125;</div><div class="line">		</div><div class="line">	</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">HMM</span></span>&#123;</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args:<span class="type">Array</span>[<span class="type">String</span>])&#123;</div><div class="line"><span class="comment">//		test_homework(1000)</span></div><div class="line">		test_homework1</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">test</span></span>&#123;</div><div class="line">		<span class="keyword">val</span> ctx = <span class="type">Context</span>.cpu(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> num_states = <span class="number">3</span> <span class="comment">// A,B,C</span></div><div class="line">		<span class="keyword">val</span> num_obs    = <span class="number">3</span></div><div class="line">		<span class="keyword">val</span> pi         = <span class="type">NDArray</span>.<span class="type">Normalize</span>((<span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.1</span>f,<span class="number">0.4</span>f,<span class="number">0.5</span>f),<span class="type">Shape</span>(<span class="number">1</span>,num_states),ctx)))</div><div class="line">		<span class="keyword">val</span> obs_pi     = <span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.5</span>f,<span class="number">0.3</span>f,<span class="number">0.2</span>f,<span class="number">0.1</span>f,<span class="number">0.6</span>f,<span class="number">0.3</span>f,<span class="number">0.0</span>f,<span class="number">0.3</span>f,<span class="number">0.7</span>f),<span class="type">Shape</span>(num_states,num_obs),ctx)</div><div class="line">		<span class="keyword">val</span> <span class="type">T</span> = <span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.7</span>f,<span class="number">0.2</span>f,<span class="number">0.1</span>f,<span class="number">0.1</span>f,<span class="number">0.6</span>f,<span class="number">0.3</span>f,<span class="number">0.4</span>f,<span class="number">0.2</span>f,<span class="number">0.4</span>f),<span class="type">Shape</span>(num_states,num_states),ctx)</div><div class="line">		</div><div class="line">		<span class="keyword">val</span> hmm = <span class="keyword">new</span> <span class="type">HMM</span>(pi,<span class="type">T</span>,obs_pi)</div><div class="line">		<span class="keyword">val</span> (y,x) = hmm.simulation(<span class="number">1000</span>)</div><div class="line"></div><div class="line">		x.foreach(println)</div><div class="line">		<span class="keyword">val</span> <span class="type">Array</span>(pi1,t1,obspi1) = hmm.train(x)</div><div class="line">			println(<span class="string">s"pi:<span class="subst">$pi1</span>"</span>)</div><div class="line">		println(<span class="string">s"T:<span class="subst">$t1</span>"</span>)</div><div class="line">		println(<span class="string">s"obspi:<span class="subst">$obspi1</span>"</span>)</div><div class="line"></div><div class="line">	&#125;</div><div class="line">	</div><div class="line">		<span class="function"><span class="keyword">def</span> <span class="title">test1</span></span>&#123;</div><div class="line">		<span class="keyword">val</span> ctx = <span class="type">Context</span>.cpu(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> num_states = <span class="number">2</span> <span class="comment">// A,B,C</span></div><div class="line">		<span class="keyword">val</span> num_obs    = <span class="number">3</span></div><div class="line">		<span class="keyword">val</span> pi         = <span class="type">NDArray</span>.<span class="type">Normalize</span>((<span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.5</span>f,<span class="number">0.5</span>f),<span class="type">Shape</span>(<span class="number">1</span>,num_states),ctx)))</div><div class="line">		<span class="keyword">val</span> obs_pi     = <span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.7</span>f,<span class="number">0.2</span>f,<span class="number">0.1</span>f,<span class="number">0.1</span>f,<span class="number">0.6</span>f,<span class="number">0.3</span>f),<span class="type">Shape</span>(num_states,num_obs),ctx)</div><div class="line">		<span class="keyword">val</span> <span class="type">T</span> = <span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.5</span>f,<span class="number">0.5</span>f,<span class="number">0.2</span>f,<span class="number">0.8</span>f),<span class="type">Shape</span>(num_states,num_states),ctx)</div><div class="line">		</div><div class="line">		<span class="keyword">val</span> hmm = <span class="keyword">new</span> <span class="type">HMM</span>(pi,<span class="type">T</span>,obs_pi)</div><div class="line">		<span class="keyword">val</span> (y,x) = hmm.simulation(<span class="number">1000</span>)</div><div class="line"><span class="comment">//		val x =  Array(2,  0,  0,  0,  0,  0, 0, 1,  0,  0)</span></div><div class="line"></div><div class="line"><span class="comment">//		x.foreach(println)</span></div><div class="line">		hmm.train(x)</div><div class="line">		<span class="keyword">val</span> <span class="type">Array</span>(pi1,t1,obspi1) = hmm.train(x)</div><div class="line">		println(<span class="string">s"pi:<span class="subst">$pi1</span>"</span>)</div><div class="line">		println(<span class="string">s"T:<span class="subst">$t1</span>"</span>)</div><div class="line">		println(<span class="string">s"obspi:<span class="subst">$obspi1</span>"</span>)</div><div class="line">	&#125;</div><div class="line"></div><div class="line">		</div><div class="line">		<span class="function"><span class="keyword">def</span> <span class="title">test_homework</span></span>(num:<span class="type">Int</span>)&#123;</div><div class="line">		<span class="keyword">val</span> ctx = <span class="type">Context</span>.cpu(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> num_states = <span class="number">3</span> <span class="comment">// A,B,C</span></div><div class="line">		<span class="keyword">val</span> num_obs    = <span class="number">2</span></div><div class="line">		<span class="keyword">val</span> pi         = <span class="type">NDArray</span>.<span class="type">Normalize</span>((<span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.3</span>f,<span class="number">0.3</span>f,<span class="number">0.4</span>f),<span class="type">Shape</span>(<span class="number">1</span>,num_states),ctx)))</div><div class="line">		<span class="keyword">val</span> obs_pi     = <span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.1</span>f,<span class="number">0.9</span>f,<span class="number">0.5</span>f,<span class="number">0.5</span>f,<span class="number">0.9</span>f,<span class="number">0.1</span>f),<span class="type">Shape</span>(num_states,num_obs),ctx)</div><div class="line">		<span class="keyword">val</span> <span class="type">T</span> = <span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.8</span>f,<span class="number">0.2</span>f,<span class="number">0</span>f,<span class="number">0.1</span>f,<span class="number">0.7</span>f,<span class="number">0.2</span>f,<span class="number">0.1</span>f,<span class="number">0</span>f,<span class="number">0.9</span>f),<span class="type">Shape</span>(num_states,num_states),ctx)</div><div class="line">		</div><div class="line">		<span class="keyword">val</span> hmm = <span class="keyword">new</span> <span class="type">HMM</span>(pi,<span class="type">T</span>,obs_pi)</div><div class="line">		</div><div class="line">		</div><div class="line">		<span class="keyword">val</span> <span class="type">Ts</span> = <span class="type">NDArray</span>.zeros(<span class="type">Shape</span>(num,num_states,num_states), ctx)</div><div class="line">		<span class="keyword">val</span> obs_pis = <span class="type">NDArray</span>.zeros(<span class="type">Shape</span>(num,num_states,num_obs), ctx)</div><div class="line">		</div><div class="line">		<span class="keyword">for</span> (i&lt;- <span class="number">0</span> until num)&#123;</div><div class="line">			println(<span class="string">s"**************step <span class="subst">$i</span>****************"</span>)</div><div class="line">			<span class="keyword">val</span> (y,x) = hmm.simulation(<span class="number">1000</span>)</div><div class="line">			<span class="keyword">val</span> res = hmm.train(x)</div><div class="line">			println(<span class="string">s"T:<span class="subst">$&#123;res(1)&#125;</span>"</span>)</div><div class="line">			println(<span class="string">s"obs_pis:<span class="subst">$&#123;res(2)&#125;</span>"</span>)</div><div class="line">			</div><div class="line">			res(<span class="number">1</span>).reshape(<span class="type">Array</span>(<span class="number">1</span>,num_states,num_states)).copyTo(<span class="type">Ts</span>.slice(i))</div><div class="line">			res(<span class="number">2</span>).reshape(<span class="type">Array</span>(<span class="number">1</span>,num_states,num_obs)).copyTo(obs_pis.slice(i))</div><div class="line">			</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		println(<span class="string">s"T variance:"</span>+<span class="type">NDArray</span>.norm(<span class="type">Ts</span>))</div><div class="line">		println(<span class="string">s"obs_pis variance :"</span>+<span class="type">NDArray</span>.norm(obs_pis))</div><div class="line"><span class="comment">//		println(s"T:$t1")</span></div><div class="line"><span class="comment">//		println(s"obspi:$obspi1")</span></div><div class="line">		</div><div class="line">	&#125;</div><div class="line">		</div><div class="line">		</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">test_homework1</span></span>&#123;</div><div class="line">		<span class="keyword">val</span> ctx = <span class="type">Context</span>.cpu(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> num_states = <span class="number">3</span> <span class="comment">// A,B,C</span></div><div class="line">		<span class="keyword">val</span> num_obs    = <span class="number">2</span></div><div class="line">		<span class="keyword">val</span> pi         = <span class="type">NDArray</span>.<span class="type">Normalize</span>((<span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.3</span>f,<span class="number">0.3</span>f,<span class="number">0.4</span>f),<span class="type">Shape</span>(<span class="number">1</span>,num_states),ctx)))</div><div class="line">		<span class="keyword">val</span> obs_pi     = <span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.1</span>f,<span class="number">0.9</span>f,<span class="number">0.5</span>f,<span class="number">0.5</span>f,<span class="number">0.9</span>f,<span class="number">0.1</span>f),<span class="type">Shape</span>(num_states,num_obs),ctx)</div><div class="line">		<span class="keyword">val</span> <span class="type">T</span> = <span class="type">NDArray</span>.array(<span class="type">Array</span>(<span class="number">0.8</span>f,<span class="number">0.2</span>f,<span class="number">0</span>f,<span class="number">0.1</span>f,<span class="number">0.7</span>f,<span class="number">0.2</span>f,<span class="number">0.1</span>f,<span class="number">0</span>f,<span class="number">0.9</span>f),<span class="type">Shape</span>(num_states,num_states),ctx)</div><div class="line">		</div><div class="line">		<span class="keyword">val</span> hmm = <span class="keyword">new</span> <span class="type">HMM</span>(pi,<span class="type">T</span>,obs_pi)</div><div class="line">		<span class="keyword">val</span> (y,x) = hmm.simulation(<span class="number">1000</span>)</div><div class="line"><span class="comment">//		x.foreach(println)</span></div><div class="line">		</div><div class="line">		<span class="keyword">val</span> <span class="type">Array</span>(pi1,t1,obspi1) = hmm.train(x)</div><div class="line">		<span class="keyword">val</span> y_est = hmm.viterbiAlgorithm(pi,<span class="type">T</span>,<span class="type">NDArray</span>.transpose(obs_pi),x)</div><div class="line">		<span class="keyword">var</span> error = <span class="number">0</span>f</div><div class="line">		y zip y_est foreach&#123;<span class="keyword">case</span>(yi,yie) =&gt;&#123;</div><div class="line">			error += math.abs(yi-yie)</div><div class="line">		&#125;&#125;</div><div class="line">		</div><div class="line">		println(<span class="string">s"TASK 2 estimate Y, error:<span class="subst">$&#123;error/y.length&#125;</span>"</span>)</div><div class="line">		println(<span class="string">"TASK 3, estimate model:"</span>)</div><div class="line">		println(<span class="string">s"pi:<span class="subst">$pi1</span>"</span>)</div><div class="line">		println(<span class="string">s"T:<span class="subst">$t1</span>"</span>)</div><div class="line">		println(<span class="string">s"obspi:<span class="subst">$obspi1</span>"</span>)</div><div class="line">		</div><div class="line">	&#125;</div><div class="line">		</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>[0]<a href="http://www.cs.colostate.edu/~anderson/cs440/index.html/doku.php?id=notes:hmm2" target="_blank" rel="external">Hidden Markov Models in Python</a><br>[2][HIDDEN MARKOV AND MAXIMUM ENTROPY MODELS]</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>NLP Tutorial | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="nlp,lstm," />
+  
+
+  <meta name="description" content="Sequence to Sequence Learning with Neural Networksseq2seqAbstractDNN表现突出，但无法做sequence to sequence 的映射 The idea is to use one LSTM to read the input sequence, one time step at a time, to obtain large f">
+<meta name="keywords" content="nlp,lstm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NLP Tutorial">
+<meta property="og:url" content="http://lemonman.net/2017/02/14/NLP/seq2seq/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="Sequence to Sequence Learning with Neural Networksseq2seqAbstractDNN表现突出，但无法做sequence to sequence 的映射 The idea is to use one LSTM to read the input sequence, one time step at a time, to obtain large f">
+<meta property="og:image" content="http://lemonman.net/images/nlp/seq2seq.png">
+<meta property="og:updated_time" content="2017-07-07T06:34:37.472Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NLP Tutorial">
+<meta name="twitter:description" content="Sequence to Sequence Learning with Neural Networksseq2seqAbstractDNN表现突出，但无法做sequence to sequence 的映射 The idea is to use one LSTM to read the input sequence, one time step at a time, to obtain large f">
+<meta name="twitter:image" content="http://lemonman.net/images/nlp/seq2seq.png">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sequence-to-Sequence-Learning-with-Neural-Networks"><span class="toc-text">Sequence to Sequence Learning with Neural Networks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Neural-Machine-Translation-by-Jointly-Learning-to-Align-and-Translate"><span class="toc-text">Neural Machine Translation by Jointly Learning to Align and Translate</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ideas"><span class="toc-text">ideas</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features"><span class="toc-text">Features</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#End-To-End-Memory-Networks"><span class="toc-text">End-To-End Memory Networks</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Neural-Turing-Machines"><span class="toc-text">Neural Turing Machines</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-NLP/seq2seq" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">NLP Tutorial</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.02.14</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Sequence-to-Sequence-Learning-with-Neural-Networks"><a href="#Sequence-to-Sequence-Learning-with-Neural-Networks" class="headerlink" title="Sequence to Sequence Learning with Neural Networks"></a>Sequence to Sequence Learning with Neural Networks</h1><p><a href="https://arxiv.org/pdf/1409.3215.pdf" target="_blank" rel="external">seq2seq</a><br>Abstract<br>DNN表现突出，但无法做sequence to sequence 的映射</p>
+<p>The idea is to use one LSTM to read the input sequence, one time step at a time, to obtain large fixed dimensional vector representation(map the entire input sentence to vector), and then to use another LSTM to extract the output sequence from that vector (fig. 1).</p>
+<p><img src="/images/nlp/seq2seq.png" alt=""><br>A useful property of the LSTM is that it learns to map an input sentence of variable length into a  fixed-dimensional vector  representation.</p>
+<p>实验的核心在于用大量的sentence对训练一个deep LSTM。通过最大化给定原句子$S$的正确翻译$T$的log条件概率,所以训练目标函数应该是：<br>$$<br>\frac{1}{|S|}\sum_{(T,S)\in S} logP(T|S)<br>$$<br>where $\mathcal{S}$ is the training set.<br>只要训练是完整的，我们提供的翻译就是用LSTM找到的最接近的翻译。<br>$$<br>\hat{T}= arg\max\limits_{T}{P(T|S)}<br>$$</p>
+<p>One of the attractive features of our model is its ability to turn a sequence of words into a vector of fixed dimensionality.</p>
+<h1 id="Neural-Machine-Translation-by-Jointly-Learning-to-Align-and-Translate"><a href="#Neural-Machine-Translation-by-Jointly-Learning-to-Align-and-Translate" class="headerlink" title="Neural Machine Translation by Jointly Learning to Align and Translate"></a>Neural Machine Translation by Jointly Learning to Align and Translate</h1><p><a href="https://arxiv.org/abs/1409.0473" target="_blank" rel="external">Bahdanau</a><br><a href="http://www.wildml.com/2016/01/attention-and-memory-in-deep-learning-and-nlp/" target="_blank" rel="external">WILDML</a></p>
+<p>$\alpha_{i,j}$表示目标词$y_i$与输入$x_j$的对齐（aligned）/相关程度。<br>第i个的context向量$c_i$就是期望的annotation，因为是在整合$\alpha$和所有annotations的基础上得到的。</p>
+<h2 id="ideas"><a href="#ideas" class="headerlink" title="ideas"></a>ideas</h2><p>A potential issue with this encoder–decoder approach is that a neural network needs to be able to compress all the necessary information of a source sentence into a fixed-length vector.  This may make it difficult for the neural network to cope with long sentences, especially those that are longer than the sentences in the training corpus. Choet al.(2014b) showed that indeed the performance of a basic encoder–decoder deteriorates rapidly as the length of an input sentence increases. In order to address this issue, we introduce an extension to the encoder–decoder model which learns to align and translate jointly.  Each time the proposed model generates a word in a translation, it (soft-)searches for a set of positions in a source sentence where the most relevant information is concentrated. The model then predicts a target word based on the context vectors associated with these source positions and all the previous generated target words.</p>
+<h2 id="Features"><a href="#Features" class="headerlink" title="Features"></a>Features</h2><p>The most important distinguishing feature of this approach from the basic encoder–decoder is that it does not attempt to encode a whole input sentence into a single fixed-length vector. Instead, it encodes the input sentence into a sequence of vectors and chooses a subset of these vectors adaptively while decoding the translation. </p>
+<p>[11]Learning phrase representations using RNN encoder-decoder for statistical machine translation</p>
+<h1 id="End-To-End-Memory-Networks"><a href="#End-To-End-Memory-Networks" class="headerlink" title="End-To-End Memory Networks"></a>End-To-End Memory Networks</h1><p><a href="https://arxiv.org/pdf/1503.08895.pdf" target="_blank" rel="external">endtoend</a></p>
+<h1 id="Neural-Turing-Machines"><a href="#Neural-Turing-Machines" class="headerlink" title="Neural Turing Machines"></a>Neural Turing Machines</h1><p><a href="https://arxiv.org/pdf/1410.5401.pdf" target="_blank" rel="external">NTM</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

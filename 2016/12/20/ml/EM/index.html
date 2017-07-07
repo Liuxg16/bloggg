@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Expectation Maximum | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="dl,work,ml," />
+  
+
+  <meta name="description" content="Gaussian Mixed ModelThere is a latent/hidden/unobserved random variable z.So, $x^i$,$z^i$ have a join a distribution:$$P(x^i,z^i) = P(x^i|z^i)P(z^i)  \\z \sim Multinomal(\phi) \\\phi_j \ge 0 \quad \su">
+<meta name="keywords" content="dl,work,ml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Expectation Maximum">
+<meta property="og:url" content="http://lemonman.net/2016/12/20/ml/EM/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="Gaussian Mixed ModelThere is a latent/hidden/unobserved random variable z.So, $x^i$,$z^i$ have a join a distribution:$$P(x^i,z^i) = P(x^i|z^i)P(z^i)  \\z \sim Multinomal(\phi) \\\phi_j \ge 0 \quad \su">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.419Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Expectation Maximum">
+<meta name="twitter:description" content="Gaussian Mixed ModelThere is a latent/hidden/unobserved random variable z.So, $x^i$,$z^i$ have a join a distribution:$$P(x^i,z^i) = P(x^i|z^i)P(z^i)  \\z \sim Multinomal(\phi) \\\phi_j \ge 0 \quad \su">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gaussian-Mixed-Model"><span class="toc-text">Gaussian Mixed Model</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gaussian-Discrimination-Model"><span class="toc-text">Gaussian Discrimination Model</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EM-in-Gaussian-Mixed-Model"><span class="toc-text">EM in Gaussian Mixed Model</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Jensen’s-inequality"><span class="toc-text">Jensen’s inequality</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#p-theta-X"><span class="toc-text">$p(\theta|X)$</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#another-idea"><span class="toc-text">another idea</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ml/EM" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Expectation Maximum</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.12.20</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Gaussian-Mixed-Model"><a href="#Gaussian-Mixed-Model" class="headerlink" title="Gaussian Mixed Model"></a>Gaussian Mixed Model</h1><p>There is a latent/hidden/unobserved random variable z.So, $x^i$,$z^i$ have a join a distribution:<br>$$<br>P(x^i,z^i) = P(x^i|z^i)P(z^i)  \\<br>z \sim Multinomal(\phi) \\<br>\phi_j \ge 0 \quad \sum \phi_j=1 \\<br>x^i|z^i=j \sim N(\mu_j,\Sigma_j)<br>$$</p>
+<h1 id="Gaussian-Discrimination-Model"><a href="#Gaussian-Discrimination-Model" class="headerlink" title="Gaussian Discrimination Model"></a>Gaussian Discrimination Model</h1><p>预设是：x^i可观测，z^i可观测，直接用Maximum Likelyhood Estimation有：<br>$$<br>l(\phi,\mu,\Sigma) = \sum_{i=1}^M log P(x^i,z^i,\phi,\mu,\Sigma) \\<br>\phi_i = \frac{\sum 1\lbrace z^i=j \rbrace}{M} \\<br>\mu_j = \frac{\sum 1\lbrace z^i=j \rbrace x^i}{\sum 1\lbrace z^i=j \rbrace}<br>$$</p>
+<p>但是，通常来说，隐变量z都是不可观测的，所以下面讲解EM算法。</p>
+<h1 id="EM-in-Gaussian-Mixed-Model"><a href="#EM-in-Gaussian-Mixed-Model" class="headerlink" title="EM in Gaussian Mixed Model"></a>EM in Gaussian Mixed Model</h1><p>Repeat {<br>E-step (guess value of $z^i$) :<br>    let<br>$$<br>w_j^i = P(z^i=j|x^i,\phi,\mu,\Sigma) \\<br>=\frac{P(x^i|z^i=j)P(z^i=j)}{\sum P(x^i|z^i=l)P(z^i=l)} \\<br>= \frac{ \frac{e^{-\frac{1}{2}(x^i-u_j)^T\Sigma_j^{-1}(x^i-u_j)}}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}} \phi_j }{\sum_l(\cdots)}<br>$$<br>[注]默认{$z \rightarrow x$}属于高斯混合模型。$w_j^i$可以被理解为第i个x是由第j个高斯分布（z一共有K类，则相当于有K个高斯分布）产生的概率。</p>
+<p>M-step:<br>$$<br>\phi_j = \frac{1}{m}\sum_{i=1}^M w_j^i \\<br>\mu_j  = \frac{\sum_{i=1}^M w_j^i x^i}{\sum_{i=1}^M w_j^i} \\<br>\Sigma_j = \frac {\sum_{i=1}^M w_j^i(x^i-\mu_j)(x^i-\mu_j)^T}{\sum_{i=1}^M w_j^i}<br>$$<br>所以第j个高斯分布产生的概率$\phi_j$等于每个样本对z的后验概率的和。</p>
+<h1 id="Jensen’s-inequality"><a href="#Jensen’s-inequality" class="headerlink" title="Jensen’s inequality"></a>Jensen’s inequality</h1><p>let f be a convex funtion (e.g. $f’’(x) \ge 0$)<br>Let X be a random variable. Then,<br>$$f(EX)=f(E[X]) \le E[f(x)]<br>$$<br>further, if $f’’(x) \ge 0$,(f is strictly convex,也就是曲线中没有直线), Then<br>$$<br>f(EX)= E[f(x)] \Leftrightarrow X=E[X] \Leftrightarrow \text{概率为1条件下取X}<br>$$<br>In addition, if $f’’le 0$<br>$$<br>f(EX)=f(E[X]) \ge E[f(x)]<br>$$<br>which EM algorithm will use it.</p>
+<h1 id="p-theta-X"><a href="#p-theta-X" class="headerlink" title="$p(\theta|X)$"></a>$p(\theta|X)$</h1><p>Have some model for $P(x,z,\theta)$,<br>Observe only x,<br>want to maximize:<br>$$<br>l(\theta) = \sum_{i=1}^M log(P(x^i,\theta)) \\<br>= \sum_{i=1}^M log \sum_{z^i}P(x^i,z^i,\theta) \\<br>\text{So,} \\<br>\max \limits_{\theta}{l(\theta)} \\<br>= \sum_{i=1}^M log \sum_{z^i}P(x^i,z^i,\theta) \\<br>= \sum_{i=1}^M log \sum_{z^i} Q(z^i) \frac{P(x^i,z^i,\theta)}{Q(z^i)} \\<br>= \sum_{i=1}^M log E_{z^i \sim Q}[\frac{P(x^i,z^i,\theta)}{Q(z^i)}]<br>$$<br>where $Q(z^i) \ge 0,\sum_{z \in Val(z)}Q(z)=1$,Q(z)是对P(z)的一个估计。</p>
+<p>根据Jenson不等式，log函数是一个凹函数(concave function)，则有$f(EX)=f(E[X]) \ge E[f(x)]$，即，<br>$$\sum_{i=1}^M log E_{z^i \sim Q}[\frac{P(x^i,z^i,\theta)}{Q(z^i)}] \\<br>\ge \sum_{i=1}^M E_{z^i \sim Q} log [\frac{P(x^i,z^i,\theta)}{Q(z^i)}]<br>$$<br>即我们找到了$l(\theta)$的一个下界(lower bound)：<br>$$<br>l(\theta)\ge \sum_{i=1}^M \sum_{z^i} Q(z^i) log [\frac{P(x^i,z^i,\theta)}{Q(z^i)}]<br>$$<br>那么，我们就是要找一个对P的估计Q，让这个lower bound 尽可能的紧。<br>Want<br>$\frac{P(x^i,z^i,\theta)}{Q(z^i)}$ is a consant for all the value of $z^i$(只是说对于相同的$z^i$,值相同，但并不是说就等于常数C),that is,<br>$$<br>Q(z^i) \propto  P(x^i,z^i,\theta)<br>$$<br>又因为$\sum_{z \in Val(z)}Q(z)=1$，所以，<br>$$<br>Q(z^i) = \frac{P(x^i,z^i,\theta)}{\sum_{z^i}P(x^i,z^i,\theta)} \\<br>= \frac{P(x^i,z^i,\theta)}{P(x^i,\theta)}\\<br>= P(z^i|x^i,\theta)<br>$$<br>因此，更为一般性的EM算法可以写为：</p>
+<ul>
+<li>E-step:<br>set $Q(z^i) = P(z^i|x^i,\theta)$<br>$Q(z^i=j) = w_j$,具体公式上面已经给出。</li>
+<li>M-step:<br>$\theta = arg\max \limits_{\theta} \sum_{i=1}^M \sum_{z^i} Q(z^i) log [\frac{P(x^i,z^i,\theta)}{Q(z^i)}]$<br>将E-step结果带入得：<br>$$<br>g = \sum_{i=1}^M \sum_{z^i} Q(z^i) log [\frac{P(x^i,z^i,\theta)}{Q(z^i)}] \\<br>= \sum_{i=1}^M \sum_{z^i} w_j log \frac {\frac{-\frac{1}{2}e^{(x^i-u_j)^T\Sigma_j^{-1}(x^i-u_j)}}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}} \phi_j}{w_j}<br>$$<br>令$\triangledown g=0$,得出：<br>$$<br>\mu_j  = \frac{\sum_{i=1}^M w_j^i x^i}{\sum_{i=1}^M w_j^i} \\<br>\cdots<br>$$</li>
+</ul>
+<p>再求$\phi_j$,需要用到其它的优化方法，有约束$\sum_j \phi_j = 1$,我们引入拉格朗日算子，有以下最优化问题：<br>$$<br>\mathcal{L} = \sum_{z^i} w_j log \frac {\frac{-\frac{1}{2}e^{(x^i-u_j)^T\Sigma_j^{-1}(x^i-u_j)}}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}} \phi_j}{w_j} - \beta(\sum_j \phi_j -1)<br>$$<br>再令：<br>$\frac{\partial \mathcal{L}}{\partial \phi}=0$,求出$\phi$</p>
+<h2 id="another-idea"><a href="#another-idea" class="headerlink" title="another idea"></a>another idea</h2><p>define:<br>$$<br>J(\theta,Q) = \sum_{i=1}^M \sum_{z^i} Q(z^i) log [\frac{P(x^i,z^i,\theta)}{Q(z^i)}] \\<br>l(\theta) \ge  J(\theta,Q)<br>$$<br>EM算法是在函数J上的坐标上升算法：<br>E-step: Maximize Q<br>M-step: Maximize $\theta$</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

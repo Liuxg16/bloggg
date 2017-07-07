@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Simple Neuron Models | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="work," />
+  
+
+  <meta name="description" content="Basic DefinitionThe cell body or soma of a typical cortical neurons ranges in diameter from about 10 to 50$\mu$m.hyperpolarizationIons thus flow into and out of a cell due to both voltage and concentr">
+<meta name="keywords" content="work">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Simple Neuron Models">
+<meta property="og:url" content="http://lemonman.net/2016/10/15/neuralcomputation/simpleNeuron/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="Basic DefinitionThe cell body or soma of a typical cortical neurons ranges in diameter from about 10 to 50$\mu$m.hyperpolarizationIons thus flow into and out of a cell due to both voltage and concentr">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.044Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Simple Neuron Models">
+<meta name="twitter:description" content="Basic DefinitionThe cell body or soma of a typical cortical neurons ranges in diameter from about 10 to 50$\mu$m.hyperpolarizationIons thus flow into and out of a cell due to both voltage and concentr">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Basic-Definition"><span class="toc-text">Basic Definition</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#The-cell-body-or-soma-of-a-typical-cortical-neurons-ranges-in-diameter-from-about-10-to-50-mu-m"><span class="toc-text">The cell body or soma of a typical cortical neurons ranges in diameter from about 10 to 50$\mu$m.</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hyperpolarization"><span class="toc-text">hyperpolarization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#depolarization"><span class="toc-text">depolarization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#action-potential"><span class="toc-text">action potential</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#refractory-period"><span class="toc-text">refractory period</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cell-membrane"><span class="toc-text">cell membrane</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ion-channels"><span class="toc-text">ion channels</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#channel-selectivity"><span class="toc-text">channel selectivity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ion-pumps"><span class="toc-text">ion pumps</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Neuron-Model"><span class="toc-text">Neuron Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Synapse-Model"><span class="toc-text">Synapse Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Adaptation-Model"><span class="toc-text">Adaptation Model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延迟整流-delayed-rectification"><span class="toc-text">延迟整流 delayed rectification</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#电压门控钾通道-voltage-gated-potassium-channel"><span class="toc-text">电压门控钾通道(voltage-gated potassium channel)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#延迟整流"><span class="toc-text">延迟整流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动作电位"><span class="toc-text">动作电位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#神经递质"><span class="toc-text">神经递质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#神经递质受体"><span class="toc-text">神经递质受体</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EPSP"><span class="toc-text">EPSP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IPSP"><span class="toc-text">IPSP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BASIS"><span class="toc-text">BASIS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#受体亚型"><span class="toc-text">受体亚型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#NEural-Simulation-tool"><span class="toc-text">NEural Simulation tool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dentrite"><span class="toc-text">dentrite</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EXAMPLE"><span class="toc-text">EXAMPLE</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-neuralcomputation/simpleNeuron" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Simple Neuron Models</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.10.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Basic-Definition"><a href="#Basic-Definition" class="headerlink" title="Basic Definition"></a>Basic Definition</h1><h2 id="The-cell-body-or-soma-of-a-typical-cortical-neurons-ranges-in-diameter-from-about-10-to-50-mu-m"><a href="#The-cell-body-or-soma-of-a-typical-cortical-neurons-ranges-in-diameter-from-about-10-to-50-mu-m" class="headerlink" title="The cell body or soma of a typical cortical neurons ranges in diameter from about 10 to 50$\mu$m."></a>The cell body or soma of a typical cortical neurons ranges in diameter from about 10 to 50$\mu$m.</h2><h2 id="hyperpolarization"><a href="#hyperpolarization" class="headerlink" title="hyperpolarization"></a>hyperpolarization</h2><p>Ions thus flow into and out of a cell due to both voltage and concentration gradients. Current, in the form of positively charged ions flowing out of the cell (or negatively charged ions flowing into the cell) through open channels makes the membrane hyperpolarization potential more negative, a process called hyperpolarization. </p>
+<h2 id="depolarization"><a href="#depolarization" class="headerlink" title="depolarization"></a>depolarization</h2><p>Current flowand depolarization ing into the cell changes the membrane potential to less negative or even positive values. This is called depolarization.</p>
+<h2 id="action-potential"><a href="#action-potential" class="headerlink" title="action potential"></a>action potential</h2><p>If a neuron is depolarized sufficiently to raise the membrane potential above a threshold level, a positive feedback process is initiated, and the neuron generates an action potential. An action potential is a roughly 100 action potential mV fluctuation in the electrical potential across the cell membrane that lasts for about 1 ms . </p>
+<h2 id="refractory-period"><a href="#refractory-period" class="headerlink" title="refractory period"></a>refractory period</h2><p>Action potential generation also depends on the recent history of cell firing. For a few milliseconds just after an action potential has been fired, it may be virtually impossible to initiate another spike. This is called the absolute refractory period. For a longer interval known as the relative refractory period, lasting up to tens of mil- refractory period liseconds after a spike, it is more difficult to evoke an action potential.</p>
+<h2 id="cell-membrane"><a href="#cell-membrane" class="headerlink" title="cell membrane"></a>cell membrane</h2><p>The cell membrane is a lipid bilayer 3 to 4 nm thick that is essentially impermeable to most charged molecules. This insulating feature causes the cell membrane to act as a capacitor by separating the charges lying along ion channels its interior and exterior surfaces. </p>
+<h2 id="ion-channels"><a href="#ion-channels" class="headerlink" title="ion channels"></a>ion channels</h2><p>Numerous ion-conducting channels embedded in the cell membrane  lower the effective membrane resistance for ion flow to a value about 10,000 times smaller than that of a pure lipid bilayer. </p>
+<h2 id="channel-selectivity"><a href="#channel-selectivity" class="headerlink" title="channel selectivity"></a>channel selectivity</h2><p>The resulting membrane conductance depends on the density and types of ion channels. A typical neuron may have a dozen or more different types of channels, anywhere from a few to hundreds of channels in a square micron of membrane, and hundreds of thousands to channel selectivity millions of channels in all. Many, but not all, channels are highly selective, allowing only a single type of ion to pass through them (to an accuracy of about 1 ion in 104). The capacity of channels for conducting ions across the cell membrane can be modified by many factors including the membrane potential (voltage-dependent channels), the internal concentration of various intracellular messengers (Ca2+-dependent channels, for example), and the extracellular concentration of neurotransmitters or neuromodulators (synaptic receptor channels, for example).</p>
+<h2 id="ion-pumps"><a href="#ion-pumps" class="headerlink" title="ion pumps"></a>ion pumps</h2><p>The membrane also contains ion pumps selective pumps that expend energy to maintain differences in the concentrations of ions inside and outside the cell.</p>
+<h2 id="Neuron-Model"><a href="#Neuron-Model" class="headerlink" title="Neuron Model"></a>Neuron Model</h2><p>The next step is to define the model of neurons in the network. The basic part of this object is the Differential Equations (DEs) of the neuron behavior. Because all neurons in this toolbox are spiking models, it is necessary to define the spike detection (also known as threshold or event) and reset functions. The spike detection function determines when a specific neuron fires a spike according to its state variables. The reset function is responsible for the behavior of the neuron right after the transmission of the spike.</p>
+<h2 id="Synapse-Model"><a href="#Synapse-Model" class="headerlink" title="Synapse Model"></a>Synapse Model</h2><p>The process of interaction of neurons in the network with each other and also the effect of external spiking inputs on neurons is described by the synapse model. Upon receiving a spike from a pre-synaptic source, a Post-Synaptic-Potential (PSP) is triggered on the destination neuron. The synapse model consists of functions to describe the PSP behavior.</p>
+<h2 id="Adaptation-Model"><a href="#Adaptation-Model" class="headerlink" title="Adaptation Model"></a>Adaptation Model</h2><p>Adaptation model is used to describe the plasticity and learning mechanisms available for a specific BNN. Synaptic weight, transmission delay, threshold value,and model parameters plasticity functions can be defined using adaptation mechanism.</p>
+<h2 id="延迟整流-delayed-rectification"><a href="#延迟整流-delayed-rectification" class="headerlink" title="延迟整流 delayed rectification"></a>延迟整流 delayed rectification</h2><p>延迟整流 delayed rectification 在对神经或肌肉通电使膜电位发生变化的情况下，电流弱或电流的方向为内向而引起膜超极化时，膜的电阻并不随膜电流的强弱而变化，膜电位的变化与通电电流强度成正比。<br>可是当外向通电时，随着通电作用而产生的去极化增大，膜的电阻的变小，而仅产生比电流强度比率为小的去极化。这意味着膜具有一种整流的作用，并且由于这种整流作用在通电开始后稍为延迟出现，因此称为延迟整流。延迟整流的产生是由于膜对K+的通透性增强，只要继续通电，则这一增强便可维持下去。动作电位产生时，首先是膜对Na+的通透性增强，稍迟一些是对K+的通透性增强，由于延迟整流的作用，后者便成为动作电位急速下降的一个原因。在用四乙胺盐作用后，延迟整流便消失。</p>
+<h2 id="电压门控钾通道-voltage-gated-potassium-channel"><a href="#电压门控钾通道-voltage-gated-potassium-channel" class="headerlink" title="电压门控钾通道(voltage-gated potassium channel)"></a>电压门控钾通道(voltage-gated potassium channel)</h2><p>当膜去极化时，大部分的钾通道开放，钾离子通过开放的通道流向细胞外，阻止进一步去极化。</p>
+<h2 id="延迟整流"><a href="#延迟整流" class="headerlink" title="延迟整流"></a>延迟整流</h2><p>细胞膜上存在钠、钾离子门控，去极化时，钠离子门控会立即打开，而钾离子门控会延迟1ms才开放。这具有整流或者重设膜电位的作用。</p>
+<h2 id="动作电位"><a href="#动作电位" class="headerlink" title="动作电位"></a>动作电位</h2><p>当膜电位去极化达到阈值时，$g<em>{Na}$瞬时增大，钠离子进入胞内，使神经元去极化。动作电位过程中$g</em>{Na}$的增加非常地短暂，致使动作电位的时程相对较短。在动作电位的下降相，$g_{K}$瞬时增加，钾离子快速外流，膜电位复极化。</p>
+<h2 id="神经递质"><a href="#神经递质" class="headerlink" title="神经递质"></a>神经递质</h2><p>大多数神经递质可以分为以下三类：氨基酸、单胺、多肽。氨基酸和胺类神经递质都是包含有一个氮原子的有机分子，有突出囊泡储存和释放。肽类神经递质则都是由分泌颗粒储存和释放的大分子。</p>
+<h2 id="神经递质受体"><a href="#神经递质受体" class="headerlink" title="神经递质受体"></a>神经递质受体</h2><p>很多，100多种，大致可分为两类：递质门控的离子通道和G蛋白偶联的受体。</p>
+<h2 id="EPSP"><a href="#EPSP" class="headerlink" title="EPSP"></a>EPSP</h2><p>由突触前神经递质释放导致的突触后膜瞬时去极化，被称为兴奋性突触后电位(excitatory postsynaptic potential,EPSP)</p>
+<h2 id="IPSP"><a href="#IPSP" class="headerlink" title="IPSP"></a>IPSP</h2><p>一个有突触前神经递质释放导致突触后膜的瞬时超极化，被称为抑制性突触后电位(Inhibitory postsynaptic potential,IPSP)。</p>
+<h3 id="BASIS"><a href="#BASIS" class="headerlink" title="BASIS"></a>BASIS</h3><ul>
+<li>钠平衡电位$E_{Na}$约等于40mV左右。<h2 id="受体亚型"><a href="#受体亚型" class="headerlink" title="受体亚型"></a>受体亚型</h2>神经递质通过与突触后膜上特异性受体结合而发挥作用。通常，不同的神经递质不可能与同一受体结合，但一种神经递质却可以与不同的受体结合。把能与同种神经递质结合的不同受体称之为受体亚型。<br>谷氨酸受体有多种亚型，如AMPA受体(AMPA receptor)、NMDA受体，海人藻酸受体等。它们是以各自的化学激动剂命名的。这三种受体亚型都可被谷氨酸激活，但AMPA仅作用于AMPA受体，NMDA仅作用于NMDA受体。</li>
+</ul>
+<h2 id="NEural-Simulation-tool"><a href="#NEural-Simulation-tool" class="headerlink" title="NEural Simulation tool"></a>NEural Simulation tool</h2><p>瑞士洛桑理工学院（École Polytechnique Fédérale de Lausanne,EPFL）开发了神经系统仿真工具（The Neural Simulation Tool,NEST），为机器人的神经系统模拟提供了基础[4]。在“蓝脑计划”（The Blue Brain Project）的支持下，学院的研究人员研究了小白鼠的大脑的数字化重建工作（图 2）。他们已模拟出一只小白鼠完整大脑中约2100万个神经元中的3.1万个模拟神经元。该研究近期被发表在Cell杂志。<br>[0]<a href="http://www.nest-simulator.org/py_sample/structural-plasticity-example/" target="_blank" rel="external">structural plasticity example</a></p>
+<h2 id="dentrite"><a href="#dentrite" class="headerlink" title="dentrite"></a>dentrite</h2><p>树突上有识别神经递质的受体，但不含突触小泡，即无法分泌神经递质，即只能接受、传导冲动<br>轴突在结构上比树突长得多，其末端膨大为突触小体，含大量突触小泡，可以释放神经递质，但无法识别神经递质（无受体）<br>即，冲动只能是（前一个神经突出小体）-（树突)-（细胞体）-（轴突）-（突触小体）-（下一个树突）传递的<br>至于终点，树突的终点是另一个神经搜索细胞的轴突末梢，轴突末梢终点是下一个神经细胞的树突</p>
+<h1 id="EXAMPLE"><a href="#EXAMPLE" class="headerlink" title="EXAMPLE"></a>EXAMPLE</h1><p>Izhikevich, E.M. (2003). Simple Model of Spiking Neurons, IEEE Transaction on Neural Networks, 14:6.</p>
+<p>The original Matlab code is provided below:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div></pre></td><td class="code"><pre><div class="line">disp("Hello World");</div><div class="line">% Created by Eugene M. Izhikevich, February 25, 2003</div><div class="line">% Excitatory neurons Inhibitory neurons</div><div class="line">Ne = 800; Ni = 200;</div><div class="line">re = rand(Ne,1); ri = rand(Ni,1);</div><div class="line">a = [0.02*ones(Ne,1); 0.02+0.08*ri];</div><div class="line">b = [0.2*ones(Ne,1); 0.25-0.05*ri];</div><div class="line">c = [-65+15*re.^2; -65*ones(Ni,1)];</div><div class="line">d = [8-6*re.^2; 2*ones(Ni,1)];</div><div class="line">S = [0.5*rand(Ne+Ni,Ne), -rand(Ne+Ni,Ni)];</div><div class="line">v = -65*ones(Ne+Ni,1); % Initial values of v</div><div class="line">u = b.*v; % Initial values of u</div><div class="line">firings = []; % spike timings</div><div class="line"></div><div class="line">u1s = [1:1000];</div><div class="line">uis(1)=u(1);</div><div class="line"></div><div class="line">v1s = [1:1000];</div><div class="line">vis(1)=v(1);</div><div class="line">for t=1:1000 % simulation of 1000 ms</div><div class="line">    I = [5*randn(Ne,1);2*randn(Ni,1)]; % thalamic input</div><div class="line">    fired = find(v&gt;=30); % indices of spikes</div><div class="line">    firings = [firings; t+0*fired,fired];</div><div class="line">    v(fired) = c(fired);</div><div class="line">    u(fired) = u(fired) + d(fired);</div><div class="line">    I = I + sum(S(:,fired),2);</div><div class="line">    v = v + 0.5*(0.04*v.^2 + 5*v + 140 - u + I); % step 0.5 ms</div><div class="line">    v = v + 0.5*(0.04*v.^2 + 5*v + 140-u + I); % for numerical</div><div class="line">    u = u + a.*(b.*v - u); % stability</div><div class="line">    v1s(t) =  v(1);</div><div class="line">    u1s(t) =  u(1);</div><div class="line">    </div><div class="line">end;</div><div class="line">%figure(1)</div><div class="line">%plot(firings(:,1),firings(:,2),'.')</div><div class="line">figure(2)</div><div class="line">plot([1:1000],u1s)</div><div class="line">disp("ddd")</div></pre></td></tr></table></figure>
+<p>[0]<a href="http://mooc.guokr.com/course/195/Computational-Neuroscience/" target="_blank" rel="external">计算神经科学</a><br>[1]<a href="http://wenku.baidu.com/link?url=g5iPCasz6O9wiz-jjTW6_fyRe4PK9uqYjx2r9iYXrRg1ShAWjkswZirEVwaQhO2LKo6-stynlqhybSe0y3GFkXFBSjQSxUFkf1tmzEh94Dm" target="_blank" rel="external">ppt</a><br><a href="https://www.engineeringvillage.com/search/quick.url" target="_blank" rel="external">engineeringvillage</a><br>[2]<a href="http://ruipcosta.weebly.com/code--data.html" target="_blank" rel="external">synaptic model</a><br>[3]<a href="http://neurotheory.umd.edu/code" target="_blank" rel="external">UMD Neurotheory Lab</a><br>[4]<a href="http://www.biomedicale.parisdescartes.fr/physiocer/" target="_blank" rel="external">Brain Physiologe Lab</a><br>[5]<a href="http://www.socsci.uci.edu/~jkrichma/CARLsim/doc/index.html" target="_blank" rel="external">CARLsim</a><br>[6]<a href="http://brian2.readthedocs.io/en/2.0rc3/index.html" target="_blank" rel="external">Brain2</a><br>[7]<a href="https://prezi.com/hyy8yyw68wlz/bcpnn-an-advanced-cortex-inspired-recurrent-artificial-neural-network-for-memory-anchored-in-bayes-theorem-and-probabilistic-computing/" target="_blank" rel="external">bcpnn-ppt</a></p>
+<p>[0]<a href="http://octave-online.net/" target="_blank" rel="external">Online Matlab</a><br>[1]<a href="http://www.compneuroprinciples.org/code-examples/all/all?page=1" target="_blank" rel="external">Modelling in neuronscience</a><br>[2]<a href="http://courses.cs.washington.edu/courses/cse590rr/03au/lectures.html" target="_blank" rel="external">Neural lecture in University of Washington</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

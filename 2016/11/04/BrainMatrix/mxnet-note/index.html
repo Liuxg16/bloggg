@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Mxnet Note | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="dl,mxnet,brainmatrix," />
+  
+
+  <meta name="description" content="重要条例 C++代码中的symbol 的toStaticGraph是没有用的  CNDArrayNDArray ret = out;//get ndarrayTBlob dst = ret.data(); //get tblobTensor out = dst-&amp;gt;FlatTo2D(s);out[0][0] mshadow::Tensordocument: mshadow/mshadow/te">
+<meta name="keywords" content="dl,mxnet,brainmatrix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mxnet Note">
+<meta property="og:url" content="http://lemonman.net/2016/11/04/BrainMatrix/mxnet-note/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="重要条例 C++代码中的symbol 的toStaticGraph是没有用的  CNDArrayNDArray ret = out;//get ndarrayTBlob dst = ret.data(); //get tblobTensor out = dst-&amp;gt;FlatTo2D(s);out[0][0] mshadow::Tensordocument: mshadow/mshadow/te">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.684Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mxnet Note">
+<meta name="twitter:description" content="重要条例 C++代码中的symbol 的toStaticGraph是没有用的  CNDArrayNDArray ret = out;//get ndarrayTBlob dst = ret.data(); //get tblobTensor out = dst-&amp;gt;FlatTo2D(s);out[0][0] mshadow::Tensordocument: mshadow/mshadow/te">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#重要条例"><span class="toc-text">重要条例</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C"><span class="toc-text">C</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#NDArray"><span class="toc-text">NDArray</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mshadow-Tensor"><span class="toc-text">mshadow::Tensor</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IO-MNISTIter"><span class="toc-text">IO.MNISTIter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray-cc"><span class="toc-text">ndarray.cc</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#注册函数"><span class="toc-text">注册函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GPU-执行"><span class="toc-text">GPU 执行</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#报错"><span class="toc-text">报错</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#增加MXNET-Gpu-Operator"><span class="toc-text">增加MXNET Gpu Operator</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-BrainMatrix/mxnet-note" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Mxnet Note</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.11.04</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="重要条例"><a href="#重要条例" class="headerlink" title="重要条例"></a>重要条例</h1><ul>
+<li>C++代码中的symbol 的toStaticGraph是没有用的</li>
+</ul>
+<h1 id="C"><a href="#C" class="headerlink" title="C"></a>C</h1><h2 id="NDArray"><a href="#NDArray" class="headerlink" title="NDArray"></a>NDArray</h2><p>NDArray ret = <em>out;//get ndarray<br>TBlob </em>dst = ret.data(); //get tblob<br>Tensor<xpu, 2,="" dtype=""> out = dst-&gt;FlatTo2D<xpu, dtype="">(s);<br>out[0][0]</xpu,></xpu,></p>
+<h2 id="mshadow-Tensor"><a href="#mshadow-Tensor" class="headerlink" title="mshadow::Tensor"></a>mshadow::Tensor</h2><p>document: mshadow/mshadow/tensor.h,可以在这里面查询tensor的用法，里面的函数是tensor的成员函数。<br>在tensor.h中对该数据进行改动代码：（搞了一下午！！！)<br><code>this[0][idx][x] = dst[0][x];</code></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Shape</span>&lt;2&gt; &#123;</span></div><div class="line">  <span class="keyword">index_t</span> shape_[<span class="number">2</span>];</div><div class="line">&#125;;</div><div class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Tensor</span>&lt;cpu, 2, float&gt; &#123;</span></div><div class="line">  <span class="keyword">float</span> *dptr_;</div><div class="line">  Shape&lt;<span class="number">2</span>&gt; shape_;</div><div class="line">  <span class="keyword">index_t</span> stride_;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Tensor<cpu, 2=""> contains dptr<em>, which points to the space that backs up the tensor.<br>Shape<2> is a structure that stores shape information, the convention is the same as numpy.<br>stride</2></em> gives the number of cell spaces allocated in the smallest dimension (if we use numpy convention, the dimension corresponds to shape<em>[-1]). This is introduced when we introduce some padding cells in lowest dimension to make sure memory is aligned. stride</em> is automatically set during memory allocation of a tensor in mshadow.</cpu,></p>
+<p>可以这样理解，Tensor由三个属性构成，dptr，shape，stride，三者才能表示一个Tensor。比如下面的程序，<code>ts.stride_=1</code>时，输出是：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ts[0][0]=0.000000</div><div class="line">ts[0][1]=1.000000</div><div class="line">ts[1][0]=1.000000</div><div class="line">ts[1][1]=2.000000</div><div class="line">ts[2][0]=2.000000</div><div class="line">ts[2][1]=3.000000</div></pre></td></tr></table></figure></p>
+<p><code>ts.stride_=3</code><br>输出为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">ts[0][0]=0.000000</div><div class="line">ts[0][1]=1.000000</div><div class="line">ts[1][0]=3.000000</div><div class="line">ts[1][1]=4.000000</div><div class="line">ts[2][0]=6.000000</div><div class="line">ts[2][1]=7.000000</div></pre></td></tr></table></figure></p>
+<h2 id="IO-MNISTIter"><a href="#IO-MNISTIter" class="headerlink" title="IO.MNISTIter"></a>IO.MNISTIter</h2><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//(1,784)</span></div><div class="line"><span class="keyword">val</span> trainDataIter = <span class="type">IO</span>.<span class="type">MNISTIter</span>(scala.collection.immutable.<span class="type">Map</span>(</div><div class="line">      <span class="string">"image"</span> -&gt; <span class="string">"data/train-images-idx3-ubyte"</span>,</div><div class="line">      <span class="string">"label"</span> -&gt; <span class="string">"data/train-labels-idx1-ubyte"</span>,</div><div class="line">      <span class="string">"data_shape"</span> -&gt; <span class="string">"(1, 784)"</span>,</div><div class="line">      <span class="string">"label_name"</span> -&gt; <span class="string">"sm_label"</span>,</div><div class="line">      <span class="string">"batch_size"</span> -&gt; batchSize.toString,</div><div class="line">      <span class="string">"shuffle"</span> -&gt; <span class="string">"1"</span>,</div><div class="line">      <span class="string">"flat"</span> -&gt; <span class="string">"1"</span>,</div><div class="line">      <span class="string">"silent"</span> -&gt; <span class="string">"0"</span>,</div><div class="line">      <span class="string">"seed"</span> -&gt; <span class="string">"10"</span>))</div><div class="line"></div><div class="line"><span class="comment">//(1,28,28)</span></div><div class="line"><span class="keyword">val</span> trainDataIter = <span class="type">IO</span>.<span class="type">MNISTIter</span>(scala.collection.immutable.<span class="type">Map</span>(</div><div class="line">      <span class="string">"image"</span> -&gt; <span class="string">"data/train-images-idx3-ubyte"</span>,</div><div class="line">      <span class="string">"label"</span> -&gt; <span class="string">"data/train-labels-idx1-ubyte"</span>,</div><div class="line">      <span class="string">"data_shape"</span> -&gt; <span class="string">"(1, 28,28)"</span>,</div><div class="line">      <span class="string">"label_name"</span> -&gt; <span class="string">"sm_label"</span>,</div><div class="line">      <span class="string">"batch_size"</span> -&gt; batchSize.toString,</div><div class="line">      <span class="string">"shuffle"</span> -&gt; <span class="string">"1"</span>,</div><div class="line">      <span class="string">"flat"</span> -&gt; <span class="string">"0"</span>, <span class="comment">//这也不一样</span></div><div class="line">      <span class="string">"silent"</span> -&gt; <span class="string">"0"</span>,</div><div class="line">      <span class="string">"seed"</span> -&gt; <span class="string">"10"</span>))</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">float</span> data[<span class="number">9</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>&#125;;</div><div class="line">        Tensor&lt;cpu, <span class="number">2</span>&gt; ts;</div><div class="line">	ts.dptr_ = data;</div><div class="line">	ts.shape_ = mshadow::Shape2(<span class="number">3</span>, <span class="number">2</span>);</div><div class="line">	ts.stride_ = <span class="number">1</span>;</div><div class="line">	<span class="comment">// now: ts[0][0] == 0, ts[0][1] == 1 , ts[1][0] == 3, ts[1][1] == 4</span></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">index_t</span> i = <span class="number">0</span>; i &lt; ts.size(<span class="number">0</span>); ++i) &#123;</div><div class="line">	  <span class="keyword">for</span> (<span class="keyword">index_t</span> j = <span class="number">0</span>; j &lt; ts.size(<span class="number">1</span>); ++j) &#123;</div><div class="line">	    <span class="built_in">printf</span>(<span class="string">"ts[%u][%u]=%f\n"</span>, i, j, ts[i][j]);</div><div class="line">  		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure>
+<h2 id="ndarray-cc"><a href="#ndarray-cc" class="headerlink" title="ndarray.cc"></a>ndarray.cc</h2><h2 id="注册函数"><a href="#注册函数" class="headerlink" title="注册函数"></a>注册函数</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">MXNET_REGISTER_NDARRAY_FUN(clip_lxg)</div><div class="line"><span class="comment">//.set_type_mask(kNDArrayArgBeforeScalar | kAcceptEmptyMutateTarget)</span></div><div class="line">.set_body([](NDArray **u, <span class="keyword">real_t</span> *s, NDArray **out,</div><div class="line">             <span class="keyword">int</span> num_params, <span class="keyword">char</span> **param_keys, <span class="keyword">char</span> **param_vals) &#123;</div><div class="line">    ClipOp_lxg(*u[<span class="number">0</span>], *u[<span class="number">1</span>], out[<span class="number">0</span>]);</div><div class="line">  &#125;)</div><div class="line">.set_num_use_vars(<span class="number">2</span>)</div><div class="line">.set_num_mutate_vars(<span class="number">1</span>)</div><div class="line">.describe(<span class="string">"lxg Clip ndarray elements to range (a_min, a_max)"</span>)</div><div class="line">.add_argument(<span class="string">"src"</span>, <span class="string">"NDArray"</span>, <span class="string">"Source input"</span>);</div></pre></td></tr></table></figure>
+<p>其中第二个参数 real_t *s 不能少。。。暂时没去深究为啥。<br>自己写了一个小函数，测试一下注册NDAarray的流程，因为这个方法是NDArray自带的方法，不与symbol共享，实现起来简单很多。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">MXNET_REGISTER_NDARRAY_FUN(change_lxg)</div><div class="line">.set_type_mask(kNDArrayArgBeforeScalar | kAcceptEmptyMutateTarget)</div><div class="line">.set_body([](NDArray **u, <span class="keyword">real_t</span> *s, NDArray **out,</div><div class="line">             <span class="keyword">int</span> num_params, <span class="keyword">char</span> **param_keys, <span class="keyword">char</span> **param_vals) &#123;</div><div class="line">    changeOp_lxg(*u[<span class="number">0</span>], *u[<span class="number">1</span>],s[<span class="number">0</span>], out[<span class="number">0</span>]);</div><div class="line">  &#125;)</div><div class="line">.set_num_use_vars(<span class="number">2</span>)</div><div class="line">.set_num_scalars(<span class="number">1</span>)</div><div class="line">.set_num_mutate_vars(<span class="number">1</span>)</div><div class="line">.describe(<span class="string">"lxg Clip ndarray elements to range (a_min, a_max)"</span>)</div><div class="line">.add_argument(<span class="string">"src"</span>, <span class="string">"NDArray"</span>, <span class="string">"Source input"</span>)</div><div class="line">.add_argument(<span class="string">"src"</span>, <span class="string">"NDArray"</span>, <span class="string">"Source input"</span>);</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">changeOp_lxg</span><span class="params">(<span class="keyword">const</span> NDArray &amp;lhs,<span class="keyword">const</span> NDArray &amp;rhs,<span class="keyword">const</span> <span class="keyword">real_t</span> &amp;num,</span></span></div><div class="line">            NDArray *out) &#123;</div><div class="line">  <span class="keyword">if</span> (out-&gt;is_none()) &#123;</div><div class="line">    *out = NDArray(lhs.shape(), lhs.ctx(), <span class="literal">true</span>, lhs.dtype());</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    CHECK(out-&gt;ctx() == lhs.ctx()) &lt;&lt; <span class="string">"target context mismatch"</span>;</div><div class="line">    CHECK(out-&gt;shape() == lhs.shape()) &lt;&lt; <span class="string">"target shape mismatch"</span>;</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%f"</span>,num);</div><div class="line">  <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;Engine::VarHandle&gt; const_vars;</div><div class="line">  const_vars.reserve(<span class="number">2</span>);</div><div class="line">  const_vars.push_back(lhs.var());</div><div class="line">  const_vars.push_back(rhs.var());</div><div class="line"></div><div class="line"></div><div class="line">  NDArray ret = *out;</div><div class="line">  <span class="keyword">switch</span> (out-&gt;ctx().dev_mask()) &#123;</div><div class="line">    <span class="keyword">case</span> cpu::kDevMask: &#123;</div><div class="line">      Engine::Get()-&gt;PushSync([lhs,rhs, ret](RunContext ctx) &#123;</div><div class="line">          <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; source_tblob(<span class="number">2</span>);</div><div class="line">	  source_tblob[<span class="number">0</span>] = lhs.data();</div><div class="line">	  source_tblob[<span class="number">1</span>] = rhs.data();</div><div class="line"></div><div class="line">          ret.CheckAndAlloc();</div><div class="line">          TBlob tmp = ret.data();</div><div class="line">          ndarray::change_lxg&lt;cpu&gt;(source_tblob, &amp;tmp, ctx);</div><div class="line">        &#125;, out-&gt;ctx(), const_vars, &#123;ret.var()&#125;);</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> MXNET_USE_CUDA</span></div><div class="line">    <span class="keyword">case</span> gpu::kDevMask: &#123;</div><div class="line">      Engine::Get()-&gt;PushSync([lhs,rhs, ret](RunContext ctx) &#123;</div><div class="line">          <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; source_tblob(<span class="number">2</span>);</div><div class="line">	  source_tblob[<span class="number">0</span>] = lhs.data();</div><div class="line">	  source_tblob[<span class="number">1</span>] = rhs.data();</div><div class="line">          ret.CheckAndAlloc();</div><div class="line">          TBlob tmp = ret.data();</div><div class="line">          ndarray::change_lxg&lt;gpu&gt;(source_tblob, &amp;tmp, ctx);</div><div class="line">          <span class="comment">// Wait GPU kernel to complete</span></div><div class="line">          ctx.get_stream&lt;gpu&gt;()-&gt;Wait();</div><div class="line">        &#125;, out-&gt;ctx(), const_vars, &#123;ret.var()&#125;);</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">    <span class="keyword">default</span>: LOG(FATAL) &lt;&lt; MXNET_GPU_NOT_ENABLED_ERROR;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//added in ndarray_function-inl.h</span></div><div class="line"><span class="comment">// edit by liuxianggen</span></div><div class="line"></div><div class="line"><span class="keyword">template</span>&lt;&gt;</div><div class="line"><span class="keyword">void</span> change_lxg&lt;DEVICE&gt;(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; source,</div><div class="line">                            TBlob *dst,</div><div class="line">                            RunContext ctx) &#123;</div><div class="line">  <span class="keyword">typedef</span> DEVICE xpu;</div><div class="line">  <span class="keyword">using</span> <span class="keyword">namespace</span> mshadow;</div><div class="line">  <span class="keyword">using</span> <span class="keyword">namespace</span> mshadow::expr;</div><div class="line">  Stream&lt;xpu&gt; *s = ctx.get_stream&lt;xpu&gt;();</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">1</span>; i &lt; source.size(); ++i) &#123;</div><div class="line">    CHECK_EQ(source[i].type_flag_, dst-&gt;type_flag_)</div><div class="line">      &lt;&lt; <span class="string">"Only support input/output with the same data type"</span>;</div><div class="line">  &#125;</div><div class="line">  MSHADOW_TYPE_SWITCH(dst-&gt;type_flag_, DType, &#123;</div><div class="line">    Tensor&lt;xpu, <span class="number">2</span>, DType&gt; out = dst-&gt;FlatTo2D&lt;xpu, DType&gt;(s);</div><div class="line">    </div><div class="line">        Tensor&lt;xpu, <span class="number">2</span>, DType&gt; in_0 = source[<span class="number">0</span>].FlatTo2D&lt;xpu, DType&gt;(s);</div><div class="line">        Tensor&lt;xpu, <span class="number">2</span>, DType&gt; in_1 = source[<span class="number">1</span>].FlatTo2D&lt;xpu, DType&gt;(s);</div><div class="line">	</div><div class="line">	<span class="keyword">float</span> data[<span class="number">9</span>] = &#123;<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>&#125;;</div><div class="line">        Tensor&lt;cpu, <span class="number">2</span>&gt; ts;</div><div class="line">	ts.dptr_ = data;</div><div class="line">	ts.shape_ = mshadow::Shape2(<span class="number">3</span>, <span class="number">2</span>);</div><div class="line">	ts.stride_ = <span class="number">1</span>;</div><div class="line">	<span class="comment">// now: ts[0][0] == 0, ts[0][1] == 1 , ts[1][0] == 3, ts[1][1] == 4</span></div><div class="line">	<span class="keyword">for</span> (<span class="keyword">index_t</span> i = <span class="number">0</span>; i &lt; ts.size(<span class="number">0</span>); ++i) &#123;</div><div class="line">	  <span class="keyword">for</span> (<span class="keyword">index_t</span> j = <span class="number">0</span>; j &lt; ts.size(<span class="number">1</span>); ++j) &#123;</div><div class="line">	    <span class="built_in">printf</span>(<span class="string">"ts[%u][%u]=%lf\n"</span>, i, j, ts[i][j]);</div><div class="line">  		&#125;</div><div class="line">	&#125;</div><div class="line">	</div><div class="line">	in_0[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">10</span>;</div><div class="line"></div><div class="line">	<span class="built_in">printf</span>(<span class="string">"in_0[0][0]=%lf\n"</span>, in_0[<span class="number">0</span>][<span class="number">0</span>]);</div><div class="line">        out = in_0 + in_1;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">  &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最后，别忘了在ndarray_funcion.h中注册该函数：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> Device&gt;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">change_lxg</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::<span class="built_in">vector</span>&lt;TBlob&gt; source,</span></span></div><div class="line">                    TBlob *out,</div><div class="line">                    RunContext ctx);</div></pre></td></tr></table></figure></p>
+<h1 id="GPU-执行"><a href="#GPU-执行" class="headerlink" title="GPU 执行"></a>GPU 执行</h1><p>根据dst的context,通过以下switch语句来选择的。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> (dst-&gt;ctx().dev_mask()) &#123;</div><div class="line">    <span class="keyword">case</span> cpu::kDevMask: &#123;...</div></pre></td></tr></table></figure></p>
+<h2 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h2><ol>
+<li>函数定义错误或者传参错误<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">error: no matching function for call to ‘mshadow::Tensor&lt;mshadow::cpu, 2, float&gt;::Slice_lxg(mshadow::Tensor&lt;mshadow::cpu, 2, float&gt;&amp;)’</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="增加MXNET-Gpu-Operator"><a href="#增加MXNET-Gpu-Operator" class="headerlink" title="增加MXNET Gpu Operator"></a>增加MXNET Gpu Operator</h1><p>[0]<a href="https://github.com/dmlc/mshadow/tree/master/guide" target="_blank" rel="external">mshadow</a><br>[1]<a href="https://github.com/zhubuntu/MXNet-Learning-Note/blob/master/%E7%BC%96%E5%86%99%E8%87%AA%E5%B7%B1%E7%9A%84Operator.md" target="_blank" rel="external">mxnet-note</a><br>[2]<a href="https://github.com/dmlc/mshadow/tree/master/guide" target="_blank" rel="external">mshadow guide</a><br>[3]<a href="https://github.com/dmlc/mshadow/blob/master/guide/defop.cpp" target="_blank" rel="external">example</a><br>[4]<a href="https://zhuanlan.zhihu.com/p/21341440" target="_blank" rel="external">Computer Vision 2016</a><br>[5]<a href="https://github.com/nativelibs4java/ScalaCL" target="_blank" rel="external">ScalaCL</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

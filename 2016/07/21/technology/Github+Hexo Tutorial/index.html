@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Github+Hexo Tutorial | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="work," />
+  
+
+  <meta name="description" content="Environment Ubuntu 14.04 LTSSetup    1.安装Node.jssudo add-apt-repository ppa:chris-lea/node.jssudo apt-get updatesudo apt-get install nodejs 2.安装Gitsudo apt-get install git 3.安装hexosudo npm install he">
+<meta name="keywords" content="work">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Github+Hexo Tutorial">
+<meta property="og:url" content="http://lemonman.net/2016/07/21/technology/Github+Hexo Tutorial/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="Environment Ubuntu 14.04 LTSSetup    1.安装Node.jssudo add-apt-repository ppa:chris-lea/node.jssudo apt-get updatesudo apt-get install nodejs 2.安装Gitsudo apt-get install git 3.安装hexosudo npm install he">
+<meta property="og:image" content="http://lemonman.net/images/github-hexo/markdown_cover.jpg">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?\prod(n_{i_y}">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?\prod(n_x">
+<meta property="og:image" content="http://latex.codecogs.com/gif.latex?\prod(n_{i_x})+1">
+<meta property="og:image" content="http://lemonman.net/images/github-hexo/markdown_pic.jpg">
+<meta property="og:image" content="http://lemonman.net/images/github-hexo/namesilo.png">
+<meta property="og:image" content="http://lemonman.net/images/github-hexo/ndspod.png">
+<meta property="og:updated_time" content="2017-07-07T06:34:37.050Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Github+Hexo Tutorial">
+<meta name="twitter:description" content="Environment Ubuntu 14.04 LTSSetup    1.安装Node.jssudo add-apt-repository ppa:chris-lea/node.jssudo apt-get updatesudo apt-get install nodejs 2.安装Gitsudo apt-get install git 3.安装hexosudo npm install he">
+<meta name="twitter:image" content="http://lemonman.net/images/github-hexo/markdown_cover.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Environment"><span class="toc-text">Environment</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Setup"><span class="toc-text">Setup</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#报错"><span class="toc-text">报错</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Quick-Start"><span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Create-a-new-post"><span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Run-server"><span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generate-static-files"><span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-text">Deploy to remote sites</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Themes"><span class="toc-text">Themes</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#fexo"><span class="toc-text">fexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#主页背景"><span class="toc-text">主页背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加多说评论模块"><span class="toc-text">添加多说评论模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#添加统计模块"><span class="toc-text">添加统计模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#其它"><span class="toc-text">其它</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#markdown-语法"><span class="toc-text">markdown 语法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#进阶语法"><span class="toc-text">进阶语法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#fexo主题-公式插件"><span class="toc-text">fexo主题 + 公式插件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MathJax"><span class="toc-text">MathJax</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其它渲染"><span class="toc-text">其它渲染</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#canvas"><span class="toc-text">canvas</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#域名配置"><span class="toc-text">域名配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#买域名"><span class="toc-text">买域名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#地址解析"><span class="toc-text">地址解析</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reference"><span class="toc-text">reference</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-technology/Github+Hexo Tutorial" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Github+Hexo Tutorial</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.07.21</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><img src="/images/github-hexo/markdown_cover.jpg" alt=""></p>
+<h1 id="Environment"><a href="#Environment" class="headerlink" title="Environment"></a>Environment</h1><ul>
+<li>Ubuntu 14.04 LTS<h1 id="Setup"><a href="#Setup" class="headerlink" title="Setup"></a>Setup</h1></li>
+</ul>
+<hr>
+<ul>
+<li>1.安装Node.js<br><code>sudo add-apt-repository ppa:chris-lea/node.js</code><br><code>sudo apt-get update</code><br><code>sudo apt-get install nodejs</code></li>
+<li>2.安装Git<br><code>sudo apt-get install git</code></li>
+<li>3.安装hexo<pre><code>sudo npm install hexo -g
+ npm install hexo-cli -g
+</code></pre>初始你博客的根目录（或者cd到指定目录下，然后执行hexo init）<pre><code>hexo init &lt;dir&gt; 
+</code></pre></li>
+<li><p>4.让博客可以发布到git（参考连接：<a href="https://hexo.io/docs/deployment.html）" target="_blank" rel="external">https://hexo.io/docs/deployment.html）</a><br>（1）安装hexo-deployer-git（不然会出现ERROR Deployer not found: git）<br><code>npm install hexo-deployer-git --save</code><br>（2） 配置你hexo博客根目录下的_config.yml文件(应该是最下面一行，修改成你的github)</p>
+<pre><code># Deployment
+ ## Docs: http://hexo.io/docs/deployment.html
+ deploy:
+ type: git
+ repo: git@github.com:ClaymanTwinkle/ClaymanTwinkle.github.io.git
+ branch: master
+</code></pre></li>
+<li><p>5.hexo常用命令<br>创建页面  ：hexo new post “文章名字（可以是中文）”<br>生成html  ： hexo generate（或者hexo g）<br>发布到git ： hexo deploy<br>生成并发布：hexo generate -d （或者hexo g -d）</p>
+</li>
+</ul>
+<h1 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h1><p>NPM安装时提示…due to the use of legacy binary node解决方法<br>使用npm安装hexo，提示：</p>
+<pre><code>npm WARN This failure might be due to the use of legacy binary &quot;node&quot;
+ npm WARN For further explanations, please read /usr/share/doc/nodejs/README.Debian
+ sudo apt-get install nodejs-legacy
+</code></pre><h1 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h1><h2 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h2 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server (or hexo s)</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h2 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate (or hexo g)</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h2 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+<h1 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h1><h2 id="fexo"><a href="#fexo" class="headerlink" title="fexo"></a><a href="www.forsigner.com">fexo</a></h2><p>具体详情请参考官方<a href="http://www.forsigner.com/2016/03/10/fexo-doc-zh-cn/" target="_blank" rel="external">说明文档</a></p>
+<h3 id="主页背景"><a href="#主页背景" class="headerlink" title="主页背景"></a>主页背景</h3><p>每次push之前在index.html中加入:<br><code>&lt;link href=&quot;/css/personal.css&quot; rel=&quot;stylesheet&quot;&gt;</code><br>而在/css中新建personal.css，写入：<br><code>body{background:url(/images/bg.jpg)}</code></p>
+<h3 id="添加多说评论模块"><a href="#添加多说评论模块" class="headerlink" title="添加多说评论模块"></a>添加多说评论模块</h3><p>1.<a href="http://duoshuo.com/" target="_blank" rel="external">在这注册</a><br>2.点击我要安装，设置域名，比如lemonman.duoshuo.com,则lemonman是你的shortname<br>3.将shortname写入_config.yml中，如下所示：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Comment service</span></div><div class="line"><span class="comment"># disqus_shortname: lemonman</span></div><div class="line">duoshuo_shortname: lemonman</div></pre></td></tr></table></figure></p>
+<p>４.<a href="http://lemonman.duoshuo.com/admin/" target="_blank" rel="external">在这管理</a></p>
+<h3 id="添加统计模块"><a href="#添加统计模块" class="headerlink" title="添加统计模块"></a>添加统计模块</h3><p><a href="http://tongji.baidu.com/web/welcome/login" target="_blank" rel="external">在这登陆</a><br>如果没用过，请:<br>1.注册站长统计平台，<br>2.将生成的代码模块，加入到<code>fexo/layout/_partial/baidu-analytics.ejs</code><br>3.更改_config.yml中相应选项：<br><code>baidu_analytics: b353f2897825febdf71d133e7ee05560</code> 具体值要换成自己的</p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><ul>
+<li><ol>
+<li>标注tag格式:[study,work]</li>
+</ol>
+</li>
+</ul>
+<p>###　Install Mathjax<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">npm install hexo-renderer-mathjax --save</div><div class="line">npm install hexo-fs</div></pre></td></tr></table></figure></p>
+<p>Edit _config.yml:<br><code>plugins: hexo-renderer-mathjax</code></p>
+<h1 id="markdown-语法"><a href="#markdown-语法" class="headerlink" title="markdown 语法"></a>markdown 语法</h1><ul>
+<li><strong>基本符号</strong><br><em>,-,+ 3个符号效果都一样，这3个符号被称为 Markdown符号<br><strong>加粗</strong>: \</em>*xxx** (死活打印不出两个*,见谅)、<em>斜体</em> : _xxx_ 、 <del>删除线</del>: ~~xxx~~</li>
+<li>空白行表示另起一个段落</li>
+<li>`是表示inline代码，tab是用来标记 代码段，分别对应html的code，pre标签</li>
+<li><strong>换行</strong><br>单一段落 用一个空白行<br>连续两个空格 会变成一个 [换行符]<br>连续3个符号，然后是空行，表示 hr横线</li>
+<li><strong>标题</strong><br>生成h1–h6,在文字前面加上 1–6个# 来实现<br>文字加粗是通过 文字左右各两个符号</li>
+<li><strong>引用</strong><br>在第一行加上 “&gt;”和一个空格，表示代码引用，还可以嵌套</li>
+<li><strong>列表</strong><br>这个是markdown文件的主要表示方式，主题要点化<br>使用*,+,-加上一个空格来表示<br>可以支持嵌套<br>有序列表用 数字+英文点+空格来表示<br>列表内容很长，不需要手工输入换行符，css控制段落的宽度，会自动的缩放的</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>ABCD</th>
+<th style="text-align:center">EFGH</th>
+<th style="text-align:right">IJKL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>a</td>
+<td style="text-align:center">b</td>
+<td style="text-align:right">c</td>
+</tr>
+<tr>
+<td>d</td>
+<td style="text-align:center">e</td>
+<td style="text-align:right">f</td>
+</tr>
+<tr>
+<td>g</td>
+<td style="text-align:center">h</td>
+<td style="text-align:right">i</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>公式</strong><br>待补充<br>![](<a href="http://latex.codecogs.com/gif.latex?\prod(n_{i_y})+1" target="_blank" rel="external">http://latex.codecogs.com/gif.latex?\prod(n_{i_y})+1</a>)<br>![](<a href="http://latex.codecogs.com/gif.latex?\prod(n_{x}" target="_blank" rel="external">http://latex.codecogs.com/gif.latex?\prod(n_{x}</a>) +1)<br><code>&lt;img src=&quot;http://latex.codecogs.com/gif.latex?\prod(n_{i_x})+1&quot;&gt;</code><br>示例：<br><img src="http://latex.codecogs.com/gif.latex?\prod(n_{i_y}" alt="">+1)<br><img src="http://latex.codecogs.com/gif.latex?\prod(n_x" alt="">+1)<br><img src="http://latex.codecogs.com/gif.latex?\prod(n_{i_x})+1"></li>
+<li><strong>链接</strong><br>示例<a href="https://citronman.github.io/" target="_blank" rel="external">我的主页</a> : [我的主页](<a href="https://citronman.github.io/" target="_blank" rel="external">https://citronman.github.io/</a>)<br>引用 先定义 [ref_name]:url，然后在需要写入url的地方， 这样使用[锚文本][ref_name]，通常的ref_name一般用数字表示，这样显得专业<br>简写url：用尖括号包裹url<br>这样生成的url锚文本就是url本身</li>
+<li><strong>图片</strong><br>示例:<br>　<img src="/images/github-hexo/markdown_pic.jpg" alt="alt_text"><br>一行表示: <code>![alt_text](/images/markdown_pic.jpg)</code><br>引用表示法: ![alt_text][id],预先定义 [id]:url “可选title”<br>直接使用<img>标签，这样可以指定图片的大小尺寸</li>
+<li><strong>特殊符号</strong><br>用\来转义，表示文本中的markdown符号<br>可以在文本种直接使用html标签，但是要注意在使用的时候，前后加上空行<br>文本前后各加一个符号，表示斜体</li>
+<li><strong>注释</strong><br>&lt;!--本行你应该假装看不见 --&gt;</li>
+<li><strong>内嵌HTML</strong><br><font color="red" size="2" face="黑体">&lt;\font color=red size=2 face=”黑体”></font><br>换行：<code>&lt;br&gt;</code></li>
+</ul>
+<h1 id="进阶语法"><a href="#进阶语法" class="headerlink" title="进阶语法"></a>进阶语法</h1><ul>
+<li><p>1.设置图片大小，居中<br>方法一：使用支持图片大小更改操作的 Mou 编辑器<br>使用如下语法<br><code>![](./pic/pic1_50.png =100x100)</code><br>注意: =前有个空格，可以只写宽度。<br>方法二：嵌入HTML代码<br>使用img标签<br><code>&lt;img src=&quot;./xxx.png&quot; width = &quot;300&quot; height = &quot;200&quot; alt=&quot;图片名称&quot; align=center /&gt;</code><br>附：如果需要居中的话只要在外面包围div标签即可,但要注意在前后各<strong>留一行空白</strong>，否则会破坏格式</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;div  align=<span class="string">"center"</span>&gt;    </div><div class="line">...</div><div class="line">&lt;/div&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>2.缩进控制<br>切换到全角字符，敲两下空格。</p>
+</li>
+<li><p>3.加入图标<br><i class="icon-list"></i> 目录<i class="icon-list"></i>：快速导航当前文稿的目录结构以跳转到感兴趣的段落<br><i class="icon-info"></i> 视图：互换左边编辑区和右边预览区的位置<br><i class="icon-user"></i> 主题：内置了黑白两种模式的主题，试试 <strong>黑色主题</strong>，超炫！</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"icon-list"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>4.复选框<br><strong>hexo 不支持！！！！</strong></p>
+</li>
+<li><p>5.上标下标<br>X<sup>1</sup> <code>X&lt;sup&gt;1&lt;/sup&gt;</code><br>X<sub>1</sub> <code>X&lt;sub&gt;1&lt;/sub&gt;</code></p>
+</li>
+</ul>
+<h1 id="fexo主题-公式插件"><a href="#fexo主题-公式插件" class="headerlink" title="fexo主题 + 公式插件"></a>fexo主题 + 公式插件</h1><h2 id="MathJax"><a href="#MathJax" class="headerlink" title="MathJax"></a><a href="https://github.com/phoenixcw/hexo-renderer-mathjax" target="_blank" rel="external">MathJax</a></h2><ul>
+<li>1.INSTALL<br><code>npm install hexo-renderer-mathjax --save</code></li>
+<li>2.Edit _config.yml:<br><code>plugins: hexo-renderer-mathjax</code></li>
+<li><p>3.如果hexo在本地可以，但是在github.io上不能显示公式，是js渲染问题，具体是什么问题我不清楚，但可以更改/node_modules/hexo-renderer-mathjax/mathjax.html中内容，解决，即用以下内容来覆盖原内容：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;script type="text/x-mathjax-config"&gt;</div><div class="line">    MathJax.Hub.Config(&#123;</div><div class="line">        tex2jax: &#123;</div><div class="line">            inlineMath: [ ["$","$"], ["\\(","\\)"] ],</div><div class="line">            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],</div><div class="line">            processEscapes: true</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    MathJax.Hub.Queue(function() &#123;</div><div class="line">        var all = MathJax.Hub.getAllJax();</div><div class="line">        for (var i = 0; i &lt; all.length; ++i)</div><div class="line">            all[i].SourceElement().parentNode.className += ' has-jax';</div><div class="line">    &#125;);</div><div class="line">&lt;/script&gt;</div><div class="line">&lt;script type="text/javascript"</div><div class="line">	src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML,</div><div class="line">	/javascripts/MathJaxLocal.js"&gt;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>4.Sample<br>Write the following latex code:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$$</div><div class="line">\frac&#123;\partial u&#125;&#123;\partial t&#125; = h^2 \left( \frac&#123;\partial^2 u&#125;&#123;\partial x^2&#125; + \frac&#123;\partial^2 u&#125;&#123;\partial y^2&#125; + \frac&#123;\partial^2 u&#125;&#123;\partial z^2&#125;\right)</div><div class="line">$$</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Then you will get:<br>$$<br>\frac{\partial u}{\partial t} = h^2 \left( \frac{\partial^2 u}{\partial x^2} + \frac{\partial^2 u}{\partial y^2} + \frac{\partial^2 u}{\partial z^2}\right)<br>$$</p>
+<ul>
+<li>5.缺陷<br>由于公式中的下标命令的下划线与markdown命令的表示斜体的下划线冲突，导致无法识别公式。<br>解决办法：加转义符<h1 id="其它渲染"><a href="#其它渲染" class="headerlink" title="其它渲染"></a>其它渲染</h1><h2 id="canvas"><a href="#canvas" class="headerlink" title="canvas"></a>canvas</h2>采用了一个不是很好的办法，谁叫我是前段小白呢：在/node_modules/hexo-renderer-mathjax/mathjax.html末尾另起一行，加上下面这行：<br><code>&lt;script src=&quot;//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js&quot;&gt;&lt;/script&gt;</code></li>
+</ul>
+<h1 id="域名配置"><a href="#域名配置" class="headerlink" title="域名配置"></a>域名配置</h1><h2 id="买域名"><a href="#买域名" class="headerlink" title="买域名"></a>买域名</h2><p>我在<a href="https://www.namesilo.com/" target="_blank" rel="external">namesilo</a>上注册lemonman.net,配置比较简单<br>1.把状态调整为active<br>2.找到nds setting，加上两个域名解析地址：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">f1g1ns1.dnspod.net</div><div class="line">f1g1ns2.dnspod.net</div></pre></td></tr></table></figure></p>
+<p>3.dns配置<br><img src="/images/github-hexo/namesilo.png" alt="namesilo"></p>
+<h2 id="地址解析"><a href="#地址解析" class="headerlink" title="地址解析"></a>地址解析</h2><ol>
+<li>注册<a href="https://www.dnspod.cn/" target="_blank" rel="external">Ndspod</a>,根据此文档<sup>9</sup>进行配置，配置结果如图：<br><img src="/images/github-hexo/ndspod.png" alt="ndspod"></li>
+</ol>
+<h1 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h1><p>[0]<a href="https://hexo.io/docs/" target="_blank" rel="external">Hexo官网资料</a><br>[1]<a href="http://wiki.jikexueyuan.com/project/hexo-document/" target="_blank" rel="external">Hexo中文网站</a><br>[2]<a href="http://wiki.jikexueyuan.com/project/hexo-document/" target="_blank" rel="external">Zippera blog</a><br>[3]<a href="http://www.itbulu.com/centos-git-nodejs-hexo.html
+[4][主题Yilia](http://litten.github.io/2014/08/31/hexo-theme-yilia/" target="_blank" rel="external">老蒋部落</a><br>[5]<a href="https://github.com/hexojs/hexo/wiki/Themes#" target="_blank" rel="external">Themes</a><br>[6]<a href="https://www.zhihu.com/question/23378396" target="_blank" rel="external">知乎郑宇</a><br>[7]<a href="https://www.zybuluo.com/mdeditor" target="_blank" rel="external">在线markdown编辑器</a><br>[8]<a href="https://vincenttam.github.io/blog/2014/11/09/mathjax-local-configuration-file/" target="_blank" rel="external">MathJax Local Configuration File</a><br>[9]<a href="http://www.joryhe.com/2016-06-03-dnspod_NameSilolo_double_line_analysis.html" target="_blank" rel="external">Dnspod+Namesilo域名结合实现域名选路解析(精)</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

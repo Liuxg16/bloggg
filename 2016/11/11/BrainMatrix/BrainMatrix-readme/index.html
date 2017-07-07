@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>BrainMatrix README | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="project,Framework," />
+  
+
+  <meta name="description" content="对，今天是个特殊的日子，特殊的日子需要用特殊的方式来纪念，比如,祝大师兄生日快乐！哈哈。好，不扯皮了，认真写README。 基于mxnet的框架主体，各自独立性良好，为了便于开发和版本管理，我们取名叫BrainMatrix，在我的github隐私repository里。BrainMatrix继承MXNet的C部分，提供具体计算和优化操作。增加了scala kernel，来支持Deep learni">
+<meta name="keywords" content="project,Framework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BrainMatrix README">
+<meta property="og:url" content="http://lemonman.net/2016/11/11/BrainMatrix/BrainMatrix-readme/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="对，今天是个特殊的日子，特殊的日子需要用特殊的方式来纪念，比如,祝大师兄生日快乐！哈哈。好，不扯皮了，认真写README。 基于mxnet的框架主体，各自独立性良好，为了便于开发和版本管理，我们取名叫BrainMatrix，在我的github隐私repository里。BrainMatrix继承MXNet的C部分，提供具体计算和优化操作。增加了scala kernel，来支持Deep learni">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.731Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BrainMatrix README">
+<meta name="twitter:description" content="对，今天是个特殊的日子，特殊的日子需要用特殊的方式来纪念，比如,祝大师兄生日快乐！哈哈。好，不扯皮了，认真写README。 基于mxnet的框架主体，各自独立性良好，为了便于开发和版本管理，我们取名叫BrainMatrix，在我的github隐私repository里。BrainMatrix继承MXNet的C部分，提供具体计算和优化操作。增加了scala kernel，来支持Deep learni">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Installation-for-linux"><span class="toc-text">Installation for linux</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Installation-for-mac"><span class="toc-text">Installation for mac</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Usage"><span class="toc-text">Usage</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Scala-Kernel"><span class="toc-text">Scala Kernel</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#核心类"><span class="toc-text">核心类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Application"><span class="toc-text">Application</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#重要包！"><span class="toc-text">重要包！</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#其它命令"><span class="toc-text">其它命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#经常提交版本到github"><span class="toc-text">经常提交版本到github</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译brainmatrix：make"><span class="toc-text">编译brainmatrix：make</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译scalaKernel"><span class="toc-text">编译scalaKernel</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考资料"><span class="toc-text">参考资料</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-BrainMatrix/BrainMatrix-readme" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">BrainMatrix README</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.11.11</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>对，今天是个特殊的日子，特殊的日子需要用特殊的方式来纪念，比如,祝大师兄生日快乐！哈哈。<br>好，不扯皮了，认真写README。</p>
+<p>基于mxnet的框架主体，各自独立性良好，为了便于开发和版本管理，我们取名叫BrainMatrix，在我的github隐私<a href="https://github.com/CitronMan/" target="_blank" rel="external">repository</a>里。BrainMatrix继承MXNet的C部分，提供具体计算和优化操作。增加了scala kernel，来支持Deep learning，Probabilistic Model，Brainlike Model的计算工作。</p>
+<h1 id="Installation-for-linux"><a href="#Installation-for-linux" class="headerlink" title="Installation for linux"></a>Installation for linux</h1><ul>
+<li>下载BrainMatrix，修改config.mk,主要是USE_CUDA项，如果装了cuda，设为1，同时给出路径；否则设为0；</li>
+<li>make ， 如果有warning,不管，只要不报错就ok<br>mac请参照：<a href="http://mxnet.io/get_started/setup.html" target="_blank" rel="external">mac installation</a>,不过源代码得用Brainmatrix。</li>
+<li>如果第二步的make没有因报错而停止，则在目录下会多一个lib文件夹，里面的mxnetlib.so,就是编译好的library</li>
+<li>将3中的lib文件夹加入动态链接库，ubuntu的做法是在.bashrc加入：<br><code>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/agen/workspace-c/BrainMatrix/lib</code><br> 如果是mac，就是在<code>~/.bash_profile</code>中添加下面一行：<br><code>export DYLD_LIBRARY_PATH=&quot;brainmatrix lib 的路径:$DYLD_LIBRARY_PATH&quot;</code><br>是否生效暂时不是那么重要，不过，当报错说找不到libmxnet.so文件的时候，就是这儿设置失败了。</li>
+<li>验证是否安装成功<br>1 安装maven，在ubuntu下是:<code>sudo apt-get install maven</code><br>2 输入命令：<code>make compile</code>,编译scala内核，需要连接互联网，如果报错，大概是环境问题，建议装jdk1.7.0_121.</li>
+<li>如果最后出现<code>BUILD SUCCESS</code>,说明BrainMatrix安装成功。</li>
+<li><p>运行scalakernel：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> scalakernel</div><div class="line">./runMain.sh</div></pre></td></tr></table></figure>
+</li>
+<li><p>打开eclipse，import $\rightarrow$ existing maven project $\rightarrow$ 选择scalaKernel $\rightarrow$ 确定</p>
+</li>
+<li>我猜还会有其它小问题，请联系我。如果make成功，那么根目录下example的python文件，有一些是可以run的了</li>
+</ul>
+<h1 id="Installation-for-mac"><a href="#Installation-for-mac" class="headerlink" title="Installation for mac"></a>Installation for mac</h1><ul>
+<li>下载BrainMatrix，修改./make文件夹中osx.mk，找到如下几行，改成：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> CC = clang-omp</div><div class="line"><span class="built_in">export</span> CXX = clang-omp++</div><div class="line">USE_OPENMP = 1</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>其它，请参照：<a href="http://mxnet.io/get_started/setup.html" target="_blank" rel="external">mac installation</a>,不过源代码得用Brainmatrix。</p>
+<ul>
+<li>make ， 如果有warning,不管，只要不报错就ok，如果make没有因报错而停止，则在目录下会多一个lib文件夹，里面的mxnetlib.so,就是编译好的library</li>
+<li>在<code>~/.bash_profile</code>中添加下面一行：<br><code>export DYLD_LIBRARY_PATH=&quot;brainmatrix lib 的路径:$DYLD_LIBRARY_PATH&quot;</code><br>是否生效暂时不是那么重要，不过，当报错说找不到libmxnet.so文件的时候，就是这儿设置失败了。</li>
+<li>验证是否安装成功<br>1 安装maven，在ubuntu下是:<code>sudo apt-get install maven</code><br>2 输入命令：<code>make compile</code>,编译scala内核，需要连接互联网，如果报错，大概是环境问题，建议装jdk1.7.0_121.</li>
+<li>如果最后出现<code>BUILD SUCCESS</code>,说明BrainMatrix安装成功。</li>
+<li>运行scalakernel：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> scalakernel</div><div class="line">./runMain.sh</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>会运行mnist识别的程序。</p>
+<ul>
+<li>打开eclipse，import $\rightarrow$ existing maven project $\rightarrow$ 选择scalaKernel $\rightarrow$ 确定</li>
+<li>我猜还会有其它小问题，请联系我。如果make成功，那么根目录下example的python文件，有一些是可以run的了</li>
+<li>[注]runMain.sh中把libmxnet.so复制到了scalakernel根目录下，所以scala程序可以找到链接库</li>
+</ul>
+<h1 id="Usage"><a href="#Usage" class="headerlink" title="Usage"></a>Usage</h1><ul>
+<li>scala程序咋在scalakernel文件夹中，推荐用eclipse scala ide 开发。eclipse提供了代码补全和代码跳转功能，用起来挺顺手的,又因为sxnet是maven项目，eclipse配置maven我比较熟，所以，建议一起用eclipse。</li>
+<li>在根目录下新建一个data文件夹，里面存放各种dataSet</li>
+<li>下载mnist 文件到data文件夹，然后就可以run sxnet里面的程序了。</li>
+<li>scalaKernel/src/test文件夹中有一些实例方法，适合上手和学习。</li>
+</ul>
+<h1 id="Scala-Kernel"><a href="#Scala-Kernel" class="headerlink" title="Scala Kernel"></a>Scala Kernel</h1><h2 id="核心类"><a href="#核心类" class="headerlink" title="核心类"></a>核心类</h2><p>在src/main/java目录下<br>thu.brainmatrix<br>thu.brainmatrix.io<br>thu.brainmatrix.optimizer<br>这三个目录是基本库。<br>thu.brainmatrix.util<br>是全局工具代码，比如画图、各种全局方法，可以自己添加。</p>
+<h2 id="Application"><a href="#Application" class="headerlink" title="Application"></a>Application</h2><p>一些熟悉的模型，都已经测试通过，可以直接run。<br>thu.brainmatrix.char_rnn_symbol<br>thu.brainmatrix.cnn<br>thu.brainmatrix.ladder<br>thu.brainmatrix.lstmbyguo<br>thu.brainmatrix.lstmSort<br>thu.brainmatrix.nce_loss<br>thu.brainmatrix.neuralStyle<br>thu.brainmatrix.rnn<br>thu.brainmatrix.synapse 是synapse模型<br>thu.brainmatrix.sae</p>
+<h3 id="重要包！"><a href="#重要包！" class="headerlink" title="重要包！"></a>重要包！</h3><p>thu.brainmatrix.suite</p>
+<ol>
+<li>所有函数的测试都在此包中进行，在基本类中的大多数方法，都有对应的测试类，可以根据名字推断。</li>
+<li>不熟悉的方法，可以在词包中添加测试类</li>
+</ol>
+<h1 id="其它命令"><a href="#其它命令" class="headerlink" title="其它命令"></a>其它命令</h1><h2 id="经常提交版本到github"><a href="#经常提交版本到github" class="headerlink" title="经常提交版本到github"></a>经常提交版本到github</h2><p>1.设置一下git的用户名和密码,参考<a href="http://www.cnblogs.com/wanqieddy/archive/2012/08/03/2621027.html" target="_blank" rel="external">这里</a><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ git config --global user.name <span class="string">"yourname"</span>  </div><div class="line">$ git config --global user.email your-email</div></pre></td></tr></table></figure></p>
+<p>2.更新本地brainmatrix和上传brainmatrix<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 更新</div><div class="line">git pull</div><div class="line">// 上传</div><div class="line">git add -A</div><div class="line">git commit -m yourcomment</div><div class="line">git push</div></pre></td></tr></table></figure></p>
+<h2 id="编译brainmatrix：make"><a href="#编译brainmatrix：make" class="headerlink" title="编译brainmatrix：make"></a>编译brainmatrix：make</h2><h2 id="编译scalaKernel"><a href="#编译scalaKernel" class="headerlink" title="编译scalaKernel"></a>编译scalaKernel</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">cd</span> scalakernel</div><div class="line">mvn compile</div></pre></td></tr></table></figure>
+<p>其实一般都用<a href="http://scala-ide.org/" target="_blank" rel="external">eclipse scala ide</a> 开发（scala 2.10.6），在那上面编译就好。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>[0]<a href="https://github.com/dmlc/mxnet" target="_blank" rel="external">mxnet github</a><br>[1]<a href="http://mxnet.io/get_started/setup.html" target="_blank" rel="external">mxnet installation</a><br>[2]<a href="http://mxnet.io/get_started/setup.html" target="_blank" rel="external">mac mxnet installation</a><br>[3]<a href="http://www.open-open.com/lib/view/open1448030000650.html" target="_blank" rel="external">用MXnet实战深度学习之一：安装GPU版mxnet并跑一个MNIST手写数字识别</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

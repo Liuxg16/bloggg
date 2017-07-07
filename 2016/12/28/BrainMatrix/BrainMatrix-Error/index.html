@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>BrainMatrix Error Set | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="project,Framework," />
+  
+
+  <meta name="description" content="错误类型storage.cc cuda is not enable可能是cuda没装好，也有可能是编译的时候，没有用cuda编译也有可能是用cuda编译后，没有make clean，导致cuda没编译通过 Check failed: Device::kDevMask == devmask TBlob.get: device type do not match specified type自己写的操">
+<meta name="keywords" content="project,Framework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="BrainMatrix Error Set">
+<meta property="og:url" content="http://lemonman.net/2016/12/28/BrainMatrix/BrainMatrix-Error/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="错误类型storage.cc cuda is not enable可能是cuda没装好，也有可能是编译的时候，没有用cuda编译也有可能是用cuda编译后，没有make clean，导致cuda没编译通过 Check failed: Device::kDevMask == devmask TBlob.get: device type do not match specified type自己写的操">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.762Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="BrainMatrix Error Set">
+<meta name="twitter:description" content="错误类型storage.cc cuda is not enable可能是cuda没装好，也有可能是编译的时候，没有用cuda编译也有可能是用cuda编译后，没有make clean，导致cuda没编译通过 Check failed: Device::kDevMask == devmask TBlob.get: device type do not match specified type自己写的操">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#错误类型"><span class="toc-text">错误类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#storage-cc-cuda-is-not-enable"><span class="toc-text">storage.cc cuda is not enable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Check-failed-Device-kDevMask-devmask-TBlob-get-device-type-do-not-match-specified-type"><span class="toc-text">Check failed: Device::kDevMask == devmask TBlob.get: device type do not match specified type</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Check-failed-lhs-ctx-rhs-ctx-operands-context-mismatch-2-0-vs-1"><span class="toc-text">Check failed: (lhs.ctx()) == (rhs.ctx()) operands context mismatch 2 0 vs. 1</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#symbol-绑定的初始矩阵不能作为输出"><span class="toc-text">symbol 绑定的初始矩阵不能作为输出</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#java-lang-IllegalArgumentException-requirement-failed-Must-specify-all-the-arguments-in-args"><span class="toc-text">java.lang.IllegalArgumentException: requirement failed: Must specify all the arguments in args</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#graph-executor-cc-1121-Check-failed-info-ref-count-0-Because-the-last-operator-is-not-Loss-function-head-gradient-is-required-in-calling-backward"><span class="toc-text">graph_executor.cc:1121: Check failed: (info.ref_count) == (0) Because the last operator is not Loss function, head_gradient is required in calling backward.</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CAUTION"><span class="toc-text">CAUTION</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ndarray"><span class="toc-text">ndarray +=</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-BrainMatrix/BrainMatrix-Error" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">BrainMatrix Error Set</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.12.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="错误类型"><a href="#错误类型" class="headerlink" title="错误类型"></a>错误类型</h1><h2 id="storage-cc-cuda-is-not-enable"><a href="#storage-cc-cuda-is-not-enable" class="headerlink" title="storage.cc cuda is not enable"></a>storage.cc cuda is not enable</h2><p>可能是cuda没装好，<br>也有可能是编译的时候，没有用cuda编译<br>也有可能是用cuda编译后，没有make clean，导致cuda没编译通过</p>
+<h2 id="Check-failed-Device-kDevMask-devmask-TBlob-get-device-type-do-not-match-specified-type"><a href="#Check-failed-Device-kDevMask-devmask-TBlob-get-device-type-do-not-match-specified-type" class="headerlink" title="Check failed: Device::kDevMask == devmask TBlob.get: device type do not match specified type"></a>Check failed: Device::kDevMask == dev<em>mask</em> TBlob.get: device type do not match specified type</h2><p>自己写的操作报错了，乖乖的换成原装操作，囧！</p>
+<h2 id="Check-failed-lhs-ctx-rhs-ctx-operands-context-mismatch-2-0-vs-1"><a href="#Check-failed-lhs-ctx-rhs-ctx-operands-context-mismatch-2-0-vs-1" class="headerlink" title="Check failed: (lhs.ctx()) == (rhs.ctx()) operands context mismatch 2 0 vs. 1"></a>Check failed: (lhs.ctx()) == (rhs.ctx()) operands context mismatch 2 0 vs. 1</h2><p>context不一致</p>
+<h2 id="symbol-绑定的初始矩阵不能作为输出"><a href="#symbol-绑定的初始矩阵不能作为输出" class="headerlink" title="symbol 绑定的初始矩阵不能作为输出"></a>symbol 绑定的初始矩阵不能作为输出</h2><p>[16:35:38] /home/agen/workspace-c/BrainMatrix/dmlc-core/include/dmlc/logging.h:235: [16:35:38] src/symbol/graph_executor.cc:832: Check failed: (info.type) == (kInternalAllocated)<br>Exception in thread “main” thu.brainmatrix.MXNetError: [16:35:38] src/symbol/graph_executor.cc:832: Check failed: (info.type) == (kInternalAllocated) </p>
+<h2 id="java-lang-IllegalArgumentException-requirement-failed-Must-specify-all-the-arguments-in-args"><a href="#java-lang-IllegalArgumentException-requirement-failed-Must-specify-all-the-arguments-in-args" class="headerlink" title="java.lang.IllegalArgumentException: requirement failed: Must specify all the arguments in args"></a>java.lang.IllegalArgumentException: requirement failed: Must specify all the arguments in args</h2><p>Symbol.bind 绑定的(symbol,ndarray)对不一致。</p>
+<h2 id="graph-executor-cc-1121-Check-failed-info-ref-count-0-Because-the-last-operator-is-not-Loss-function-head-gradient-is-required-in-calling-backward"><a href="#graph-executor-cc-1121-Check-failed-info-ref-count-0-Because-the-last-operator-is-not-Loss-function-head-gradient-is-required-in-calling-backward" class="headerlink" title="graph_executor.cc:1121: Check failed: (info.ref_count) == (0) Because the last operator is not Loss function, head_gradient is required in calling backward."></a>graph_executor.cc:1121: Check failed: (info.ref_count) == (0) Because the last operator is not Loss function, head_gradient is required in calling backward.</h2><p>最后一层，不是loss层，然后backward函数带的参数不够。</p>
+<h1 id="CAUTION"><a href="#CAUTION" class="headerlink" title="CAUTION"></a>CAUTION</h1><h2 id="ndarray"><a href="#ndarray" class="headerlink" title="ndarray +="></a>ndarray +=</h2><p>+=操作会改变原始的指针！！！慎用！<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> ctx = <span class="type">Context</span>.cpu(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> ctxg= <span class="type">Context</span>.gpu(<span class="number">0</span>)</div><div class="line">		<span class="keyword">val</span> nda1 = <span class="type">NDArray</span>.ones(ctx, <span class="number">1</span>,<span class="number">3</span>)*<span class="number">2</span></div><div class="line">	  	<span class="keyword">var</span> tt  = nda1</div><div class="line">	  	tt +=  <span class="type">NDArray</span>.ones(ctx, <span class="number">1</span>,<span class="number">3</span>)*<span class="number">3</span></div><div class="line">	        println(nda1)</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>5.0  5.0  5.0 </p>
+</blockquote>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Deep Learning Technique | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="dl,work," />
+  
+
+  <meta name="description" content="Batch Normlizationinternal covariate shift网络训练过程中参数不断改变导致后续每一层输入的分布也发生变化，而学习的过程又要使每一层适应输入的分布，因此我们不得不降低学习率、小心地初始化。作者将分布发生变化称之为 internal covariate shift。 核心思想为了减轻internal covariate shift,虽然可以通过whitening">
+<meta name="keywords" content="dl,work">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning Technique">
+<meta property="og:url" content="http://lemonman.net/2016/12/05/neuralnetwork/DeepLearningTech/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="Batch Normlizationinternal covariate shift网络训练过程中参数不断改变导致后续每一层输入的分布也发生变化，而学习的过程又要使每一层适应输入的分布，因此我们不得不降低学习率、小心地初始化。作者将分布发生变化称之为 internal covariate shift。 核心思想为了减轻internal covariate shift,虽然可以通过whitening">
+<meta property="og:updated_time" content="2017-07-07T06:34:37.628Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deep Learning Technique">
+<meta name="twitter:description" content="Batch Normlizationinternal covariate shift网络训练过程中参数不断改变导致后续每一层输入的分布也发生变化，而学习的过程又要使每一层适应输入的分布，因此我们不得不降低学习率、小心地初始化。作者将分布发生变化称之为 internal covariate shift。 核心思想为了减轻internal covariate shift,虽然可以通过whitening">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Batch-Normlization"><span class="toc-text">Batch Normlization</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#internal-covariate-shift"><span class="toc-text">internal covariate shift</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#核心思想"><span class="toc-text">核心思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Why-BN"><span class="toc-text">Why BN</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#weakness-of-Fully-Connected"><span class="toc-text">weakness of Fully Connected</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Weights-Initialization"><span class="toc-text">Weights Initialization</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dropout"><span class="toc-text">Dropout</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-neuralnetwork/DeepLearningTech" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Deep Learning Technique</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.12.05</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Batch-Normlization"><a href="#Batch-Normlization" class="headerlink" title="Batch Normlization"></a>Batch Normlization</h1><h2 id="internal-covariate-shift"><a href="#internal-covariate-shift" class="headerlink" title="internal covariate shift"></a>internal covariate shift</h2><p>网络训练过程中参数不断改变导致后续每一层输入的分布也发生变化，而学习的过程又要使每一层适应输入的分布，因此我们不得不降低学习率、小心地初始化。作者将分布发生变化称之为 internal covariate shift。</p>
+<h2 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h2><p>为了减轻internal covariate shift,虽然可以通过whitening来加速收敛，但是需要的计算资源会很大。<br>而Batch Normalizationn的思想则是对于每一组batch，在网络的每一层中，分feature对输入进行normalization，对各个feature分别normalization，即对网络中每一层的单个神经元输入，计算均值和方差后，再进行normalization。对于CNN来说normalize $Wx+b$而非 $x$，也可以忽略掉b，即normalize $Wx$，而计算均值和方差的时候，是在feature map的基础上（原来是每一个feature）。<sup>[2]</sup></p>
+<h2 id="Why-BN"><a href="#Why-BN" class="headerlink" title="Why BN"></a>Why BN</h2><p>以下是知友魏秀参的回答：<br>说到底，BN的提出还是为了克服深度神经网络难以训练的弊病。其实BN背后的insight非常简单，只是在文章中被Google复杂化了。<br>首先来说说“Internal Covariate Shift”。文章的title除了BN这样一个关键词，还有一个便是“ICS”。大家都知道在统计机器学习中的一个经典假设是“源空间（source domain）和目标空间（target domain）的数据分布（distribution）是一致的”。如果不一致，那么就出现了新的机器学习问题，如，transfer learning/domain adaptation等。而covariate shift就是分布不一致假设之下的一个分支问题，它是指源空间和目标空间的条件概率是一致的，但是其边缘概率不同，即：对所有$x\in \mathcal{X} \quad P_x(Y|X=x)=P_t(Y|X=x)$,但是$P_s(X) \neq P_t(X)$. 大家细想便会发现，的确，对于神经网络的各层输出，由于它们经过了层内操作作用，其分布显然与各层对应的输入信号分布不同，而且差异会随着网络深度增大而增大，可是它们所能“指示”的样本标记（label）仍然是不变的，这便符合了covariate shift的定义。由于是对层间信号的分析，也即是“internal”的来由。<br>那么好，为什么前面我说Google将其复杂化了。其实如果严格按照解决covariate shift的路子来做的话，大概就是上“importance weight”之类的机器学习方法。可是这里Google仅仅说“通过mini-batch来规范化某些层/所有层的输入，从而可以固定每层输入信号的均值与方差”就可以解决问题。如果covariate shift可以用这么简单的方法解决，那前人对其的研究也真真是白做了。此外，试想，均值方差一致的分布就是同样的分布吗？当然不是。显然，ICS只是这个问题的“包装纸”嘛，仅仅是一种high-level demonstration。<br>那BN到底是什么原理呢？说到底还是为了防止“梯度弥散”。关于梯度弥散，大家都知道一个简单的栗子：。在BN中，是通过将activation规范为均值和方差一致的手段使得原本会减小的activation的scale变大。可以说是一种更有效的local response normalization方法（见4.2.1节）<sup>[3]</sup></p>
+<h1 id="weakness-of-Fully-Connected"><a href="#weakness-of-Fully-Connected" class="headerlink" title="weakness of Fully Connected"></a>weakness of Fully Connected</h1><p>Regular Neural Nets don’t scale well to full images. In CIFAR-10, images are only of size 32x32x3 (32 wide, 32 high, 3 color channels), so a single fully-connected neuron in a first hidden layer of a regular Neural Network would have 32<em>32</em>3 = 3072 weights. This amount still seems manageable, but clearly this fully-connected structure does not scale to larger images. For example, an image of more respectible size, e.g. 200x200x3, would lead to neurons that have 200<em>200</em>3 = 120,000 weights. Moreover, we would almost certainly want to have several such neurons, so the parameters would add up quickly! Clearly, this full connectivity is wasteful and the huge number of parameters would quickly lead to overfitting.</p>
+<h1 id="Weights-Initialization"><a href="#Weights-Initialization" class="headerlink" title="Weights Initialization"></a>Weights Initialization</h1><p><a href="http://www.jmlr.org/proceedings/papers/v9/glorot10a/glorot10a.pdf?hc_location=ufi" target="_blank" rel="external">Understanding the difficulty of training deep feedforward neural networks</a></p>
+<h1 id="Dropout"><a href="#Dropout" class="headerlink" title="Dropout"></a>Dropout</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">hidden1 = T.nnet.relu(T.dot(X,W_input_to_hidden1) + b_hidden1)</div><div class="line"><span class="keyword">if</span> training:</div><div class="line">	hidden1 = T.switch(srng.binomial(size=hidden1.shape,p=<span class="number">0.5</span>),hidden1,<span class="number">0</span>)</div><div class="line"><span class="keyword">else</span>:</div><div class="line">	hidden1 = <span class="number">0.5</span> * hidden1</div></pre></td></tr></table></figure>
+<p>[0]<a href="https://deeplearning4j.org/glossary#deep-learning-and-neural-network-glossary" target="_blank" rel="external">Deep Learning and Neural Network Glossary</a><br>[1]<a href="http://blog.csdn.net/elaine_bao/article/details/50890491" target="_blank" rel="external">解读Batch Normalization</a><br>[2]<a href="http://blog.csdn.net/meanme/article/details/48679785" target="_blank" rel="external">Batch Normalization 简单理解</a><br>[3]<a href="https://www.zhihu.com/question/38102762/answer/85238569" target="_blank" rel="external">Why BN</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

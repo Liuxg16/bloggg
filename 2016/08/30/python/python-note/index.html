@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Python Note | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="work," />
+  
+
+  <meta name="description" content="语法_Python中有一个有趣的语法，只要定义类型的时候，实现call函数，这个类型就成为可调用的。换句话说，我们可以把这个类的对象当作函数来使用，相当于重载了括号运算符。 python中setattr, getattr, delattr, call的作用是重写dict，扩展其功能举例：1234567891011121314151617181920212223class storage(dic">
+<meta name="keywords" content="work">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Note">
+<meta property="og:url" content="http://lemonman.net/2016/08/30/python/python-note/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="语法_Python中有一个有趣的语法，只要定义类型的时候，实现call函数，这个类型就成为可调用的。换句话说，我们可以把这个类的对象当作函数来使用，相当于重载了括号运算符。 python中setattr, getattr, delattr, call的作用是重写dict，扩展其功能举例：1234567891011121314151617181920212223class storage(dic">
+<meta property="og:image" content="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQFhCC8nHdWn7DcQkFfdJ9e4gRa_JT7KRLsqVhtd0fGS1RLtBRJ">
+<meta property="og:updated_time" content="2017-07-07T06:34:37.394Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python Note">
+<meta name="twitter:description" content="语法_Python中有一个有趣的语法，只要定义类型的时候，实现call函数，这个类型就成为可调用的。换句话说，我们可以把这个类的对象当作函数来使用，相当于重载了括号运算符。 python中setattr, getattr, delattr, call的作用是重写dict，扩展其功能举例：1234567891011121314151617181920212223class storage(dic">
+<meta name="twitter:image" content="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQFhCC8nHdWn7DcQkFfdJ9e4gRa_JT7KRLsqVhtd0fGS1RLtBRJ">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#语法"><span class="toc-text">语法_</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Test"><span class="toc-text">Test</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#格式打印"><span class="toc-text">格式打印</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#随机数"><span class="toc-text">随机数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#numpy-random-multinomial"><span class="toc-text">numpy.random.multinomial</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#numpy-random-multinomial-n-pvals-size-None"><span class="toc-text">numpy.random.multinomial(n, pvals, size=None)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#numpy-dot"><span class="toc-text">numpy.dot</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#numpy-squeeze"><span class="toc-text">numpy.squeeze</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UTF-8-编码"><span class="toc-text">UTF-8 编码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#读写文件"><span class="toc-text">读写文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#匹配"><span class="toc-text">匹配</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#正则表达式基础"><span class="toc-text">正则表达式基础</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#多线程"><span class="toc-text">多线程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#产生日期"><span class="toc-text">产生日期</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#python-浅拷贝"><span class="toc-text">python  浅拷贝</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#python-调用java"><span class="toc-text">python 调用java</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#字符"><span class="toc-text">字符</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#coding-utf-8"><span class="toc-text">-- coding: utf-8 --</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Counter类"><span class="toc-text">Counter类</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#递归次数"><span class="toc-text">递归次数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Throw-Exception"><span class="toc-text">Throw Exception</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-python/python-note" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Python Note</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.08.30</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <div align="center"><br><img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcQFhCC8nHdWn7DcQkFfdJ9e4gRa_JT7KRLsqVhtd0fGS1RLtBRJ" alt=""><br></div>
+
+<h1 id="语法"><a href="#语法" class="headerlink" title="语法_"></a>语法_</h1><p>Python中有一个有趣的语法，只要定义类型的时候，实现<strong>call</strong>函数，这个类型就成为可调用的。<br>换句话说，我们可以把这个类的对象当作函数来使用，相当于重载了括号运算符。</p>
+<p>python中<strong>setattr</strong>, <strong>getattr</strong>, <strong>delattr</strong>, <strong>call</strong>的作用是重写dict，扩展其功能<br>举例：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">storage</span><span class="params">(dict)</span>:</span></div><div class="line">	<span class="comment"># 通过使用__setattr__, __getattr__, __delattr__</span></div><div class="line">	<span class="comment"># 可以重写dict，使之通过“.”调用</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__setattr__</span><span class="params">(self, key, value)</span>:</span></div><div class="line">		self[key] = value</div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__getattr__</span> <span class="params">(self, key)</span>:</span></div><div class="line">		<span class="keyword">try</span>:</div><div class="line">		<span class="keyword">return</span> self[key]</div><div class="line">		<span class="keyword">except</span> KeyError, k:</div><div class="line">		<span class="keyword">return</span> <span class="keyword">None</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__delattr__</span> <span class="params">(self, key)</span>:</span></div><div class="line">		<span class="keyword">try</span>:</div><div class="line">	<span class="keyword">del</span> self[key]</div><div class="line">		<span class="keyword">except</span> KeyError, k:</div><div class="line">		<span class="keyword">return</span> <span class="keyword">None</span></div><div class="line"></div><div class="line">	<span class="comment"># __call__方法用于实例自身的调用</span></div><div class="line">	<span class="comment">#达到()调用的效果</span></div><div class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__call__</span> <span class="params">(self, key)</span>:</span></div><div class="line">		<span class="keyword">try</span>:</div><div class="line">		<span class="keyword">return</span> self[key]</div><div class="line">		<span class="keyword">except</span> KeyError, k:</div><div class="line">		<span class="keyword">return</span> <span class="keyword">None</span></div></pre></td></tr></table></figure></p>
+<h3 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">s = storage()</div><div class="line">s.name = <span class="string">"hello"</span><span class="comment">#这是__setattr__起的作用</span></div><div class="line"><span class="keyword">print</span> s(<span class="string">"name"</span>)<span class="comment">#这是__call__起的作用</span></div><div class="line"><span class="keyword">print</span> s[<span class="string">"name"</span>]<span class="comment">#dict默认行为</span></div><div class="line"><span class="keyword">print</span> s.name<span class="comment">#这是__getattr__起的作用</span></div><div class="line"><span class="keyword">del</span> s.name<span class="comment">#这是__delattr__起的作用</span></div><div class="line"><span class="keyword">print</span> s(<span class="string">"name"</span>)</div><div class="line"><span class="keyword">print</span> s[<span class="string">"name"</span>]</div><div class="line"><span class="keyword">print</span> s.name</div></pre></td></tr></table></figure>
+<h1 id="格式打印"><a href="#格式打印" class="headerlink" title="格式打印"></a>格式打印</h1><p><code>print &quot;train error: {}&quot;.format(3231)</code></p>
+<h1 id="随机数"><a href="#随机数" class="headerlink" title="随机数"></a>随机数</h1><p>[注]random模块</p>
+<ul>
+<li>random.random()<br>同javascript的Math.random(),返回[0.0,1)之间的浮点数</li>
+<li>random.uniform(a, b)<br>返回[a,b]之间的浮点数<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">print</span> random.uniform(<span class="number">10</span>, <span class="number">20</span>)     </div><div class="line"><span class="keyword">print</span> random.uniform(<span class="number">20</span>, <span class="number">10</span>)     </div><div class="line">```  </div><div class="line">* random.randint(a, b) </div><div class="line">返回[a,b]之间的整数</div><div class="line">```python</div><div class="line"><span class="keyword">print</span> random.randint(<span class="number">12</span>, <span class="number">20</span>) <span class="comment">#生成的随机数n: 12 &lt;= n &lt;= 20     </span></div><div class="line"><span class="keyword">print</span> random.randint(<span class="number">20</span>, <span class="number">20</span>) <span class="comment">#结果永远是20     </span></div><div class="line"><span class="comment">#print random.randint(20, 10) #该语句是错误的。下限必须小于上限。  </span></div><div class="line">random.randrange([start], stop[, step])，从指定范围内，按指定基数递增的集合中 获取一个随机数。如：random.randrange(<span class="number">10</span>, <span class="number">100</span>, <span class="number">2</span>)，结果相当于从[<span class="number">10</span>, <span class="number">12</span>, <span class="number">14</span>, <span class="number">16</span>, ... <span class="number">96</span>, <span class="number">98</span>]序列中获取一个随机数。</div><div class="line">random.randrange(<span class="number">10</span>, <span class="number">100</span>, <span class="number">2</span>)在结果上与 random.choice(range(<span class="number">10</span>, <span class="number">100</span>, <span class="number">2</span>) 等效。</div><div class="line">random.choice(sequence)。参数sequence表示一个有序类型。这里要说明 一下：sequence在python不是一种特定的类型，而是泛指一系列的类型。list, tuple, 字符串都属于sequence。</div><div class="line"><span class="keyword">print</span> random.choice(<span class="string">"学习Python"</span>)    </div><div class="line"><span class="keyword">print</span> random.choice([<span class="string">"JGood"</span>, <span class="string">"is"</span>, <span class="string">"a"</span>, <span class="string">"handsome"</span>, <span class="string">"boy"</span>])     </div><div class="line"><span class="keyword">print</span> random.choice((<span class="string">"Tuple"</span>, <span class="string">"List"</span>, <span class="string">"Dict"</span>))   </div><div class="line">random.shuffle(x[, random])，用于将一个列表中的元素打乱</div><div class="line">p = [<span class="string">"Python"</span>, <span class="string">"is"</span>, <span class="string">"powerful"</span>, <span class="string">"simple"</span>, <span class="string">"and so on..."</span>]     </div><div class="line">random.shuffle(p)     </div><div class="line"><span class="keyword">print</span> p     </div><div class="line">&gt;结果（不同机器上的结果可能不一样。）     </div><div class="line"><span class="comment">#['powerful', 'simple', 'is', 'Python', 'and so on...']  </span></div><div class="line">random.sample(sequence, k)，从指定序列中随机获取指定长度的片断。sample函数不会修改原有序列。</div><div class="line">Python代码  收藏代码</div><div class="line">list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span>]     </div><div class="line">slice = random.sample(list, <span class="number">5</span>) <span class="comment">#从list中随机获取5个元素，作为一个片断返回     </span></div><div class="line"><span class="keyword">print</span> slice     </div><div class="line"><span class="keyword">print</span> list <span class="comment">#原有序列并没有改变。</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="numpy-random-multinomial"><a href="#numpy-random-multinomial" class="headerlink" title="numpy.random.multinomial"></a>numpy.random.multinomial</h1><p>在介绍Multinomial分布的博客中，有着细致的描写，这里不多说了。下面是文档的解释和例子。<br>Draw samples from a multinomial distribution.<br>The multinomial distribution is a multivariate generalisation of the binomial distribution. Take an experiment with one of p possible outcomes. An example of such an experiment is throwing a dice, where the outcome can be 1 through 6. Each sample drawn from the distribution represents n such experiments. Its values, X_i = [X_0, X_1, …, X_p], represent the number of times the outcome was i. </p>
+<h3 id="numpy-random-multinomial-n-pvals-size-None"><a href="#numpy-random-multinomial-n-pvals-size-None" class="headerlink" title="numpy.random.multinomial(n, pvals, size=None)"></a>numpy.random.multinomial(n, pvals, size=None)</h3><p>n:代表实验次数<br>pvals:代表每种结果的概率，一个数组形式，加和等于1<br>size: 上述过程重复次数<br>return: 返回(size,pvals.length)的矩阵，每行代表每种结果出现的次数，算是一次实验对模型的采样。属于Observations</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">np.random.multinomial(<span class="number">20</span>, [<span class="number">1</span>/<span class="number">6.</span>]*<span class="number">6</span>, size=<span class="number">1</span>)</div><div class="line">array([[<span class="number">4</span>, <span class="number">1</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">2</span>, <span class="number">1</span>]])</div></pre></td></tr></table></figure>
+<p>It landed 4 times on 1, once on 2, etc.</p>
+<p>Now, throw the dice 20 times, and 20 times again:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">np.random.multinomial(<span class="number">20</span>, [<span class="number">1</span>/<span class="number">6.</span>]*<span class="number">6</span>, size=<span class="number">2</span>)</div><div class="line">array([[<span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">3</span>],</div><div class="line">       [<span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">0</span>, <span class="number">7</span>]])</div></pre></td></tr></table></figure></p>
+<h1 id="numpy-dot"><a href="#numpy-dot" class="headerlink" title="numpy.dot"></a>numpy.dot</h1><p>numpy.dot(M,V) 与numpy.dot(V,M)都是把前者视为行，把后者视为列（”视为”是指不管in fact是不是），然后做卷积。例如：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">M = np.array([[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>]])</div><div class="line">V = np.array([<span class="number">2</span>,<span class="number">4</span>])</div><div class="line"><span class="keyword">print</span> np.dot(M,V)</div><div class="line"><span class="keyword">print</span> np.dot(M.T,V)</div><div class="line"><span class="keyword">print</span> np.dot(V,M)</div><div class="line"><span class="keyword">print</span> np.dot(V.T,M)</div><div class="line"><span class="comment">#output</span></div><div class="line">[<span class="number">10</span> <span class="number">22</span>]</div><div class="line">[<span class="number">14</span> <span class="number">20</span>]</div><div class="line">[<span class="number">14</span> <span class="number">20</span>]</div><div class="line">[<span class="number">14</span> <span class="number">20</span>]</div></pre></td></tr></table></figure></p>
+<h1 id="numpy-squeeze"><a href="#numpy-squeeze" class="headerlink" title="numpy.squeeze"></a>numpy.squeeze</h1><p>去掉多余维度<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line">x = np.array([[[<span class="number">0</span>], [<span class="number">1</span>], [<span class="number">2</span>]]])</div><div class="line">print(x.shape)</div><div class="line"><span class="keyword">print</span> np.squeeze(x,axis=<span class="number">0</span>).shape</div></pre></td></tr></table></figure></p>
+<h1 id="UTF-8-编码"><a href="#UTF-8-编码" class="headerlink" title="UTF-8 编码"></a>UTF-8 编码</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div></pre></td></tr></table></figure>
+<h1 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> sys</div><div class="line">r_name = <span class="string">'ListContent'</span></div><div class="line">source = open(r_name, <span class="string">'r'</span>).read()<span class="comment">#所有文本</span></div></pre></td></tr></table></figure>
+<p>追加写文件<br><code>output = open(&#39;data&#39;, &#39;w+&#39;)</code></p>
+<p>写数据<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">file_object = open(<span class="string">'thefile.txt'</span>, <span class="string">'w'</span>)</div><div class="line">file_object.write(all_the_text)</div><div class="line">	file_object.close( )</div></pre></td></tr></table></figure></p>
+<h1 id="匹配"><a href="#匹配" class="headerlink" title="匹配"></a>匹配</h1><p>a = source.find(‘裁判日期’) # 16byte</p>
+<h2 id="正则表达式基础"><a href="#正则表达式基础" class="headerlink" title="正则表达式基础"></a>正则表达式基础</h2><p>^ 匹配字符串的开始。<br>$ 匹配字符串的结尾。<br>\b 匹配一个单词的边界。<br>\d 匹配任意数字。<br>\D 匹配任意非数字字符。<br>x? 匹配一个可选的 x 字符 (换言之，它匹配 1 次或者 0 次 x 字符)。<br>x* 匹配0次或者多次 x 字符。<br>x+ 匹配1次或者多次 x 字符。<br>x{n,m} 匹配 x 字符，至少 n 次，至多 m 次。<br>(a|b|c) 要么匹配 a，要么匹配 b，要么匹配 c。<br>(x) 一般情况下表示一个记忆组 (remembered group)。你可以利用 re.search 函数返回对象的 groups() 函数获取它的值。<br>正则表达式中的点号通常意味着 “匹配任意单字符”</p>
+<h1 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> threading</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">myThread</span><span class="params">(threading.Thread)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name,page_id)</span>:</span></div><div class="line">        threading.Thread.__init__(self)</div><div class="line">        self.t_name = name</div><div class="line">        self.pageid = page_id</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        logging.info(<span class="string">'start'</span>)</div><div class="line">        file_path = (<span class="string">'./pageinfo.txt'</span>)</div><div class="line">        self.downloadPages(file_path,  self.pageid, <span class="number">400000</span>)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    t = myThread(<span class="string">"d"</span>,<span class="number">90</span>)</div><div class="line">    t.start()</div></pre></td></tr></table></figure>
+<h1 id="产生日期"><a href="#产生日期" class="headerlink" title="产生日期"></a>产生日期</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">datelist</span><span class="params">(start, end)</span>:</span> <span class="comment">#(2014,4,5),(2014,5,7) =&gt; 2 days:&#123;2014-04-05),(2014-05-06&#125;,(2014-05-07&#125;</span></div><div class="line">    start_date = datetime.date(*start)</div><div class="line">    end_date = datetime.date(*end)</div><div class="line"></div><div class="line">    result = []</div><div class="line">    curr_date = start_date</div><div class="line">    <span class="keyword">while</span> curr_date != end_date:</div><div class="line">        result.append(<span class="string">"%04d-%02d-%02d"</span> % (curr_date.year, curr_date.month, curr_date.day))</div><div class="line">        curr_date += datetime.timedelta(<span class="number">1</span>)</div><div class="line">    result.append(<span class="string">"%04d-%02d-%02d"</span> % (curr_date.year, curr_date.month, curr_date.day))</div><div class="line">    <span class="keyword">return</span> result</div></pre></td></tr></table></figure>
+<h1 id="python-浅拷贝"><a href="#python-浅拷贝" class="headerlink" title="python  浅拷贝"></a>python  浅拷贝</h1><p><a href="http://www.cnblogs.com/btchenguang/archive/2012/01/30/2332479.html" target="_blank" rel="external">http://www.cnblogs.com/btchenguang/archive/2012/01/30/2332479.html</a></p>
+<p>#link<br>[编译器]<a href="http://c.runoob.com/compile/6" target="_blank" rel="external">http://c.runoob.com/compile/6</a></p>
+<h1 id="python-调用java"><a href="#python-调用java" class="headerlink" title="python 调用java"></a>python 调用java</h1><p>然后从<a href="http://jpype.sourceforge.net/" target="_blank" rel="external">http://jpype.sourceforge.net/</a> 上下载jpype-x.x.x.zip<br>直接在随便哪个放置这个安装包的目录下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">unzip JPype-0.5.3.zip</div><div class="line"><span class="built_in">cd</span> JPype-0.5.3</div><div class="line">python setup.py install</div></pre></td></tr></table></figure></p>
+<p>demo：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> jpype</div><div class="line">jvmPath = jpype.getDefaultJVMPath()</div><div class="line">jpype.startJVM(jvmPath)</div><div class="line">jpype.java.lang.System.out.println(<span class="string">'hello world!'</span>)</div><div class="line">jpype.shutdownJVM()</div></pre></td></tr></table></figure></p>
+<h1 id="字符"><a href="#字符" class="headerlink" title="字符"></a>字符</h1><h1 id="coding-utf-8"><a href="#coding-utf-8" class="headerlink" title="-- coding: utf-8 --"></a>-<em>- coding: utf-8 -</em>-</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">t1 = ord(<span class="string">'我'</span>)</div><div class="line">t2 = ord(<span class="string">'好'</span>)</div><div class="line">t3 = ord(<span class="string">'你'</span>)</div><div class="line">t4 = ord(<span class="string">'坏'</span>)</div><div class="line">s = <span class="string">'我是个好人'</span></div><div class="line">m = &#123;t1:t3,t2:t4&#125;</div><div class="line">trans = str.maketrans(m)</div><div class="line">atran = s.translate(trans)</div><div class="line">print(atran)</div></pre></td></tr></table></figure>
+<h1 id="Counter类"><a href="#Counter类" class="headerlink" title="Counter类"></a>Counter类</h1><p>创建：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; c = Counter(<span class="string">"abcdefgab"</span>)</div><div class="line">&gt;&gt;&gt; c[<span class="string">"a"</span>]</div><div class="line">2</div><div class="line">&gt;&gt;&gt; c[<span class="string">"c"</span>]</div><div class="line">1</div><div class="line">&gt;&gt;&gt; c[<span class="string">"h"</span>]</div><div class="line">0</div></pre></td></tr></table></figure></p>
+<p>常用方法：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sum(c.values())  <span class="comment"># 所有计数的总数</span></div><div class="line">c.clear()  <span class="comment"># 重置Counter对象，注意不是删除</span></div><div class="line">list(c)  <span class="comment"># 将c中的键转为列表</span></div><div class="line">set(c)  <span class="comment"># 将c中的键转为set</span></div><div class="line">dict(c)  <span class="comment"># 将c中的键值对转为字典</span></div><div class="line">c.items()  <span class="comment"># 转为(elem, cnt)格式的列表</span></div><div class="line">Counter(dict(list_of_pairs))  <span class="comment"># 从(elem, cnt)格式的列表转换为Counter类对象</span></div><div class="line">c.most_common()[:-n:<span class="number">-1</span>]  <span class="comment"># 取出计数最少的n个元素</span></div><div class="line">c += Counter()  <span class="comment"># 移除0和负值</span></div></pre></td></tr></table></figure></p>
+<h1 id="递归次数"><a href="#递归次数" class="headerlink" title="递归次数"></a>递归次数</h1><p>最大递归次数：<code>sys.setrecursionlimit(10000)</code><br>这是python专门设置的一种机制用来防止无限递归造成Python溢出崩溃， 最大递归次数是可以重新调整的。超过最大递归次数会报错：<br><code>RuntimeError: maximum recursion depth exceeded</code></p>
+<h1 id="Throw-Exception"><a href="#Throw-Exception" class="headerlink" title="Throw Exception"></a>Throw Exception</h1><p><code>raise NotImplementedError</code></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>python产生随机数:<a href="http://essen.iteye.com/blog/1454726" target="_blank" rel="external">http://essen.iteye.com/blog/1454726</a>    </p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

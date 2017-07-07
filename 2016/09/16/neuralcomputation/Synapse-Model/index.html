@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Synapse Model | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="work," />
+  
+
+  <meta name="description" content="Experiment   XPU Neurons Steps(0.2ms/step) Time(ms)     CPU 4 200 1647   CPU 4 2000 8954   CPU 4 8000 30546   CPU 4 10000 43577   CPU 200 200 1755   CPU 200 800 9805   CPU 200 2000 45854   CPU 200 100">
+<meta name="keywords" content="work">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Synapse Model">
+<meta property="og:url" content="http://lemonman.net/2016/09/16/neuralcomputation/Synapse-Model/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="Experiment   XPU Neurons Steps(0.2ms/step) Time(ms)     CPU 4 200 1647   CPU 4 2000 8954   CPU 4 8000 30546   CPU 4 10000 43577   CPU 200 200 1755   CPU 200 800 9805   CPU 200 2000 45854   CPU 200 100">
+<meta property="og:image" content="http://lemonman.net/images/neuralScience/chemical_synapse.png">
+<meta property="og:image" content="http://images.cnitblog.com/blog/667949/201502/251731512366497.png">
+<meta property="og:image" content="http://neuronaldynamics.epfl.ch/online/x170.png">
+<meta property="og:image" content="http://lemonman.net/2016/09/16/neuralcomputation/Synapse-Model/~/19-42-22.jpg">
+<meta property="og:updated_time" content="2017-07-07T06:34:37.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Synapse Model">
+<meta name="twitter:description" content="Experiment   XPU Neurons Steps(0.2ms/step) Time(ms)     CPU 4 200 1647   CPU 4 2000 8954   CPU 4 8000 30546   CPU 4 10000 43577   CPU 200 200 1755   CPU 200 800 9805   CPU 200 2000 45854   CPU 200 100">
+<meta name="twitter:image" content="http://lemonman.net/images/neuralScience/chemical_synapse.png">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Experiment"><span class="toc-text">Experiment</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Synapse-structure"><span class="toc-text">Synapse structure:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#钙离子内流-0"><span class="toc-text">钙离子内流[0]</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#概述"><span class="toc-text">概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#learning-systems-within-the-hippocampus"><span class="toc-text">learning systems within the hippocampus</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Synaptic-and-nonsynaptic-plasticity-approximating-probabilistic-inference"><span class="toc-text">Synaptic and nonsynaptic plasticity approximating probabilistic inference</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-neuralcomputation/Synapse-Model" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Synapse Model</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.09.16</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Experiment"><a href="#Experiment" class="headerlink" title="Experiment"></a>Experiment</h1><table>
+<thead>
+<tr>
+<th>XPU</th>
+<th>Neurons</th>
+<th style="text-align:center">Steps(0.2ms/step)</th>
+<th style="text-align:right">Time(ms)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CPU</td>
+<td>4</td>
+<td style="text-align:center">200</td>
+<td style="text-align:right">1647</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>4</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:right">8954</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>4</td>
+<td style="text-align:center">8000</td>
+<td style="text-align:right">30546</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>4</td>
+<td style="text-align:center">10000</td>
+<td style="text-align:right">43577</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>200</td>
+<td style="text-align:center">200</td>
+<td style="text-align:right">1755</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>200</td>
+<td style="text-align:center">800</td>
+<td style="text-align:right">9805</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>200</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:right">45854</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>200</td>
+<td style="text-align:center">10000</td>
+<td style="text-align:right">1906963</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>1000</td>
+<td style="text-align:center">200</td>
+<td style="text-align:right">2987</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>1000</td>
+<td style="text-align:center">800</td>
+<td style="text-align:right">80941</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>1000</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:right">186972</td>
+</tr>
+<tr>
+<td>CPU</td>
+<td>1000</td>
+<td style="text-align:center">10000</td>
+<td style="text-align:right">&gt;1E8</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>4</td>
+<td style="text-align:center">200</td>
+<td style="text-align:right">1959</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>4</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:right">7504</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>4</td>
+<td style="text-align:center">8000</td>
+<td style="text-align:right">19094</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>4</td>
+<td style="text-align:center">10000</td>
+<td style="text-align:right">38914</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>200</td>
+<td style="text-align:center">200</td>
+<td style="text-align:right">1954</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>200</td>
+<td style="text-align:center">800</td>
+<td style="text-align:right">3024</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>200</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:right">8945</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>200</td>
+<td style="text-align:center">8000</td>
+<td style="text-align:right">29455</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>200</td>
+<td style="text-align:center">10000</td>
+<td style="text-align:right">42741</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>1000</td>
+<td style="text-align:center">200</td>
+<td style="text-align:right">2039</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>1000</td>
+<td style="text-align:center">800</td>
+<td style="text-align:right">9045</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>1000</td>
+<td style="text-align:center">2000</td>
+<td style="text-align:right">23348</td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>1000</td>
+<td style="text-align:center">10000</td>
+<td style="text-align:right">77621</td>
+</tr>
+</tbody>
+</table>
+<h1 id="Synapse-structure"><a href="#Synapse-structure" class="headerlink" title="Synapse structure:"></a>Synapse structure:</h1><div align="center"><br><img src="/images/neuralScience/chemical_synapse.png" alt=""><br></div>
+
+
+<h1 id="钙离子内流-0"><a href="#钙离子内流-0" class="headerlink" title="钙离子内流[0]"></a>钙离子内流<sup>[0]</sup></h1><p>主要通过AMPA和NMDA谷氨酸受体、电压门控钙通道（VGCC）、烟碱型胆碱能受体（nAChR）和瞬时受体电位C型通道（TRPC）；细胞内钙库的钙释放主要由IP3R和RyR介导；钙离子外流则由膜钙ATP酶（PMCA）、Na+-Ca2+质子泵（NCX）及萨尔科/内质网钙ATP酶（SERCA）介导；线粒体在维持神经元钙离子稳态中发挥重要作用。</p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>细胞内钙离子作为重要的信号分子其作用具有时间性和空间性。当第一个细胞兴奋时，产生了一个电冲动，此时，细胞外的钙离子流入该细胞内，促使该细胞分泌神经递质，神经递质与相邻的下一级神经细胞膜上的蛋白分子结合，促使这一级神经细胞产生新的电冲动。以此类推，神经信号便一级一级地传递下去，从而构成复杂的信号体系，最终形成学习、记忆等大脑的高级功能。在哺乳动物神经系统中，钙离子同样扮演着重要的信号分子的角色。静息状态下大部分神经元细胞内钙离子浓度约为50-100nM，而细胞兴奋时钙离子浓度能瞬间上升10-100倍，增加的钙离子对于突触囊泡胞吐释放神经递质的过程必不可少。众所周知，只有游离钙才具有生物学活性，而细胞质内钙离子浓度由钙离子的内外流平衡所决定，同时也受钙结合蛋白的影响。细胞外钙离子内流的方式有很多种，其中包括电压门控钙离子通道、离子型谷氨酰胺受体、烟碱型胆碱能受体（nAChR）和瞬时受体电位C型通道（TRPC）等。神经元钙成像的原理就是利用特殊的荧光染料或钙离子指示剂将神经元中钙离子浓度的变化通过荧光强度表现出来，以反映神经元活性。该方法可以同时观察多个功能或位置相关的脑细胞。<br>而人工神经网络的神经单元如图所示：<br><img src="http://images.cnitblog.com/blog/667949/201502/251731512366497.png" alt=""><br>而我理解您的意思是增加网络中weight的内涵，让其变得丰富，很有可能是一个三维数据而存在，下图是经典的脉冲计算模型：</p>
+<div align="center"><br><img src="http://neuronaldynamics.epfl.ch/online/x170.png" alt=""><br></div>
+
+<h1 id="learning-systems-within-the-hippocampus"><a href="#learning-systems-within-the-hippocampus" class="headerlink" title="learning systems within the hippocampus"></a>learning systems within the hippocampus</h1><p>全名：Complementary learning systems within the hippocampus:A neural network modeling approach to reconciling episodic memory with statistical learning</p>
+<h1 id="Synaptic-and-nonsynaptic-plasticity-approximating-probabilistic-inference"><a href="#Synaptic-and-nonsynaptic-plasticity-approximating-probabilistic-inference" class="headerlink" title="Synaptic and nonsynaptic plasticity approximating probabilistic inference"></a>Synaptic and nonsynaptic plasticity approximating probabilistic inference</h1><p>电信号的形成在于膜内外的电势差，一旦外部电流$I$输入，电容会增加电荷，当电压恒定是，外部电流=电容上的电流+离子通道上的电流，即：<br>$$I(t)=I_c(t)+\sum_k I_k(t) $$<br>其中，I(t)为外部输入的总电流，I_c(t)为电容上的电流，$\sum_k I_k(t)$为通过膜电位的离子通道的电流累积。针对细胞膜电容$C$，可将上式写为：<br>$$C\frac{du}{dt}=I(t)-\sum_k I_k(t) $$<br>其中，$u$为细胞膜电位，研究发现，离子通道上的电流为$Na$电流、钾电流和漏电流之和，将上式展开，即：<br>$$\sum_k I_k=g_{Na}m^3h(u-E_{Na})+g_kn^4(u-E_K)+g_L(u-E_L) $$<br>H-H模型是一种基于点到点的模型，可变点到$g_{Na} \text{,}g_{K}$代表与电压有关的钠电导、钾电导，固定电阻$g_L$表示与电压无关的漏电导（通常是氯离子引起的）。针对上述例子通道，存在门通道变量m、n、h，只有当门通道允许时，例子才可以流过，其变化范围在0-1之间，该门通道可有下列非线性微分方程表征。<br>$$\dot m=\alpha_m(u)(1-m)-\beta_m(u)m \\<br>\dot n=\alpha_n(u)(1-n)-\beta_n(u)n \\<br>\dot h=\alpha_h(u)(1-h)-\beta_h(u)h$$<br>上式中$\alpha_m \text{、}\alpha_n \text{、}\alpha_h$表示门通道从不允许状态转变为允许状态的速率，反之，$\beta_m,\beta_n,\beta_h$表示从允许状态变为不允许状态的速率。其值由下式得出：<br>$$<br>\alpha_n=\frac{0.1-0.1u}{e^{1-0.1u}-1} \\<br>\alpha_m=\frac{2.5-0.1u}{e^{2.5-0.1u}-1} \\<br>\alpha_h=0.07e^{-u/20} \\<br>\beta_n=0.125e^{-u/80} \\<br>\beta_m=4e^{-u/80} \\<br>\beta_h=\frac{1}{e^{3-0.1u}+1}<br>$$<br>H-H 方程很好的描述了 Spiking 神经元的生理特性，是目前仿真生物神经元最为精确的模型，通常也会将其作为其他模型比较的标准，然而，HH 模型计算代价非常高，尤其是仿真大规模的神经元。Long 和 Fang证明在 2.8GHz 的 8 核 Mac OS X 服务器下，HH 的 CPU 运行时间代价大约为 下节所提到的LIF 模型的 30倍。<br>H-H 模型极好地描述了动作电位的形成、离子通道等相关属性，但该模型并没有用到时间编码的特性，而且神经元发放的脉冲可以简化成有或无的二值形式。这一观点被Gerstner 等人采用，并加入脉冲发放的时间信息，继而提 出Intergrate-and-Fire(简称 IF)模型，相比 H-H 模型，这种加入时间信息的模型算得上是正式的 Spiking 神经元模型。顾名思义，他们是把神经元当成一个积分电路（Intergrator）来处理，当神经元的膜电位累积达到给定阈值时发放脉冲。这里考虑应用最多的 leaky IF（简称 LIF）模型。其模型机制如下图所示，上半部分表示突触后神经元 j 接收来自突触前的神经元的脉冲信息，下图右 表示经过一定的累积过后，神经元 j 的膜电位值达到阈值θ从而发放脉冲，这表明 LIF 模型亦是一个阈值脉冲发放模型，之后膜电位值重置为 0，再之后若有脉冲输入，神经元 j 处于绝对不应期状态，将不予以反应，直到一段时间过后，神经元 j 才对输入的刺激给予反应，然后不断重复上述的脉冲发放过程，从而可以进行信息的传递。<br><img src="~/19-42-22.jpg" alt=""><br>下半部分表示 LIF 模型的等效电路图，基本电路为图中红圈内的模块，包括一个电阻 R 及电容 C，当突触前神经元 i 发放脉冲后，外部电流 I(t)流过 RC电路，其值随时间不断的累积直至膜电位达到阈值θ时，即$t_j^f$时刻，脉冲发放，之后重置为 0,LIF 模型的表达式如公式：<br>$$<br>\tau\frac{du_j}{dt}=-u_j+RI(t) \\<br>t_j^f:u_j(t_j^f) = \theta \text{&amp;&amp;}\frac{du_j(t)}{dt}|t=t_j^f&gt;0<br>$$</p>
+<p>其中，第一个公式是由 RC 电路电流的关系表达式及电流 I、电阻 C 的定义式推导而来，它是关于突触后神经元 j 的膜电位ju 的一阶线性微分方程。其中，τ为时间常量，其值为 R 与 C 的乘积，I(t)为 t 时刻外部的输入电流，给出$\tau$=1.5ms，R=10Ω，θ=15mV，不应期为 2ms 下的外部输入电流与脉冲发放率之间的关系。Spiking 神经元对信息时间编码的特性表明脉冲发放的时间是特别重要的。<sup>[3]</sup></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[0]<a href="http://www.aiweibang.com/yuedu/135658204.html" target="_blank" rel="external">功能成像技术之大脑神经元钙成像（一）</a><br>[1]<a href="http://neuronaldynamics.epfl.ch/book.html" target="_blank" rel="external">Neuronal Dynamics</a>:From single neurons to networks and models of cognition<br>[2]<a href="http://www.math.uwaterloo.ca/~sacampbe/mathbio/slides/sac_lect11.pdf" target="_blank" rel="external">Integrate and Fire Models</a><br>[3]朱宗花，Spiking神经网络的研究及其在图像分割中的应用<br>[4]<a href="http://neuroscience.ucdavis.edu/goldman/Tutorials_files/Integrate%26Fire.pdf" target="_blank" rel="external">Integrate and Fire Model with Matlab</a><br>[5]<a href="https://liannemeah.wordpress.com/2013/11/25/ego-te-provoco/" target="_blank" rel="external">IAF MATLAB CODE</a><br>[6]<a href="http://www.haodf.com/zhuanjiaguandian/songbowang_4743659768.htm" target="_blank" rel="external">5种主要神经递质作用机制列表</a><br>[7]Christopher Johansson,Anders Lansner,Implementing plastic weights in neural networks using low precision arithmetic,2007</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

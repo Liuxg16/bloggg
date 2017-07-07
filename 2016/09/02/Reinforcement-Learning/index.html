@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Reinforcement Learning Tutorial | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="work," />
+  
+
+  <meta name="description" content="1 Core Concept1.1 Definition   Vatiables Discription     $V$ value of state   $gamma$ discount rate   $q(a)$ true value of action a   $r(s,a,s’)$ the reward of s $s\to s’$ with a   $R_k$ the reward of">
+<meta name="keywords" content="work">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Reinforcement Learning Tutorial">
+<meta property="og:url" content="http://lemonman.net/2016/09/02/Reinforcement-Learning/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="1 Core Concept1.1 Definition   Vatiables Discription     $V$ value of state   $gamma$ discount rate   $q(a)$ true value of action a   $r(s,a,s’)$ the reward of s $s\to s’$ with a   $R_k$ the reward of">
+<meta property="og:image" content="http://www.gotoli.us/wp-content/uploads/2016/04/mdp.png">
+<meta property="og:updated_time" content="2017-07-07T06:34:36.431Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Reinforcement Learning Tutorial">
+<meta name="twitter:description" content="1 Core Concept1.1 Definition   Vatiables Discription     $V$ value of state   $gamma$ discount rate   $q(a)$ true value of action a   $r(s,a,s’)$ the reward of s $s\to s’$ with a   $R_k$ the reward of">
+<meta name="twitter:image" content="http://www.gotoli.us/wp-content/uploads/2016/04/mdp.png">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-Core-Concept"><span class="toc-text">1 Core Concept</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-Definition"><span class="toc-text">1.1 Definition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-finite-MDP"><span class="toc-text">1.2 finite MDP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-episodic-tasks"><span class="toc-text">1.3 episodic tasks</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-4-Return"><span class="toc-text">1.4 Return</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Simple-Return"><span class="toc-text">Simple Return</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#discounted-return"><span class="toc-text">discounted return</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Greedy-Policy"><span class="toc-text">Greedy Policy</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-模型无关RL"><span class="toc-text">2 模型无关RL</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-Policy-Iteration"><span class="toc-text">2 Policy Iteration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-Value-Evaluation"><span class="toc-text">2.1 Value Evaluation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-Policy-update"><span class="toc-text">2.2 Policy update</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-模型无关入门"><span class="toc-text">3 模型无关入门</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-q-Value"><span class="toc-text">4 $q$ Value</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Eligibility-Trace-资格迹"><span class="toc-text">Eligibility Trace(资格迹)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-Principle"><span class="toc-text">Basic Principle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Update-Rule-TD"><span class="toc-text">Update Rule(TD)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TD与MC的不同"><span class="toc-text">TD与MC的不同</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Incremental-every-visit-Monte-Carlo"><span class="toc-text">Incremental every-visit Monte-Carlo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Simplest-temporal-difference-learning-algotithm-TD-0"><span class="toc-text">Simplest temporal-difference learning algotithm:TD(0)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sarsa-lambda"><span class="toc-text">$Sarsa(\lambda)$</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Definition"><span class="toc-text">Definition</span></a></li></ol></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Reinforcement-Learning" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Reinforcement Learning Tutorial</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.09.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="1-Core-Concept"><a href="#1-Core-Concept" class="headerlink" title="1 Core Concept"></a>1 Core Concept</h1><h2 id="1-1-Definition"><a href="#1-1-Definition" class="headerlink" title="1.1 Definition"></a>1.1 Definition</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">Vatiables</th>
+<th style="text-align:center">Discription</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">$V$</td>
+<td style="text-align:center">value of state</td>
+</tr>
+<tr>
+<td style="text-align:center">$gamma$</td>
+<td style="text-align:center">discount rate</td>
+</tr>
+<tr>
+<td style="text-align:center">$q(a)$</td>
+<td style="text-align:center">true value of action a</td>
+</tr>
+<tr>
+<td style="text-align:center">$r(s,a,s’)$</td>
+<td style="text-align:center">the reward of s $s\to s’$ with a</td>
+</tr>
+<tr>
+<td style="text-align:center">$R_k$</td>
+<td style="text-align:center">the reward of k-th action afterwards</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-2-finite-MDP"><a href="#1-2-finite-MDP" class="headerlink" title="1.2 finite MDP"></a>1.2 finite MDP</h2><p>A particular finite MDP is defined by its state and action sets and by the one-step<br>dynamics of the environment. Given any state and action s and a, the probability<br>of each possible pair of next state and reward, s , r, is denoted</p>
+<h2 id="1-3-episodic-tasks"><a href="#1-3-episodic-tasks" class="headerlink" title="1.3 episodic tasks"></a>1.3 episodic tasks</h2><p>when the agent–environment interactionbreaks naturally into subsequences, which we call episodes, 5 such as plays of a game,trips through a maze, or any sort of repeated interactions. Each episode ends in a special state called the terminal state, followed by a reset to a standard starting state or to a sample from a standard distribution of starting states. Tasks with episodes of this kind are called episodic tasks. In episodic tasks we sometimes need to distinguish the set of all nonterminal states, denoted $S$, from the set of all statesplus the terminal state, denoted $S^+$ .Tasks with episodes of this kind are called episodic tasks.</p>
+<h2 id="1-4-Return"><a href="#1-4-Return" class="headerlink" title="1.4 Return"></a>1.4 Return</h2><h3 id="Simple-Return"><a href="#Simple-Return" class="headerlink" title="Simple Return"></a>Simple Return</h3><p>In the simplest case the return is the sum of the rewards:<br>$$<br>\begin{eqnarray}<br>\label{1}<br>G_t = R_{t+1}+R_{t+2}+R_{t+3}+…+R_{T}<br>\end{eqnarray}<br>$$<br>where T is a final time step.这种return方式对于有确切终止状态的模型才有意义,比如迷宫或者其它的重复交互的模型。并且一般terminal state的reward不为0，其它大多数reward都为0，这样才可以引导agent找到terminal state。<br>最简单的Environment,状态量较少，有限的随机action可以到达terminal state.</p>
+<h3 id="discounted-return"><a href="#discounted-return" class="headerlink" title="discounted return"></a>discounted return</h3><p>当对于continual process-control task来说，有无数个state,用上述方法似乎是不可行的。对于未来，我们似乎更加注重当前这步的选择，于是有了discounted return:<br>$$<br>\begin{eqnarray}<br>G_t = R_{t+1}+\gamma R_{t+2}+γ^2 R_{t+3}+= \sum_{k=0}^\infty \gamma^k R_{t+k+1}<br>\end{eqnarray}<br>$$<br>where γ is a parameter, 0 ≤ γ ≤ 1, called the discount rate.</p>
+<ul>
+<li>$\gamma$大小评论<br>If $γ&lt;1$, the infinite sum has a finite value as long as the reward sequence ${R_k}$ is bounded. If $γ = 0$, the agent is “myopic” in being concerned only with maximizing immediate rewards: its objective in this case is to learn how to choose A t so as to maximize only R t+1 . If each of the agent’s actions happened to influence only the immediate reward, not future rewards as well, then a myopic agent could maximize the formulation by separately maximizing each immediate reward. But in general, acting to maximize immediate reward can reduce access to future rewards so that the return may actually be reduced. As $y$ approaches 1, the objective takes future rewards into account more strongly: the agent becomes more farsighted.<br>简单来说就是，$y$越大，当前决策考虑未来的权重越大；加入$y$后，要让agent尽快达到goal。</li>
+</ul>
+<h2 id="Greedy-Policy"><a href="#Greedy-Policy" class="headerlink" title="Greedy Policy"></a>Greedy Policy</h2><p>最优策略是贪婪策略，这个不用怀疑。但对于学习来说，贪婪策略不一定是最好的。</p>
+<blockquote>
+<p>举个栗子，状态集合为 {A, B, C, D}， 其中 A 是起始状态而 D 是终止状态。A-&gt;B 奖励为1 而 C-&gt;D 奖励为100，其他奖励为0。从起始状态 A, 贪婪策略会一直选择进入 B，而不探索 C 从而获得更高奖励。为了鼓励探索，我们用了另一种ϵ−贪婪策略(也被称为$\epsilon-soft$)：<br>$$\pi_(s,a) =<br>\begin{cases}<br>1-\epsilon+\frac{\epsilon}{|A|},  &amp; \text{if $a=argmax_a q(s,a)$} \\<br>\frac{\epsilon}{|A|},  &amp; \text{if $a\neq argmax_a q(s,a))$}  \<br>\end{cases}<br>$$</p>
+</blockquote>
+<h1 id="2-模型无关RL"><a href="#2-模型无关RL" class="headerlink" title="2 模型无关RL"></a>2 模型无关RL</h1><p>对策略进行随机采样,得到环境对策略每个action的reward,更新状态价值。<br>状态价值更新策略:<br>对于策略$\pi$，状态$s$的价值可以通过此后的状态价值表示:$$v(s) = \sum_1^T(\gamma^k*R_k)$$<br>其中$R_k$表示按照此策略$\pi$距离当前状态$s$，$k$个action的reward。<br>对于样本迭代：$$V_k(s) = \frac{V_{k-1}(s) + v(s)}{k}$$<br>最后$V_k$收敛（为何会收敛，暂时没研究），得到最后的状态价值。</p>
+<p>待续，要明确下，这个模型有关和模型无关的区别。<br>当我们完全知道环境背后的马尔科夫决策过程时，用值迭代就可以解决。但有些时候我们并不知道环境背后的MDP原理，即奖励函数$r(s,a,s’)$和转移概率$P(s’,r|s,a)$的分布。所以引入了q_value来做估计。</p>
+<h2 id="2-Policy-Iteration"><a href="#2-Policy-Iteration" class="headerlink" title="2 Policy Iteration"></a>2 Policy Iteration</h2><p>模型相关的强化学习算法主要有：策略迭代 (Policy Iteration) 和价值迭代 (Value Iteration)。策略迭代的主要思想:先随机初始化一个策略$\pi_0$，计算这个策略下每个状态的价值$v_{\pi_0}(s)$,计算方法后面补充；根据这些状态价值得到新策略$\pi_1$，,更新方法后面补充，最简单的更新方法则是找出使得更新后的$v_{\pi_0}(s)$最大的那个action；计算新策略下每个状态的价值$v_{\pi_1}(s)$… 直到收敛(由于状态之间是可以相互转移的，比如 s’ 可以是 s 的后续状态，但反过来 s 也可以是 s’ 后续状态。如果只遍历并更新一遍状态价值，状态价值并不是当前策略的价值。为此我们多次遍历并更新状态价值。)。计算一个策略下每个状态的价值，被称为策略评估 (Policy Evaluation)；根据状态价值得到新策略，被称为策略改进 (Policy Improvement)。</p>
+<!--如下图所示，一个机器人出发寻找金币。找到金币则获得奖励 1，碰到海盗则损失 1。找到金币或者碰到海盗则机器人停止。图中不同位置为状态，因此状态集合 S = {1,...,5}。机器人采取的动作是向东南西北方向走，因此A={'n','e','s','w'}。转移概率方面，当机器人碰到墙壁，则会停在原来的位置；当机器人找到金币时获得奖励 1，当碰到海盗则损失 1, 其他情况不奖励也不惩罚。因此除了 R1,s=−1, R3,s=1，R5,s=−1 之外，其他情况R∗,∗=0。γ衰减因子等于 0.8。-->
+<p><div align="center"><br><img src="http://www.gotoli.us/wp-content/uploads/2016/04/mdp.png" alt="mdp"><br></div><br>以上图机器人找金币为例<sup>[2]</sup>（有部分内容受AlgorithmDog<sup>[0]</sup>启发）用scala写了几个小demo。先定义mdp转移方法:<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">  * given the action, return the state and the reward of transform</div><div class="line">  */</div><div class="line"> <span class="function"><span class="keyword">def</span> <span class="title">transform</span></span>(state:<span class="type">Int</span>, action:<span class="type">Char</span>):(<span class="type">Boolean</span>,<span class="type">Int</span>,<span class="type">Float</span>) = &#123;<span class="comment">//n is_terminal,state, reward</span></div><div class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.terminal_states.contains(state))</div><div class="line">         (<span class="literal">true</span>, state, <span class="number">0</span>)</div><div class="line"></div><div class="line">      <span class="keyword">val</span> key = <span class="string">s"<span class="subst">$&#123;state&#125;</span>_<span class="subst">$action</span>"</span></div><div class="line">      <span class="keyword">var</span> next_state = state  </div><div class="line">      <span class="comment">//if it's out of bound, then the agent stay  </span></div><div class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.t.contains(key)) </div><div class="line">          next_state = <span class="keyword">this</span>.t(key); </div><div class="line">      <span class="keyword">var</span> is_terminal = <span class="literal">false</span></div><div class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.terminal_states.contains(next_state))</div><div class="line">          is_terminal = <span class="literal">true</span></div><div class="line">      <span class="keyword">var</span> r = <span class="number">0.0</span>f</div><div class="line">      <span class="keyword">if</span>(<span class="keyword">this</span>.rewards.contains(key))</div><div class="line">          r = <span class="keyword">this</span>.rewards(key);</div><div class="line">         </div><div class="line">      (is_terminal, next_state, r); </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="2-1-Value-Evaluation"><a href="#2-1-Value-Evaluation" class="headerlink" title="2.1 Value Evaluation"></a>2.1 Value Evaluation</h2><p>策略评估利用了贝尔曼等式。根据贝尔曼等式，一个状态的价值和它后续状态的价值有关。因此我们用后续状态价值$v(s′)$ 去更新当前状态的价值$v(s)$。策略评估遍历所有状态，按照下面公式更新其价值。<br>$$<br>v(s) = \sum_{a\in A}\pi(s,a)(r(s,a,s’)+\gamma \sum_{s’\in S}P(s’,r|s,a)v(s’))<br>$$具体实现为：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(i &lt;- <span class="number">0</span> until <span class="number">100</span>)&#123;</div><div class="line">				<span class="keyword">var</span> delta = <span class="number">0</span>f</div><div class="line">				<span class="keyword">for</span>(state &lt;- mdp.states)&#123;</div><div class="line">					<span class="keyword">if</span>(!mdp.terminal_states.contains(state))&#123;</div><div class="line">						<span class="keyword">val</span> action = <span class="keyword">this</span>.pi(state)</div><div class="line">						<span class="keyword">val</span> nextstate = mdp.transform(state, action)</div><div class="line">						<span class="keyword">val</span> new_v = nextstate.r + mdp.gamma * <span class="keyword">this</span>.value(nextstate.next_state)</div><div class="line">						delta += math.abs(<span class="keyword">this</span>.value(state)-new_v)</div><div class="line">						<span class="keyword">this</span>.value(state) = new_v</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line"></div><div class="line">				<span class="keyword">if</span>(delta &lt; <span class="number">1e-6</span>)</div><div class="line">					loop.<span class="keyword">break</span>()</div><div class="line">			</div><div class="line">			&#125;</div></pre></td></tr></table></figure></p>
+<p>其中<code>delta</code>是一个极小值，用它来检测$v(s)$是否收敛。</p>
+<h2 id="2-2-Policy-update"><a href="#2-2-Policy-update" class="headerlink" title="2.2 Policy update"></a>2.2 Policy update</h2><p>根据当前所有状态的价值得到新策略，叫策略改进。greedy策略是选出使得当前状态价值$v(s)=r(s,a,s’)+\gamma \sum_ {s’ \in S}P(s’,r|s,a)v(s’)$最大的action。<br>$$<br>\pi_{i+1}(s,a) =<br>\begin{cases}<br>1,  &amp; \text{if $a=argmax_a(r(s,a,s’)+\gamma \sum_ {s’ \in S}P(s’,r|s,a)v(s’))$} \\<br>0,  &amp; \text{if $a\neq argmax_a(r(s,a,s’)+\gamma \sum_ {s’ \in S}P(s’,r|s,a)v(s’))$}  \<br>\end{cases}<br>$$<br>因此，$\pi_{i+1}(s)$是策略，是一个对采取action概率分布。具体实现如下：<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//updates:traverse for each states for each action,and choose the best action for each state</span></div><div class="line">  	<span class="function"><span class="keyword">def</span> <span class="title">policy_improve</span></span>(mdp:<span class="type">Mdp</span>)&#123;</div><div class="line">		<span class="keyword">for</span>(state &lt;- mdp.states)&#123;</div><div class="line">			<span class="keyword">if</span>(!mdp.terminal_states.contains(state))&#123;</div><div class="line">				<span class="comment">//initial a value</span></div><div class="line">				<span class="keyword">var</span> a1 = mdp.actions(<span class="number">0</span>)</div><div class="line">				<span class="keyword">var</span> trans = mdp.transform(state, a1)</div><div class="line">				<span class="keyword">var</span> v1 = trans.r + mdp.gamma * <span class="keyword">this</span>.value(trans.next_state)</div><div class="line">				</div><div class="line">				<span class="comment">// select the action which performs max </span></div><div class="line">				<span class="keyword">for</span>(action&lt;-mdp.actions)&#123;</div><div class="line">					trans = mdp.transform(state, action)</div><div class="line">					<span class="keyword">if</span>(v1 &lt; (trans.r + mdp.gamma * <span class="keyword">this</span>.value(trans.next_state)))&#123;</div><div class="line">						a1 = action</div><div class="line">						v1 = trans.r + mdp.gamma*<span class="keyword">this</span>.value(trans.next_state)</div><div class="line">					&#125;</div><div class="line">				&#125;</div><div class="line">				<span class="keyword">this</span>.pi = <span class="keyword">this</span>.pi.updated(state, a1)</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">	&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="3-模型无关入门"><a href="#3-模型无关入门" class="headerlink" title="3 模型无关入门"></a>3 模型无关入门</h1><p>模型无关的策略评价主要有两种算法，一个是蒙特卡罗算法，另一个叫时差学习算法。</p>
+<ul>
+<li>3.1 蒙特卡罗算法<br>产生样本，通过样本计算状态价值的方法。首先，用当前策略探索产生一个完整的状态-动作-奖励序列。<br>$$s_1,a_1,r_1,….,s_k,a_k,r_k∼\pi$$<br>然后，在序列第一次碰到或者每次碰到一个状态s时，计算其衰减奖励。<br>$$G_s=r_t+\gamma r_{t+1}+…+\gamma^{k−t}r_k$$<br>最后更新状态价值：<br>$$<br>v(s) = v(s) + G_s \\<br>N(s) = N(s) + 1 \\<br>V(s) = \frac{V(s)}{N(s)}<br>$$<br>代码实现为：<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">mc</span></span>(gamma:<span class="type">Float</span>,sample:(<span class="type">Array</span>[<span class="type">Array</span>[<span class="type">Int</span>]],<span class="type">Array</span>[<span class="type">Array</span>[<span class="type">Char</span>]],<span class="type">Array</span>[<span class="type">Array</span>[<span class="type">Float</span>]])): <span class="type">Map</span>[<span class="type">Int</span>, <span class="type">Float</span>] = &#123;</div><div class="line">		<span class="keyword">val</span> (state_sample, action_sample, reward_sample) = sample</div><div class="line">		<span class="keyword">var</span> vfunc = states.map(x =&gt;&#123;</div><div class="line">			(x,<span class="number">0</span>f)</div><div class="line">		&#125;).toMap  </div><div class="line">		<span class="keyword">var</span> nfunc = states.map(x =&gt;&#123;</div><div class="line">			(x,<span class="number">0</span>f)</div><div class="line">		&#125;).toMap </div><div class="line">		<span class="keyword">for</span>(iter &lt;- <span class="number">0</span> until state_sample.length)&#123;</div><div class="line">			<span class="keyword">var</span> <span class="type">G</span> = <span class="number">0</span>f</div><div class="line">			<span class="keyword">for</span>(step &lt;- (<span class="number">0</span> until state_sample(iter).length).reverse)&#123;</div><div class="line">				<span class="type">G</span> = <span class="type">G</span> * gamma</div><div class="line">				<span class="type">G</span> += reward_sample(iter)(step)</div><div class="line">			&#125;</div><div class="line">			<span class="keyword">for</span>(step &lt;- <span class="number">0</span> until state_sample(iter).length)&#123;</div><div class="line">				<span class="keyword">val</span> s = state_sample(iter)(step)</div><div class="line">				vfunc = vfunc.updated(s, vfunc(s)+<span class="type">G</span>)</div><div class="line">				nfunc = nfunc.updated(s, nfunc(s)+<span class="number">1</span>f)</div><div class="line">				<span class="type">G</span>    -= reward_sample(iter)(step)</div><div class="line">				<span class="type">G</span>    /= gamma</div><div class="line">			&#125;</div><div class="line">		&#125;</div><div class="line">		<span class="keyword">for</span>(s &lt;- states)&#123;</div><div class="line">			<span class="keyword">if</span>(nfunc(s) &gt;<span class="number">1e-6</span>)</div><div class="line">				vfunc = vfunc.updated(s, vfunc(s)/nfunc(s))</div><div class="line">		&#125;</div><div class="line">		</div><div class="line">		vfunc</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>3.2 时差学习算法<br>AlgorithmDog<sup>3</sup>已经讲得很清楚。</p>
+<h1 id="4-q-Value"><a href="#4-q-Value" class="headerlink" title="4 $q$ Value"></a>4 $q$ Value</h1><ul>
+<li><p>4.1 引入$q$ Value<br>再由2.2出发，我们考虑下$\pi(s)$:<br>$$<br>\pi_{i+1}(s,a) =<br>\begin{cases}<br>1,  &amp; \text{if $a=argmax_a(r(s,a,s’)+\gamma \sum_ {s’ \in S}P(s’,r|s,a)v(s’))$} \\<br>0,  &amp; \text{if $a\neq argmax_a(r(s,a,s’)+\gamma \sum_ {s’ \in S}P(s’,r|s,a)v(s’))$}  \<br>\end{cases}<br>$$<br>对于复杂的Env,通常情况下$P(s’,r|s,a)$是不可测的，且$P(s’,r|s,a)$与$r(s,a,s’)$是一一对应的，或者可以转化为一一对应的，因为某些状态转移可以对应不同的情况，我们也可以用reward期望表示r。当然可以在预测时探索环境得到$P(s’,r|s,a)$和$r(s,a,s’)$。但是实际问题中，特别是那些连续场景问题，探索会破坏当前状态。比如机器人行走任务中，为了探索机器人需要做出一个动作，这个动作使得机器人状态发生变化。而由于是连续场景，原来的状态是不可能重现额，这时候为原来状态选择最优动作已经没有意义了。解决办法是把工作对象换成状态-动作价值$q$。获得最优策略的状态-动作价值$q$之后，对于状态 s 最优策略如下所示。<br>$$<br>\pi(s,a) =<br>\begin{cases}<br>1,  &amp; a = argmax_{a}q(s,a) \\<br>0  &amp; a \neq argmax_{a}q(s,a)<br>\end{cases}<br>$$</p>
+</li>
+<li><p>4.2 待续…</p>
+<h2 id="Eligibility-Trace-资格迹"><a href="#Eligibility-Trace-资格迹" class="headerlink" title="Eligibility Trace(资格迹)"></a>Eligibility Trace(资格迹)</h2><p>Eligibility trace用来解决时间星都分配问题。<br>结合Eligibility Traces后，我们可以得到Q(λ),Sarsa(λ)等算法<br>RL有两个难点：</p>
+</li>
+</ul>
+<ol>
+<li>结构信度分配问题，当空间太大而无法完全搜索时，Agent需要根据相似的Env的经验推测到新的环境。</li>
+<li>时间信度问题。 当Agent执行一系列动作，最后得到一个结果，Agent需要对每个state或 (state, action)返回的奖励或惩罚，以调整它的决策。<h3 id="Basic-Principle"><a href="#Basic-Principle" class="headerlink" title="Basic Principle"></a>Basic Principle</h3>复杂系统中，一个动作的成功或失败需要一段时间以后才能知道，所以RL信号往往是一个动作序列中很早以前某个动作所引起的响应，这种情况被称为延时强化学习。解决难点2最著名的方法是Sutton于1988年提出的Temporal Difference(TD)方法。<br><strong>target policy</strong>: The policy being learned about is called the target policy.<br><strong>behavior policy</strong>: The polcy used to generate behavior is called the hebavior policy.<br><strong>Off policy</strong>: The policy learned about need not be the same as the one used to select actions.</li>
+</ol>
+<h3 id="Update-Rule-TD"><a href="#Update-Rule-TD" class="headerlink" title="Update Rule(TD)"></a>Update Rule(TD)</h3><p>If we let s denote the state before the greedy move, and $s’$ the state after the move, then the update to the estimated value of s, denoted $V(s)$:<br>$$V(s)  \leftarrow V(s)+\alpha[V(s’)-V(s)]$$<br>where α is a small positive fraction called the step-size parameter, which influences,the rate of learning. Its changes are based on a difference, $V (s0)−V (s)$, between estimates at two different times, So used in TD.<br>In this way we “back up” the value of the state after each greedy move to the state before the move. they diagram relationships that form the basis of the update or backup operations that are at the heart of reinforcement learning methods. These operations transfer value information back to a state (or a state–action pair) from its successor states (or state–action pairs). We use backup diagrams throughout the book to provide graphical summaries of the algorithms we discuss.(Note that unlike transition graphs, the state nodes of backup diagrams do not necessarily represent distinct states; for example, a state might be its own successor. We also omit explicit arrowheads because time always flows downward in a backup diagram.)</p>
+<h2 id="TD与MC的不同"><a href="#TD与MC的不同" class="headerlink" title="TD与MC的不同"></a>TD与MC的不同</h2><p>Goal： learn $V_\pi$ online from experience under policy $\pi$.</p>
+<h3 id="Incremental-every-visit-Monte-Carlo"><a href="#Incremental-every-visit-Monte-Carlo" class="headerlink" title="Incremental every-visit Monte-Carlo"></a>Incremental every-visit Monte-Carlo</h3><p>Update value $V(s)$ toward actual return $G_t$<br>$$V(s)  \leftarrow V(s)+\alpha[G_t-V(s)]$$<br>MC可以使用准确的return来更新VALUE.</p>
+<h3 id="Simplest-temporal-difference-learning-algotithm-TD-0"><a href="#Simplest-temporal-difference-learning-algotithm-TD-0" class="headerlink" title="Simplest temporal-difference learning algotithm:TD(0)"></a>Simplest temporal-difference learning algotithm:TD(0)</h3><p>Update value $V(s)$toward estimated return $R<em>{t+1}+\gamma V(s</em>{t+1})$ :<br>$$V(s)  \leftarrow V(s)+\alpha[R<em>{t+1}+\gamma V(s</em>{t+1})-V(s)]$$<br>$R<em>{t+1}+\gamma V(s</em>{t+1})$ is called the TD Target.<br>$\sigma<em>t = R</em>{t+1}+\gamma V(S_{t+1})-V(S_t)$ is called the TD error.<br>TD则使用Bellman方程中对value的估计方法来估计value，然后将估计值作为value的目标值进行更新。</p>
+<h2 id="Sarsa-lambda"><a href="#Sarsa-lambda" class="headerlink" title="$Sarsa(\lambda)$"></a>$Sarsa(\lambda)$</h2><h3 id="Definition"><a href="#Definition" class="headerlink" title="Definition"></a>Definition</h3><p>The eligibility trace vetion of Sarsa we call $Sarsa(\lambda)$.</p>
+<p>[0]<a href="http://www.algorithmdog.com/" target="_blank" rel="external">AlgorithmDog</a><br>[1]<a href="http://www.algorithmdog.com/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0-%E9%A9%AC%E5%B0%94%E7%A7%91%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B" target="_blank" rel="external">强化学习系列之一:马尔科夫决策过程</a><br>[2]<a href="http://www.algorithmdog.com/%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%B3%BB%E5%88%97%E4%B9%8B%E4%BA%8C-%E6%A8%A1%E5%9E%8B%E7%9B%B8%E5%85%B3%E7%9A%84%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0" target="_blank" rel="external">强化学习系列之二:模型相关的强化学习</a><br>[3]<a href="http://www.algorithmdog.com/reinforcement-learning-model-free-evalution" target="_blank" rel="external">强化学习系列之三:模型无关的策略评价</a><br>[4]<a href="http://blog.csdn.net/songrotek/article/details/51382759" target="_blank" rel="external">增强学习Reinforcement Learning经典算法梳理3：TD方法</a><br>[5]<a href="https://zhuanlan.zhihu.com/p/25319023" target="_blank" rel="external">强化学习（Reinforcement Learning）知识整理</a><br>[6]<a href="https://zhuanlan.zhihu.com/p/24603385" target="_blank" rel="external">Richard Sutton</a><br>[7]<a href="http://blog.csdn.net/desire121/article/details/60466845" target="_blank" rel="external">matalb mex</a><br>[8]<a href="https://rllab.readthedocs.io/en/latest/user/implement_algo_basic.html?highlight=basic" target="_blank" rel="external">basic rl</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

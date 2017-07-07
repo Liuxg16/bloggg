@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Machine Learning Basis | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="ML," />
+  
+
+  <meta name="description" content="ml 基础概念Hessian矩阵：设有凸函数f(X)，X是向量（x1,x2,…, xn)，Hessian矩阵M定义为：M的第i行,第j列元素为df(X)/dxidxj, 即为f(X)对于变量xi和xj的二次偏导数。梯度：设有凸函数f(X)，X是向量（x1,x2,…, xn)，函数f(X)在点X0处的梯度是一个向量，等于（df(X0)/dx1, df(X0)/dx2, …., df(X0)/dxn)">
+<meta name="keywords" content="ML">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning Basis">
+<meta property="og:url" content="http://lemonman.net/2016/12/14/ml/ML-Basis/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="ml 基础概念Hessian矩阵：设有凸函数f(X)，X是向量（x1,x2,…, xn)，Hessian矩阵M定义为：M的第i行,第j列元素为df(X)/dxidxj, 即为f(X)对于变量xi和xj的二次偏导数。梯度：设有凸函数f(X)，X是向量（x1,x2,…, xn)，函数f(X)在点X0处的梯度是一个向量，等于（df(X0)/dx1, df(X0)/dx2, …., df(X0)/dxn)">
+<meta property="og:image" content="http://lemonman.net/images/ml/convolution.gif">
+<meta property="og:image" content="http://lemonman.net/images/ml/deconvolution.gif">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.325Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Machine Learning Basis">
+<meta name="twitter:description" content="ml 基础概念Hessian矩阵：设有凸函数f(X)，X是向量（x1,x2,…, xn)，Hessian矩阵M定义为：M的第i行,第j列元素为df(X)/dxidxj, 即为f(X)对于变量xi和xj的二次偏导数。梯度：设有凸函数f(X)，X是向量（x1,x2,…, xn)，函数f(X)在点X0处的梯度是一个向量，等于（df(X0)/dx1, df(X0)/dx2, …., df(X0)/dxn)">
+<meta name="twitter:image" content="http://lemonman.net/images/ml/convolution.gif">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ml-基础概念"><span class="toc-text">ml 基础概念</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#牛顿法"><span class="toc-text">牛顿法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#exponential-family"><span class="toc-text">exponential family</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Generalized-linear-model-GLM"><span class="toc-text">Generalized linear model(GLM)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#采样"><span class="toc-text">采样</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Convolution-And-Deconvolution"><span class="toc-text">Convolution And Deconvolution</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Convolution"><span class="toc-text">Convolution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deconvolution"><span class="toc-text">Deconvolution</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#训练方法"><span class="toc-text">训练方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Cross-Validation"><span class="toc-text">Cross Validation</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#偏差与方差"><span class="toc-text">偏差与方差</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#协同过滤"><span class="toc-text">协同过滤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C-4-5"><span class="toc-text">C 4.5</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ml/ML-Basis" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Machine Learning Basis</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.12.14</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="ml-基础概念"><a href="#ml-基础概念" class="headerlink" title="ml 基础概念"></a>ml 基础概念</h1><p>Hessian矩阵：设有凸函数f(X)，X是向量（x1,x2,…, xn)，Hessian矩阵M定义为：M的第i行,第j列元素为df(X)/dxidxj, 即为f(X)对于变量xi和xj的二次偏导数。<br>梯度：设有凸函数f(X)，X是向量（x1,x2,…, xn)，函数f(X)在点X0处的梯度是一个向量，等于（df(X0)/dx1, df(X0)/dx2, …., df(X0)/dxn), 即是对于各个变量的偏导数的向量。例子：如果方程是z=f(x,y)，梯度是在XOY平面内的一个向量，与z无关。因此要特别注意梯度不是点(X，f(X))处的切线方向。</p>
+<h2 id="牛顿法"><a href="#牛顿法" class="headerlink" title="牛顿法"></a>牛顿法</h2><p>$$<br>\theta^{t+1}= \theta^{t}-\frac{l(\theta^{t})}{l’(\theta^{t})}<br>$$<br>牛顿迭代法是一个收敛速度非常快的方法，被称为二次收敛(quadratic conversions), 牛顿方法的每一次迭代都会是你的解的有效数字提高一倍。即error:0.1-&gt;0.01-&gt;0.0001-&gt;0.00000001,当然，这是在解足够逼近真实解的情况下。<br>若$\theta$是向量的话，为：<br>$$<br>\theta^{t+1}= \theta^{t}-H^{-1}\Delta_{\theta}l \\<br>H_{ij}=\frac{\partial^2l}{\partial\theta_i\partial\theta_i}<br>$$<br>where H is the Hessian Matrix.<br>$$<br>P(y|x,\theta) \\<br>y \in R, Guassian \rightarrow least squasres \\<br>\mathcal{N}(\mu, \delta) \\<br>y \in {0,1},Bernoulli \rightarrow Logistic \quad regression \\<br>Bernoulli(\phi)  \rightarrow P(y=1;\phi)=\phi \\<br>$$</p>
+<h2 id="exponential-family"><a href="#exponential-family" class="headerlink" title="exponential family"></a>exponential family</h2><p>$$P(y;\eta)=b(y)e^{\eta^TT(y)-a(\eta)}$$<br>$\eta$- natural parameta 自然分布<br>$\tau$ - sufficient statistic 充分统计量<br>T(y)=y<br>$\eta$ 是一个实数<br>给定的概率分布即：a,b,t<br>我们改变不同的a,b,t的取值，得到不同的分布</p>
+<p>$$<br>Ber(\phi) \\<br>P(y;\phi) = \phi^y(1-\phi)^{1-y} \\<br>= e^{log \phi^y(1-\phi)^{1-y}} \\<br>= e^{ylog\phi+(1-y)log(1-\phi)} \\<br>= e^{log\frac{\phi}{1-\phi}y+log(1-\phi)}<br>$$<br>where:<br>$$<br>1 \rightarrow b(y) \\<br>log\frac{\phi}{1-\phi} \rightarrow \eta \\<br>y \rightarrow T(y) \\<br>-log(1-\phi) \rightarrow a(\phi)<br>$$<br>对于Guassian 分布：<br>$$<br>\mathcal{N}(\mu,\sigma^2) \quad set \sigma = 1 \\<br>P(y)=\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}(y-\mu)^2} \\<br>=\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}y^2}e^{\mu y-\frac{1}{2}mu^2} \\<br>where \\<br>\frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}y^2} \rightarrow b(y) \\<br>\mu \rightarrow \eta \\<br>y \rightarrow T(y) \\<br>-\frac{1}{2}mu^2 \rightarrow a(y)<br>$$<br>也同样可以分拆成指数族的形式。</p>
+<h2 id="Generalized-linear-model-GLM"><a href="#Generalized-linear-model-GLM" class="headerlink" title="Generalized linear model(GLM)"></a>Generalized linear model(GLM)</h2><p>Assume:<br>(1)y|x;\theta  ~ expFamily(\eta)<br>(2)given X, goal is to output E[T(y)|x]<br>want h(x) = E[T(y)|x]</p>
+<p>$\eta=\theta^Tx  \in \mathcal{R^n}$</p>
+<p>The Mahalanobis distance of an observation $ {\vec {x}}=(x_{1},x_{2},x_{3},\dots ,x_{N})^{T}$ from a set of observations with mean $\vec {\mu }=(\mu_{1},\mu _{2},\mu _{3},\dots ,\mu _{N})^{T}$ and covariance matrix $S$ is defined as:</p>
+<p>$$ D_{M}({\vec {x}})=\sqrt {({\vec {x}}-{\vec {\mu }})^{T}S^{-1}({\vec {x}}-{\vec {\mu }})}$$<br>Mahalanobis distance (or “generalized squared interpoint distance” for its squared value[3]) can also be defined as a dissimilarity measure between two random vectors $ \underline {x} $and$\underline {y}$ of the same distribution with the covariance matrix $S$:<br>$$ d({\vec {x}},{\vec {y}})=\sqrt{ ({\vec {x}}-{\vec {y}})^{T}S^{-1}({\vec {x}}-{\vec {y}}) }$$<br>If the covariance matrix is the identity matrix, the Mahalanobis distance reduces to the Euclidean distance. If the covariance matrix is diagonal, then the resulting distance measure is called a normalized Euclidean distance:<br>$$<br>d(\vec{x},\vec{y})=\sqrt{\sum_{i=1}^N  {(x_i - y_i)^2 \over s_{i}^2}},<br>$$<br>where $si$ is the standard deviation of the xi and yi over the sample set.<br>因此，两个样本在两个不同的分布中的马氏距离是不一样的，除非这两个分布的协方差刚好一样。</p>
+<h1 id="采样"><a href="#采样" class="headerlink" title="采样"></a>采样</h1><p> 通常采样指的是下采样，也就是对信号的抽取 。  连续-〉离散<br>上采样是下采样的逆过程，也称增取样（Upsampling）或内插（Interpolating）。 离散-〉连续或加密！</p>
+<h1 id="Convolution-And-Deconvolution"><a href="#Convolution-And-Deconvolution" class="headerlink" title="Convolution And Deconvolution"></a>Convolution And Deconvolution</h1><h2 id="Convolution"><a href="#Convolution" class="headerlink" title="Convolution"></a>Convolution</h2><p>The convolution of f and g is written f∗g, using an asterisk or star. It is defined as the integral of the product of the two functions after one is reversed and shifted. As such, it is a particular kind of integral transform:<br>$$(f*g)(t)=\int_{-\infty}^\infty(\tau)g(t-\tau)d\tau \\<br>=\int_{-\infty}^\infty(t-\tau)g(\tau)d\tau$$<br>蓝色方块为输入，filter是$3\times 3$的卷积核，PADING=2，stride=1;上面藏青色方块为卷积结果。<br><img src="/images/ml/convolution.gif" alt=""></p>
+<h2 id="Deconvolution"><a href="#Deconvolution" class="headerlink" title="Deconvolution"></a>Deconvolution</h2><p>In mathematics, deconvolution is an algorithm-based process used to reverse the effects of convolution on recorded data.<br>其实Deconvolution讲道理应该被叫做transposed convolutional layer,因为其过程实质就是卷积。 但它却很不幸地还有一个大家公认的名字：反卷积。<br>对于上述卷积的逆过程，可以由下图表示<sup>[0]</sup>：<br><img src="/images/ml/deconvolution.gif" alt=""><br>而蓝白相间的方块可以用Upsampling来实现，所以deconvolution 经常与upsampling一起出现。</p>
+<h1 id="训练方法"><a href="#训练方法" class="headerlink" title="训练方法"></a>训练方法</h1><h2 id="Cross-Validation"><a href="#Cross-Validation" class="headerlink" title="Cross Validation"></a>Cross Validation</h2><ul>
+<li>LOOCV: Leave one out of cross-validation</li>
+<li>N-fold coss-validation</li>
+<li>0.632 bootstraping($0.632=1-e^{-1}$)<br>bootstraping:又放回的采样，达到极限的时候，在集合中trainging用到的样本数占总数的0.632，其余的用作testing。相对应的是bagging，不放回的采样。</li>
+</ul>
+<h1 id="偏差与方差"><a href="#偏差与方差" class="headerlink" title="偏差与方差"></a>偏差与方差</h1><p>用低次模型拟合复杂模型  =&gt;  偏差大<br>用高次模型拟合低维模型  =&gt;  方差大</p>
+<h1 id="协同过滤"><a href="#协同过滤" class="headerlink" title="协同过滤"></a>协同过滤</h1><p><a href="http://www.cnblogs.com/wentingtu/archive/2011/12/16/2289926.html" target="_blank" rel="external">非常好的协同过滤入门文章</a></p>
+<h1 id="C-4-5"><a href="#C-4-5" class="headerlink" title="C 4.5"></a>C 4.5</h1><p><a href="http://blog.csdn.net/zjsghww/article/details/51638126" target="_blank" rel="external">算法介绍</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

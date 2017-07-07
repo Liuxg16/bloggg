@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Features | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="work," />
+  
+
+  <meta name="description" content="信号的频域[0]化成灰也不能忘的理论： 时域卷积相当于频域相乘。频域卷积相当于时域相乘。  最一开始，没有计算机，不论是微分方程的连续时间s变换，还是差分方程的离散时间z变换，应该都是是为了求解的方便。在电子学、控制系统及统计学中，频域是指在对函数或信号进行分析时，分析其和频率有关部份，而不是和时间有关的部份，和时域一词相对。函数或信号可以透过一对数学的运算子在时域及频域之间转换。例如傅里叶变">
+<meta name="keywords" content="work">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Features">
+<meta property="og:url" content="http://lemonman.net/2016/09/26/ml/Features/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="信号的频域[0]化成灰也不能忘的理论： 时域卷积相当于频域相乘。频域卷积相当于时域相乘。  最一开始，没有计算机，不论是微分方程的连续时间s变换，还是差分方程的离散时间z变换，应该都是是为了求解的方便。在电子学、控制系统及统计学中，频域是指在对函数或信号进行分析时，分析其和频率有关部份，而不是和时间有关的部份，和时域一词相对。函数或信号可以透过一对数学的运算子在时域及频域之间转换。例如傅里叶变">
+<meta property="og:image" content="http://lemonman.net/images/feature/features.jpg">
+<meta property="og:image" content="http://lemonman.net/images/feature/frequency.jpg">
+<meta property="og:image" content="http://lemonman.net/images/feature/dynamic_fre.gif">
+<meta property="og:updated_time" content="2017-07-07T06:34:38.387Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Features">
+<meta name="twitter:description" content="信号的频域[0]化成灰也不能忘的理论： 时域卷积相当于频域相乘。频域卷积相当于时域相乘。  最一开始，没有计算机，不论是微分方程的连续时间s变换，还是差分方程的离散时间z变换，应该都是是为了求解的方便。在电子学、控制系统及统计学中，频域是指在对函数或信号进行分析时，分析其和频率有关部份，而不是和时间有关的部份，和时域一词相对。函数或信号可以透过一对数学的运算子在时域及频域之间转换。例如傅里叶变">
+<meta name="twitter:image" content="http://lemonman.net/images/feature/features.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#信号的频域-0"><span class="toc-text">信号的频域[0]</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Laplace-变换："><span class="toc-text">Laplace 变换：</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ml/Features" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Features</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.09.26</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <div align="center"><br><img src="/images/feature/features.jpg" alt=""><br></div>
+
+<h1 id="信号的频域-0"><a href="#信号的频域-0" class="headerlink" title="信号的频域[0]"></a>信号的频域<sup>[0]<sup></sup></sup></h1><p>化成灰也不能忘的理论：</p>
+<div align="center"><br><font color="green" size="4" face="”黑体”"><br>时域卷积相当于频域相乘。<br>频域卷积相当于时域相乘。<br></font><br></div>
+
+<p>最一开始，没有计算机，不论是微分方程的连续时间s变换，还是差分方程的离散时间z变换，应该都是是为了求解的方便。在电子学、控制系统及统计学中，频域是指在对函数或信号进行分析时，分析其和频率有关部份，而不是和时间有关的部份，和时域一词相对。函数或信号可以透过一对数学的运算子在时域及频域之间转换。例如傅里叶变换可以将一个时域信号转换成在不同频率下对应的振幅及相位，其频谱就是时域信号在频域下的表现，而反傅里叶变换可以将频谱再转换回时域的信号。</p>
+<p>以信号为例，信号在时域下的图形可以显示信号如何随着时间变化，而信号在频域下的图形（一般称为频谱）可以显示信号分布在哪些频率及其比例。频域的表示法除了有各个频率下的大小外，也会有各个频率的相位，利用大小及相位的资讯可以将各频率的弦波给予不同的大小及相位，相加以后可以还原成原始的信号。在频域的分析中，常会用频谱分析仪来将实际的信号转换为频域下的频谱。</p>
+<p>频域，尤其在射频和通信系统中运用较多，在高速数字应用中也会遇到频域。频域最重要的性质是：它不是真实的，而是一个数学构造。时域是惟一客观存在的域，而频域是一个遵循特定规则的数学范畴。</p>
+<p>正弦波是频域中唯一存在的波形，这是频域中最重要的规则，即正弦波是对频域的描述，因为时域中的任何波形都可用正弦波合成。这是正弦波的一个非常重要的性质。然而，它并不是正弦波的独有特性，还有许多其他的波形也有这样的性质。正弦波有四个性质使它可以有效地描述其他任一波形：<br>（1）时域中的任何波形都可以由正弦波的组合完全且惟一地描述。<br>（2）任何两个频率不同的正弦波都是正交的。如果将两个正弦波相乘并在整个时间轴上求积分，则积分值为零。这说明可以将不同的频率分量相互分离开。<br>（3）正弦波有精确的数学定义。<br>（4）正弦波及其微分值处处存在，没有上下边界。</p>
+<div align="center"><br><img src="/images/feature/frequency.jpg" alt=""><br></div>
+
+<p>使用正弦波作为频域中的函数形式有它特别的地方。若使用正弦波，则与互连线的电气效应相关的一些问题将变得更容易理解和解决。如果变换到频域并使用正弦波描述，有时会比仅仅在时域中能更快地得到答案。而在实际中，首先建立包含电阻，电感和电容的电路，并输入任意波形。一般情况下，就会得到一个类似正弦波的波形。而且，用几个正弦波的组合就能很容易地描述这些波形。许多物理元件的特性会随着输入讯号的频率而改变，例如电容在低频时阻抗变大，高频时阻抗变小，而电感恰好相反，高频时阻抗变大，低频时阻抗变小。一个线性非时变系统的特性也会随频率而变化，因此也有其频域下的特性，频率响应的图形即为其代表。频率响应可以视为是一个系统在输入信号振幅相同、频率不同时，其输出信号振幅的变化，可以看出系统在哪些频率的输出较大。有些系统的定义就是以频域为主，例如低通滤波器只允许低于一定频率的讯号通过。</p>
+<p>不论是进行拉普拉斯转换、Z转换或是傅立叶变换，其产生的频谱都是一个频率的复变函数，表示一个信号（或是系统的响应）的振幅及其相位。不过在许多的应用中相位的资讯并不重要，若不考虑相位的资讯，都可以将频谱的资讯只以不同频率下的振幅（或是功率密度）来表示。功率谱密度是一种常应用在许多非周期性也不满足平方可积性（square-integrable）讯号的频域表示法。只要一个讯号是符合广义平稳随机过程的输出，就可以计算其对应的功率谱密度。</p>
+<p>时域分析与频域分析是对模拟信号的两个观察面。时域分析是以时间轴为坐标表示动态信号的关系；频域分析是把信号变为以频率轴为坐标表示出来。一般来说，时域的表示较为形象与直观，频域分析则更为简练，剖析问题更为深刻和方便。目前，信号分析的趋势是从时域向频域发展。然而，它们是互相联系，缺一不可，相辅相成的。</p>
+<div align="center"><br><img src="/images/feature/dynamic_fre.gif" alt=""><br></div>
+
+<p>DFT或FFT是用来将实际波形从时域变换到频域的。对测量得到的任意波形都可以使用DFT，关键条件就是该波形应是重复性的。通常用大写字母F表示时域波形的重复频率。<br>例如，一个理想方波可能是从0V到1V，其重复周期为1ns，且占空比为50%，由于是理想方波，所以从0V跳变到1V的上升时间应为0秒，重复频率就是1GHz。在时域中，如果一个信号在时间间隔t=0到t=T内是一些任意的波形，则就不能看成是重复性的。然而，将信号以T为周期进行延拓，可以把它变成重复信号。这是重复频率就是F=1/T。这样，任何一个波形都可以变为重复波形，并可用DFT将其变换到频域中。</p>
+<p>对于DFT，频谱中仅存在某些频率值，这些值取决于时间间隔或重复频率的选择。频谱中的正弦波频率应是重复频率的整数倍。若时钟频率为1GHz，那么DFT就只有1GHz，2GHz，3GHz等正弦波分量。第一个正弦波频率称为一次谐波，第二个正弦波频率称为二次谐波，依次类推。每个谐波都有不同的幅度和相位。，所有谐波及其幅度的集合称为频谱。每个谐波的实际幅度都有DFT计算的值来确定，每个具体的波形都有其各自的频谱。定义理想方波的上升时间为0，它并不是真实的波形，只是对现实世界的近似而已。然而从理想方波的频谱中可以得到有用的信息，运用这些信息可以估计实际波形。理想方波是对称的，其占空比为50%，并且峰值为1V。以下是几个信号的频域分析处理在实际中的应用。</p>
+<p>“耳声发射”——由内耳耳蜗产生且可在外耳道中记录到的微弱声能量。耳声发射的存在与否是听觉外周系统是否完好无损的客观指标。耳声发射反映的是耳蜗外毛细胞的功能。频谱中某一频率成分的强弱与耳蜗相应感音频率处外毛细胞的活性有关，通过频谱分析就可以推测出耳蜗上外毛细胞活性的增益因子Ｇｎ。通过分析耳聋患者的幅度频谱，进而分析增益因子Ｇｎ，就可以知道患者是高频耳聋患者还是低频耳聋患者，并且可以获知耳蜗病灶的位置。</p>
+<p>医学超声中的频率信号处理。在超声多普勒技术中，超声探头接收的回波信号除了来自血流的多普勒频移信号外，还包含来自房壁、房室、血管壁和瓣膜运动的信号。这些信号特点是幅度高，频率低，如不滤除将会干扰多普勒频谱显示。显然，比滤波器在滤除血管壁运动信号的同时也会滤去与血管壁运动信号相近的低速血流。所以壁滤波器有几种选择，如检测高速血流，如心室流出道和月瓣的血流，则滤波器频率可提高，一般为400-800Hz；如检测低速血流，如如腔静脉及肺静脉及房室瓣的血流，则滤波器频率要在抑制壁搏动信号的原则下，尽可能保持低。</p>
+<p>医学超声信号检测也处理。以上我们将的频域和时域只是对信号分析和处理的不同方法，实际上两者在医学超声信号检测、处理中都要用到。比如在超声诊断仪中要检测出回波信息，包括幅度信息，多普勒频移信息及谐波信息。一般的超声诊断仪只要求检测出幅度信息即可，这就是普通Ｂ超。双功Ｂ超则还要求检测出多普勒频移信息，以实现具有脉冲，连续多普勒功能的Ｂ超。彩超则要求进一步从检测到的多普勒频移信息中计算出每个取样点的血流速度大小、方向及方差，以构成二维血流平面图。九十年代以来的发展的彩超中的功率模式，即能量图是将正交检测到的两路多普勒频移信号进行平方根处理获得。从而使血流信号检测灵敏度大为提高，以至可检测出微小血流。在频域将回波中的两倍谐波分量提取出来进行处理，形成二维谐波图高，一般为400-800Hz；如检测低速血流，如腔静脉、象，是九十年代末兴起的新的成像技术。其对冠动脉，心肌血流灌注等观察很有益。</p>
+<p>为了克服声波能量随深度衰减带来的问题，信号检测电路中一般都要设计一个深度（时间）补偿电路，即ＴＧＣ电路。其靠仪器操作面板上滑动电位器来调节。我们回顾过去几十年，从超声回波中检测出幅度信息，到检测出多谱勒频移信息，进而检测出谐波信息。可以说超声回波信号的检测历史就是一部不断发展的揭示隐含信息的历史。从Ｂ超，彩超，到多普勒频移谐波成象，应该说每一步都有一个飞跃。所谓隐含信息就是暂时未知的信息。可以预见新的隐含信息<br>检测出来将会带来超声诊断仪新的突破。医学超声工程是样，生物医学工程领域更是如此，对信号，特别是对新的隐含信息检测、分析、处理，孕育着新的突破和革命。</p>
+<h1 id="Laplace-变换："><a href="#Laplace-变换：" class="headerlink" title="Laplace 变换："></a>Laplace 变换：</h1><p>$$F[s] = \mathcal{L}[f(t)] = \int_0 ^{+\infty}f(t)e^{-st}dt$$</p>
+<p>[0]<a href="http://blog.jobbole.com/70549/" target="_blank" rel="external">如果看了此文你还不懂傅里叶变换，那就过来掐死我吧【完整版】</a><br>[1]<a href="http://www.doc88.com/p-1731450825817.html" target="_blank" rel="external">时域和频域的关系</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>

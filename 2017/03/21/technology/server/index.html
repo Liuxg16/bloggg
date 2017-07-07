@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Server | LemonMan</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="ubuntu,server,shadowsock," />
+  
+
+  <meta name="description" content="linux shadowsocks 配置指南:http://aitanlu.com/ubuntu-shadowsocks-ke-hu-duan-pei-zhi.html 步骤:  开服务器:ssh root@159.203.102.157ssserver2.客户端（linux）开shadowsocks:sslocal -s 139.59.160.89 -p 8388 -k “xxxx”3.开chr">
+<meta name="keywords" content="ubuntu,server,shadowsock">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Server">
+<meta property="og:url" content="http://lemonman.net/2017/03/21/technology/server/index.html">
+<meta property="og:site_name" content="LemonMan">
+<meta property="og:description" content="linux shadowsocks 配置指南:http://aitanlu.com/ubuntu-shadowsocks-ke-hu-duan-pei-zhi.html 步骤:  开服务器:ssh root@159.203.102.157ssserver2.客户端（linux）开shadowsocks:sslocal -s 139.59.160.89 -p 8388 -k “xxxx”3.开chr">
+<meta property="og:updated_time" content="2017-07-07T06:34:36.830Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Server">
+<meta name="twitter:description" content="linux shadowsocks 配置指南:http://aitanlu.com/ubuntu-shadowsocks-ke-hu-duan-pei-zhi.html 步骤:  开服务器:ssh root@159.203.102.157ssserver2.客户端（linux）开shadowsocks:sslocal -s 139.59.160.89 -p 8388 -k “xxxx”3.开chr">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#linux-shadowsocks-配置"><span class="toc-text">linux shadowsocks 配置</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Debian-Ubuntu安装"><span class="toc-text">Debian / Ubuntu安装:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#启动："><span class="toc-text">启动：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#后台运行"><span class="toc-text">后台运行</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#停止运行"><span class="toc-text">停止运行</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#查询日志"><span class="toc-text">查询日志</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#备注"><span class="toc-text">备注</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web-construction"><span class="toc-text">web construction</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#nginx"><span class="toc-text">nginx</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gunicorn"><span class="toc-text">Gunicorn</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#supervisor"><span class="toc-text">supervisor</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-technology/server" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Server</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.03.21</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="linux-shadowsocks-配置"><a href="#linux-shadowsocks-配置" class="headerlink" title="linux shadowsocks 配置"></a>linux shadowsocks 配置</h1><p>指南:<a href="http://aitanlu.com/ubuntu-shadowsocks-ke-hu-duan-pei-zhi.html" target="_blank" rel="external">http://aitanlu.com/ubuntu-shadowsocks-ke-hu-duan-pei-zhi.html</a></p>
+<p>步骤:</p>
+<ol>
+<li>开服务器:<br>ssh root@159.203.102.157<br>ssserver<br>2.客户端（linux）开shadowsocks:<br>sslocal -s 139.59.160.89 -p 8388 -k “xxxx”<br>3.开chrome<br>备注:<br>配置服务器命令：sudo nano /usr/local/lib/node_modules/shadowsocks/config.json</li>
+</ol>
+<p>Shadowsocks服务端安装： </p>
+<h1 id="Debian-Ubuntu安装"><a href="#Debian-Ubuntu安装" class="headerlink" title="Debian / Ubuntu安装:"></a>Debian / Ubuntu安装:</h1><p>apt-get install<br>python-pip pip<br>install shadowsocks  </p>
+<h1 id="启动："><a href="#启动：" class="headerlink" title="启动："></a>启动：</h1><p>ssserver -p 443 -k password -m aes-256-cfb </p>
+<p>#ssserver -p 服务器端口 -k 密码 -m 加密方法 </p>
+<h1 id="后台运行"><a href="#后台运行" class="headerlink" title="后台运行"></a>后台运行</h1><p>sudo ssserver -p 443 -k password -m aes-256-cfb –user nobody -d start #ssserver -p 服务器端口 -k 密码 -m 加密方法 –user 运行用户 -d 后台运行 </p>
+<h1 id="停止运行"><a href="#停止运行" class="headerlink" title="停止运行"></a>停止运行</h1><p>sudo ssserver -d stop </p>
+<h1 id="查询日志"><a href="#查询日志" class="headerlink" title="查询日志"></a>查询日志</h1><p>sudo less/more /var/log/shadowsocks.log sudo tail -f  /var/log/shadowsocks.log #-h查询帮助。<br>可将配置单独写成一个文件,建一个config.json文件，放在/etc/shadowsocks/下 （默认没有这个文件，你要自己创建一个），或者放置于其他路径。 </p>
+<h2 id="备注"><a href="#备注" class="headerlink" title="备注"></a>备注</h2><p>服务器IP(IPv4/IPv6)，注意这也将是服务端监听的IP地址 server_port<br>服务器端口 local_port<br>本地端端口 password<br>用来加密的密码 timeout：超时时间（秒） method          加密方法，可选”bf-cfb”,”aes-256-cfb”,”des-cfb”,”rc4”,等等。默认是一种不安全的加密，推荐用 “aes-256-cfb” #配置完成启动 ssserver -c /etc/shadowsocks/config.json #后台运行 nohup ssserver -c /etc/shadowsocks.json &gt; /dev/null 2&gt;&amp;1 &amp; #开机启动加入/etc/rc.local</p>
+<h1 id="web-construction"><a href="#web-construction" class="headerlink" title="web construction"></a>web construction</h1><h1 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h1><p>sudo apt-get install nginx<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name 101.200.151.95; </div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_pass http://127.0.0.1:8080; </div><div class="line">        proxy_set_header Host $host;</div><div class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<h1 id="Gunicorn"><a href="#Gunicorn" class="headerlink" title="Gunicorn"></a>Gunicorn</h1><p>比uwsgi简单太多！！！！<br>安装Gunicorn<br>pip install gunicorn<br>安装完成后使用以下命令启动项目<br><code>gunicorn -w 4 -b 127.0.0.1:8080 app:app</code></p>
+<p>想要结束 gunicorn 只需执行 pkill gunicorn，有时候还的 ps 找到 pid 进程号才能 kill。可是这对于一个开发来说，太过于繁琐，因此出现了另外一个神器—supervisor，一个专门用来管理进程的工具，还可以管理系统的工具进程。</p>
+<h2 id="supervisor"><a href="#supervisor" class="headerlink" title="supervisor"></a>supervisor</h2><p>安装supervisor<br>pip install supervisor</p>
+<p>再项目SMT目录下初始化配置文件</p>
+<p>echo_supervisord_conf &gt; supervisor.conf</p>
+<p>vim supervisor.conf</p>
+<p>在配置文件最底部加入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">[program:myapp]</div><div class="line">user=web</div><div class="line">command=/home/web/venv/bin/gunicorn -w 4 -b 127.0.0.1:8080 app:app</div><div class="line">directory=/home/web/workspace-python/</div><div class="line">startsecs=0</div><div class="line">stopwaitsecs=0</div><div class="line">autostart=false</div><div class="line">autorestart=false</div></pre></td></tr></table></figure></p>
+<p>[必要时，用sudo]<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">启动supervisord</div><div class="line">supervisord -c supervisor.conf</div><div class="line">查看状态</div><div class="line">supervisorctl -c supervisor.conf status </div><div class="line">smt未启动</div><div class="line">supervisorctl -c supervisor.conf start smt</div><div class="line">supervisord -c supervisor.conf                             通过配置文件启动supervisor</div><div class="line">supervisorctl -c supervisor.conf status                    察看supervisor的状态</div><div class="line">supervisorctl -c supervisor.conf reload                    重新载入 配置文件</div><div class="line">supervisorctl -c supervisor.conf start [all]|[appname]     启动指定/所有 supervisor管理的程序进程</div><div class="line">supervisorctl -c supervisor.conf stop [all]|[appname]      关闭指定/所有 supervisor管理的程序进程</div></pre></td></tr></table></figure></p>
+<p><a href="https://my.oschina.net/caomenglong/blog/714294" target="_blank" rel="external">python 部署：virtuale + gunicorn + supervisor + flask</a></p>
+<p><a href="http://www.cnblogs.com/Ray-liang/p/4173923.html" target="_blank" rel="external">阿里云部署 Flask + WSGI + Nginx 详解</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
