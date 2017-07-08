@@ -15,17 +15,17 @@
     <meta name="keywords" content="RL," />
   
 
-  <meta name="description" content="Note for  David Silver LectureLecture 4: Model-Free Prediction research link[0]David Silver lecture">
+  <meta name="description" content="What makes reinforcement learning different from other machine learning paradigms?There is no supervisor, only a reward signalFeedback is delayed, not instantaneousTime really matters (sequential, non">
 <meta name="keywords" content="RL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Reinforce Learning">
 <meta property="og:url" content="http://lemonman.net/2017/07/07/NLP/ReinforcementLearning/index.html">
 <meta property="og:site_name" content="LemonMan">
-<meta property="og:description" content="Note for  David Silver LectureLecture 4: Model-Free Prediction research link[0]David Silver lecture">
-<meta property="og:updated_time" content="2017-07-07T07:15:54.806Z">
+<meta property="og:description" content="What makes reinforcement learning different from other machine learning paradigms?There is no supervisor, only a reward signalFeedback is delayed, not instantaneousTime really matters (sequential, non">
+<meta property="og:updated_time" content="2017-07-07T11:57:41.359Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Reinforce Learning">
-<meta name="twitter:description" content="Note for  David Silver LectureLecture 4: Model-Free Prediction research link[0]David Silver lecture">
+<meta name="twitter:description" content="What makes reinforcement learning different from other machine learning paradigms?There is no supervisor, only a reward signalFeedback is delayed, not instantaneousTime really matters (sequential, non">
 
   
 
@@ -40,7 +40,7 @@
 
   
 
-  <% if (theme.baidu_analytics){ %>
+  
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -50,16 +50,8 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-<% } %>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
+
+
 
 
 </head>
@@ -150,7 +142,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Note-for-David-Silver-Lecture"><span class="toc-text">Note for  David Silver Lecture</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#research-link"><span class="toc-text">research link</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-makes-reinforcement-learning-different-from-other-machine-learning-paradigms"><span class="toc-text">What makes reinforcement learning different from other machine learning paradigms?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reward-Hypothesis"><span class="toc-text">Reward Hypothesis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#History"><span class="toc-text">History</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent-State"><span class="toc-text">Agent State</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Information-State-Makov-State"><span class="toc-text">Information State(Makov State)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Full-observability"><span class="toc-text">Full observability</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Partial-observability"><span class="toc-text">Partial observability</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Agent-must-construct-its-own-state-representation-S-t-a-e-g"><span class="toc-text">Agent must construct its own state representation $S_t^a$, e.g.</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Note-for-David-Silver-Lecture"><span class="toc-text">Note for  David Silver Lecture</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#research-link"><span class="toc-text">research link</span></a>
   </div>
 
 
@@ -183,7 +175,16 @@ var _hmt = _hmt || [];
 
   <div class="article-content">
     
-      <h1 id="Note-for-David-Silver-Lecture"><a href="#Note-for-David-Silver-Lecture" class="headerlink" title="Note for  David Silver Lecture"></a>Note for  David Silver Lecture</h1><p>Lecture 4: Model-Free Prediction</p>
+      <h2 id="What-makes-reinforcement-learning-different-from-other-machine-learning-paradigms"><a href="#What-makes-reinforcement-learning-different-from-other-machine-learning-paradigms" class="headerlink" title="What makes reinforcement learning different from other machine learning paradigms?"></a>What makes reinforcement learning different from other machine learning paradigms?</h2><p>There is no supervisor, only a reward signal<br>Feedback is delayed, not instantaneous<br>Time really matters (sequential, non i.i.d data)<br>Agent’s actions affect the subsequent data it receives</p>
+<h2 id="Reward-Hypothesis"><a href="#Reward-Hypothesis" class="headerlink" title="Reward Hypothesis"></a>Reward Hypothesis</h2><p>All goals can be described by the maximisation of expected cumulative reward</p>
+<h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p>The history is the sequence of observations, actions, rewards<br>$$H_t = O_1,R_1,A_1,\cdots, A_{t_1}, O_t,R_t$$</p>
+<p>State is the information used to determine what happens next</p>
+<h2 id="Agent-State"><a href="#Agent-State" class="headerlink" title="Agent State"></a>Agent State</h2><p>The agent state $S_t^a$<br>is the agent’s internal representation<br>i.e. whatever information the agent uses to pick the next action<br>i.e. it is the information used by reinforcement learning algorithms<br>It can be any function of history<br>$$S_t^a = f(H_t)$$</p>
+<h2 id="Information-State-Makov-State"><a href="#Information-State-Makov-State" class="headerlink" title="Information State(Makov State)"></a>Information State(Makov State)</h2><p>An information state (a.k.a. Markov state) contains all useful information from the history<br>A state $S_t$ is Markov if and only if:<br>$$<br>P[S_{t+1}|s_t] = P[S_{t+1}|s_t,\cdots,s_1]<br>$$</p>
+<h2 id="Full-observability"><a href="#Full-observability" class="headerlink" title="Full observability"></a>Full observability</h2><p>agent directly observes environment state<br>Agent state = environment state = information state<br>Formally, this is a <strong>Markov decision process (MDP)</strong></p>
+<h2 id="Partial-observability"><a href="#Partial-observability" class="headerlink" title="Partial observability"></a>Partial observability</h2><p>agent indirectly observes environment,Now agent state 6= environment state. Formally this is a <strong>partially observable Markov decision process (POMDP)</strong>.</p>
+<h3 id="Agent-must-construct-its-own-state-representation-S-t-a-e-g"><a href="#Agent-must-construct-its-own-state-representation-S-t-a-e-g" class="headerlink" title="Agent must construct its own state representation $S_t^a$, e.g."></a>Agent must construct its own state representation $S_t^a$, e.g.</h3><p>\itemize<br>Complete history: $S^a_t = H_t$<br>Beliefs of environment state(Bayes view:each state is just a probability): $$S^a_t \sim (P[S^e_t=S^1],\cdots,P[S^e_t=S^n])$$<br>Recurrent neural network: $S^a_t = \delta(S^a_{t-1}W_s+O_tW_o) $</p>
+<h1 id="Note-for-David-Silver-Lecture"><a href="#Note-for-David-Silver-Lecture" class="headerlink" title="Note for  David Silver Lecture"></a>Note for  David Silver Lecture</h1><p>Lecture 4: Model-Free Prediction</p>
 <h1 id="research-link"><a href="#research-link" class="headerlink" title="research link"></a>research link</h1><p>[0]<a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" target="_blank" rel="external">David Silver lecture</a></p>
 
     
