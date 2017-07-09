@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Reinforce Learning | LemonMan</title>
+  <title>David Silver RL Lecture 1-2 | LemonMan</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -18,13 +18,13 @@
   <meta name="description" content="What makes reinforcement learning different from other machine learning paradigms?There is no supervisor, only a reward signalFeedback is delayed, not instantaneousTime really matters (sequential, non">
 <meta name="keywords" content="RL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Reinforce Learning">
-<meta property="og:url" content="http://lemonman.net/2017/07/07/NLP/ReinforcementLearning/index.html">
+<meta property="og:title" content="David Silver RL Lecture 1-2">
+<meta property="og:url" content="http://lemonman.net/2017/07/07/rl/lecture12/index.html">
 <meta property="og:site_name" content="LemonMan">
 <meta property="og:description" content="What makes reinforcement learning different from other machine learning paradigms?There is no supervisor, only a reward signalFeedback is delayed, not instantaneousTime really matters (sequential, non">
-<meta property="og:updated_time" content="2017-07-07T11:57:41.359Z">
+<meta property="og:updated_time" content="2017-07-09T06:48:56.595Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Reinforce Learning">
+<meta name="twitter:title" content="David Silver RL Lecture 1-2">
 <meta name="twitter:description" content="What makes reinforcement learning different from other machine learning paradigms?There is no supervisor, only a reward signalFeedback is delayed, not instantaneousTime really matters (sequential, non">
 
   
@@ -142,15 +142,15 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-makes-reinforcement-learning-different-from-other-machine-learning-paradigms"><span class="toc-text">What makes reinforcement learning different from other machine learning paradigms?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reward-Hypothesis"><span class="toc-text">Reward Hypothesis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#History"><span class="toc-text">History</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent-State"><span class="toc-text">Agent State</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Information-State-Makov-State"><span class="toc-text">Information State(Makov State)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Full-observability"><span class="toc-text">Full observability</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Partial-observability"><span class="toc-text">Partial observability</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Agent-must-construct-its-own-state-representation-S-t-a-e-g"><span class="toc-text">Agent must construct its own state representation $S_t^a$, e.g.</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Note-for-David-Silver-Lecture"><span class="toc-text">Note for  David Silver Lecture</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#research-link"><span class="toc-text">research link</span></a>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-makes-reinforcement-learning-different-from-other-machine-learning-paradigms"><span class="toc-text">What makes reinforcement learning different from other machine learning paradigms?</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reward-Hypothesis"><span class="toc-text">Reward Hypothesis</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#History"><span class="toc-text">History</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Agent-State"><span class="toc-text">Agent State</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Information-State-Makov-State"><span class="toc-text">Information State(Makov State)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Full-observability"><span class="toc-text">Full observability</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Markov-Process-Markov-Chain"><span class="toc-text">Markov Process(Markov Chain)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Partial-observability"><span class="toc-text">Partial observability</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Agent-must-construct-its-own-state-representation-S-t-a-e-g"><span class="toc-text">Agent must construct its own state representation $S_t^a$, e.g.</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Three-Main-Components-can-not-included-for-agent"><span class="toc-text">Three Main Components(can not included for agent)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Policy"><span class="toc-text">Policy</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Value-function"><span class="toc-text">Value function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Transitions"><span class="toc-text">Transitions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Rewards"><span class="toc-text">Rewards</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Value-Based"><span class="toc-text">Value Based</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Markov-decision-processes-MDPs"><span class="toc-text">Markov decision processes. MDPs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Almost-all-RL-problems-can-be-formalised-as-MDPs"><span class="toc-text">Almost all RL problems can be formalised as MDPs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Markov-Decision-Process-MRP"><span class="toc-text">Markov Decision Process, MRP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Return"><span class="toc-text">Return</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Value-Function"><span class="toc-text">Value Function</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bellman-Expectation-Equation"><span class="toc-text">Bellman Expectation Equation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Relations"><span class="toc-text">Relations</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Details"><span class="toc-text">Details</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Bellman-Expectation-Equation-for-v-pi"><span class="toc-text">Bellman Expectation Equation for $v_{\pi}$</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Extention-of-MDPs"><span class="toc-text">Extention of MDPs</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#research-link"><span class="toc-text">research link</span></a>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-NLP/ReinforcementLearning" class="article article-type-post" itemprop="blogPost">
+   <article id="post-rl/lecture12" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">Reinforce Learning</h1>
+    <h1 class="post-title">David Silver RL Lecture 1-2</h1>
 
     <div class="article-meta">
       <span>
@@ -182,9 +182,31 @@ var _hmt = _hmt || [];
 <h2 id="Agent-State"><a href="#Agent-State" class="headerlink" title="Agent State"></a>Agent State</h2><p>The agent state $S_t^a$<br>is the agent’s internal representation<br>i.e. whatever information the agent uses to pick the next action<br>i.e. it is the information used by reinforcement learning algorithms<br>It can be any function of history<br>$$S_t^a = f(H_t)$$</p>
 <h2 id="Information-State-Makov-State"><a href="#Information-State-Makov-State" class="headerlink" title="Information State(Makov State)"></a>Information State(Makov State)</h2><p>An information state (a.k.a. Markov state) contains all useful information from the history<br>A state $S_t$ is Markov if and only if:<br>$$<br>P[S_{t+1}|s_t] = P[S_{t+1}|s_t,\cdots,s_1]<br>$$</p>
 <h2 id="Full-observability"><a href="#Full-observability" class="headerlink" title="Full observability"></a>Full observability</h2><p>agent directly observes environment state<br>Agent state = environment state = information state<br>Formally, this is a <strong>Markov decision process (MDP)</strong></p>
+<h2 id="Markov-Process-Markov-Chain"><a href="#Markov-Process-Markov-Chain" class="headerlink" title="Markov Process(Markov Chain)"></a>Markov Process(Markov Chain)</h2><p>a tuple $(\mathcal{S},\mathcal{P})$<br>$\mathcal{S}$ is a finite set of states<br>$\mathcal{P}$ is a state transition probability matrix<br>$$<br>P_{ss’} = P[S_{t+1} = s’|S_{t} = s]<br>$$</p>
 <h2 id="Partial-observability"><a href="#Partial-observability" class="headerlink" title="Partial observability"></a>Partial observability</h2><p>agent indirectly observes environment,Now agent state 6= environment state. Formally this is a <strong>partially observable Markov decision process (POMDP)</strong>.</p>
-<h3 id="Agent-must-construct-its-own-state-representation-S-t-a-e-g"><a href="#Agent-must-construct-its-own-state-representation-S-t-a-e-g" class="headerlink" title="Agent must construct its own state representation $S_t^a$, e.g."></a>Agent must construct its own state representation $S_t^a$, e.g.</h3><p>\itemize<br>Complete history: $S^a_t = H_t$<br>Beliefs of environment state(Bayes view:each state is just a probability): $$S^a_t \sim (P[S^e_t=S^1],\cdots,P[S^e_t=S^n])$$<br>Recurrent neural network: $S^a_t = \delta(S^a_{t-1}W_s+O_tW_o) $</p>
-<h1 id="Note-for-David-Silver-Lecture"><a href="#Note-for-David-Silver-Lecture" class="headerlink" title="Note for  David Silver Lecture"></a>Note for  David Silver Lecture</h1><p>Lecture 4: Model-Free Prediction</p>
+<h3 id="Agent-must-construct-its-own-state-representation-S-t-a-e-g"><a href="#Agent-must-construct-its-own-state-representation-S-t-a-e-g" class="headerlink" title="Agent must construct its own state representation $S_t^a$, e.g."></a>Agent must construct its own state representation $S_t^a$, e.g.</h3><p>Complete history: $S^a_t = H_t$<br>Beliefs of environment state(Bayes view:each state is just a probability): $$S^a_t \sim (P[S^e_t=S^1],\cdots,P[S^e_t=S^n])$$<br>Recurrent neural network: $S^a_t = \delta(S^a_{t-1}W_s+O_tW_o) $</p>
+<h2 id="Three-Main-Components-can-not-included-for-agent"><a href="#Three-Main-Components-can-not-included-for-agent" class="headerlink" title="Three Main Components(can not included for agent)"></a>Three Main Components(can not included for agent)</h2><ol>
+<li>Policy: Which action will take given the state,agent’s  behaviour function.</li>
+<li>Value function: how good is each state and/or action</li>
+<li>Model: agent’s representation  of the environment</li>
+</ol>
+<h3 id="Policy"><a href="#Policy" class="headerlink" title="Policy"></a>Policy</h3><p>a map from state to action<br>Deterministic policy: $a = \pi(s)$<br>Stochastic policy: $\pi(a|s) = P[A=a|S=s]$</p>
+<h3 id="Value-function"><a href="#Value-function" class="headerlink" title="Value function"></a>Value function</h3><p>a prediction of future reward<br>used to evaluate the googdness/badness of states<br>e.g.<br>$$<br>v_{\pi} = E_{\pi}[R_t+\gamma R_{t+1}+\gamma^2 R_{t+2}+\dots|S_t=s]<br>$$</p>
+<h3 id="Transitions"><a href="#Transitions" class="headerlink" title="Transitions"></a>Transitions</h3><p>$\mathcal{P}$ predicts the next state(i.e. dynamics)<br>$$<br>\mathcal{P}_{ss’}^a = P[S’=s’|S=s,A=a]<br>$$</p>
+<h3 id="Rewards"><a href="#Rewards" class="headerlink" title="Rewards"></a>Rewards</h3><p>$\mathcal{R}$ predicts the next (immediate) reward. e.g.<br>$$<br>\mathcal{R}_s^a = E[R|S=s,A=a]<br>$$</p>
+<h2 id="Value-Based"><a href="#Value-Based" class="headerlink" title="Value Based"></a>Value Based</h2><p>value function<br>no Policy(implicit)</p>
+<h2 id="Markov-decision-processes-MDPs"><a href="#Markov-decision-processes-MDPs" class="headerlink" title="Markov decision processes. MDPs"></a>Markov decision processes. MDPs</h2><h3 id="Almost-all-RL-problems-can-be-formalised-as-MDPs"><a href="#Almost-all-RL-problems-can-be-formalised-as-MDPs" class="headerlink" title="Almost all RL problems can be formalised as MDPs"></a>Almost all RL problems can be formalised as MDPs</h3><ol>
+<li>Optimal control primarily deals with continous MDPs</li>
+<li>Partially observable problems can be converted into MDPs</li>
+</ol>
+<h2 id="Markov-Decision-Process-MRP"><a href="#Markov-Decision-Process-MRP" class="headerlink" title="Markov Decision Process, MRP"></a>Markov Decision Process, MRP</h2><p>A Markov reward process is a Markov chain with values<br>A markov reward process is a tuple $(\mathcal{S},\mathcal{P},\mathcal{R},\gamma)$<br>Where,<br>$$<br>R_s=E[R_{t+1}|S_t = s]<br>$$</p>
+<h3 id="Return"><a href="#Return" class="headerlink" title="Return"></a>Return</h3><p>The return $G_t$ is the total discounted reward from time step t<br>$$<br>G_t = R_{t+1}+\gamma R_{t+1} + \dots = \sum\gamma^k R_{t+k+1}<br>$$</p>
+<h3 id="Value-Function"><a href="#Value-Function" class="headerlink" title="Value Function"></a>Value Function</h3><p>gives the long-term value of state s.<br>$$<br>v(s) = E[G_t|S_t=s]<br>$$</p>
+<h2 id="Bellman-Expectation-Equation"><a href="#Bellman-Expectation-Equation" class="headerlink" title="Bellman Expectation Equation"></a>Bellman Expectation Equation</h2><p>$$<br>v_{\pi}(s) = E_{\pi}[R_{t+1}+\gamma v_{\pi}(S_{t+1})|S_t=s)] \\<br>q_{\pi}(s,a) = E_{\pi}[R_{t+1}+\gamma q_{\pi}(S_{t+1},A_{t+1})|S_t=s,A_t=a]<br>$$</p>
+<h3 id="Relations"><a href="#Relations" class="headerlink" title="Relations"></a>Relations</h3><p>$$<br>v_{\pi}(s) = \sum_{a\in A} \pi(a|s) q_{\pi}(s,a) \\<br>q_{\pi}(s,a)  = R_s^a + \gamma \sum_{s’\in S}P_{ss’}^av_{\pi}(s’)<br>$$</p>
+<h3 id="Details"><a href="#Details" class="headerlink" title="Details"></a>Details</h3><p>$$<br>v_{\pi} = \sum_a \pi(a|s) R_s^a + \gamma \sum_{s’} P_{ss’}^a v_{\pi}(s’) \\<br>q_{\pi}(s,a)  = R_s^a + \gamma\sum_{s’\in S} P_{ss’}^a\sum_{a’ \in A}\pi(a’|s’)q_{\pi}(s’,a’)<br>$$</p>
+<h3 id="Bellman-Expectation-Equation-for-v-pi"><a href="#Bellman-Expectation-Equation-for-v-pi" class="headerlink" title="Bellman Expectation Equation for $v_{\pi}$"></a>Bellman Expectation Equation for $v_{\pi}$</h3><p>$$<br>v_{\pi} = \sum_{a\in A} \pi(a|s) R_s^a + \gamma \sum_{s’} P_{ss’}^a v_{\pi}(s’)<br>$$</p>
+<h1 id="Extention-of-MDPs"><a href="#Extention-of-MDPs" class="headerlink" title="Extention of MDPs"></a>Extention of MDPs</h1><p>infinite and continuous MDPs<br>Partially observable MDPs<br>Undiscounted, average reward MDPs</p>
 <h1 id="research-link"><a href="#research-link" class="headerlink" title="research link"></a>research link</h1><p>[0]<a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" target="_blank" rel="external">David Silver lecture</a></p>
 
     
