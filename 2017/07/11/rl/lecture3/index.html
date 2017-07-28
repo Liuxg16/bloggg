@@ -15,19 +15,19 @@
     <meta name="keywords" content="RL," />
   
 
-  <meta name="description" content="Dynamic Programminga method for solving complex probelms Dynamicsequential or temporal component to the problems Programmingoptimising a “program”  i.e. a policy two property Optimal substructure  Ove">
+  <meta name="description" content="$$L_{cons}(i,j) = (x_i+\frac{w_i}{2}-x_j-\frac{w_j}{2})^2+(y_i+\frac{h_i}{2}-y_j-\frac{h_j}{2})^2$$ $$L_{mask}(p,l) = -\sum_i log(p^{(i)}_{l^{(i)}})$$ Dynamic Programminga method for solving complex p">
 <meta name="keywords" content="RL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="David Silver RL Lecture 3">
 <meta property="og:url" content="http://lemonman.net/2017/07/11/rl/lecture3/index.html">
 <meta property="og:site_name" content="LemonMan">
-<meta property="og:description" content="Dynamic Programminga method for solving complex probelms Dynamicsequential or temporal component to the problems Programmingoptimising a “program”  i.e. a policy two property Optimal substructure  Ove">
+<meta property="og:description" content="$$L_{cons}(i,j) = (x_i+\frac{w_i}{2}-x_j-\frac{w_j}{2})^2+(y_i+\frac{h_i}{2}-y_j-\frac{h_j}{2})^2$$ $$L_{mask}(p,l) = -\sum_i log(p^{(i)}_{l^{(i)}})$$ Dynamic Programminga method for solving complex p">
 <meta property="og:image" content="http://lemonman.net/2017/07/11/rl/lecture3/rl/policy_iteration.JPG">
 <meta property="og:image" content="http://lemonman.net/2017/07/11/rl/lecture3/rl/policy_iteration1.JPG">
-<meta property="og:updated_time" content="2017-07-11T05:31:19.966Z">
+<meta property="og:updated_time" content="2017-07-12T08:03:23.693Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="David Silver RL Lecture 3">
-<meta name="twitter:description" content="Dynamic Programminga method for solving complex probelms Dynamicsequential or temporal component to the problems Programmingoptimising a “program”  i.e. a policy two property Optimal substructure  Ove">
+<meta name="twitter:description" content="$$L_{cons}(i,j) = (x_i+\frac{w_i}{2}-x_j-\frac{w_j}{2})^2+(y_i+\frac{h_i}{2}-y_j-\frac{h_j}{2})^2$$ $$L_{mask}(p,l) = -\sum_i log(p^{(i)}_{l^{(i)}})$$ Dynamic Programminga method for solving complex p">
 <meta name="twitter:image" content="http://lemonman.net/2017/07/11/rl/lecture3/rl/policy_iteration.JPG">
 
   
@@ -43,7 +43,7 @@
 
   
 
-  
+  <% if (theme.baidu_analytics){ %>
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -53,8 +53,16 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
-
+<% } %>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
@@ -178,7 +186,9 @@ var _hmt = _hmt || [];
 
   <div class="article-content">
     
-      <h1 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h1><p>a method for solving complex probelms</p>
+      <p>$$<br>L_{cons}(i,j) = (x_i+\frac{w_i}{2}-x_j-\frac{w_j}{2})^2+(y_i+\frac{h_i}{2}-y_j-\frac{h_j}{2})^2<br>$$</p>
+<p>$$<br>L_{mask}(p,l) = -\sum_i log(p^{(i)}_{l^{(i)}})<br>$$</p>
+<h1 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h1><p>a method for solving complex probelms</p>
 <h2 id="Dynamic"><a href="#Dynamic" class="headerlink" title="Dynamic"></a>Dynamic</h2><p>sequential or temporal component to the problems</p>
 <h2 id="Programming"><a href="#Programming" class="headerlink" title="Programming"></a>Programming</h2><p>optimising a “program”  i.e. a policy</p>
 <h2 id="two-property"><a href="#two-property" class="headerlink" title="two property"></a>two property</h2><ol>

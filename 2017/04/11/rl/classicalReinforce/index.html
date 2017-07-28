@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://lemonman.net/2017/04/11/rl/classicalReinforce/index.html">
 <meta property="og:site_name" content="LemonMan">
 <meta property="og:description" content="Bref[2]Classical REINFORCE [1] algorithm, also known as the “vanilla” policy gradient. We will start with an implementation that works with a fixed policy and environment. The next section Implementin">
-<meta property="og:updated_time" content="2017-07-09T06:16:52.471Z">
+<meta property="og:updated_time" content="2017-07-12T12:51:42.195Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Classical Reinforce Algorithm">
 <meta name="twitter:description" content="Bref[2]Classical REINFORCE [1] algorithm, also known as the “vanilla” policy gradient. We will start with an implementation that works with a fixed policy and environment. The next section Implementin">
@@ -40,7 +40,7 @@
 
   
 
-  
+  <% if (theme.baidu_analytics){ %>
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -50,8 +50,16 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
-
+<% } %>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
@@ -180,7 +188,7 @@ var _hmt = _hmt || [];
 <p>\begin{align}<br>\eta(\theta) &amp;= \mathbb{E}\left[\sum_{t=0}^T \gamma^t r(s_t, a_t)\right] \\<br>&amp;= \sum_HP(H)(\sum_{t=0}^T \gamma^t r(s_t, a_t)) \\<br>&amp;= \sum_Hp(s_0)\prod_{t=0}^{T-1}P(a_t|s_t)P(s_{t+1}|s_t,a_{t})(\sum_{t=0}^T \gamma^t r(s_t, a_t))<br>\end{align}<br>where the expectation is implicitly taken over all possible trajectories, following the sampling procedure $s_0\sim \mu_0$, $a_t\sim \pi_{\theta}(a_t|s_t)=P(a_t|s_t)$, and $s_{t+1} \sim P(s_{t+1}|s_t,a_t)$, and $H$ indicates a single possible trajectories.<br>Basicly,the return $r(s,a)$ and the transition probability$P(s_{t+1}|s_t,a_t)$ are both controlled by environment,and only $\pi_{theta}(a_t|s_t)$ is the function of $\theta$.<br>By the likelihood ratio trick, the gradient of the objective with respect to $\theta$ is given by the followings.<br>The upper formular may be frastrating, we first have,<br>\begin{align}<br>\nabla_{\theta}\prod\pi_{\theta}(a_t|s_t) &amp;= \prod\pi_{\theta}(a_t|s_t) \nabla_{\theta}log\prod\pi_{\theta}(a_t|s_t) \\<br>&amp;= \prod\pi_{\theta}(a_t|s_t) \sum_t\nabla_{\theta}log\pi_{\theta}(a_t|s_t)<br>\end{align}<br>and,<br>\begin{align}<br>\nabla_\theta \eta(\theta) &amp;= \sum_H  P(s_0)\prod_{t=0}^{T-1}P(s_{t+1}|s_t,a_t)\nabla_{\theta}\prod_{t=0}^{T}P(a_t|s_t)  (\sum_{t=0}^T \gamma^t r(s_t, a_t)) \\<br>&amp;= \sum_H P(s_0)\prod_{t=0}^{T-1}P(s_{t+1}|s_t,a_t)\nabla_{\theta}\prod_{t=0}^{T}\pi_{\theta}(a_t|s_t) (\sum_{t=0}^T \gamma^t r(s_t, a_t))\\<br>&amp;= \sum_H P(H) \sum_t\nabla log\pi_{\theta}(a_t|s_t)(\sum_{t=0}^T \gamma^t r(s_t, a_t))\\<br>&amp;=  \mathbb{E}\left[\left(\sum_{t=0}^T \gamma^t r(s_t, a_t)\right) \left(\sum_{t=0}^T \nabla_\theta \log \pi_\theta(a_t | s_t) \right)\right]<br>\end{align}<br>Then we can reduce the variance of this estimator by noting that for $t′&lt;t$,<br>\begin{align}<br>E(t’) &amp;= \mathbb{E}\left[ r(s_{t’}, a_{t’}) \nabla_\theta \log \pi_\theta(a_t | s_t) \right] \\<br>&amp;= \sum_H P(H)\left[ r(s_{t’}, a_{t’}) \nabla_\theta \log \pi_\theta(a_t | s_t) \right] \\<br>&amp;= \sum_{H} P(H-a_t) \cdot P(a_t|s_t) r(s_{t’}, a_{t’}) \nabla_\theta \log \pi_\theta(a_t | s_t) \\<br>&amp;= \sum_{H} P(H-a_t) \cdot P(a_t|s_t) r(s_{t’}, a_{t’}) \nabla_\theta  \pi_\theta(a_t | s_t) \\<br>&amp;= \sum_{H-a_t} P(H-a_t) \cdot P(a_t|s_t) r(s_{t’}, a_{t’}) \nabla_\theta  \sum_{a_t}\pi_\theta(a_t | s_t) \\<br>&amp;= \sum_{H-a_t} P(H-a_t) \cdot P(a_t|s_t) r(s_{t’}, a_{t’}) \nabla_\theta 1 \\<br>&amp;= 0<br>\end{align}<br>Hence,<br>$$\nabla_\theta \eta(\theta) = \mathbb{E}\left[ \sum_{t=0}^T \nabla_\theta \log \pi_\theta(a_t | s_t) \sum_{t’=t}^T \gamma^{t’} r(s_{t’}, a_{t’}) \right]$$</p>
 <p>Often, we use the following estimator instead:<br>$$\nabla_\theta \eta(\theta) = \mathbb{E}\left[ \sum_{t=0}^T \nabla_\theta \log \pi_\theta(a_t | s_t) \sum_{t’=t}^T \gamma^{t’-t} r(s_{t’}, a_{t’}) \right]$$<br>where $\gamma^{t’}$ is replaced by $\gamma^{t’-t}$. When viewing the discount factor as a variance reduction factor for the undiscounted objective, this alternative gradient estimator has less bias, at the expense of having a larger variance. We define $R_t := \sum_{t’=t}^T \gamma^{t’-t} r(s_{t’}, a_{t’})$as the empirical discounted return.</p>
 <p>The above formula will be the central object of our implementation. The pseudocode for the whole algorithm is as below:<br>$\quad \cdot$ Initialize policy $\pi_{\theta}$ with parameter $\theta_0$.<br>$\quad \cdot$ For iteration $k=1,2,\dots$:<br>$\quad\quad \cdot$ Sample N trajectories $\tau_1,\dots,\tau_n$ under the current policy $\theta_k$, where $\tau_i = (s_t^i, a_t^i, R_t^i)_{t=0}^{T-1}$. Note that the last state is dropped since no action is taken after observing the last state.<br>$\quad\quad \cdot$ Compute the empirical policy gradient:<br>$$\widehat{\nabla_\theta \eta(\theta)} = \frac{1}{NT} \sum_{i=1}^N \sum_{t=0}^{T-1} \nabla_\theta \log \pi_\theta(a_t^i | s_t^i) R_t^i$$<br>$\quad\quad \cdot$ Take a gradient step: $\theta_{k+1} = \theta_k + \alpha \widehat{\nabla_\theta \eta(\theta)}$</p>
-<p>[1]Williams, Ronald J. “Simple statistical gradient-following algorithms for connectionist reinforcement learning.” Machine learning 8.3-4 (1992): 229-256.<br>[2] this is a note for <a href="https://rllab.readthedocs.io/en/latest/user/implement\_algo\_basic.html?highlight=basic#id3" target="_blank" rel="external">rllab document</a><br>[3]<a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Home.html" target="_blank" rel="external">David Silver</a></p>
+<p>[1]Williams, Ronald J. “Simple statistical gradient-following algorithms for connectionist reinforcement learning.” Machine learning 8.3-4 (1992): 229-256.<br>[2] this is a note for <a href="https://rllab.readthedocs.io/en/latest/user/implement\_algo\_basic.html?highlight=basic#id3" target="_blank" rel="external">rllab document</a><br>[3]<a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Home.html" target="_blank" rel="external">David Silver</a><br>[4]<a href="https://zhuanlan.zhihu.com/p/21725498" target="_blank" rel="external">深度增强学习之Policy Gradient方法</a><br>[5]<a href="https://zhuanlan.zhihu.com/p/22339097" target="_blank" rel="external">智能单元</a><br>[6]<a href="http://icml.cc/2016/tutorials/deep_rl_tutorial.pdf" target="_blank" rel="external">deep rl tutorial</a></p>
 
     
   </div>

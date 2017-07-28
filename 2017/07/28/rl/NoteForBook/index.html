@@ -7,27 +7,25 @@
 <head>
   <meta charset="utf-8">
   
-  <title>《三体---死神永生》 | LemonMan</title>
+  <title>Note for Book of Sutton | LemonMan</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="life," />
+    <meta name="keywords" content="RL," />
   
 
-  <meta name="description" content="程心思绪随着作者的笔尖走过千山万水、世世代代，每走一步，脚底就被针扎一次，似乎是作者挑了一条最难走的路。 在爱和友善呵护着长大的程心，无论如何也不适合承担执剑人的使命和责任，因为与外星文明斗争是残酷无情的，或者程心应该先去接受魔鬼训练，让她经受最黑暗、恐怖的考验，高智商和博弈训练后在当执剑人。不过，选民最后选她自然是群体盲目的结果，心疼维德，虽然不怎么喜欢维德，可是相信他能够带领人类继续坚守。">
-<meta name="keywords" content="life">
+  <meta name="description" content="Monte Carlo methodsMonte Carlo methods require only experience—sample sequences of states, actions, and rewards from actual or simulated interaction with an environment. Learning from actual experienc">
+<meta name="keywords" content="RL">
 <meta property="og:type" content="article">
-<meta property="og:title" content="《三体---死神永生》">
-<meta property="og:url" content="http://lemonman.net/2016/11/21/threeBody3/index.html">
+<meta property="og:title" content="Note for Book of Sutton">
+<meta property="og:url" content="http://lemonman.net/2017/07/28/rl/NoteForBook/index.html">
 <meta property="og:site_name" content="LemonMan">
-<meta property="og:description" content="程心思绪随着作者的笔尖走过千山万水、世世代代，每走一步，脚底就被针扎一次，似乎是作者挑了一条最难走的路。 在爱和友善呵护着长大的程心，无论如何也不适合承担执剑人的使命和责任，因为与外星文明斗争是残酷无情的，或者程心应该先去接受魔鬼训练，让她经受最黑暗、恐怖的考验，高智商和博弈训练后在当执剑人。不过，选民最后选她自然是群体盲目的结果，心疼维德，虽然不怎么喜欢维德，可是相信他能够带领人类继续坚守。">
-<meta property="og:image" content="http://awb.img1.xmtbang.com/wechatmsg/article/20140928/1e596ed3ae1a43b9a9a14be6df0d1832.jpg">
-<meta property="og:updated_time" content="2017-07-07T06:34:36.284Z">
+<meta property="og:description" content="Monte Carlo methodsMonte Carlo methods require only experience—sample sequences of states, actions, and rewards from actual or simulated interaction with an environment. Learning from actual experienc">
+<meta property="og:updated_time" content="2017-07-28T12:42:45.776Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="《三体---死神永生》">
-<meta name="twitter:description" content="程心思绪随着作者的笔尖走过千山万水、世世代代，每走一步，脚底就被针扎一次，似乎是作者挑了一条最难走的路。 在爱和友善呵护着长大的程心，无论如何也不适合承担执剑人的使命和责任，因为与外星文明斗争是残酷无情的，或者程心应该先去接受魔鬼训练，让她经受最黑暗、恐怖的考验，高智商和博弈训练后在当执剑人。不过，选民最后选她自然是群体盲目的结果，心疼维德，虽然不怎么喜欢维德，可是相信他能够带领人类继续坚守。">
-<meta name="twitter:image" content="http://awb.img1.xmtbang.com/wechatmsg/article/20140928/1e596ed3ae1a43b9a9a14be6df0d1832.jpg">
+<meta name="twitter:title" content="Note for Book of Sutton">
+<meta name="twitter:description" content="Monte Carlo methodsMonte Carlo methods require only experience—sample sequences of states, actions, and rewards from actual or simulated interaction with an environment. Learning from actual experienc">
 
   
 
@@ -152,20 +150,20 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#程心"><span class="toc-text">程心</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Monte-Carlo-methods"><span class="toc-text">Monte Carlo methods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GPI"><span class="toc-text">GPI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#On-policy-methods"><span class="toc-text">On-policy methods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#off-policy-methods"><span class="toc-text">off-policy methods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#target-policy-and-behavior-policy"><span class="toc-text">target policy and behavior policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#importance-sampling"><span class="toc-text">importance sampling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#weighted-importance-sampling"><span class="toc-text">weighted importance sampling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#temporal-difference-TD-learning"><span class="toc-text">temporal-difference (TD) learning</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#research-link"><span class="toc-text">research link</span></a>
   </div>
 
 
 
 <div class="content content-post CENTER">
-   <article id="post-threeBody3" class="article article-type-post" itemprop="blogPost">
+   <article id="post-rl/NoteForBook" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">《三体---死神永生》</h1>
+    <h1 class="post-title">Note for Book of Sutton</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2016.11.21</span>
+        <span>2017.07.28</span>
       </span>
 
       
@@ -185,11 +183,15 @@ var _hmt = _hmt || [];
 
   <div class="article-content">
     
-      <div align="center"><br><img src="http://awb.img1.xmtbang.com/wechatmsg/article/20140928/1e596ed3ae1a43b9a9a14be6df0d1832.jpg" alt=""><br></div>
-
-<h1 id="程心"><a href="#程心" class="headerlink" title="程心"></a>程心</h1><p>思绪随着作者的笔尖走过千山万水、世世代代，每走一步，脚底就被针扎一次，似乎是作者挑了一条最难走的路。 在爱和友善呵护着长大的程心，无论如何也不适合承担执剑人的使命和责任，因为与外星文明斗争是残酷无情的，或者程心应该先去接受魔鬼训练，让她经受最黑暗、恐怖的考验，高智商和博弈训练后在当执剑人。不过，选民最后选她自然是群体盲目的结果，心疼维德，虽然不怎么喜欢维德，可是相信他能够带领人类继续坚守。再到程心决然的要求维德放弃研发曲率驱动飞船，对联邦政府投降，宣告了人类逃离太阳系无望，理智的我快理智不下去了。。。</p>
-<p>到歌者对太阳系进行维度打击的时候，作者借罗辑说出了真相，程心做出的种种看似很傻的决定，并不是她的错，而是人类集体做出的选择。当人类不仅有求生本能，还有善良友爱纯真的共识，我们不能接受被阴谋、残忍、狡诈充满的世界，即使是灭绝，也毫不妥协！套用一句话：我自私地以为，我们都应该去了解世界的恶，但，在这之前，请首先学会去守护爱！<sup>[1]</sup></p>
-<p>[1][行走日志-长姑米Teacher和茉莉花]</p>
+      <h2 id="Monte-Carlo-methods"><a href="#Monte-Carlo-methods" class="headerlink" title="Monte Carlo methods"></a>Monte Carlo methods</h2><p>Monte Carlo methods require only experience—sample sequences of states, actions, and rewards from actual or simulated interaction with an environment. Learning from actual experience is striking because it requires no prior knowledge of the environment’s dynamics, yet can still<br>attain optimal behavior.</p>
+<h2 id="GPI"><a href="#GPI" class="headerlink" title="GPI"></a>GPI</h2><p>generalized policy iteration</p>
+<h2 id="On-policy-methods"><a href="#On-policy-methods" class="headerlink" title="On-policy methods"></a>On-policy methods</h2><p>On-policy methods attempt to evaluate or improve the policy that is used to make decisions.</p>
+<h2 id="off-policy-methods"><a href="#off-policy-methods" class="headerlink" title="off-policy methods"></a>off-policy methods</h2><p>off-policy methods evaluate or improve a policy different from that used to generate the data.</p>
+<h2 id="target-policy-and-behavior-policy"><a href="#target-policy-and-behavior-policy" class="headerlink" title="target policy and behavior policy"></a>target policy and behavior policy</h2><p>The policy being learned about is called the target policy, and the policy used to generate behavior is called the behavior policy</p>
+<h2 id="importance-sampling"><a href="#importance-sampling" class="headerlink" title="importance sampling"></a>importance sampling</h2><p> a general technique for estimating expected values under one distribution given samples from another.</p>
+<h2 id="weighted-importance-sampling"><a href="#weighted-importance-sampling" class="headerlink" title="weighted importance sampling"></a>weighted importance sampling</h2><p>An important alternative of IS</p>
+<h2 id="temporal-difference-TD-learning"><a href="#temporal-difference-TD-learning" class="headerlink" title="temporal-difference (TD) learning"></a>temporal-difference (TD) learning</h2><p>TD learning is a combination of Monte Carlo ideas and dynamic programming (DP) ideas. Like Monte Carlo methods, TD methods can learn directly from raw experience without a model of the environment’s dynamics. Like DP, TD methods update estimates based in part on other learned estimates, without waiting for a final outcome (they bootstrap).</p>
+<h1 id="research-link"><a href="#research-link" class="headerlink" title="research link"></a>research link</h1><p>[0]<a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" target="_blank" rel="external">David Silver lecture</a></p>
 
     
   </div>

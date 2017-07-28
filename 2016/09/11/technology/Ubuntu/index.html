@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="LemonMan">
 <meta property="og:description" content="常用命令 ipython notebook –profile-nbserver:开ipython服务器在浏览器用地址https://192.168.31.239:port/查看 pwd:查看当前目录 lshw: 查看电脑硬件详细信息 lscpu: 查看cpu htop: 动态监控进程 nvidia-smi: 查看gpu find . -name name*: 查找包含name的文件名 ssh-k">
 <meta property="og:image" content="http://pic1.win4000.com/wallpaper/0/53a4e6348266e.jpg">
-<meta property="og:updated_time" content="2017-07-07T06:34:36.749Z">
+<meta property="og:updated_time" content="2017-07-27T01:51:11.141Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu">
 <meta name="twitter:description" content="常用命令 ipython notebook –profile-nbserver:开ipython服务器在浏览器用地址https://192.168.31.239:port/查看 pwd:查看当前目录 lshw: 查看电脑硬件详细信息 lscpu: 查看cpu htop: 动态监控进程 nvidia-smi: 查看gpu find . -name name*: 查找包含name的文件名 ssh-k">
@@ -42,7 +42,7 @@
 
   
 
-  
+  <% if (theme.baidu_analytics){ %>
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -52,8 +52,16 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
-
+<% } %>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
@@ -219,7 +227,7 @@ var _hmt = _hmt || [];
 </ol>
 <h1 id="Particular-Command"><a href="#Particular-Command" class="headerlink" title="Particular Command"></a>Particular Command</h1><p>打开python notebook:<code>ipython notebook --profile=nbserver</code></p>
 <h1 id="software"><a href="#software" class="headerlink" title="software"></a>software</h1><p>sudo apt-get install graphviz</p>
-<h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><p>查看硬盘：<code>sudo fdisk -l</code><br>查看具体文件大小：du -hs 123.jpg </p>
+<h1 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h1><p>查看硬盘：<code>sudo fdisk -l</code><br>查看具体文件大小：du -hs 123.jpg<br>查看txt行数：wc命令可以对文件中的行数、字符数、字节数进行计数<br><code>wc -l fileName</code></p>
 <h1 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h1><p>改nds：vim /etc/resolv.conf</p>
 <h2 id="hosts设置"><a href="#hosts设置" class="headerlink" title="hosts设置"></a>hosts设置</h2><p>可无需输入ip，方便些<br>1.<code>vim /ect/hosts</code><br>2.加入ip和hostsname<br><code>1.1.1.1    ahostname</code></p>
 <h1 id="杀进程"><a href="#杀进程" class="headerlink" title="杀进程"></a>杀进程</h1><p>ps -ef |grep processid<br>kill xxx</p>
