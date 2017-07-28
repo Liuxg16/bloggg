@@ -5,9 +5,9 @@
 
 
 <head>
-  <meta charset="utf-8">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>Liu Xianggen</title>
+  <title>LemonMan</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -16,11 +16,11 @@
   
 
   <meta property="og:type" content="website">
-<meta property="og:title" content="Liu Xianggen">
-<meta property="og:url" content="http://www.liuxianggen.com/index.html">
-<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:title" content="LemonMan">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="LemonMan">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Liu Xianggen">
+<meta name="twitter:title" content="LemonMan">
 
   
 
@@ -29,13 +29,14 @@
   
 
   <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+  <link href="/css/personal.css" rel="stylesheet">
 
 
   
 
   
 
-  <% if (theme.baidu_analytics){ %>
+  
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -44,17 +45,9 @@ var _hmt = _hmt || [];
   var s = document.getElementsByTagName("script")[0]; 
   s.parentNode.insertBefore(hm, s);
 })();
-</script>
-<% } %>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
 
 
 </head>
@@ -65,12 +58,12 @@ var _hmt = _hmt || [];
   
 
   
-  <div class="content-home text-center">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="content-home text-center">
   <a class="avatar" href="/">
     <img src="/images/me.jpg" alt="" />
   </a>
   <h1 class="name" style="font-family: calligraffittiregular">
-    Liuxg&#39;s Blog
+    LemonMan
   </h1>
   <div class="slogan">
     Three Pound Universe
@@ -232,6 +225,26 @@ var _hmt = _hmt || [];
     });
   }
 </script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script type="text/javascript"
+	src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML,
+	/javascripts/MathJaxLocal.js">
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
 
 </body>
 </html>
