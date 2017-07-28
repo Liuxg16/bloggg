@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Inference | LemonMan</title>
+  <title>Inference | Liu Xianggen</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -19,15 +19,15 @@
 <meta name="keywords" content="ml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Inference">
-<meta property="og:url" content="http://lemonman.net/2016/12/05/ml/ml-inference/index.html">
-<meta property="og:site_name" content="LemonMan">
+<meta property="og:url" content="http://www.liuxianggen.com/2016/12/05/ml/ml-inference/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
 <meta property="og:description" content="Importance Sampling重要性采样和蒙特卡洛积分密切相关，看积分:$$\int f(x) dx = \int f(x)(1/g(x))g(x)dx $$ 如果g(x)是一个概率分布，从g(x)中抽取N个样本，上述的式子就约等于(1/N) \sum f(xi)(1/g(xi))。这相当于给每个样本赋予了一个权重，g(xi)大意味着概率大，那么N里面含有这样的样本xi就多，即这些样本的权">
-<meta property="og:image" content="http://lemonman.net/2016/12/05/ml/ml-inference/~/10-55-30.png">
+<meta property="og:image" content="http://www.liuxianggen.com/2016/12/05/ml/ml-inference/~/10-55-30.png">
 <meta property="og:updated_time" content="2017-07-07T06:34:38.262Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Inference">
 <meta name="twitter:description" content="Importance Sampling重要性采样和蒙特卡洛积分密切相关，看积分:$$\int f(x) dx = \int f(x)(1/g(x))g(x)dx $$ 如果g(x)是一个概率分布，从g(x)中抽取N个样本，上述的式子就约等于(1/N) \sum f(xi)(1/g(xi))。这相当于给每个样本赋予了一个权重，g(xi)大意味着概率大，那么N里面含有这样的样本xi就多，即这些样本的权">
-<meta name="twitter:image" content="http://lemonman.net/2016/12/05/ml/ml-inference/~/10-55-30.png">
+<meta name="twitter:image" content="http://www.liuxianggen.com/2016/12/05/ml/ml-inference/~/10-55-30.png">
 
   
 
@@ -355,20 +355,5 @@ var _hmt = _hmt || [];
   }
 </script>
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
