@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://www.liuxianggen.com/2017/07/28/rl/NoteForBook/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
 <meta property="og:description" content="Monte Carlo methodsMonte Carlo methods require only experience—sample sequences of states, actions, and rewards from actual or simulated interaction with an environment. Learning from actual experienc">
-<meta property="og:updated_time" content="2017-07-28T14:47:27.303Z">
+<meta property="og:updated_time" content="2017-07-30T07:48:23.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Note for Book of Sutton">
 <meta name="twitter:description" content="Monte Carlo methodsMonte Carlo methods require only experience—sample sequences of states, actions, and rewards from actual or simulated interaction with an environment. Learning from actual experienc">
@@ -142,7 +142,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Monte-Carlo-methods"><span class="toc-text">Monte Carlo methods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GPI"><span class="toc-text">GPI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#On-policy-methods"><span class="toc-text">On-policy methods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#off-policy-methods"><span class="toc-text">off-policy methods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#target-policy-and-behavior-policy"><span class="toc-text">target policy and behavior policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#importance-sampling"><span class="toc-text">importance sampling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#weighted-importance-sampling"><span class="toc-text">weighted importance sampling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#temporal-difference-TD-learning"><span class="toc-text">temporal-difference (TD) learning</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#research-link"><span class="toc-text">research link</span></a>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Monte-Carlo-methods"><span class="toc-text">Monte Carlo methods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GPI"><span class="toc-text">GPI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#On-policy-methods"><span class="toc-text">On-policy methods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#off-policy-methods"><span class="toc-text">off-policy methods</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#target-policy-and-behavior-policy"><span class="toc-text">target policy and behavior policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#importance-sampling"><span class="toc-text">importance sampling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#weighted-importance-sampling"><span class="toc-text">weighted importance sampling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#temporal-difference-TD-learning"><span class="toc-text">temporal-difference (TD) learning</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RL的几种分类方法"><span class="toc-text">RL的几种分类方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Model-free-and-Model-Based"><span class="toc-text">Model free and Model Based</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Model-Free-通过不断与环境交互，来更新决策方法。"><span class="toc-text">Model Free: 通过不断与环境交互，来更新决策方法。</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model-Based：-多一个部分，为真实世界建模。有想象力。"><span class="toc-text">Model Based： 多一个部分，为真实世界建模。有想象力。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Policy-Based-and-Value-Based"><span class="toc-text">Policy Based and Value Based</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Policy-Based：-通过概率采样action"><span class="toc-text">Policy Based： 通过概率采样action</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Value-Based-通过Value-function-选择value-最大的action。"><span class="toc-text">Value Based: 通过Value function 选择value 最大的action。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Monte-Carlo-update-or-Temporal-Difference-update"><span class="toc-text">Monte-Carlo update or Temporal-Difference update</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#MC-update-回合更新"><span class="toc-text">MC update:回合更新</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TD-update-单步更新，通过当前的反馈和对下一时刻的估计，来更新。"><span class="toc-text">TD update: 单步更新，通过当前的反馈和对下一时刻的估计，来更新。</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#On-Policy-or-Off-policy"><span class="toc-text">On-Policy or Off-policy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#On-policy-methods-1"><span class="toc-text">On-policy methods</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#off-policy-methods-1"><span class="toc-text">off-policy methods</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#research-link"><span class="toc-text">research link</span></a>
   </div>
 
 
@@ -184,6 +184,15 @@ var _hmt = _hmt || [];
 <h2 id="weighted-importance-sampling"><a href="#weighted-importance-sampling" class="headerlink" title="weighted importance sampling"></a>weighted importance sampling</h2><p>An important alternative of IS</p>
 <h2 id="temporal-difference-TD-learning"><a href="#temporal-difference-TD-learning" class="headerlink" title="temporal-difference (TD) learning"></a>temporal-difference (TD) learning</h2><p>TD learning is a combination of Monte Carlo ideas and dynamic programming (DP) ideas. Like Monte Carlo methods, TD methods can learn directly from raw experience without a model of the environment’s dynamics. Like DP, TD methods update estimates based in part on other learned estimates, without waiting for a final outcome (they bootstrap).</p>
 <p>TD methods combine the sampling of Monte Carlo with the bootstrapping of Dynamic Programming.</p>
+<h1 id="RL的几种分类方法"><a href="#RL的几种分类方法" class="headerlink" title="RL的几种分类方法"></a>RL的几种分类方法</h1><h2 id="Model-free-and-Model-Based"><a href="#Model-free-and-Model-Based" class="headerlink" title="Model free and Model Based"></a>Model free and Model Based</h2><h3 id="Model-Free-通过不断与环境交互，来更新决策方法。"><a href="#Model-Free-通过不断与环境交互，来更新决策方法。" class="headerlink" title="Model Free: 通过不断与环境交互，来更新决策方法。"></a>Model Free: 通过不断与环境交互，来更新决策方法。</h3><p>Q Learning, Sarsa, Policy Gradients</p>
+<h3 id="Model-Based：-多一个部分，为真实世界建模。有想象力。"><a href="#Model-Based：-多一个部分，为真实世界建模。有想象力。" class="headerlink" title="Model Based： 多一个部分，为真实世界建模。有想象力。"></a>Model Based： 多一个部分，为真实世界建模。有想象力。</h3><p>具体来讲就是比Model free 算法多一个估计transition的部分，例如在dqn中，求梯度的方法是：<br>$$<br>J = f(Q(s,a) - (r+\gamma \max\limits_{a’} Q(s’,a’)))<br>$$<br>用来更新Q的参数。</p>
+<p>在model Based 里应该是：<br>$$<br>J = f(Q(s,a) - (r+\gamma \sum_{s’} P(s’|s,a) \max\limits_{a’} Q(s’,a’)))<br>$$<br>用来更新Q的参数，然后，还有一个分类问题，来预测$s’$, 产生的loss来更新P。</p>
+<h2 id="Policy-Based-and-Value-Based"><a href="#Policy-Based-and-Value-Based" class="headerlink" title="Policy Based and Value Based"></a>Policy Based and Value Based</h2><h3 id="Policy-Based：-通过概率采样action"><a href="#Policy-Based：-通过概率采样action" class="headerlink" title="Policy Based： 通过概率采样action"></a>Policy Based： 通过概率采样action</h3><p>Policy gradients</p>
+<h3 id="Value-Based-通过Value-function-选择value-最大的action。"><a href="#Value-Based-通过Value-function-选择value-最大的action。" class="headerlink" title="Value Based: 通过Value function 选择value 最大的action。"></a>Value Based: 通过Value function 选择value 最大的action。</h3><p>Value Iteration</p>
+<h2 id="Monte-Carlo-update-or-Temporal-Difference-update"><a href="#Monte-Carlo-update-or-Temporal-Difference-update" class="headerlink" title="Monte-Carlo update or Temporal-Difference update"></a>Monte-Carlo update or Temporal-Difference update</h2><h3 id="MC-update-回合更新"><a href="#MC-update-回合更新" class="headerlink" title="MC update:回合更新"></a>MC update:回合更新</h3><p>Monte-Carlo learning , policy gradients</p>
+<h3 id="TD-update-单步更新，通过当前的反馈和对下一时刻的估计，来更新。"><a href="#TD-update-单步更新，通过当前的反馈和对下一时刻的估计，来更新。" class="headerlink" title="TD update: 单步更新，通过当前的反馈和对下一时刻的估计，来更新。"></a>TD update: 单步更新，通过当前的反馈和对下一时刻的估计，来更新。</h3><p>Q learning， Sarsa， TD(n)</p>
+<h2 id="On-Policy-or-Off-policy"><a href="#On-Policy-or-Off-policy" class="headerlink" title="On-Policy or Off-policy"></a>On-Policy or Off-policy</h2><h3 id="On-policy-methods-1"><a href="#On-policy-methods-1" class="headerlink" title="On-policy methods"></a>On-policy methods</h3><p>On-policy methods attempt to evaluate or improve the policy that is used to make decisions.</p>
+<h3 id="off-policy-methods-1"><a href="#off-policy-methods-1" class="headerlink" title="off-policy methods"></a>off-policy methods</h3><p>off-policy methods evaluate or improve a policy different from that used to generate the data.</p>
 <h1 id="research-link"><a href="#research-link" class="headerlink" title="research link"></a>research link</h1><p>[0]<a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" target="_blank" rel="external">David Silver lecture</a></p>
 
     
@@ -344,20 +353,5 @@ var _hmt = _hmt || [];
   }
 </script>
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>

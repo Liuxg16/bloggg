@@ -15,20 +15,17 @@
     <meta name="keywords" content="RL," />
   
 
-  <meta name="description" content="$$L_{cons}(i,j) = (x_i+\frac{w_i}{2}-x_j-\frac{w_j}{2})^2+(y_i+\frac{h_i}{2}-y_j-\frac{h_j}{2})^2$$ $$L_{mask}(p,l) = -\sum_i log(p^{(i)}_{l^{(i)}})$$ Dynamic Programminga method for solving complex p">
+  <meta name="description" content="dynamic programming: solve a known MDPmodel-free prediction: Estimate the value function of an unknown MDPModel-free control: Optimise the value function of an unknown MDP Model Free learningMonte-Car">
 <meta name="keywords" content="RL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="David Silver RL Lecture 4">
 <meta property="og:url" content="http://www.liuxianggen.com/2017/07/29/rl/lecture4/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
-<meta property="og:description" content="$$L_{cons}(i,j) = (x_i+\frac{w_i}{2}-x_j-\frac{w_j}{2})^2+(y_i+\frac{h_i}{2}-y_j-\frac{h_j}{2})^2$$ $$L_{mask}(p,l) = -\sum_i log(p^{(i)}_{l^{(i)}})$$ Dynamic Programminga method for solving complex p">
-<meta property="og:image" content="http://www.liuxianggen.com/2017/07/29/rl/lecture4/rl/policy_iteration.JPG">
-<meta property="og:image" content="http://www.liuxianggen.com/2017/07/29/rl/lecture4/rl/policy_iteration1.JPG">
-<meta property="og:updated_time" content="2017-07-29T09:16:12.968Z">
+<meta property="og:description" content="dynamic programming: solve a known MDPmodel-free prediction: Estimate the value function of an unknown MDPModel-free control: Optimise the value function of an unknown MDP Model Free learningMonte-Car">
+<meta property="og:updated_time" content="2017-07-30T07:59:08.721Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="David Silver RL Lecture 4">
-<meta name="twitter:description" content="$$L_{cons}(i,j) = (x_i+\frac{w_i}{2}-x_j-\frac{w_j}{2})^2+(y_i+\frac{h_i}{2}-y_j-\frac{h_j}{2})^2$$ $$L_{mask}(p,l) = -\sum_i log(p^{(i)}_{l^{(i)}})$$ Dynamic Programminga method for solving complex p">
-<meta name="twitter:image" content="http://www.liuxianggen.com/2017/07/29/rl/lecture4/rl/policy_iteration.JPG">
+<meta name="twitter:description" content="dynamic programming: solve a known MDPmodel-free prediction: Estimate the value function of an unknown MDPModel-free control: Optimise the value function of an unknown MDP Model Free learningMonte-Car">
 
   
 
@@ -145,7 +142,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Dynamic-Programming"><span class="toc-text">Dynamic Programming</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Dynamic"><span class="toc-text">Dynamic</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Programming"><span class="toc-text">Programming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#two-property"><span class="toc-text">two property</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Markov-decision-processes-satisfy-both-properties"><span class="toc-text">Markov decision processes satisfy both properties</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Policy-Evaluation"><span class="toc-text">Policy Evaluation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#synchronous-backups"><span class="toc-text">synchronous backups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Policy-iteration"><span class="toc-text">Policy iteration</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step1-Evaluate-the-policy"><span class="toc-text">step1. Evaluate the policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#step2-improve-the-policy"><span class="toc-text">step2. improve the policy</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#the-convergence-of-Policy-iteration"><span class="toc-text">the convergence of Policy iteration</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Value-Iteration"><span class="toc-text">Value Iteration</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#synchronous-backups-1"><span class="toc-text">synchronous backups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#In-place-iteration"><span class="toc-text">In-place iteration</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#research-link"><span class="toc-text">research link</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Model-Free-learning"><span class="toc-text">Model Free learning</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Monte-Carlo-learning"><span class="toc-text">Monte-Carlo learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#feature"><span class="toc-text">feature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#update-V-S-t"><span class="toc-text">update $V(S_t)$</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Temporal-Difference-Learning"><span class="toc-text">Temporal-Difference Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature"><span class="toc-text">Feature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#update-V-S-t-for-TD-0"><span class="toc-text">update $V(S_t)$  for TD(0)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TD-lambda"><span class="toc-text">TD($\lambda$)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#research-link"><span class="toc-text">research link</span></a></li></ol>
   </div>
 
 
@@ -178,35 +175,20 @@ var _hmt = _hmt || [];
 
   <div class="article-content">
     
-      <p>$$<br>L_{cons}(i,j) = (x_i+\frac{w_i}{2}-x_j-\frac{w_j}{2})^2+(y_i+\frac{h_i}{2}-y_j-\frac{h_j}{2})^2<br>$$</p>
-<p>$$<br>L_{mask}(p,l) = -\sum_i log(p^{(i)}_{l^{(i)}})<br>$$</p>
-<h1 id="Dynamic-Programming"><a href="#Dynamic-Programming" class="headerlink" title="Dynamic Programming"></a>Dynamic Programming</h1><p>a method for solving complex probelms</p>
-<h2 id="Dynamic"><a href="#Dynamic" class="headerlink" title="Dynamic"></a>Dynamic</h2><p>sequential or temporal component to the problems</p>
-<h2 id="Programming"><a href="#Programming" class="headerlink" title="Programming"></a>Programming</h2><p>optimising a “program”  i.e. a policy</p>
-<h2 id="two-property"><a href="#two-property" class="headerlink" title="two property"></a>two property</h2><ol>
-<li>Optimal substructure </li>
-<li>Overlapping subproblems<br>2.1 Subproblems recur many times<br>2.2 solution can stores and reuse<h2 id="Markov-decision-processes-satisfy-both-properties"><a href="#Markov-decision-processes-satisfy-both-properties" class="headerlink" title="Markov decision processes satisfy both properties"></a>Markov decision processes satisfy both properties</h2>Bellman equation gites recurseve decomposition<br>value function stores and resues solutions</li>
+      <p>dynamic programming: solve a known MDP<br>model-free prediction: Estimate the value function of an unknown MDP<br>Model-free control: Optimise the value function of an unknown MDP</p>
+<h1 id="Model-Free-learning"><a href="#Model-Free-learning" class="headerlink" title="Model Free learning"></a>Model Free learning</h1><h2 id="Monte-Carlo-learning"><a href="#Monte-Carlo-learning" class="headerlink" title="Monte-Carlo learning"></a>Monte-Carlo learning</h2><h3 id="feature"><a href="#feature" class="headerlink" title="feature"></a>feature</h3><ol>
+<li>no knownledge of MDP transitions</li>
+<li>learns from complete episodes: no bootstrapping</li>
+<li>simplest possible idea: value = mean return</li>
+<li>all episodes must terminate<h3 id="update-V-S-t"><a href="#update-V-S-t" class="headerlink" title="update $V(S_t)$"></a>update $V(S_t)$</h3>$$<br>V(S_t) \leftarrow V(S_t)+\alpha (G_t-V(S_t))<br>$$</li>
 </ol>
-<h1 id="Policy-Evaluation"><a href="#Policy-Evaluation" class="headerlink" title="Policy Evaluation"></a>Policy Evaluation</h1><p>Problem : evaluate a given policy $\pi$<br>Solution: iterative application of Bellman expectation backup</p>
-<h2 id="synchronous-backups"><a href="#synchronous-backups" class="headerlink" title="synchronous backups"></a>synchronous backups</h2><ol>
-<li>At each iteration k+1</li>
-<li>For all states $s \in S$</li>
-<li>Update $v_{k+1}(s)$ from $v_k(s’)$<br>$$ v_{k+1} = \sum_a \pi(a|s) R_s^a + \gamma \sum_{s’} P_{ss’}^a v_{k}(s’)<br>$$</li>
-<li>where $s’$ is a successor state of s<br>it will convergence.</li>
+<h2 id="Temporal-Difference-Learning"><a href="#Temporal-Difference-Learning" class="headerlink" title="Temporal-Difference Learning"></a>Temporal-Difference Learning</h2><h3 id="Feature"><a href="#Feature" class="headerlink" title="Feature"></a>Feature</h3><ol>
+<li>no knownledge of MDP transitions</li>
+<li>learns from incomplete episodes: bootstrapping</li>
+<li>simplest possible idea: value = mean return</li>
+<li>TD updates a guess towards a guess<h3 id="update-V-S-t-for-TD-0"><a href="#update-V-S-t-for-TD-0" class="headerlink" title="update $V(S_t)$  for TD(0)"></a>update $V(S_t)$  for TD(0)</h3>$$<br>V(S_t) \leftarrow V(S_t)+\alpha (R_{t+1}+\gamma V(S_{t+1})-V(S_t))<br>$$</li>
 </ol>
-<h2 id="Policy-iteration"><a href="#Policy-iteration" class="headerlink" title="Policy iteration"></a>Policy iteration</h2><h2 id="step1-Evaluate-the-policy"><a href="#step1-Evaluate-the-policy" class="headerlink" title="step1. Evaluate the policy"></a>step1. Evaluate the policy</h2><p>$$<br>v_{\pi}(s) = E_{\pi}[R_{t+1}+\gamma v_{\pi}(S_{t+1})|S_t=s)]<br>$$</p>
-<h2 id="step2-improve-the-policy"><a href="#step2-improve-the-policy" class="headerlink" title="step2. improve the policy"></a>step2. improve the policy</h2><p>$$<br>q_{\pi}(s,\pi ‘(s)) = max<em>a q\</em>{\pi}(s,a) \ge \q_{\pi}(s,\pi(s)) = v_{\pi}(s)<br>$$</p>
-<p>$$<br>\pi^{new} = greedy(v{\pi})<br>$$<br>The policy iteration always converges to $\pi^*$</p>
-<h2 id="the-convergence-of-Policy-iteration"><a href="#the-convergence-of-Policy-iteration" class="headerlink" title="the convergence of Policy iteration"></a>the convergence of Policy iteration</h2><p><img src="rl/policy_iteration.JPG" alt=""><br><img src="rl/policy_iteration1.JPG" alt=""></p>
-<h1 id="Value-Iteration"><a href="#Value-Iteration" class="headerlink" title="Value Iteration"></a>Value Iteration</h1><p>Problem: find optimal policy $\pi$<br>Solution: iterative application of Bellman expectation backup</p>
-<h2 id="synchronous-backups-1"><a href="#synchronous-backups-1" class="headerlink" title="synchronous backups"></a>synchronous backups</h2><ol>
-<li>At each iteration k+1</li>
-<li>For all states $s \in S$</li>
-<li>Update $v_{k+1}(s)$ from $v_k(s’)$<br>$$ v_{k+1} = max_a  R_s^a + \gamma \sum_{s’} P_{ss’}^a v_{k}(s’)<br>$$</li>
-</ol>
-<h2 id="In-place-iteration"><a href="#In-place-iteration" class="headerlink" title="In-place iteration"></a>In-place iteration</h2><p>for all s in S<br>    $$v_{old} \leftarrow v_{new}$$</p>
-<p>but there will be a question to select a state to begin.Solution:find the state that change largest:<br>$$<br>max_s |max_a (R_s^a + \gamma \sum_{s’\in S) P_{ss’}^a v(s’))-v(s) |<br>$$</p>
-<h1 id="research-link"><a href="#research-link" class="headerlink" title="research link"></a>research link</h1><p>[0]<a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" target="_blank" rel="external">David Silver lecture</a></p>
+<h2 id="TD-lambda"><a href="#TD-lambda" class="headerlink" title="TD($\lambda$)"></a>TD($\lambda$)</h2><h1 id="research-link"><a href="#research-link" class="headerlink" title="research link"></a>research link</h1><p>[0]<a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" target="_blank" rel="external">David Silver lecture</a></p>
 
     
   </div>
@@ -366,20 +348,5 @@ var _hmt = _hmt || [];
   }
 </script>
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
