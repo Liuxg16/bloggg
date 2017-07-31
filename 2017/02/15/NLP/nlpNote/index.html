@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://www.liuxianggen.com/2017/02/15/NLP/nlpNote/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
 <meta property="og:description" content="123vocab[&apos;&amp;lt;S&amp;gt;&apos;] = bos_idxvocab[&apos;&amp;lt;/S&amp;gt;&apos;] = eos_idxvocab[&apos;&amp;lt;UNK&amp;gt;&apos;] = unk_idx seqeunce labellingATTENDING TO CHARACTERS IN NEURAL SEQUENCE LABELING MODELS TaskPOS-taggingError detectionNa">
-<meta property="og:updated_time" content="2017-07-07T07:12:24.378Z">
+<meta property="og:updated_time" content="2017-07-30T10:34:20.153Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NLP Note">
 <meta name="twitter:description" content="123vocab[&apos;&amp;lt;S&amp;gt;&apos;] = bos_idxvocab[&apos;&amp;lt;/S&amp;gt;&apos;] = eos_idxvocab[&apos;&amp;lt;UNK&amp;gt;&apos;] = unk_idx seqeunce labellingATTENDING TO CHARACTERS IN NEURAL SEQUENCE LABELING MODELS TaskPOS-taggingError detectionNa">
@@ -181,7 +181,7 @@ var _hmt = _hmt || [];
 <h1 id="Encoding-Source-Language-with-Convolutional-Neural-Network-for-Machine-Translation"><a href="#Encoding-Source-Language-with-Convolutional-Neural-Network-for-Machine-Translation" class="headerlink" title="Encoding Source Language with Convolutional Neural Network for Machine Translation"></a>Encoding Source Language with Convolutional Neural Network for Machine Translation</h1><p>Previous CNNs, including those for NLP tasks (Hu et al., 2014; Kalchbrenner et al., 2014), take a straightforward convolution-pooling strategy, in which the “fusion” decisions (e.g., selecting the largest one in max-pooling) are based on the values of feature-maps. This is essentially a soft template matching, which works for tasks like classification, but harmful for keeping the composition functionality of convolution, which is critical for modeling sentences. In this paper, we propose to use separate gating unit to release the score function duty from the convolution, and let it focus on composition.<br>传统的CNN都会沿用convolution-pooling strategy,这是基于有价值的feature map上的fusion desisions, 本质上是一个软模板匹配， 在分类问题上效果较好， 但是对于在句子建模上非常重要的卷积特征的融合功能是不利的。我们提出采用离散的gating单元来分担卷积核的打分工作，让卷积核专注于提取特征。</p>
 <h2 id="comment"><a href="#comment" class="headerlink" title="comment"></a>comment</h2><p>convolution-pooling strategy中pooling是自动的操作，只要是high signal都会被提取，是基于feature-map本身价值的提取，并没有针对具体任务的做specialized 操作，而会有很多high signal但没有用的info，就可以通过gating去掉。</p>
 <h1 id="Beer-reviews"><a href="#Beer-reviews" class="headerlink" title="Beer reviews"></a>Beer reviews</h1><p>Feel:<br>Look:<br>Overall:<br>a:appearance<br>d:drinkability<br>s:smell<br>t:taste</p>
-<h2 id="research-link"><a href="#research-link" class="headerlink" title="research link"></a>research link</h2><p>[0]<a href="https://zhuanlan.zhihu.com/p/23326430" target="_blank" rel="external">seqgan</a><br>[1]<a href="https://github.com/hexahedria/gated-graph-transformer-network" target="_blank" rel="external">graph transition</a><br>[2]<a href="https://biendata.com/competition/zhihu/timeprize/" target="_blank" rel="external">zhihu competition</a><br>[3]<a href="https://research.fb.com/downloads/babi/" target="_blank" rel="external">babi task</a></p>
+<h2 id="research-link"><a href="#research-link" class="headerlink" title="research link"></a>research link</h2><p>[0]<a href="https://zhuanlan.zhihu.com/p/23326430" target="_blank" rel="external">seqgan</a><br>[1]<a href="https://github.com/hexahedria/gated-graph-transformer-network" target="_blank" rel="external">graph transition</a><br>[2]<a href="https://biendata.com/competition/zhihu/timeprize/" target="_blank" rel="external">zhihu competition</a><br>[3]<a href="https://research.fb.com/downloads/babi/" target="_blank" rel="external">babi task</a><br>[4]<a href="https://chairs-blog.acl2017.org/2017/06/02/wednesday-2-august-detailed-program/" target="_blank" rel="external">acl outstanding paper</a></p>
 
     
   </div>
@@ -341,5 +341,20 @@ var _hmt = _hmt || [];
   }
 </script>
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
