@@ -36,7 +36,7 @@
 
   
 
-  
+  <% if (theme.baidu_analytics){ %>
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -46,8 +46,16 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
-
+<% } %>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
@@ -308,6 +316,11 @@ var _hmt = _hmt || [];
         <span class="tag-size">( 1 )</span>
       </a>
     
+      <a class="tag-item" href="#muzi">
+        <span class="tag-name">muzi</span>
+        <span class="tag-size">( 1 )</span>
+      </a>
+    
       <a class="tag-item" href="#mxnet">
         <span class="tag-name">mxnet</span>
         <span class="tag-size">( 2 )</span>
@@ -505,13 +518,13 @@ var _hmt = _hmt || [];
 <li class="item-post item">
   <span class="post-date">09-26</span>
 
-  <a class="post-title" href="/2016/09/26/Religion/">亚当和夏娃</a>
+  <a class="post-title" href="/2016/09/26/History/">历史小记</a>
 
 </li>
 <li class="item-post item">
   <span class="post-date">09-26</span>
 
-  <a class="post-title" href="/2016/09/26/History/">历史小记</a>
+  <a class="post-title" href="/2016/09/26/Religion/">亚当和夏娃</a>
 
 </li>
 <li id="ML" class="item-category-name item-title item-title-1">
@@ -579,9 +592,9 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">07-07</span>
+  <span class="post-date">09-02</span>
 
-  <a class="post-title" href="/2017/07/07/rl/lecture12/">David Silver RL Lecture 1-2</a>
+  <a class="post-title" href="/2016/09/02/rl/Reinforcement-Learning/">Reinforcement Learning Tutorial</a>
 
 </li>
 <li class="item-post item">
@@ -591,21 +604,21 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">07-11</span>
+  <span class="post-date">07-07</span>
 
-  <a class="post-title" href="/2017/07/11/rl/lecture3/">David Silver RL Lecture 3</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">09-02</span>
-
-  <a class="post-title" href="/2016/09/02/rl/Reinforcement-Learning/">Reinforcement Learning Tutorial</a>
+  <a class="post-title" href="/2017/07/07/rl/lecture12/">David Silver RL Lecture 1-2</a>
 
 </li>
 <li class="item-post item">
   <span class="post-date">04-11</span>
 
   <a class="post-title" href="/2017/04/11/rl/classicalReinforce/">Classical Reinforce Algorithm</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">07-11</span>
+
+  <a class="post-title" href="/2017/07/11/rl/lecture3/">David Silver RL Lecture 3</a>
 
 </li>
 <li id="Religion" class="item-category-name item-title item-title-0">
@@ -667,15 +680,15 @@ var _hmt = _hmt || [];
    -->
 </li>
 <li class="item-post item">
-  <span class="post-date">01-29</span>
-
-  <a class="post-title" href="/2017/01/29/ml/Naive-Bayes/">Naive Bayes</a>
-
-</li>
-<li class="item-post item">
   <span class="post-date">02-15</span>
 
   <a class="post-title" href="/2017/02/15/neuralnetwork/DeepLearningBayes/">Deep Learning And Bayes</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">01-29</span>
+
+  <a class="post-title" href="/2017/01/29/ml/Naive-Bayes/">Naive Bayes</a>
 
 </li>
 <li id="beam search" class="item-category-name item-title item-title-4">
@@ -793,33 +806,15 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">12-20</span>
-
-  <a class="post-title" href="/2016/12/20/ml/EM/">Expectation Maximum</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">12-05</span>
-
-  <a class="post-title" href="/2016/12/05/ml/learning/">Learning</a>
-
-</li>
-<li class="item-post item">
   <span class="post-date">11-04</span>
 
   <a class="post-title" href="/2016/11/04/mxnet/mxnet-python/">Mxnet Python Note</a>
 
 </li>
 <li class="item-post item">
-  <span class="post-date">02-22</span>
+  <span class="post-date">01-16</span>
 
-  <a class="post-title" href="/2017/02/22/neuralcomputation/neuralPrinciple/">Paper Review</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">12-20</span>
-
-  <a class="post-title" href="/2016/12/20/ml/unsupervisedLearning/">Unsupervised Learning</a>
+  <a class="post-title" href="/2017/01/16/neuralnetwork/Batch-Normalization/">Batch Normalization</a>
 
 </li>
 <li class="item-post item">
@@ -829,9 +824,9 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">01-16</span>
+  <span class="post-date">02-15</span>
 
-  <a class="post-title" href="/2017/01/16/neuralnetwork/Batch-Normalization/">Batch Normalization</a>
+  <a class="post-title" href="/2017/02/15/neuralnetwork/DeepLearningBayes/">Deep Learning And Bayes</a>
 
 </li>
 <li class="item-post item">
@@ -853,9 +848,27 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">02-15</span>
+  <span class="post-date">12-20</span>
 
-  <a class="post-title" href="/2017/02/15/neuralnetwork/DeepLearningBayes/">Deep Learning And Bayes</a>
+  <a class="post-title" href="/2016/12/20/ml/EM/">Expectation Maximum</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">12-05</span>
+
+  <a class="post-title" href="/2016/12/05/ml/learning/">Learning</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">12-20</span>
+
+  <a class="post-title" href="/2016/12/20/ml/unsupervisedLearning/">Unsupervised Learning</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">02-22</span>
+
+  <a class="post-title" href="/2017/02/22/neuralcomputation/neuralPrinciple/">Paper Review</a>
 
 </li>
 <li class="item-post item">
@@ -893,12 +906,6 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">11-21</span>
-
-  <a class="post-title" href="/2016/11/21/threeBody3/">《三体---死神永生》</a>
-
-</li>
-<li class="item-post item">
   <span class="post-date">09-03</span>
 
   <a class="post-title" href="/2016/09/03/threeBody/">《三体---地球往事》</a>
@@ -908,6 +915,12 @@ var _hmt = _hmt || [];
   <span class="post-date">01-02</span>
 
   <a class="post-title" href="/2017/01/02/Schedule/">计划</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">11-21</span>
+
+  <a class="post-title" href="/2016/11/21/threeBody3/">《三体---死神永生》</a>
 
 </li>
 <li id="lstm" class="item-category-name item-title item-title-1">
@@ -921,15 +934,15 @@ var _hmt = _hmt || [];
    -->
 </li>
 <li class="item-post item">
-  <span class="post-date">02-15</span>
-
-  <a class="post-title" href="/2017/02/15/NLP/nlpNote/">NLP Note</a>
-
-</li>
-<li class="item-post item">
   <span class="post-date">02-14</span>
 
   <a class="post-title" href="/2017/02/14/NLP/seq2seq/">NLP Tutorial</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">02-15</span>
+
+  <a class="post-title" href="/2017/02/15/NLP/nlpNote/">NLP Note</a>
 
 </li>
 <li class="item-post item">
@@ -1013,6 +1026,12 @@ var _hmt = _hmt || [];
    -->
 </li>
 <li class="item-post item">
+  <span class="post-date">12-05</span>
+
+  <a class="post-title" href="/2016/12/05/neuralnetwork/backpropagation/">BackPropagation</a>
+
+</li>
+<li class="item-post item">
   <span class="post-date">12-20</span>
 
   <a class="post-title" href="/2016/12/20/ml/EM/">Expectation Maximum</a>
@@ -1031,9 +1050,9 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">02-19</span>
+  <span class="post-date">12-05</span>
 
-  <a class="post-title" href="/2017/02/19/ml/approximation/">Approximation</a>
+  <a class="post-title" href="/2016/12/05/ml/ml-inference/">Inference</a>
 
 </li>
 <li class="item-post item">
@@ -1043,21 +1062,15 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">12-05</span>
-
-  <a class="post-title" href="/2016/12/05/ml/ml-inference/">Inference</a>
-
-</li>
-<li class="item-post item">
   <span class="post-date">12-20</span>
 
   <a class="post-title" href="/2016/12/20/ml/unsupervisedLearning/">Unsupervised Learning</a>
 
 </li>
 <li class="item-post item">
-  <span class="post-date">12-05</span>
+  <span class="post-date">02-19</span>
 
-  <a class="post-title" href="/2016/12/05/neuralnetwork/backpropagation/">BackPropagation</a>
+  <a class="post-title" href="/2017/02/19/ml/approximation/">Approximation</a>
 
 </li>
 <li id="mle" class="item-category-name item-title item-title-2">
@@ -1092,7 +1105,23 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2017/02/26/life/liqiu/">立秋</a>
 
 </li>
-<li id="mxnet" class="item-category-name item-title item-title-4">
+<li id="muzi" class="item-category-name item-title item-title-4">
+  <!--
+    <a href="" class="text-year">
+   -->
+    muzi
+    <span class="category-count">( 1 )</span>
+  <!--
+  </a>
+   -->
+</li>
+<li class="item-post item">
+  <span class="post-date">02-26</span>
+
+  <a class="post-title" href="/2017/02/26/life/test/">【重磅】成都华阳奥迪4S店压榨员工！！</a>
+
+</li>
+<li id="mxnet" class="item-category-name item-title item-title-0">
   <!--
     <a href="" class="text-year">
    -->
@@ -1114,7 +1143,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2016/11/04/mxnet/mxnet-python/">Mxnet Python Note</a>
 
 </li>
-<li id="neuron" class="item-category-name item-title item-title-0">
+<li id="neuron" class="item-category-name item-title item-title-1">
   <!--
     <a href="" class="text-year">
    -->
@@ -1130,7 +1159,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2017/02/25/neuralcomputation/tracing/">Tracing:TRIO</a>
 
 </li>
-<li id="nlp" class="item-category-name item-title item-title-1">
+<li id="nlp" class="item-category-name item-title item-title-2">
   <!--
     <a href="" class="text-year">
    -->
@@ -1147,18 +1176,18 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">02-15</span>
-
-  <a class="post-title" href="/2017/02/15/NLP/nlpNote/">NLP Note</a>
-
-</li>
-<li class="item-post item">
   <span class="post-date">02-14</span>
 
   <a class="post-title" href="/2017/02/14/NLP/seq2seq/">NLP Tutorial</a>
 
 </li>
-<li id="nn" class="item-category-name item-title item-title-2">
+<li class="item-post item">
+  <span class="post-date">02-15</span>
+
+  <a class="post-title" href="/2017/02/15/NLP/nlpNote/">NLP Note</a>
+
+</li>
+<li id="nn" class="item-category-name item-title item-title-3">
   <!--
     <a href="" class="text-year">
    -->
@@ -1181,12 +1210,6 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">02-22</span>
-
-  <a class="post-title" href="/2017/02/22/neuralcomputation/neuralPrinciple/">Paper Review</a>
-
-</li>
-<li class="item-post item">
   <span class="post-date">01-16</span>
 
   <a class="post-title" href="/2017/01/16/neuralnetwork/Batch-Normalization/">Batch Normalization</a>
@@ -1199,12 +1222,18 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
+  <span class="post-date">02-22</span>
+
+  <a class="post-title" href="/2017/02/22/neuralcomputation/neuralPrinciple/">Paper Review</a>
+
+</li>
+<li class="item-post item">
   <span class="post-date">06-10</span>
 
   <a class="post-title" href="/2017/06/10/python/pytorch_tutorial/">PyTorch Tutorial</a>
 
 </li>
-<li id="project" class="item-category-name item-title item-title-3">
+<li id="project" class="item-category-name item-title item-title-4">
   <!--
     <a href="" class="text-year">
    -->
@@ -1226,7 +1255,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2016/11/11/BrainMatrix/BrainMatrix-readme/">BrainMatrix README</a>
 
 </li>
-<li id="python" class="item-category-name item-title item-title-4">
+<li id="python" class="item-category-name item-title item-title-0">
   <!--
     <a href="" class="text-year">
    -->
@@ -1242,7 +1271,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2016/08/30/python/python-utf/">Python Process UTF Code</a>
 
 </li>
-<li id="pytorch" class="item-category-name item-title item-title-0">
+<li id="pytorch" class="item-category-name item-title item-title-1">
   <!--
     <a href="" class="text-year">
    -->
@@ -1258,7 +1287,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2017/06/10/python/pytorch_tutorial/">PyTorch Tutorial</a>
 
 </li>
-<li id="reinforce" class="item-category-name item-title item-title-1">
+<li id="reinforce" class="item-category-name item-title item-title-2">
   <!--
     <a href="" class="text-year">
    -->
@@ -1274,7 +1303,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2017/04/11/rl/classicalReinforce/">Classical Reinforce Algorithm</a>
 
 </li>
-<li id="rnn" class="item-category-name item-title item-title-2">
+<li id="rnn" class="item-category-name item-title item-title-3">
   <!--
     <a href="" class="text-year">
    -->
@@ -1290,7 +1319,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2016/11/21/neuralnetwork/rnn-speech-recognition/">Speech Recognition</a>
 
 </li>
-<li id="server" class="item-category-name item-title item-title-3">
+<li id="server" class="item-category-name item-title item-title-4">
   <!--
     <a href="" class="text-year">
    -->
@@ -1306,7 +1335,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2017/03/21/technology/server/">Server</a>
 
 </li>
-<li id="shadowsock" class="item-category-name item-title item-title-4">
+<li id="shadowsock" class="item-category-name item-title item-title-0">
   <!--
     <a href="" class="text-year">
    -->
@@ -1322,7 +1351,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2017/03/21/technology/server/">Server</a>
 
 </li>
-<li id="station" class="item-category-name item-title item-title-0">
+<li id="station" class="item-category-name item-title item-title-1">
   <!--
     <a href="" class="text-year">
    -->
@@ -1338,7 +1367,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2017/02/22/technology/webStation/">Brain Quake Station</a>
 
 </li>
-<li id="study" class="item-category-name item-title item-title-1">
+<li id="study" class="item-category-name item-title item-title-2">
   <!--
     <a href="" class="text-year">
    -->
@@ -1354,7 +1383,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2016/09/23/ml/ProbabilisticGraphicalModel/">Probabilistic Graphical Model</a>
 
 </li>
-<li id="text" class="item-category-name item-title item-title-2">
+<li id="text" class="item-category-name item-title item-title-3">
   <!--
     <a href="" class="text-year">
    -->
@@ -1370,7 +1399,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2017/02/19/NLP/TextGen/">Neural Text Generation</a>
 
 </li>
-<li id="theano" class="item-category-name item-title item-title-3">
+<li id="theano" class="item-category-name item-title item-title-4">
   <!--
     <a href="" class="text-year">
    -->
@@ -1386,7 +1415,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2017/01/30/python/Theano-note/">Theano Note</a>
 
 </li>
-<li id="ubuntu" class="item-category-name item-title item-title-4">
+<li id="ubuntu" class="item-category-name item-title item-title-0">
   <!--
     <a href="" class="text-year">
    -->
@@ -1402,7 +1431,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2017/03/21/technology/server/">Server</a>
 
 </li>
-<li id="utf" class="item-category-name item-title item-title-0">
+<li id="utf" class="item-category-name item-title item-title-1">
   <!--
     <a href="" class="text-year">
    -->
@@ -1418,7 +1447,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2016/08/30/python/python-utf/">Python Process UTF Code</a>
 
 </li>
-<li id="work" class="item-category-name item-title item-title-1">
+<li id="work" class="item-category-name item-title item-title-2">
   <!--
     <a href="" class="text-year">
    -->
@@ -1435,6 +1464,12 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
+  <span class="post-date">07-21</span>
+
+  <a class="post-title" href="/2016/07/21/matlab/MatlabTutorial/">MatlabTutorial</a>
+
+</li>
+<li class="item-post item">
   <span class="post-date">08-21</span>
 
   <a class="post-title" href="/2016/08/21/BrainMatrix/BrainMatrix-Brief/">BranMatrix Brief</a>
@@ -1444,60 +1479,6 @@ var _hmt = _hmt || [];
   <span class="post-date">12-28</span>
 
   <a class="post-title" href="/2016/12/28/BrainMatrix/scalaKernel/">Scala Kernel Note</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">07-21</span>
-
-  <a class="post-title" href="/2016/07/21/matlab/MatlabTutorial/">MatlabTutorial</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">09-26</span>
-
-  <a class="post-title" href="/2016/09/26/ml/Features/">Features</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">12-20</span>
-
-  <a class="post-title" href="/2016/12/20/ml/EM/">Expectation Maximum</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">10-28</span>
-
-  <a class="post-title" href="/2016/10/28/ml/ML-HMM/">About HMM</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">12-05</span>
-
-  <a class="post-title" href="/2016/12/05/ml/learning/">Learning</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">09-16</span>
-
-  <a class="post-title" href="/2016/09/16/neuralcomputation/Spiking-Neural-Network/">Spiking Neural Network</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">12-20</span>
-
-  <a class="post-title" href="/2016/12/20/ml/unsupervisedLearning/">Unsupervised Learning</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">10-15</span>
-
-  <a class="post-title" href="/2016/10/15/neuralcomputation/simpleNeuron/">Simple Neuron Models</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">09-16</span>
-
-  <a class="post-title" href="/2016/09/16/neuralcomputation/Synapse-Model/">Synapse Model</a>
 
 </li>
 <li class="item-post item">
@@ -1519,21 +1500,51 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
+  <span class="post-date">12-20</span>
+
+  <a class="post-title" href="/2016/12/20/ml/EM/">Expectation Maximum</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">09-26</span>
+
+  <a class="post-title" href="/2016/09/26/ml/Features/">Features</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">10-28</span>
+
+  <a class="post-title" href="/2016/10/28/ml/ML-HMM/">About HMM</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">12-05</span>
+
+  <a class="post-title" href="/2016/12/05/ml/learning/">Learning</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">12-20</span>
+
+  <a class="post-title" href="/2016/12/20/ml/unsupervisedLearning/">Unsupervised Learning</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">09-16</span>
+
+  <a class="post-title" href="/2016/09/16/neuralcomputation/Spiking-Neural-Network/">Spiking Neural Network</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">09-16</span>
+
+  <a class="post-title" href="/2016/09/16/neuralcomputation/Synapse-Model/">Synapse Model</a>
+
+</li>
+<li class="item-post item">
   <span class="post-date">08-30</span>
 
   <a class="post-title" href="/2016/08/30/python/python-note/">Python Note</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">01-30</span>
-
-  <a class="post-title" href="/2017/01/30/python/Theano-note/">Theano Note</a>
-
-</li>
-<li class="item-post item">
-  <span class="post-date">06-10</span>
-
-  <a class="post-title" href="/2017/06/10/python/pytorch_tutorial/">PyTorch Tutorial</a>
 
 </li>
 <li class="item-post item">
@@ -1543,15 +1554,15 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">08-20</span>
+  <span class="post-date">10-15</span>
 
-  <a class="post-title" href="/2016/08/20/technology/Crawler Tutorial/">Crawler Tutorial</a>
+  <a class="post-title" href="/2016/10/15/neuralcomputation/simpleNeuron/">Simple Neuron Models</a>
 
 </li>
 <li class="item-post item">
-  <span class="post-date">09-17</span>
+  <span class="post-date">01-30</span>
 
-  <a class="post-title" href="/2016/09/17/technology/FireTheWall/">DeepCurious 科学上网配置指南</a>
+  <a class="post-title" href="/2017/01/30/python/Theano-note/">Theano Note</a>
 
 </li>
 <li class="item-post item">
@@ -1561,9 +1572,9 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">08-29</span>
+  <span class="post-date">09-17</span>
 
-  <a class="post-title" href="/2016/08/29/technology/Git-Tutorial/">Git Tutorial</a>
+  <a class="post-title" href="/2016/09/17/technology/FireTheWall/">DeepCurious 科学上网配置指南</a>
 
 </li>
 <li class="item-post item">
@@ -1573,15 +1584,33 @@ var _hmt = _hmt || [];
 
 </li>
 <li class="item-post item">
-  <span class="post-date">12-28</span>
+  <span class="post-date">06-10</span>
 
-  <a class="post-title" href="/2016/12/28/technology/Maven/">Maven</a>
+  <a class="post-title" href="/2017/06/10/python/pytorch_tutorial/">PyTorch Tutorial</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">08-29</span>
+
+  <a class="post-title" href="/2016/08/29/technology/Git-Tutorial/">Git Tutorial</a>
 
 </li>
 <li class="item-post item">
   <span class="post-date">07-21</span>
 
   <a class="post-title" href="/2016/07/21/technology/Github+Hexo Tutorial/">Github+Hexo Tutorial</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">08-20</span>
+
+  <a class="post-title" href="/2016/08/20/technology/Crawler Tutorial/">Crawler Tutorial</a>
+
+</li>
+<li class="item-post item">
+  <span class="post-date">12-28</span>
+
+  <a class="post-title" href="/2016/12/28/technology/Maven/">Maven</a>
 
 </li>
 <li class="item-post item">
@@ -1596,7 +1625,7 @@ var _hmt = _hmt || [];
   <a class="post-title" href="/2016/09/11/technology/Ubuntu/">Ubuntu</a>
 
 </li>
-<li id="xiaomu" class="item-category-name item-title item-title-2">
+<li id="xiaomu" class="item-category-name item-title item-title-3">
   <!--
     <a href="" class="text-year">
    -->
