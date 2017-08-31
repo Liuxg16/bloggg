@@ -23,7 +23,7 @@
 <meta property="og:site_name" content="Liu Xianggen">
 <meta property="og:description" content="DNC: Differentiable Neural Computerpaper:Hybrid computing using a neural network with dynamic external memorylinkdeep mind blog[Quora 讨论]https://www.quora.com/How-does-the-Deepmind-DNC-Differentiable">
 <meta property="og:image" content="http://www.liuxianggen.com/images/science/science.png">
-<meta property="og:updated_time" content="2017-07-07T06:34:36.478Z">
+<meta property="og:updated_time" content="2017-08-20T16:13:31.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Paper Review">
 <meta name="twitter:description" content="DNC: Differentiable Neural Computerpaper:Hybrid computing using a neural network with dynamic external memorylinkdeep mind blog[Quora 讨论]https://www.quora.com/How-does-the-Deepmind-DNC-Differentiable">
@@ -42,7 +42,7 @@
 
   
 
-  <% if (theme.baidu_analytics){ %>
+  
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -52,16 +52,8 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-<% } %>
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
+
+
 
 
 </head>
@@ -152,7 +144,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DNC-Differentiable-Neural-Computer"><span class="toc-text">DNC: Differentiable Neural Computer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstraction"><span class="toc-text">Abstraction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interaction-between-the-heads-and-the-memory"><span class="toc-text">Interaction between the heads and the memory</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NTM-Neural-Turing-Machine"><span class="toc-text">NTM:Neural Turing Machine</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction-1"><span class="toc-text">Introduction</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generative-Temporal-Models-with-Memory"><span class="toc-text">Generative Temporal Models with Memory</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#the-review-for-reasoning"><span class="toc-text">the review for reasoning</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#description-of-rnn"><span class="toc-text">description of rnn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Learning-Graphical-state-transitions"><span class="toc-text">Learning Graphical state transitions</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DNC-Differentiable-Neural-Computer"><span class="toc-text">DNC: Differentiable Neural Computer</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Abstraction"><span class="toc-text">Abstraction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interaction-between-the-heads-and-the-memory"><span class="toc-text">Interaction between the heads and the memory</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NTM-Neural-Turing-Machine"><span class="toc-text">NTM:Neural Turing Machine</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction-1"><span class="toc-text">Introduction</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Generative-Temporal-Models-with-Memory"><span class="toc-text">Generative Temporal Models with Memory</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#the-review-for-reasoning"><span class="toc-text">the review for reasoning</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#description-of-rnn"><span class="toc-text">description of rnn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#One-Model-to-learn-them-all"><span class="toc-text">One Model to learn  them  all</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Learning-Graphical-state-transitions"><span class="toc-text">Learning Graphical state transitions</span></a></li></ol>
   </div>
 
 
@@ -193,6 +185,7 @@ var _hmt = _hmt || [];
 <h2 id="Introduction-1"><a href="#Introduction-1" class="headerlink" title="Introduction"></a>Introduction</h2><p>[0]An NTM bears another close resemblance to models of working memory since the<br>NTM architecture uses an attentional process to read from and write to memory selectively<br>[1]We then describe our basic contribution, a memory architecture and attentional controller that we believe is well-suited to the performance of tasks that require the induction and execution of simple programs.</p>
 <h1 id="Generative-Temporal-Models-with-Memory"><a href="#Generative-Temporal-Models-with-Memory" class="headerlink" title="Generative Temporal Models with Memory"></a>Generative Temporal Models with Memory</h1><h1 id="the-review-for-reasoning"><a href="#the-review-for-reasoning" class="headerlink" title="the review for reasoning"></a>the review for reasoning</h1><p>Symbolic approaches to artificial intelligence are inherently relational [32, 11]. Practitioners define the relations between symbols using the language of logic and mathematics, and then reason about these relations using a multitude of powerful methods, including deduction, arithmetic, and algebra. But symbolic approaches suffer from the symbol grounding problem and are not robust to small task and input variations [11]. Other approaches, such as those based on statistical learning, build representations from raw data and often generalize across diverse and noisy conditions [25]. However, a number of these approaches, such as deep learning, often struggle in data-poor problems where the underlying structure is characterized by sparse but complex relations. [a simple neural network module for relational reasoning]</p>
 <h1 id="description-of-rnn"><a href="#description-of-rnn" class="headerlink" title="description of rnn"></a>description of rnn</h1><p>To get the question embedding q, we used the final state of an LSTM that processed question words. Question words were assigned unique integers, which were then used to index a learnable lookup table that provided embeddings to the LSTM. At each time-step, the LSTM received a single word embedding as input, according to the syntax of the English-encoded question.</p>
+<h1 id="One-Model-to-learn-them-all"><a href="#One-Model-to-learn-them-all" class="headerlink" title="One Model to learn  them  all"></a>One Model to learn  them  all</h1><p><a href="http://skyhigh233.com/blog/2017/07/21/transformer/" target="_blank" rel="external">review</a></p>
 <h1 id="Learning-Graphical-state-transitions"><a href="#Learning-Graphical-state-transitions" class="headerlink" title="Learning Graphical state transitions"></a>Learning Graphical state transitions</h1><p><a href="http://www.hexahedria.com/files/2017learninggraphical.pdf" target="_blank" rel="external">link</a><br><a href="http://mp.weixin.qq.com/s/arSKKs7oEJLGrEwMn8_xww" target="_blank" rel="external">review1</a></p>
 
     

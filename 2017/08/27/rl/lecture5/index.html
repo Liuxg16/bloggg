@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>David Silver RL Lecture 5 | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="RL," />
+  
+
+  <meta name="description" content="dynamic programming: solve a known MDPmodel-free prediction: Estimate the value function of an unknown MDPModel-free control: Optimise the value function of an unknown MDP Sarsa  Algorithm$$Q(s,a) \ri">
+<meta name="keywords" content="RL">
+<meta property="og:type" content="article">
+<meta property="og:title" content="David Silver RL Lecture 5">
+<meta property="og:url" content="http://www.liuxianggen.com/2017/08/27/rl/lecture5/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="dynamic programming: solve a known MDPmodel-free prediction: Estimate the value function of an unknown MDPModel-free control: Optimise the value function of an unknown MDP Sarsa  Algorithm$$Q(s,a) \ri">
+<meta property="og:updated_time" content="2017-08-27T14:37:22.802Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="David Silver RL Lecture 5">
+<meta name="twitter:description" content="dynamic programming: solve a known MDPmodel-free prediction: Estimate the value function of an unknown MDPModel-free control: Optimise the value function of an unknown MDP Sarsa  Algorithm$$Q(s,a) \ri">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Sarsa-Algorithm"><span class="toc-text">Sarsa  Algorithm</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Monte-Carlo-Importance-Sampling"><span class="toc-text">Monte-Carlo Importance Sampling</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Q-Learning"><span class="toc-text">Q-Learning</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Model-Free-learning"><span class="toc-text">Model Free learning</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Monte-Carlo-learning"><span class="toc-text">Monte-Carlo learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#feature"><span class="toc-text">feature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#update-V-S-t"><span class="toc-text">update $V(S_t)$</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Temporal-Difference-Learning"><span class="toc-text">Temporal-Difference Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature"><span class="toc-text">Feature</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#update-V-S-t-for-TD-0"><span class="toc-text">update $V(S_t)$  for TD(0)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TD-lambda"><span class="toc-text">TD($\lambda$)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#research-link"><span class="toc-text">research link</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-rl/lecture5" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">David Silver RL Lecture 5</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.08.27</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>dynamic programming: solve a known MDP<br>model-free prediction: Estimate the value function of an unknown MDP<br>Model-free control: Optimise the value function of an unknown MDP</p>
+<h1 id="Sarsa-Algorithm"><a href="#Sarsa-Algorithm" class="headerlink" title="Sarsa  Algorithm"></a>Sarsa  Algorithm</h1><p>$$<br>Q(s,a) \rightarrow Q(s,a)+\alpha (R_{s,a} + Q(s’,a’)-Q(s,a))<br>$$</p>
+<h1 id="Monte-Carlo-Importance-Sampling"><a href="#Monte-Carlo-Importance-Sampling" class="headerlink" title="Monte-Carlo Importance Sampling"></a>Monte-Carlo Importance Sampling</h1><p>get much lower variance<br>$$<br>V(S_t) \rightarrow V(S_t)+ \alpha(\frac{\pi(A_t|S_t)}{\mu(A_t|S_t)} (R_{t+1}+\gamma V(S_{t+1})-V(S_t))<br>$$</p>
+<h1 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h1><p>off-policy learning of action-values Q(s,a)<br>No importance sampling is required<br>Next action is chosen using behaviour policy $A_{t+1} \sim<br>\mu(\cdot|S_t)$<br>But the estimation of next Q value using the target policy.<br>$$<br>Q(S_t,A_t) \rightarrow Q(S_t,A_t)+\alpha (R_{s,a} + \gamma Q(S_{t+1},A_{t+1})-Q(S_t,A_t))<br>$$</p>
+<h1 id="Model-Free-learning"><a href="#Model-Free-learning" class="headerlink" title="Model Free learning"></a>Model Free learning</h1><h2 id="Monte-Carlo-learning"><a href="#Monte-Carlo-learning" class="headerlink" title="Monte-Carlo learning"></a>Monte-Carlo learning</h2><h3 id="feature"><a href="#feature" class="headerlink" title="feature"></a>feature</h3><ol>
+<li>no knownledge of MDP transitions</li>
+<li>learns from complete episodes: no bootstrapping</li>
+<li>simplest possible idea: value = mean return</li>
+<li>all episodes must terminate<h3 id="update-V-S-t"><a href="#update-V-S-t" class="headerlink" title="update $V(S_t)$"></a>update $V(S_t)$</h3>$$<br>V(S_t) \leftarrow V(S_t)+\alpha (G_t-V(S_t))<br>$$</li>
+</ol>
+<h2 id="Temporal-Difference-Learning"><a href="#Temporal-Difference-Learning" class="headerlink" title="Temporal-Difference Learning"></a>Temporal-Difference Learning</h2><h3 id="Feature"><a href="#Feature" class="headerlink" title="Feature"></a>Feature</h3><ol>
+<li>no knownledge of MDP transitions</li>
+<li>learns from incomplete episodes: bootstrapping</li>
+<li>simplest possible idea: value = mean return</li>
+<li>TD updates a guess towards a guess<h3 id="update-V-S-t-for-TD-0"><a href="#update-V-S-t-for-TD-0" class="headerlink" title="update $V(S_t)$  for TD(0)"></a>update $V(S_t)$  for TD(0)</h3>$$<br>V(S_t) \leftarrow V(S_t)+\alpha (R_{t+1}+\gamma V(S_{t+1})-V(S_t))<br>$$</li>
+</ol>
+<h2 id="TD-lambda"><a href="#TD-lambda" class="headerlink" title="TD($\lambda$)"></a>TD($\lambda$)</h2><h1 id="research-link"><a href="#research-link" class="headerlink" title="research link"></a>research link</h1><p>[0]<a href="http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html" target="_blank" rel="external">David Silver lecture</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
