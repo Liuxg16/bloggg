@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>PyTorch Tutorial | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="nn,work,pytorch," />
+  
+
+  <meta name="description" content="briefPyTorch is a deep learning framework that puts Python first.  layout: post APITutorial basis123shape:tensor.size()reshape：tensor.view(shape)加个假维度：如果你拿的是单个样本，使用input.unsqueeze(0)来加一个假维度就可以了。 conca">
+<meta name="keywords" content="nn,work,pytorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PyTorch Tutorial">
+<meta property="og:url" content="http://www.liuxianggen.com/2017/06/10/python/pytorch_debug/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="briefPyTorch is a deep learning framework that puts Python first.  layout: post APITutorial basis123shape:tensor.size()reshape：tensor.view(shape)加个假维度：如果你拿的是单个样本，使用input.unsqueeze(0)来加一个假维度就可以了。 conca">
+<meta property="og:updated_time" content="2017-08-24T05:28:30.178Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PyTorch Tutorial">
+<meta name="twitter:description" content="briefPyTorch is a deep learning framework that puts Python first.  layout: post APITutorial basis123shape:tensor.size()reshape：tensor.view(shape)加个假维度：如果你拿的是单个样本，使用input.unsqueeze(0)来加一个假维度就可以了。 conca">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#brief"><span class="toc-text">brief</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#basis"><span class="toc-text">basis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#concat"><span class="toc-text">concat</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#reshape"><span class="toc-text">reshape</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#calculate-gradients"><span class="toc-text">calculate gradients</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#cuda"><span class="toc-text">cuda</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#指定gpu"><span class="toc-text">指定gpu</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#save-和load-model"><span class="toc-text">save 和load model</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于volatile和requires-grad"><span class="toc-text">关于volatile和requires_grad</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Optimize-only-the-classifier"><span class="toc-text">Optimize only the classifier</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-基础操作"><span class="toc-text">2. 基础操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-函数运算和梯度计算"><span class="toc-text">3.函数运算和梯度计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-简单的回归方法"><span class="toc-text">4.简单的回归方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-定义一个神经网络"><span class="toc-text">5.定义一个神经网络</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BiRNN-code"><span class="toc-text">BiRNN code</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#reversed-directional-rnn"><span class="toc-text">reversed directional rnn</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Error-Collection"><span class="toc-text">Error Collection</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RuntimeError-input-is-not-contiguous-at-…"><span class="toc-text">RuntimeError: input is not contiguous at …</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#void-cunn-ClassNLLCriterion-updateOutput-kernel-…-cuda-runtime-error-59-device-side-assert-triggered"><span class="toc-text">void cunn_ClassNLLCriterion_updateOutput_kernel … cuda runtime error (59) : device-side assert triggered</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#an-illegal-memory-access-was-encountered"><span class="toc-text">an illegal memory access was encountered</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KeyError-‘unexpected-key-“module-emb-layer-weight”-in-state-dict’"><span class="toc-text">KeyError: ‘unexpected key “module.emb_layer.weight” in state_dict’</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cat-received-an-invalid-combination-of-arguments-got-tuple-int"><span class="toc-text">cat received an invalid combination of arguments - got (tuple, int)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#missing-keys-in-state-dict-“set-’rnn-ent-h-gate-bias-’-’hrnn-rnn-ent-h-gate-weight-’-’hrnn-rnn-ent-h-gate-bias-’-’rnn-ent-h-gate-weight-’"><span class="toc-text">missing keys in state_dict: “set([\’rnn.ent_h_gate.bias\’, \’hrnn.rnn.ent_h_gate.weight\’, \’hrnn.rnn.ent_h_gate.bias\’, \’rnn.ent_h_gate.weight\’])</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-python/pytorch_debug" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">PyTorch Tutorial</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.06.10</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="brief"><a href="#brief" class="headerlink" title="brief"></a>brief</h1><p>PyTorch is a deep learning framework that puts Python first.</p>
+<hr>
+<p>layout: post</p>
+<p><a href="http://pytorch.org/docs/notes/autograd.html" target="_blank" rel="external">API</a><br><a href="http://pytorch.org/tutorials/" target="_blank" rel="external">Tutorial</a></p>
+<h1 id="basis"><a href="#basis" class="headerlink" title="basis"></a>basis</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">shape:tensor.size()</div><div class="line">reshape：tensor.view(shape)</div><div class="line">加个假维度：如果你拿的是单个样本，使用input.unsqueeze(<span class="number">0</span>)来加一个假维度就可以了。</div></pre></td></tr></table></figure>
+<h2 id="concat"><a href="#concat" class="headerlink" title="concat"></a>concat</h2><p>Concatenate columns:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">x_2 = torch.randn(<span class="number">2</span>, <span class="number">3</span>)</div><div class="line">y_2 = torch.randn(<span class="number">2</span>, <span class="number">5</span>)</div><div class="line"><span class="comment">## second arg specifies which axis to concat along</span></div><div class="line">z_2 = torch.cat([x_2, y_2], <span class="number">1</span>)</div><div class="line">print(z_2)</div></pre></td></tr></table></figure></p>
+<h2 id="reshape"><a href="#reshape" class="headerlink" title="reshape"></a>reshape</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">x = torch.randn(<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>)</div><div class="line">	print(x)</div><div class="line">	print(x.view(<span class="number">2</span>, <span class="number">12</span>))  <span class="comment"># Reshape to 2 rows, 12 columns</span></div><div class="line"><span class="comment"># Same as above.  If one of the dimensions is -1, its size can be inferred</span></div><div class="line">print(x.view(<span class="number">2</span>, <span class="number">-1</span>))</div></pre></td></tr></table></figure>
+<h2 id="calculate-gradients"><a href="#calculate-gradients" class="headerlink" title="calculate gradients"></a>calculate gradients</h2><p>Variables wrap tensor objects<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">x = autograd.Variable(torch.Tensor([<span class="number">1.</span>, <span class="number">2.</span>, <span class="number">3</span>]), requires_grad=<span class="keyword">True</span>)</div><div class="line"><span class="comment"># You can access the data with the .data attribute</span></div><div class="line">print(x.data)</div><div class="line"></div><div class="line"><span class="comment">## You can also do all the same operations you did with tensors with Variables.</span></div><div class="line">y = autograd.Variable(torch.Tensor([<span class="number">4.</span>, <span class="number">5.</span>, <span class="number">6</span>]), requires_grad=<span class="keyword">True</span>)</div><div class="line">z = x + y</div><div class="line">print(z.data)</div><div class="line"></div><div class="line"><span class="comment">## BUT z knows something extra.</span></div><div class="line">print(z.grad_fn)</div></pre></td></tr></table></figure></p>
+<h1 id="cuda"><a href="#cuda" class="headerlink" title="cuda"></a>cuda</h1><p>如果想在CUDA上进行计算，需要将操作对象放在GPU内存中。<br>对于普通的张量，可以直接：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">x = torch.randn(<span class="number">2</span>, <span class="number">3</span>)</div><div class="line">x = x.cuda()</div></pre></td></tr></table></figure></p>
+<p>对于神经网络：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">model = MyModel()</div><div class="line">model.cuda()</div></pre></td></tr></table></figure></p>
+<p>同一个GPU上的张量计算结果仍然保存在该GPU上</p>
+<h2 id="指定gpu"><a href="#指定gpu" class="headerlink" title="指定gpu"></a>指定gpu</h2><p>可以通过在命令前加上：<code>CUDA_VISIBLE_DEVICES=1</code></p>
+<h2 id="save-和load-model"><a href="#save-和load-model" class="headerlink" title="save 和load model"></a>save 和load model</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">         <span class="comment"># Load the best saved model.</span></div><div class="line"><span class="keyword">with</span> open(args.save, <span class="string">'rb'</span>) <span class="keyword">as</span> f:</div><div class="line">    model = torch.load(f)</div><div class="line"><span class="keyword">with</span> open(filename, <span class="string">'wb'</span>) <span class="keyword">as</span> f:</div><div class="line">    torch.save(self.model, f)</div></pre></td></tr></table></figure>
+<h2 id="关于volatile和requires-grad"><a href="#关于volatile和requires-grad" class="headerlink" title="关于volatile和requires_grad"></a>关于volatile和requires_grad</h2><p>Backward过程中排除子图</p>
+<p>pytorch的BP过程是由一个函数决定的，loss.backward()， 可以看到backward()函数里并没有传要求谁的梯度。那么我们可以大胆猜测，在BP的过程中，pytorch是将所有影响loss的Variable都求了一次梯度。但是有时候，我们并不想求所有Variable的梯度。那就要考虑如何在Backward过程中排除子图（ie.排除没必要的梯度计算）。<br>如何BP过程中排除子图？ Variable的两个参数（requires_grad和volatile）<br>requires_grad:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> torch</div><div class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</div><div class="line">x = Variable(torch.randn(<span class="number">5</span>, <span class="number">5</span>))</div><div class="line">y = Variable(torch.randn(<span class="number">5</span>, <span class="number">5</span>))</div><div class="line">z = Variable(torch.randn(<span class="number">5</span>, <span class="number">5</span>), requires_grad=<span class="keyword">True</span>)</div><div class="line">a = x + y  <span class="comment"># x, y的 requires_grad的标记都为false， 所以输出的变量requires_grad也为false</span></div><div class="line">a.requires_grad</div><div class="line"><span class="keyword">False</span></div><div class="line">b = a + z <span class="comment">#a ,z 中，有一个 requires_grad 的标记为True，那么输出的变量的 requires_grad为True</span></div><div class="line">b.requires_grad</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure></p>
+<p>变量的requires_grad标记的运算就相当于or。<br>如果你想部分冻结你的网络（ie.不做梯度计算），那么通过设置requires_grad标签是非常容易实现的。<br>下面给出了利用requires_grad使用pretrained网络的一个例子，只fine tune了最后一层。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">model = torchvision.models.resnet18(pretrained=<span class="keyword">True</span>)</div><div class="line"><span class="keyword">for</span> param <span class="keyword">in</span> model.parameters():</div><div class="line">    param.requires_grad = <span class="keyword">False</span></div><div class="line"><span class="comment"># Replace the last fully-connected layer</span></div><div class="line"><span class="comment"># Parameters of newly constructed modules have requires_grad=True by default</span></div><div class="line">model.fc = nn.Linear(<span class="number">512</span>, <span class="number">100</span>)</div></pre></td></tr></table></figure></p>
+<h1 id="Optimize-only-the-classifier"><a href="#Optimize-only-the-classifier" class="headerlink" title="Optimize only the classifier"></a>Optimize only the classifier</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">optimizer = optim.SGD(model.fc.parameters(), lr=<span class="number">1e-2</span>, momentum=<span class="number">0.9</span>)</div><div class="line">volatile：</div><div class="line">j = Variable(torch.randn(<span class="number">5</span>,<span class="number">5</span>), volatile=<span class="keyword">True</span>)</div><div class="line">k = Variable(torch.randn(<span class="number">5</span>,<span class="number">5</span>))</div><div class="line">m = Variable(torch.randn(<span class="number">5</span>,<span class="number">5</span>))</div><div class="line">n = k+m <span class="comment"># k,m变量的volatile标记都为False，输出的Variable的volatile标记也为false</span></div><div class="line">n.volatile</div><div class="line"><span class="keyword">False</span></div><div class="line">o = j+k <span class="comment">#k,m变量的volatile标记有一个True，输出的Variable的volatile为True</span></div><div class="line">o.volatile</div><div class="line"><span class="keyword">True</span></div></pre></td></tr></table></figure>
+<p>变量的volatile标记的运算也相当于or。<br>注意：volatile=True相当于requires_grad=False。但是在纯推断模式的时候，只要是输入volatile=True，那么输出Variable的volatile必为True。这就比使用requires_grad=False方便多了。</p>
+<p>NOTE：在使用volatile=True的时候，变量是不存储 creator属性的，这样也减少了内存的使用。</p>
+<p>为什么要排除子图</p>
+<p>也许有人会问，梯度全部计算，不更新的话不就得了。<br>这样就涉及了效率的问题了，计算很多没用的梯度是浪费了很多资源的（时间，计算机内存）</p>
+<p><a href="http://blog.csdn.net/u012436149/article/details/66971822" target="_blank" rel="external">http://blog.csdn.net/u012436149/article/details/66971822</a></p>
+<p>入门的操作可以参考官方的一些<a href="https://github.com/pytorch/tutorials/blob/master/Deep%20Learning%20with%20PyTorch.ipynb" target="_blank" rel="external">入门教程</a> 我自己写一点简单的操作, 这些操作在建模和数据预处理的都非常重要.</p>
+<h3 id="2-基础操作"><a href="#2-基础操作" class="headerlink" title="2. 基础操作"></a>2. 基础操作</h3><p>基本的加减乘除</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> torch</div><div class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</div><div class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line">dtype = torch.FloatTensor</div><div class="line"></div><div class="line">d = <span class="number">2</span></div><div class="line">h = <span class="number">2</span></div><div class="line"><span class="comment"># 初始化变量, 可以直接使用 torch.ones(d, h) 或者 torch.randn 进行随机初始化</span></div><div class="line"><span class="comment"># 主要目的是, 初始化一个容器, 在容器里放一些数据, 这个好处是可以直接用容器里的数据进行运算和测试</span></div><div class="line">x = Variable(torch.ones(d, h).type(dtype), requires_grad=<span class="keyword">False</span>)</div><div class="line">y = Variable(torch.ones(d, h).type(dtype), requires_grad=<span class="keyword">False</span>)</div><div class="line">xx = torch.rand(<span class="number">1</span>, <span class="number">1</span>)</div><div class="line"><span class="comment"># 也可以从numpy中进行初始化</span></div><div class="line">a = np.array([[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">1</span>, <span class="number">2</span>]])</div><div class="line">b = np.array([[<span class="number">2</span>, <span class="number">3</span>], [<span class="number">3</span>, <span class="number">2</span>]])</div><div class="line">x = torch.from_numpy(a)</div><div class="line">y = torch.from_numpy(b)</div><div class="line"></div><div class="line"><span class="comment"># 四则运算, 注意x和y 已经从a 和 b里进行初始化了</span></div><div class="line">print(x, y)            <span class="comment"># 分别看看x, y是啥</span></div><div class="line">print(x + y)           <span class="comment"># 加法</span></div><div class="line">print(x.add(y))        <span class="comment"># 等价于 x + y</span></div><div class="line">print(x * <span class="number">2</span> + y)       <span class="comment"># 还是加法</span></div><div class="line">print(x * y)           <span class="comment"># 对应元素的乘积, 得到 [[2, 6], [3, 4]]</span></div><div class="line">print(x.mul(y))        <span class="comment"># 等价于 x * y</span></div><div class="line">print(x.dot(y))        <span class="comment"># 点乘, 得到 15 = 2 + 6 + 3 + 4</span></div><div class="line">print(x @ y)           <span class="comment"># 矩阵叉乘, 得到[[8, 7], [8, 7]]</span></div><div class="line">print(x.mm(y))         <span class="comment"># 等价于 x @ y</span></div><div class="line">print(x / y)           <span class="comment"># 除法! 一定小心! 如果打印出来一定能够看到x,y是整形的, 所以结果是0!! 而不是小数</span></div><div class="line"></div><div class="line"><span class="comment"># 是否有下划线的区别</span></div><div class="line">print(x.add(y))       <span class="comment"># 输出 x + y, x保持不变</span></div><div class="line">print(x.add_(y))      <span class="comment"># 输出 x + y, 同时修改x的值 = x + y, 同理dot, mm, mul等操作!!</span></div></pre></td></tr></table></figure>
+<h3 id="3-函数运算和梯度计算"><a href="#3-函数运算和梯度计算" class="headerlink" title="3.函数运算和梯度计算"></a>3.函数运算和梯度计算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 简单的case</span></div><div class="line">x = Variable(torch.ones(<span class="number">1</span>), requires_grad = <span class="keyword">True</span>)</div><div class="line">y = x ** <span class="number">2</span> + <span class="number">3</span></div><div class="line">y.backward(retain_variables=<span class="keyword">True</span>)</div><div class="line">print(x.grad)  <span class="comment"># 梯度值是 2*x = 2</span></div><div class="line"><span class="comment"># 复杂一点,</span></div><div class="line">target = torch.FloatTensor([<span class="number">10</span>])</div><div class="line">y.backward(target, retain_variables=<span class="keyword">True</span>)</div><div class="line">print(x.grad)  <span class="comment"># 梯度值是 2*x = 20, 因为retain的设置为true, grad会加上原来的梯度值2, 结果是22</span></div><div class="line"></div><div class="line">x = Variable(torch.ones(<span class="number">1</span>), requires_grad = <span class="keyword">True</span>)</div><div class="line">y = x ** <span class="number">2</span> + <span class="number">3</span></div><div class="line">target = torch.FloatTensor([<span class="number">10</span>])</div><div class="line">y.backward(target)</div><div class="line">print(x.grad)      <span class="comment"># 直接设置backward, 得到梯度值 20</span></div><div class="line">y.backward(target) <span class="comment"># 会报错, 因为x的grad已经被填充了, 不能再放东西进去了</span></div></pre></td></tr></table></figure>
+<p>这里只是一个随便的x做的测试, 主要是提醒大家retain_variables的问题, 可能会引起的潜在问题.</p>
+<p>从上面可以看出来, pytorch可以任意的定义函数,并且进行梯度的计算, 最重要的是我们可以随便输入一个简单的值, 比如1, 0等等进行forward的验证. 同时,我们也可以设置顶一个值, 进行backward的测试, 来验证我们的模型是否符合预期, 以及建模中经常会遇到的维度不一致导致的叉乘点乘混淆在一起.</p>
+<h3 id="4-简单的回归方法"><a href="#4-简单的回归方法" class="headerlink" title="4.简单的回归方法"></a>4.简单的回归方法</h3><p>官方给出了一个回归的example, 我稍微简化一下, 介绍如下</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> torch</div><div class="line"><span class="keyword">import</span> torch.autograd</div><div class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</div><div class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</div><div class="line"></div><div class="line">feature_num = <span class="number">3</span></div><div class="line">batch_size = b</div><div class="line">w_target = torch.randn(feature_num, <span class="number">1</span>) * <span class="number">4</span>   <span class="comment"># 初始化一下参数w, 作为我们的目标参数</span></div><div class="line">b_target = torch.randn(<span class="number">1</span>) * <span class="number">3</span>                <span class="comment"># 初始化一下bias项, 作为我们的目标参数</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">f</span><span class="params">(x)</span>:</span></div><div class="line">    <span class="keyword">return</span> x.mm(w_target) + b_target[<span class="number">0</span>]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_param</span><span class="params">(W, b)</span>:</span></div><div class="line">    result = <span class="string">'y = '</span></div><div class="line">    <span class="keyword">for</span> i, w <span class="keyword">in</span> enumerate(W):</div><div class="line">        result += <span class="string">'&#123;:+.2f&#125; x_&#123;&#125; '</span>.format(w, len(W) - i)</div><div class="line">    result += <span class="string">'&#123;:+.2f&#125;'</span>.format(b[<span class="number">0</span>])</div><div class="line">    <span class="keyword">return</span> result</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_batch</span><span class="params">(batch_size=<span class="number">32</span>)</span>:</span></div><div class="line">    <span class="string">"""生成一些训练数据, 用于训练"""</span></div><div class="line">    x = torch.randn(batch_size, feature_num)</div><div class="line">    y = f(x)</div><div class="line">    <span class="keyword">return</span> Variable(x), Variable(y)</div><div class="line"></div><div class="line"><span class="comment"># 定义模型, 通常情况我们都会用nn库中的一些函数来建模, 利用也有的库, 而不是自己写一个</span></div><div class="line">fc = torch.nn.Linear(w_target.size(<span class="number">0</span>), <span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="comment"># 看一下我们要学习的函数</span></div><div class="line">print(<span class="string">'Actual  function:\t%s'</span> %(print_param(w_target.view(<span class="number">-1</span>), b_target)))</div><div class="line"></div><div class="line"><span class="keyword">for</span> batch_idx <span class="keyword">in</span> range(<span class="number">100</span>):</div><div class="line">    batch_x, batch_y = get_batch()</div><div class="line">    <span class="comment"># 重置梯度</span></div><div class="line">    fc.zero_grad()</div><div class="line">    <span class="comment"># Forward 操作</span></div><div class="line">    output = F.smooth_l1_loss(fc(batch_x), batch_y)</div><div class="line">    loss = output.data[<span class="number">0</span>]</div><div class="line">    <span class="comment"># Backward 操作</span></div><div class="line">    output.backward()</div><div class="line">    <span class="comment"># 随机梯度下降学习</span></div><div class="line">    <span class="keyword">for</span> param <span class="keyword">in</span> fc.parameters():</div><div class="line">        param.data.add_(<span class="number">-0.1</span> * param.grad.data)</div><div class="line">    <span class="comment"># 设置停止训练的标准</span></div><div class="line">    <span class="keyword">if</span> loss &lt; <span class="number">1e-3</span>:</div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line">print(<span class="string">'Loss: &#123;:.6f&#125; after &#123;&#125; batches'</span>.format(loss, batch_idx))</div><div class="line">print(<span class="string">'Learned function:\t%s'</span> %(print_param(fc.weight.data.view(<span class="number">-1</span>), fc.bias.data)))</div><div class="line">print(<span class="string">'Actual  function:\t%s'</span> %(print_param(w_target.view(<span class="number">-1</span>), b_target)))</div></pre></td></tr></table></figure>
+<p>这个case中, 我们使用了torch自带的nn中的Linear函数和smooth_l1_loss, 但是我们的随机梯度下降却仍然是自己实现的, 当然啦, pytorch也提供了SGD以及相关的函数实现. 详细的见下一个case吧!</p>
+<h3 id="5-定义一个神经网络"><a href="#5-定义一个神经网络" class="headerlink" title="5.定义一个神经网络"></a>5.定义一个神经网络</h3><p>现在我们来实验一个简单的神经网络吧, 依旧是使用mnist数据集, 这个已经被玩烂的数据集, 仍然是入门和测试的好数据集.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> torch</div><div class="line"><span class="keyword">import</span> torch.autograd</div><div class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</div><div class="line"><span class="keyword">from</span> torch.autograd <span class="keyword">import</span> Variable</div><div class="line"><span class="keyword">import</span> torch.optim <span class="keyword">as</span> optim</div><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Net</span><span class="params">(nn.Module)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">        super(Net, self).__init__()</div><div class="line">        <span class="comment"># 常用的一些操作, 主要是卷积, 池化和全链接, 可以尝试加dropout和batchNorm</span></div><div class="line">        self.conv1 = nn.Conv2d(<span class="number">3</span>, <span class="number">6</span>, <span class="number">5</span>)</div><div class="line">        self.pool  = nn.MaxPool2d(<span class="number">2</span>,<span class="number">2</span>)</div><div class="line">        self.conv2 = nn.Conv2d(<span class="number">6</span>, <span class="number">16</span>, <span class="number">5</span>)</div><div class="line">        self.fc1   = nn.Linear(<span class="number">16</span>*<span class="number">5</span>*<span class="number">5</span>, <span class="number">120</span>)</div><div class="line">        self.fc2   = nn.Linear(<span class="number">120</span>, <span class="number">84</span>)</div><div class="line">        self.fc3   = nn.Linear(<span class="number">84</span>, <span class="number">10</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span><span class="params">(self, x)</span>:</span></div><div class="line">        x = self.pool(F.relu(self.conv1(x)))</div><div class="line">        x = self.pool(F.relu(self.conv2(x)))</div><div class="line">        x = x.view(<span class="number">-1</span>, <span class="number">16</span>*<span class="number">5</span>*<span class="number">5</span>)</div><div class="line">        x = F.relu(self.fc1(x))</div><div class="line">        x = F.relu(self.fc2(x))</div><div class="line">        x = self.fc3(x)</div><div class="line">        <span class="keyword">return</span> x</div><div class="line"></div><div class="line"><span class="comment"># 正常情况下, 我们都会用类进行封装一个网络</span></div><div class="line">net = Net()</div><div class="line"><span class="comment"># 定义目标函数</span></div><div class="line">criterion = nn.CrossEntropyLoss()</div><div class="line"><span class="comment"># 定义优化方法, 这里使用SGD + 动量的方法</span></div><div class="line">optimizer = optim.SGD(net.parameters(), lr=<span class="number">0.001</span>, momentum=<span class="number">0.9</span>)</div><div class="line"></div><div class="line"><span class="comment"># 训练整个网络</span></div><div class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> range(<span class="number">2</span>):</div><div class="line">    running_loss = <span class="number">0.0</span></div><div class="line">    <span class="comment"># 这里需要自己搞一下数据 官网提供了一些现成的数据供玩耍</span></div><div class="line">    <span class="keyword">for</span> i, data <span class="keyword">in</span> enumerate(trainloader, <span class="number">0</span>):</div><div class="line">        <span class="comment"># get the inputs</span></div><div class="line">        inputs, labels = data</div><div class="line">        <span class="comment"># wrap them in Variable</span></div><div class="line">        inputs, labels = Variable(inputs), Variable(labels)</div><div class="line">        <span class="comment"># zero the parameter gradients</span></div><div class="line">        optimizer.zero_grad()</div><div class="line"></div><div class="line">        <span class="comment"># forward + backward + optimize</span></div><div class="line">        outputs = net(inputs)</div><div class="line">        loss = criterion(outputs, labels)</div><div class="line">        loss.backward()</div><div class="line">        optimizer.step()</div><div class="line"></div><div class="line">        <span class="comment"># print statistics</span></div><div class="line">        running_loss += loss.data[<span class="number">0</span>]</div><div class="line">        <span class="keyword">if</span> i % <span class="number">2000</span> == <span class="number">1999</span>: <span class="comment"># print every 2000 mini-batches</span></div><div class="line">            print(<span class="string">'[%d, %5d] loss: %.3f'</span> % (epoch+<span class="number">1</span>, i+<span class="number">1</span>, running_loss / <span class="number">2000</span>))</div><div class="line">            running_loss = <span class="number">0.0</span></div><div class="line">print(<span class="string">'Finished Training'</span>)</div></pre></td></tr></table></figure>
+<p>后面的预估什么的, 都是比较简单的, 详细可以看一下官网的case. 这里重点要强调一点(官网上有, 但是这里没有写出来的):</p>
+<ul>
+<li>查看参数的方式, <code>params = list(net.parameters())</code></li>
+<li>调试模型:<ul>
+<li>可以先使用 <code>x_t = Variable(torch.randn(1, 1, 32, 32))</code>, 之后 <code>out = net(input)</code> 来看看中间结果是否能够正常运行</li>
+<li>同样,我们可以随机一个out, 通过 <code>net.zero_grad()</code> 和 <code>out.backward(torch.randn(1, 10))</code>来看看误差反馈正常与否</li>
+</ul>
+</li>
+<li>查看函数链 <code>print(loss.creator.previous_functions[0][0]) # Linear</code> 可以不断看到这个函数的前面的函数是啥</li>
+</ul>
+<h2 id="BiRNN-code"><a href="#BiRNN-code" class="headerlink" title="BiRNN code"></a>BiRNN code</h2><p>```python</p>
+<h1 id="reversed-directional-rnn"><a href="#reversed-directional-rnn" class="headerlink" title="reversed directional rnn"></a>reversed directional rnn</h1><p>idx = [i for i in range(l<em>k-1, -1, -1)]<br>idx = Variable(torch.cuda.LongTensor(idx))<br>inv_emb = word_vectors.index_select(1, idx) # (b_s, l</em>k, embsize)<br>mask_x_inv = mask_x.index_select(1, idx) # (b_s, l*k)</p>
+<h1 id="Error-Collection"><a href="#Error-Collection" class="headerlink" title="Error Collection"></a>Error Collection</h1><h2 id="RuntimeError-input-is-not-contiguous-at-…"><a href="#RuntimeError-input-is-not-contiguous-at-…" class="headerlink" title="RuntimeError: input is not contiguous at …"></a>RuntimeError: input is not contiguous at …</h2><p>view is only supposed to work on contiguous tensors, and transposing a tensor makes it non-contiguous.You can use .contiguous() to fix it</p>
+<h2 id="void-cunn-ClassNLLCriterion-updateOutput-kernel-…-cuda-runtime-error-59-device-side-assert-triggered"><a href="#void-cunn-ClassNLLCriterion-updateOutput-kernel-…-cuda-runtime-error-59-device-side-assert-triggered" class="headerlink" title="void cunn_ClassNLLCriterion_updateOutput_kernel … cuda runtime error (59) : device-side assert triggered"></a>void cunn_ClassNLLCriterion_updateOutput_kernel … cuda runtime error (59) : device-side assert triggered</h2><p>May be the input of criterion operator,  the number of categoris wrong</p>
+<h2 id="an-illegal-memory-access-was-encountered"><a href="#an-illegal-memory-access-was-encountered" class="headerlink" title="an illegal memory access was encountered"></a>an illegal memory access was encountered</h2><p>gpu memory is not enough</p>
+<h2 id="KeyError-‘unexpected-key-“module-emb-layer-weight”-in-state-dict’"><a href="#KeyError-‘unexpected-key-“module-emb-layer-weight”-in-state-dict’" class="headerlink" title="KeyError: ‘unexpected key “module.emb_layer.weight” in state_dict’"></a>KeyError: ‘unexpected key “module.emb_layer.weight” in state_dict’</h2><p>use normal  model to load the saved parallel model</p>
+<h2 id="cat-received-an-invalid-combination-of-arguments-got-tuple-int"><a href="#cat-received-an-invalid-combination-of-arguments-got-tuple-int" class="headerlink" title="cat received an invalid combination of arguments - got (tuple, int)"></a>cat received an invalid combination of arguments - got (tuple, int)</h2><p>maybe the type of input is not consistent.</p>
+<h2 id="missing-keys-in-state-dict-“set-’rnn-ent-h-gate-bias-’-’hrnn-rnn-ent-h-gate-weight-’-’hrnn-rnn-ent-h-gate-bias-’-’rnn-ent-h-gate-weight-’"><a href="#missing-keys-in-state-dict-“set-’rnn-ent-h-gate-bias-’-’hrnn-rnn-ent-h-gate-weight-’-’hrnn-rnn-ent-h-gate-bias-’-’rnn-ent-h-gate-weight-’" class="headerlink" title="missing keys in state_dict: “set([\’rnn.ent_h_gate.bias\’, \’hrnn.rnn.ent_h_gate.weight\’, \’hrnn.rnn.ent_h_gate.bias\’, \’rnn.ent_h_gate.weight\’])"></a>missing keys in state_dict: “set([\’rnn.ent_h_gate.bias\’, \’hrnn.rnn.ent_h_gate.weight\’, \’hrnn.rnn.ent_h_gate.bias\’, \’rnn.ent_h_gate.weight\’])</h2><p>the model loaded is lack the parameters mentioned above</p>
+<p>某些部分转载自：<a href="http://www.datakit.cn/blog/2017/03/03/pytorch_01_basic.html" target="_blank" rel="external">http://www.datakit.cn/blog/2017/03/03/pytorch_01_basic.html</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
