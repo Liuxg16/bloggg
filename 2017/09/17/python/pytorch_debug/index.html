@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Deal with Error in PyTorch | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="nn,work,pytorch," />
+  
+
+  <meta name="description" content="Error Collectioncuda runtime error (59) : device-side assert triggereduseful method:run with CUDA_LAUNCH_BLOCKING=1 and see if you can get a good stack-trace to identify the location of your issue. An">
+<meta name="keywords" content="nn,work,pytorch">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deal with Error in PyTorch">
+<meta property="og:url" content="http://www.liuxianggen.com/2017/09/17/python/pytorch_debug/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="Error Collectioncuda runtime error (59) : device-side assert triggereduseful method:run with CUDA_LAUNCH_BLOCKING=1 and see if you can get a good stack-trace to identify the location of your issue. An">
+<meta property="og:updated_time" content="2017-09-17T15:17:22.661Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deal with Error in PyTorch">
+<meta name="twitter:description" content="Error Collectioncuda runtime error (59) : device-side assert triggereduseful method:run with CUDA_LAUNCH_BLOCKING=1 and see if you can get a good stack-trace to identify the location of your issue. An">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Error-Collection"><span class="toc-text">Error Collection</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cuda-runtime-error-59-device-side-assert-triggered"><span class="toc-text">cuda runtime error (59) : device-side assert triggered</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#useful-method"><span class="toc-text">useful method:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis"><span class="toc-text">Analysis</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#out-of-bound-of-lookup-table-index-1-or-larger-than-max"><span class="toc-text">out of bound of lookup table. index -1 or larger than max</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#out-of-bound-of-crossEntropy-or-athor-loss-function"><span class="toc-text">out of bound of crossEntropy or athor loss function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#out-of-bound-of-gather-and-scatter-function"><span class="toc-text">out of bound of gather and scatter function</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RuntimeError-input-is-not-contiguous-at-…"><span class="toc-text">RuntimeError: input is not contiguous at …</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#void-cunn-ClassNLLCriterion-updateOutput-kernel-…-cuda-runtime-error-59-device-side-assert-triggered"><span class="toc-text">void cunn_ClassNLLCriterion_updateOutput_kernel … cuda runtime error (59) : device-side assert triggered</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#an-illegal-memory-access-was-encountered"><span class="toc-text">an illegal memory access was encountered</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#KeyError-‘unexpected-key-“module-emb-layer-weight”-in-state-dict’"><span class="toc-text">KeyError: ‘unexpected key “module.emb_layer.weight” in state_dict’</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cat-received-an-invalid-combination-of-arguments-got-tuple-int"><span class="toc-text">cat received an invalid combination of arguments - got (tuple, int)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#missing-keys-in-state-dict-“set-’rnn-ent-h-gate-bias-’-’hrnn-rnn-ent-h-gate-weight-’-’hrnn-rnn-ent-h-gate-bias-’-’rnn-ent-h-gate-weight-’"><span class="toc-text">missing keys in state_dict: “set([\’rnn.ent_h_gate.bias\’, \’hrnn.rnn.ent_h_gate.weight\’, \’hrnn.rnn.ent_h_gate.bias\’, \’rnn.ent_h_gate.weight\’])</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-python/pytorch_debug" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Deal with Error in PyTorch</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.09.17</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Error-Collection"><a href="#Error-Collection" class="headerlink" title="Error Collection"></a>Error Collection</h1><h2 id="cuda-runtime-error-59-device-side-assert-triggered"><a href="#cuda-runtime-error-59-device-side-assert-triggered" class="headerlink" title="cuda runtime error (59) : device-side assert triggered"></a>cuda runtime error (59) : device-side assert triggered</h2><h3 id="useful-method"><a href="#useful-method" class="headerlink" title="useful method:"></a>useful method:</h3><p>run with CUDA_LAUNCH_BLOCKING=1 and see if you can get a good stack-trace to identify the location of your issue.</p>
+<h3 id="Analysis"><a href="#Analysis" class="headerlink" title="Analysis"></a>Analysis</h3><p>There are several issue about it:<br><a href="https://github.com/torch/cutorch/issues/708" target="_blank" rel="external">github 708</a><br><a href="https://discuss.pytorch.org/t/issue-with-cuda/3297/2" target="_blank" rel="external">error of cuda</a><br>but there is no answer is suitable for all. This is it!<br>It can be divided as three category.</p>
+<h3 id="out-of-bound-of-lookup-table-index-1-or-larger-than-max"><a href="#out-of-bound-of-lookup-table-index-1-or-larger-than-max" class="headerlink" title="out of bound of lookup table. index -1 or larger than max"></a>out of bound of lookup table. index -1 or larger than max</h3><p>please check the vocabulary size</p>
+<h3 id="out-of-bound-of-crossEntropy-or-athor-loss-function"><a href="#out-of-bound-of-crossEntropy-or-athor-loss-function" class="headerlink" title="out of bound of crossEntropy or athor loss function"></a>out of bound of crossEntropy or athor loss function</h3><h3 id="out-of-bound-of-gather-and-scatter-function"><a href="#out-of-bound-of-gather-and-scatter-function" class="headerlink" title="out of bound of gather and scatter function"></a>out of bound of <strong>gather</strong> and <strong>scatter</strong> function</h3><h2 id="RuntimeError-input-is-not-contiguous-at-…"><a href="#RuntimeError-input-is-not-contiguous-at-…" class="headerlink" title="RuntimeError: input is not contiguous at …"></a>RuntimeError: input is not contiguous at …</h2><p>view is only supposed to work on contiguous tensors, and transposing a tensor makes it non-contiguous.You can use .contiguous() to fix it</p>
+<h2 id="void-cunn-ClassNLLCriterion-updateOutput-kernel-…-cuda-runtime-error-59-device-side-assert-triggered"><a href="#void-cunn-ClassNLLCriterion-updateOutput-kernel-…-cuda-runtime-error-59-device-side-assert-triggered" class="headerlink" title="void cunn_ClassNLLCriterion_updateOutput_kernel … cuda runtime error (59) : device-side assert triggered"></a>void cunn_ClassNLLCriterion_updateOutput_kernel … cuda runtime error (59) : device-side assert triggered</h2><p>May be the input of criterion operator,  the number of categoris wrong</p>
+<h2 id="an-illegal-memory-access-was-encountered"><a href="#an-illegal-memory-access-was-encountered" class="headerlink" title="an illegal memory access was encountered"></a>an illegal memory access was encountered</h2><p>gpu memory is not enough</p>
+<h2 id="KeyError-‘unexpected-key-“module-emb-layer-weight”-in-state-dict’"><a href="#KeyError-‘unexpected-key-“module-emb-layer-weight”-in-state-dict’" class="headerlink" title="KeyError: ‘unexpected key “module.emb_layer.weight” in state_dict’"></a>KeyError: ‘unexpected key “module.emb_layer.weight” in state_dict’</h2><p>use normal  model to load the saved parallel model</p>
+<h2 id="cat-received-an-invalid-combination-of-arguments-got-tuple-int"><a href="#cat-received-an-invalid-combination-of-arguments-got-tuple-int" class="headerlink" title="cat received an invalid combination of arguments - got (tuple, int)"></a>cat received an invalid combination of arguments - got (tuple, int)</h2><p>maybe the type of input is not consistent.</p>
+<h2 id="missing-keys-in-state-dict-“set-’rnn-ent-h-gate-bias-’-’hrnn-rnn-ent-h-gate-weight-’-’hrnn-rnn-ent-h-gate-bias-’-’rnn-ent-h-gate-weight-’"><a href="#missing-keys-in-state-dict-“set-’rnn-ent-h-gate-bias-’-’hrnn-rnn-ent-h-gate-weight-’-’hrnn-rnn-ent-h-gate-bias-’-’rnn-ent-h-gate-weight-’" class="headerlink" title="missing keys in state_dict: “set([\’rnn.ent_h_gate.bias\’, \’hrnn.rnn.ent_h_gate.weight\’, \’hrnn.rnn.ent_h_gate.bias\’, \’rnn.ent_h_gate.weight\’])"></a>missing keys in state_dict: “set([\’rnn.ent_h_gate.bias\’, \’hrnn.rnn.ent_h_gate.weight\’, \’hrnn.rnn.ent_h_gate.bias\’, \’rnn.ent_h_gate.weight\’])</h2><p>the model loaded is lack the parameters mentioned above</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
