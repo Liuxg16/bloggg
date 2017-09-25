@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://www.liuxianggen.com/2016/12/05/neuralnetwork/backpropagation/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
 <meta property="og:description" content="softmax求导softmax函数:$$f(x_j) = \frac{e^{x_j}}{\sum_k e^{x_k}}$$导数：$$\frac{\partial f(x_j)}{\partial x_i} = \begin{cases} f(x_i)(1 – f(x_i)),&amp;amp;\quad i = j \\ -f(x_i)f(x_j),&amp;amp;\quad i \neq j\end{cas">
-<meta property="og:updated_time" content="2017-07-07T06:34:37.738Z">
+<meta property="og:updated_time" content="2017-09-21T07:14:45.190Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="BackPropagation">
 <meta name="twitter:description" content="softmax求导softmax函数:$$f(x_j) = \frac{e^{x_j}}{\sum_k e^{x_k}}$$导数：$$\frac{\partial f(x_j)}{\partial x_i} = \begin{cases} f(x_i)(1 – f(x_i)),&amp;amp;\quad i = j \\ -f(x_i)f(x_j),&amp;amp;\quad i \neq j\end{cas">
@@ -40,7 +40,7 @@
 
   
 
-  
+  <% if (theme.baidu_analytics){ %>
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -50,8 +50,16 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
-
+<% } %>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
@@ -142,7 +150,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#softmax求导"><span class="toc-text">softmax求导</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#softmax求导"><span class="toc-text">softmax求导</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#思考"><span class="toc-text">思考</span></a></li></ol>
   </div>
 
 
@@ -177,6 +185,7 @@ var _hmt = _hmt || [];
     
       <h1 id="softmax求导"><a href="#softmax求导" class="headerlink" title="softmax求导"></a>softmax求导</h1><p>softmax函数:<br>$$f(x_j) = \frac{e^{x_j}}{\sum_k e^{x_k}}$$<br>导数：<br>$$<br>\frac{\partial f(x_j)}{\partial x_i} = \begin{cases} f(x_i)(1 – f(x_i)),&amp;\quad i = j \\ -f(x_i)f(x_j),&amp;\quad i \neq j\end{cases}$$</p>
 <p>其损失函数为Normalized Negative Log-likelihood (NNL)，即$L = -\sum_j y_j \log p_j,$<br>其中，$o$是一个向量，对$o$求$L$的导数如下<br>则<br>$$\frac{\partial L}{\partial o_i} =-\sum_ky_k\frac{\partial \log p_k}{\partial o_i} =-\sum_ky_k\frac{1}{p_k}\frac{\partial p_k}{\partial o_i} =-y_i(1-p_i)-\sum_{k\neq i}y_k\frac{1}{p_k}({-p_kp_i})<br>\\<br>=-y_i(1-p_i)+\sum_{k\neq i}y_k({p_i}) =-y_i+{y_ip_i+\sum_{k\neq i}y_k({p_i})} \\<br>={p_i\left(\sum_ky_k\right)}-y_i  =p_i-y_i $$</p>
+<h1 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h1><p>如果让模型自己决定是否更新，是否会是一个更好的学习方法？</p>
 <p>[0]<a href="https://www.zybuluo.com/Feiteng/note/20154" target="_blank" rel="external">分分钟推导神经网络</a></p>
 
     

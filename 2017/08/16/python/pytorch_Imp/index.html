@@ -15,17 +15,17 @@
     <meta name="keywords" content="nn,work,pytorch," />
   
 
-  <meta name="description" content="Awesome-pytorch-list">
+  <meta name="description" content="Module 1: compare gradients1234567891011if i==0:	 p_mean = 0	 p_d_mean = 0	 p_num = 0	 for p in self.model.parameters():		 if p.grad is not None:			 p_num+=1			 p_mean += torch.mean(torch.abs(p.data))">
 <meta name="keywords" content="nn,work,pytorch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PyTorch Implements">
 <meta property="og:url" content="http://www.liuxianggen.com/2017/08/16/python/pytorch_Imp/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
-<meta property="og:description" content="Awesome-pytorch-list">
-<meta property="og:updated_time" content="2017-08-16T09:19:33.230Z">
+<meta property="og:description" content="Module 1: compare gradients1234567891011if i==0:	 p_mean = 0	 p_d_mean = 0	 p_num = 0	 for p in self.model.parameters():		 if p.grad is not None:			 p_num+=1			 p_mean += torch.mean(torch.abs(p.data))">
+<meta property="og:updated_time" content="2017-09-25T07:33:36.873Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PyTorch Implements">
-<meta name="twitter:description" content="Awesome-pytorch-list">
+<meta name="twitter:description" content="Module 1: compare gradients1234567891011if i==0:	 p_mean = 0	 p_d_mean = 0	 p_num = 0	 for p in self.model.parameters():		 if p.grad is not None:			 p_num+=1			 p_mean += torch.mean(torch.abs(p.data))">
 
   
 
@@ -40,7 +40,7 @@
 
   
 
-  
+  <% if (theme.baidu_analytics){ %>
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -50,8 +50,16 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
-
+<% } %>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
@@ -140,6 +148,11 @@ var _hmt = _hmt || [];
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Module-1-compare-gradients"><span class="toc-text">Module 1: compare gradients</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
@@ -170,7 +183,8 @@ var _hmt = _hmt || [];
 
   <div class="article-content">
     
-      <p><a href="https://github.com/bharathgs/Awesome-pytorch-list" target="_blank" rel="external">Awesome-pytorch-list</a></p>
+      <h1 id="Module-1-compare-gradients"><a href="#Module-1-compare-gradients" class="headerlink" title="Module 1: compare gradients"></a>Module 1: compare gradients</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> i==<span class="number">0</span>:</div><div class="line">	 p_mean = <span class="number">0</span></div><div class="line">	 p_d_mean = <span class="number">0</span></div><div class="line">	 p_num = <span class="number">0</span></div><div class="line">	 <span class="keyword">for</span> p <span class="keyword">in</span> self.model.parameters():</div><div class="line">		 <span class="keyword">if</span> p.grad <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</div><div class="line">			 p_num+=<span class="number">1</span></div><div class="line">			 p_mean += torch.mean(torch.abs(p.data))</div><div class="line">			 p_d_mean += torch.mean(torch.abs(p.grad.data))</div><div class="line">	 self.logg.logging(<span class="string">'| epoch &#123;:1d&#125; |p_mean &#123;:3.3f&#125; | pd_mean &#123;:3.3f&#125; |'</span>.\</div><div class="line">			 format(self.epoch, p_mean/p_num,p_d_mean/p_num))</div></pre></td></tr></table></figure>
+<p><a href="https://github.com/bharathgs/Awesome-pytorch-list" target="_blank" rel="external">Awesome-pytorch-list</a></p>
 
     
   </div>
