@@ -35,7 +35,7 @@
 
   
 
-  
+  <% if (theme.baidu_analytics){ %>
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -45,8 +45,16 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
-
+<% } %>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
@@ -176,7 +184,7 @@ var _hmt = _hmt || [];
 <li class="item-post item">
   <span class="post-date">11-21</span>
 
-  <a class="post-title" href="/2016/11/21/threeBody3/">《三体---死神永生》</a>
+  <a class="post-title" href="/2016/11/21/BrainMatrix/threeBody3/">《三体---死神永生》</a>
 
 </li>
 <li class="item-post item">
