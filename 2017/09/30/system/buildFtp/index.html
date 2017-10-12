@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>���ձʼ� | Liu Xianggen</title>
+  <title>Building FTP | Liu Xianggen</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -15,17 +15,17 @@
     <meta name="keywords" content="life," />
   
 
-  <meta name="description" content="ת���ԣ�ShuolBDe ǰ�ԣ�����������Ŀ��Ҫ��������ļ�������������ʹ�õ���apache����������Ҫ������Ŀ��Ŀ¼����������Ȼ��ͨ�������ӽ���������Ŀ��������������������ͬʱ����������Ŀ�������Ļ���δ��������ĿĿ¼�ͻᶪʧ����ʵ���ۣ����Բ��д">
+  <meta name="description" content="转载自：ShuolBDe 前言：　　最近项目需要搭建第三方文件服务器，本来使用的是apache服务器将需要的子项目的目录发布出来，然后通过软连接将所有子项目关联起来，但是如果不同时将所有子项目跑起来的话，未开启的项目目录就会丢失，着实蛋疼，所以才有搭建ftp服务器的想法，下面开始正文。一、安装如果是ubuntu环境下的话，安装是很简单的，只需输入如下命令:sudo apt-get install">
 <meta name="keywords" content="life">
 <meta property="og:type" content="article">
-<meta property="og:title" content="���ձʼ�">
+<meta property="og:title" content="Building FTP">
 <meta property="og:url" content="http://www.liuxianggen.com/2017/09/30/system/buildFtp/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
-<meta property="og:description" content="ת���ԣ�ShuolBDe ǰ�ԣ�����������Ŀ��Ҫ��������ļ�������������ʹ�õ���apache����������Ҫ������Ŀ��Ŀ¼����������Ȼ��ͨ�������ӽ���������Ŀ��������������������ͬʱ����������Ŀ�������Ļ���δ��������ĿĿ¼�ͻᶪʧ����ʵ���ۣ����Բ��д">
-<meta property="og:updated_time" content="2017-09-30T14:38:00.661Z">
+<meta property="og:description" content="转载自：ShuolBDe 前言：　　最近项目需要搭建第三方文件服务器，本来使用的是apache服务器将需要的子项目的目录发布出来，然后通过软连接将所有子项目关联起来，但是如果不同时将所有子项目跑起来的话，未开启的项目目录就会丢失，着实蛋疼，所以才有搭建ftp服务器的想法，下面开始正文。一、安装如果是ubuntu环境下的话，安装是很简单的，只需输入如下命令:sudo apt-get install">
+<meta property="og:updated_time" content="2017-10-12T05:16:38.518Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="���ձʼ�">
-<meta name="twitter:description" content="ת���ԣ�ShuolBDe ǰ�ԣ�����������Ŀ��Ҫ��������ļ�������������ʹ�õ���apache����������Ҫ������Ŀ��Ŀ¼����������Ȼ��ͨ�������ӽ���������Ŀ��������������������ͬʱ����������Ŀ�������Ļ���δ��������ĿĿ¼�ͻᶪʧ����ʵ���ۣ����Բ��д">
+<meta name="twitter:title" content="Building FTP">
+<meta name="twitter:description" content="转载自：ShuolBDe 前言：　　最近项目需要搭建第三方文件服务器，本来使用的是apache服务器将需要的子项目的目录发布出来，然后通过软连接将所有子项目关联起来，但是如果不同时将所有子项目跑起来的话，未开启的项目目录就会丢失，着实蛋疼，所以才有搭建ftp服务器的想法，下面开始正文。一、安装如果是ubuntu环境下的话，安装是很简单的，只需输入如下命令:sudo apt-get install">
 
   
 
@@ -40,7 +40,7 @@
 
   
 
-  
+  <% if (theme.baidu_analytics){ %>
 <script>
 var _hmt = _hmt || [];
 (function() {
@@ -50,8 +50,16 @@ var _hmt = _hmt || [];
   s.parentNode.insertBefore(hm, s);
 })();
 </script>
-
-
+<% } %>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
 
 </head>
@@ -142,7 +150,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#��������"><span class="toc-text">��������</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#����"><span class="toc-text">����</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ftp-����"><span class="toc-text">ftp ����</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#运行命令"><span class="toc-text">运行命令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#重启"><span class="toc-text">重启</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ftp-命令"><span class="toc-text">ftp 命令</span></a></li></ol>
   </div>
 
 
@@ -150,7 +158,7 @@ var _hmt = _hmt || [];
 <div class="content content-post CENTER">
    <article id="post-system/buildFtp" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">���ձʼ�</h1>
+    <h1 class="post-title">Building FTP</h1>
 
     <div class="article-meta">
       <span>
@@ -175,57 +183,57 @@ var _hmt = _hmt || [];
 
   <div class="article-content">
     
-      <p>ת���ԣ�<a href="http://www.cnblogs.com/ShuolBDe/p/4453329.html" target="_blank" rel="external">ShuolBDe</a></p>
-<p>ǰ�ԣ�<br>����������Ŀ��Ҫ��������ļ�������������ʹ�õ���apache����������Ҫ������Ŀ��Ŀ¼����������Ȼ��ͨ�������ӽ���������Ŀ��������������������ͬʱ����������Ŀ�������Ļ���δ��������ĿĿ¼�ͻᶪʧ����ʵ���ۣ����Բ��дftp���������뷨�����濪ʼ���ġ�</p>
-<p>һ����װ<br>������ubuntu�����µĻ�����װ�Ǻܼ򵥵ģ�ֻ��������������:<br><code>sudo apt-get install vsftpd</code><br>������װ���ɺ����Բ쿴�·���״̬����ʵ��װ�����˾ͻ���ʾ�Ѿ������ˣ�<br><code>sudo service vsftpd status</code></p>
-<p>���������ļ�<br>������ʵ���õ����ļ�ֻ������<br>����1. /etc/vsftp.conf���������ļ���</p>
-<p>����2. /etc/vsftp.chroot_list���ɷ����û��б���������������ò�Ʋ������еģ������ֽ��ģ������쿴�����Ǹ������ļ��ͻᷢ�֣������ļ������й�����</p>
-<p>����3. /etc/pam.d/vsftpd�������и�ѡ����Ҫ�޸ģ�������Ҫ��������һ�£����������֡�530 login incorrect���Ĵ�����<br>�������濪ʼ�����ļ�˵����<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">����1./etc/vsftpd.config ������ע�ͱȽ϶࣬������ϸ�������Ͳ�һһ�о��ˣ�ֻд�����޸ĵ�</div><div class="line"></div><div class="line">��������anonymous_enable=NO���Ƿ�����������½��</div><div class="line"></div><div class="line">��������local_enable=YES���Ƿ��������ص�½��</div><div class="line"></div><div class="line">��������write_enable=YES������FTP��д��</div><div class="line"></div><div class="line">��������//chroot ��Change Root��</div><div class="line"></div><div class="line">��������chroot_local_user=YES�����ó�YES�󣬼���vsftpd.chroot_list�е��û�����ͨ��ftp���ʣ�</div><div class="line"></div><div class="line">��������chroot_list_enable=YES��������������vsftpd.chroot_list��</div><div class="line"></div><div class="line">��������chroot_list_file=/etc/vsftpd.chroot_list��ָ��һ��list�������ļ�Ĭ�ϵģ����ǲ������ڣ���Ҫ�ֶ�Ūһ�£�</div><div class="line">��������pam_service_name=vsftpd�������������ǣ���һ�������»�����530�����⣬������������ȥ����</div></pre></td></tr></table></figure></p>
-<p>����2./etc/vsftpd.chroot_list<br>�������������ļ��Ƚϼ򵥣�֮��Ҫ������ftp��½���û����Ž������У�һ��һ�У���֮ǰһֱ�ȽϷ�ŭ����������������ô˵һ�£���û�����ӣ�����������ô���ʵ�ܼ򵥣�������������<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">user</div><div class="line">user2</div><div class="line">user22</div></pre></td></tr></table></figure></p>
-<p>������������˵���������û�����ʵ�������ģ�������ʹ�ñ����Ѿ����ڵ��û���������Ϊһ��������ftp���������ǲ�Ӧ�ðѱ����Ķ����������������ģ����õķ��������ٴ������û�ר�Ÿ�ftpʹ��</p>
-<p>��������������������һ���û�������</p>
-<p>�����������ӣ�-d��ָ�����û���Ŀ¼��-m��Ҫ�������û�������</p>
-<p>sudo useradd -d /home/user -m username<br>�����������������û�����Ҫ���û����룬</p>
-<p>sudo passwd username<br>��������Whatever��Ҫ����ɾ�ˣ�</p>
-<p>sudo userdel username<br>�����������ﻹҪ�������ǣ����ڴ����û�֮����һЩ�����¿��ܻ����ָ�500�Ĵ�����������������ȥ��</p>
-<p>�����������ˣ����ڲ쿴�´������������Ź�������</p>
-<p>���ƴ���<br>user@userServer:/home$ ll<br>������ xx<br>drwxr-xr-x  7 root   root    4096  4�� 24 11:27 ./<br>drwxr-xr-x 25 root   root    4096  4��  9 09:47 ../<br>drwxr-xr-x  2 heihei    heihei     4096  4�� 24 11:27 heihei/<br>drwxr-xr-x  6 haha    haha     4096  2�� 15 18:08 haha/<br>drwxr-xr-x 75 username    username    4096  4�� 24 13:18 username/<br>���ƴ���<br>��������==================================================================</p>
-<p>����3./etc/pam.d/vsftpd</p>
-<p>�������������ļ���ʵҲû���ٶ������͸�һ�����ɣ�</p>
-<p>auth    required        pam_listfile.so item=user sense=deny file=/etc/ftpuser onerr=succeed<br>��������Ĭ����ftpuser�������ĳɷ���vsftpd.chroot_list�������û������ˣ���Ҫ�����Ǹ�deny������Ӧ����allow�������ǲ�����ʹ�ã�����..</p>
-<p>������½</p>
-<p>������ʵ�кö෽����½��</p>
-<p>����1.������</p>
-<p>��������ip��ַ������..</p>
-<p>���������Ǹ�usernameӦ���ǵ�ǰ���û�����Ҫ���������Ǻ�ftp�û���һ����</p>
-<p>��������user��������ftp�û�����ǰ�������Ǹ���Ҫ�Ǻ͵�ǰ�û���һ���Ļ�ֱ�ӻس���ȥ��</p>
-<p>��������passwd���룻</p>
-<p>���������㶨</p>
-<p>���ƴ���<br>user@userServer:/home$ ftp 192.168.1.123<br>Connected to 192.168.1.123.<br>220 (vsFTPd 2.3.5)<br>Name (192.168.1.123:username): user<br>331 Please specify the password.<br>Password:<br>230 Login successful.<br>Remote system type is UNIX.<br>Using binary mode to transfer files.<br>ftp&gt;<br>���ƴ���<br> ����2.������</p>
-<p>���������ڵ�ַ������(your ip address):����ftp://192.168.1.123</p>
-<p>����3.��windows��Ŀ¼��ַ�������������ĵ�ַ</p>
-<p>�ġ�����</p>
-<p>�������ڵ�����������Ӳ�����ô���׾�����ֱ�����ɣ�����ô�������⣬���ܲ���������������..</p>
-<p>����1.530 login Incorrect</p>
-<p>����������˵��������ò�Ƽ��������������֣�</p>
-<p>����������1��pam_service_name=vsftpd ����ǰ��vsftpd.conf�ļ��������ˣ����ڵ�һ̨PC�������ʱ���ļ�����û�У���˵����Ϊ���仰�����ڵ�һ̨PC���������϶࣬��Ҳ��ȷ���ǲ�����������<br>����������2�����ǵ�/etc/pam.d/vsftpd�Ǹ��ļ�����˵�˲�Ҫ��deny���ǲ����ּ�<br>����������3����û���֣�����Ϊ�˿���չ�ԣ�:-)<br>����2.500 OOPS: cannot change directory:/home/**<br>����������1������˵���Ƚ�ͳһ��һ����˵����һ�Ѳ����ͺ��ˣ����Բ�һ��<br>����������2����˵˵�ҵĴ���ԭ������MD��ʵ����ftp�û�������ʱ���Ұ��ļ���Ȩ���޶��ˣ����������û�û�и���Ȩ��Ҳ�����������⣬����ʱ����ֻ��Ҫ��<br><code>sudo chmod 755 userDir/</code></p>
-<h1 id="��������"><a href="#��������" class="headerlink" title="��������"></a>��������</h1><h2 id="����"><a href="#����" class="headerlink" title="����"></a>����</h2><p><code>sudo /etc/init.d/vsftpd restart</code></p>
-<h1 id="ftp-����"><a href="#ftp-����" class="headerlink" title="ftp ����"></a>ftp ����</h1><p>1.ftp ip </p>
-<p>2.open 123.123.123.123<br>/<em>��һ����������һ���ϲ����ڡ����С���ֱ�����롱ftp 123.123.123.123�塣��������FTP�����������õ�21Ĭ�϶˿ڣ������˿���12333����ô�˲�������Ӧ�ں����ո���12333������open 123.123.123.123 12333��</em>/ </p>
-<p>3.ftpname<br>/<em>�����л���ʾ�������û�������ͬ��OS�汾��XP��Vista��Win7����ʾ���ܻ���������</em>/ </p>
-<p>4.ftppwd<br>/<em>��ʾ���������룬���������������в�����ʾҲ�����ƶ����꣬�����������س����ɡ��������������������󣬽�������ʾ���������룬��ʱ��Ҫ���롰user������������ֵ����������������������û��������롣</em>/ </p>
-<p>5.dir<br>/<em>���ɹ���½���Ϳ�����dir�鿴�����鿴FTP�������е��ļ���Ŀ¼����ls����ֻ���Բ鿴�ļ���</em>/ </p>
-<p>6.mkdir rsfile<br>/<em>��FTP�������ϸ�Ŀ¼�½���rsfileĿ¼��</em>/ </p>
-<p>7.cd rsfile<br>/<em>����Ŀ¼rsfile,�á�cd ����Ŀ¼�������Խ��뵱ǰĿ¼����һ��Ŀ¼������DOSһ����</em>/ </p>
-<p>8.bin<br>/<em>���ö����ƴ��䡣������Ҫ�ϴ����أ���һ������Ҫ������ִ����������ϴ����ػ�������</em>/ </p>
-<p>9.lcd D:\ftpin<br>/<em>��λ����Ĭ���ļ��С�������lcd����������ƽʱ�������µ�cd</em>/ </p>
-<p>10.!dir<br>/<em>�鿴�����ļ����е��ļ���Ŀ¼</em>/ </p>
-<p>11.put file.doc<br>/<em>����ǰĿ¼(D:\ftpin)�е��ļ�file.doc�ϴ���FTP������Ĭ��Ŀ¼�������á�mput </em>.<em>���������ļ��ϴ���FTP�������ϡ�</em>/ </p>
-<p>12.get aaa.jpg<br>/<em>��FTP������Ĭ��Ŀ¼�е��ļ�aaa.jpg���ص���ǰĿ¼��(D:\ftpin)�������á�mget </em>.<em>���������ļ����ص�D:\ftpin</em>/ </p>
-<p>13.delete <em>.</em><br>/<em>ɾ��Ŀ¼ftpin�е������ļ���</em>/ </p>
-<p>14.cd ..<br>/<em>��������һ��Ŀ¼������Ŀ¼��������һ��Ŀ¼�á�cd ..��Ҫע�⣬�м��пո񡣷��ظ�Ŀ¼�á�cd \����</em>/ </p>
-<p>15.mrdir ftpin<br>/<em>ɾ��Ŀ¼ftpin��ɾ��Ŀ¼���ڴ�Ŀ¼�²������ļ���Ŀ¼����Ȼ���޷�ɾ����</em>/ </p>
-<p>16.bye<br>/<em>�˳�FTP������</em>/ </p>
+      <p>转载自：<a href="http://www.cnblogs.com/ShuolBDe/p/4453329.html" target="_blank" rel="external">ShuolBDe</a></p>
+<p>前言：<br>　　最近项目需要搭建第三方文件服务器，本来使用的是apache服务器将需要的子项目的目录发布出来，然后通过软连接将所有子项目关联<br>起来，但是如果不同时将所有子项目跑起来的话，未开启的项目目录就会丢失，着实蛋疼，所以才有搭建ftp服务器的想法，下面开始正文。<br>一、安装<br>如果是ubuntu环境下的话，安装是很简单的，只需输入如下命令:<br><code>sudo apt-get install vsftpd</code><br>　　安装完成后可以察看下服务状态（其实安装完成了就会提示已经在跑了）<br><code>sudo service vsftpd status</code></p>
+<p>二、配置文件<br>　　其实我用到的文件只有三个<br>　　1. /etc/vsftp.conf（主配置文件）<br>　　2. /etc/vsftp.chroot_list（可访问用户列表，这个在我这里貌似不是已有的，我是手建的，这个察看上面那个配置文件就会发现，配置文件里面有关联）<br>　　3. /etc/pam.d/vsftpd（里面有个选项需要修改，这个需要简单配置一下，否则会出现“530 login incorrect”的错误）<br>　　下面开始逐个文件说明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">　　1./etc/vsftpd.config 里面的注释比较多，还很详细，这里就不一一列举了，只写上我修改的anonymous_enable=NO（是否允许匿名登陆）</div><div class="line">　　　　local_enable=YES（是否允许本地登陆）</div><div class="line">　　　　write_enable=YES（设置FTP可写）</div><div class="line"></div><div class="line">　　　　//chroot （Change Root）</div><div class="line"></div><div class="line">　　　　chroot_local_user=YES（设置成YES后，加入vsftpd.chroot_list中的用户可以通过ftp访问）</div><div class="line"></div><div class="line">　　　　chroot_list_enable=YES（启用下面这个vsftpd.chroot_list）</div><div class="line"></div><div class="line">　　　　chroot_list_file=/etc/vsftpd.chroot_list（指定一下list，这是文件默认的，但是并不存在，需要手动弄一下）</div><div class="line">　　　　pam_service_name=vsftpd（这里留个标记，在一定情况下会出现530的问题，留到后面错误去讲）</div></pre></td></tr></table></figure></p>
+<p>　　2./etc/vsftpd.chroot_list<br>　　　　这个文件比较简单，之需要将允许ftp登陆的用户名放进来就行，一个一行，我之前一直比较愤怒，网上在这里就这么说一下，都没</p>
+<p>个例子，这叫劳资怎么填，其实很简单，比如像这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">user</div><div class="line">user2</div><div class="line">user22</div></pre></td></tr></table></figure></p>
+<p>　　　　由于说到了添加用户，其实是这样的，你可以使用本地已经存在的用户，但是作为一个淡定的ftp服务器，是不应该把本机的东西都</p>
+<p>共享给外面的，最好的方法就是再创建个用户专门给ftp使用</p>
+<p>　　　　所以这里来搞一下用户的问题</p>
+<p>　　　　添加（-d是指定的用户主目录，-m接要创建的用户名），</p>
+<p>sudo useradd -d /home/user -m username<br>　　　　创建完了用户还需要个用户密码，</p>
+<p>sudo passwd username<br>　　　　Whatever，要是想删了，</p>
+<p>sudo userdel username<br>　　　　这里还要留个标记，关于创建用户之后，一些情况下可能会出现个500的错误，留到后面错误去讲</p>
+<p>　　　　好了，现在察看下创建结果，发着光的那条</p>
+<p>复制代码<br>user@userServer:/home$ ll<br>总用量 xx<br>drwxr-xr-x  7 root   root    4096  4月 24 11:27 ./<br>drwxr-xr-x 25 root   root    4096  4月  9 09:47 ../<br>drwxr-xr-x  2 heihei    heihei     4096  4月 24 11:27 heihei/<br>drwxr-xr-x  6 haha    haha     4096  2月 15 18:08 haha/<br>drwxr-xr-x 75 username    username    4096  4月 24 13:18 username/<br>复制代码<br>　　　　==================================================================</p>
+<p>　　3./etc/pam.d/vsftpd</p>
+<p>　　　　这个文件其实也没多少东西，就改一处即可：</p>
+<p>auth    required        pam_listfile.so item=user sense=deny file=/etc/ftpuser onerr=succeed<br>　　　　默认是ftpuser，这里改成放入vsftpd.chroot_list里面的用户就行了，不要在意那个deny，他不应该是allow，他不是不让你使用</p>
+<p>，淡定..</p>
+<p>三、登陆</p>
+<p>　　其实有好多方法登陆的</p>
+<p>　　1.命令行</p>
+<p>　　　　ip地址用你的..</p>
+<p>　　　　那个username应该是当前的用户，不要管他，除非和ftp用户是一个；</p>
+<p>　　　　user就是你的ftp用户，先前创建的那个，要是和当前用户是一个的话直接回车过去；</p>
+<p>　　　　passwd输入；</p>
+<p>　　　　搞定</p>
+<p>复制代码<br>user@userServer:/home$ ftp 192.168.1.123<br>Connected to 192.168.1.123.<br>220 (vsFTPd 2.3.5)<br>Name (192.168.1.123:username): user<br>331 Please specify the password.<br>Password:<br>230 Login successful.<br>Remote system type is UNIX.<br>Using binary mode to transfer files.<br>ftp&gt;<br>复制代码<br> 　　2.浏览器</p>
+<p>　　　　在地址栏输入(your ip address):　　ftp://192.168.1.123</p>
+<p>　　3.在windows的目录地址上面敲入上面的地址</p>
+<p>四、错误</p>
+<p>　　终于到了这里，事情从不会那么容易就让你直接完成，就那么几个问题，可能不经意见就中了套..</p>
+<p>　　1.530 login Incorrect</p>
+<p>　　　　话说这个问题貌似几个情况都会出现：</p>
+<p>　　　　（1）pam_service_name=vsftpd 就是前面vsftpd.conf文件里面那厮，我在第一台PC上面搭建的时候文件里面没有，据说是因为这</p>
+<p>句话，由于第一台PC上面问题较多，我也不确定是不是这个问题<br>　　　　（2）还记得/etc/pam.d/vsftpd那个文件不，说了不要动deny，是不是手贱<br>　　　　（3）还没发现，这是为了可扩展性，:-)<br>　　2.500 OOPS: cannot change directory:/home/**<br>　　　　（1）网上说法比较统一，一般是说设置一堆参数就好了，可以查一下<br>　　　　（2）我说说我的错误原因哈，MD其实就是ftp用户创建的时候我把文件夹权限限定了，如果你的用户没有各种权限也会出这种问题</p>
+<p>，这个时候你只需要：<br><code>sudo chmod 755 userDir/</code></p>
+<h1 id="运行命令"><a href="#运行命令" class="headerlink" title="运行命令"></a>运行命令</h1><h2 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h2><p><code>sudo /etc/init.d/vsftpd restart</code></p>
+<h1 id="ftp-命令"><a href="#ftp-命令" class="headerlink" title="ftp 命令"></a>ftp 命令</h1><p>1.ftp ip<br>2.open 123.123.123.123<br>这一步可以与第一步合并，在“运行”里直接输入”ftp 123.123.123.123″。如果你的FTP服务器不是用的21默认端口，假如端口是12333 ，那么此步的命令应在后面空格加12333，即“open 123.123.123.123 12333”<br>3.ftpname<br>命令行会提示你输入用户名，不同的OS版本（XP，Vista，Win7）提示可能会有所差别<br>4.ftppwd<br>提示你输入密码，在密码输入过程中不会显示也不会移动光标，打完密码后回车即可。如果你的密码输入错误，将不会提示你重新输入，</p>
+<p>这时你要键入“user”命令，将会出现第三步，你可以重新输入用户名和密码。</p>
+<p>5.dir<br>你成功登陆后就可以用dir查看命令查看FTP服务器中的文件及目录，用ls命令只可以查看文件。</p>
+<p>6.mkdir rsfile<br>在FTP服务器上根目录下建立rsfile目录。</p>
+<p>7.cd rsfile<br>进入目录rsfile,用“cd 你的目录名”可以进入当前目录的下一级目录，这跟DOS一样。</p>
+<p>8.bin<br>采用二进制传输。如果你要上传下载，这一步很重要，不先执行这个命令，上传下载会很慢。</p>
+<p>9.lcd D:\ftpin<br>定位本地默认文件夹。这里的lcd命令类似于平时命令行下的cd</p>
+<p>10.!dir<br>查看本地文件夹中的文件及目录</p>
+<p>11.put file.doc<br>将当前目录(D:\ftpin)中的文件file.doc上传到FTP服务器默认目录。可以用”mput <em>.</em>”将所有文件上传到FTP服务器上。</p>
+<p>12.get aaa.jpg<br>将FTP服务器默认目录中的文件aaa.jpg下载到当前目录下(D:\ftpin)。可以用”mget <em>.</em>”将所有文件下载到D:\ftpin</p>
+<p>13.delete <em>.</em><br>删除目录ftpin中的所有文件。</p>
+<p>14.cd ..<br>/<em>返回至上一级目录，即根目录。返回上一级目录用“cd ..”要注意，中间有空格。返回根目录用“cd \”。</em>/ </p>
+<p>15.mrdir ftpin<br>删除目录ftpin。删除目录，在此目录下不能有文件及目录，不然将无法删除。</p>
+<p>16.bye<br>退出FTP服务器</p>
 
     
   </div>
@@ -385,5 +393,20 @@ var _hmt = _hmt || [];
   }
 </script>
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 </html>
