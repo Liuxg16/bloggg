@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 
 
-  <html class="light page-page">
+  <html class="light page-post">
 
 
 <head>
   <meta charset="utf-8">
   
-  <title>Liu Xianggen</title>
+  <title>Dynamic Programming | Liu Xianggen</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="Reinforce Learning, Neural Computation" />
+    <meta name="keywords" content="ml,cs," />
   
 
-  <meta name="description" content="My love is always here   @font-face { 	font-family: digit; 	src: url(&apos;digital-7_mono.ttf&apos;) format(&quot;truetype&quot;); } a{ text-decoration:none}               	 		 			/** 			*2016—12-16, 			*2016-12-22,1">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Liu Xianggen">
-<meta property="og:url" content="http://www.liuxianggen.com/other-back/love.html">
+  <meta name="description" content="基本概念动态规划过程是：每次决策依赖于当前状态，又随即引起状态的转移。一个决策序列就是在变化的状态中产生出来的，所以，这种多阶段最优化决策解决问题的过程就称为动态规划。 基本思想与策略基本思想与分治法类似，也是将待求解的问题分解为若干个子问题（阶段），按顺序求解子阶段，前一子问题的解，为后一子问题的求解提供了有用的信息。在求解任一子问题时，列出各种可能的局部解，通过决策保留那些有可能达到最优的局部">
+<meta name="keywords" content="ml,cs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dynamic Programming">
+<meta property="og:url" content="http://www.liuxianggen.com/2016/12/05/ml/dynamicProgramming/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
-<meta property="og:description" content="My love is always here   @font-face { 	font-family: digit; 	src: url(&apos;digital-7_mono.ttf&apos;) format(&quot;truetype&quot;); } a{ text-decoration:none}               	 		 			/** 			*2016—12-16, 			*2016-12-22,1">
-<meta property="og:updated_time" content="2017-12-06T08:36:13.075Z">
+<meta property="og:description" content="基本概念动态规划过程是：每次决策依赖于当前状态，又随即引起状态的转移。一个决策序列就是在变化的状态中产生出来的，所以，这种多阶段最优化决策解决问题的过程就称为动态规划。 基本思想与策略基本思想与分治法类似，也是将待求解的问题分解为若干个子问题（阶段），按顺序求解子阶段，前一子问题的解，为后一子问题的求解提供了有用的信息。在求解任一子问题时，列出各种可能的局部解，通过决策保留那些有可能达到最优的局部">
+<meta property="og:updated_time" content="2018-01-12T08:52:38.378Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Liu Xianggen">
-<meta name="twitter:description" content="My love is always here   @font-face { 	font-family: digit; 	src: url(&apos;digital-7_mono.ttf&apos;) format(&quot;truetype&quot;); } a{ text-decoration:none}               	 		 			/** 			*2016—12-16, 			*2016-12-22,1">
+<meta name="twitter:title" content="Dynamic Programming">
+<meta name="twitter:description" content="基本概念动态规划过程是：每次决策依赖于当前状态，又随即引起状态的转移。一个决策序列就是在变化的状态中产生出来的，所以，这种多阶段最优化决策解决问题的过程就称为动态规划。 基本思想与策略基本思想与分治法类似，也是将待求解的问题分解为若干个子问题（阶段），按顺序求解子阶段，前一子问题的解，为后一子问题的求解提供了有用的信息。在求解任一子问题时，列出各种可能的局部解，通过决策保留那些有可能达到最优的局部">
 
   
 
@@ -138,17 +139,22 @@ var _hmt = _hmt || [];
 </div>
 
 
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本概念"><span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#基本思想与策略"><span class="toc-text">基本思想与策略</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#适用的情况"><span class="toc-text">适用的情况</span></a></li></ol>
+  </div>
+
 
 
 <div class="content content-post CENTER">
-   <article id="page-undefined" class="article article-type-page" itemprop="blogPost">
+   <article id="post-ml/dynamicProgramming" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
-    <h1 class="post-title">(no title)</h1>
+    <h1 class="post-title">Dynamic Programming</h1>
 
     <div class="article-meta">
       <span>
         <i class="icon-calendar"></i>
-        <span>2017.12.06</span>
+        <span>2016.12.05</span>
       </span>
 
       
@@ -168,120 +174,10 @@ var _hmt = _hmt || [];
 
   <div class="article-content">
     
-      <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>My love is always here</title>
-
-<style type="text/css">
-@font-face {
-	font-family: digit;
-	src: url('digital-7_mono.ttf') format("truetype");
-}
-a{ text-decoration:none} 
-</style>
-
-
-<link href="css/default.css" type="text/css" rel="stylesheet">
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="js/garden.js"></script>
-<script type="text/javascript" src="js/functions.js"></script>
-
-</head>
-
-<body>
-
-<div id="mainDiv">
-	<div id="content">
-		<div id="code">
-			<span class="comments">/**</span><br>
-			<span class="space"><span class="comments">*2016—12-16,</span><br>
-			<span class="space"><span class="comments">*2016-12-22,18:30.</span><br>
-			<span class="space"><span class="comments">*/</span><br>
-			Boy name = <span class="keyword">Yang Xiaoer</span> <br>
-			Girl name = <span class="keyword">Muzi</span> <br>
-			<span class="comments">The girl is very beautiful and pure.</span><br>
-			<span class="comments">The boy is kind and gentle.</span><br>
-
-			<span>They knew each other long long ago.</span><br>
-			<span class="comments">As time goes on.</span><br>
-			
-			<span>The girl likes to talk with him.</span> <br>
-			<span>The boy always takes intersting things to the girl for a</span> <span class="keyword">smile.</span><br>
-			<span>Until one day, they fall in love river as others' prediction.</span><br>
-			<span class="keyword">The girl would like to<span class="keyword"> change everything</span> for the boy.</span><br>
-			<span class="keyword">The boy wants to give her the best love in the world.<br>
-			<br>
-			<br>
-
-			<span>My darling, brief is life, but love is long.</span><br>
-			How lucky I am to share my life with the greatest lady I ever met.<br>
-			I love you<a href="http://www.liuxianggen.com/xiaomu.html">.</a>
-		</span></span></span></span></div>
-		<div id="loveHeart">
-			<canvas id="garden"></canvas>
-			<div id="words">
-				<div id="messages">
-					亲爱的，这是我们的时光。
-					<div id="elapseClock"></div>
-				</div>
-				<div id="loveu">
-					爱你，是一辈子的事。<br>
-					宠你，是每分每秒的事。<br>
-					<div class="signature"> 羊小二</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
- <audio id="audio" autoplay="autoplay" loop="loop">
-        <source src="http://hovertree.com" type="audio/ogg">
-        <source src="http://sc1.111ttt.com/2016/1/07/03/200031034353.mp3" type="audio/mpeg">
-        您的浏览器不支持播放音乐。请用支持html5的浏览器打开,例如chrome或火狐或者新版IE等。
-        <br>
-    </audio>
-
-
-<script type="text/javascript">
-var offsetX = $("#loveHeart").width() / 2;
-var offsetY = $("#loveHeart").height() / 2 - 30;
-var together = new Date();
-together.setFullYear(2016, 11, 22);
-together.setHours(18);
-together.setMinutes(0);
-together.setSeconds(0);
-together.setMilliseconds(0);
-
-if (!document.createElement('canvas').getContext) {
-	var msg = document.createElement("div");
-	msg.id = "errorMsg";
-	msg.innerHTML = "Your browser doesn't support HTML5!<br/>Recommend use Chrome 14+/IE 9+/Firefox 7+/Safari 4+"; 
-	document.body.appendChild(msg);
-	$("#code").css("display", "none")
-	$("#copyright").css("position", "absolute");
-	$("#copyright").css("bottom", "10px");
-	document.execCommand("stop");
-} else {
-	setTimeout(function () {
-		startHeartAnimation();
-	}, 5000);
-
-	timeElapse(together);
-	setInterval(function () {
-		timeElapse(together);
-	}, 500);
-
-	adjustCodePosition();
-	$("#code").typewriter();
-}
-</script>
-<div style="text-align:center;clear:both">
-
-</div>
-</body>
-</html>
+      <h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><p>动态规划过程是：每次决策依赖于当前状态，又随即引起状态的转移。一个决策序列就是在变化的状态中产生出来的，所以，这种多阶段最优化决策解决问题的过程就称为动态规划。</p>
+<h1 id="基本思想与策略"><a href="#基本思想与策略" class="headerlink" title="基本思想与策略"></a>基本思想与策略</h1><p>基本思想与分治法类似，也是将待求解的问题分解为若干个子问题（阶段），按顺序求解子阶段，前一子问题的解，为后一子问题的求解提供了有用的信息。在求解任一子问题时，列出各种可能的局部解，通过决策保留那些有可能达到最优的局部解，丢弃其他局部解。依次解决各子问题，最后一个子问题就是初始问题的解。</p>
+<p>由于动态规划解决的问题多数有重叠子问题这个特点，为减少重复计算，对每一个子问题只解一次，将其不同阶段的不同状态保存在一个二维数组中。<br>与分治法最大的差别是：适合于用动态规划法求解的问题，经分解后得到的子问题往往不是互相独立的（即下一个子阶段的求解是建立在上一个子阶段的解的基础上，进行进一步的求解）。</p>
+<h1 id="适用的情况"><a href="#适用的情况" class="headerlink" title="适用的情况"></a>适用的情况</h1><p>能采用动态规划求解的问题的一般要具有3个性质：<br>    (1) 最优化原理：如果问题的最优解所包含的子问题的解也是最优的，就称该问题具有最优子结构，即满足最优化原理。<br>    (2) 无后效性：即某阶段状态一旦确定，就不受这个状态以后决策的影响。也就是说，某状态以后的过程不会影响以前的状态，只与当前状态有关。<br>    (3) 有重叠子问题：即子问题之间是不独立的，一个子问题在下一阶段决策中可能被多次使用到。（该性质并不是动态规划适用的必要条件，但是如果没有这条性质，动态规划算法同其他算法相比就不具备优势）</p>
 
     
   </div>
@@ -399,7 +295,7 @@ if (!document.createElement('canvas').getContext) {
 
 
   
-      <div class="fexo-comments comments-page">
+      <div class="fexo-comments comments-post">
     
 
     

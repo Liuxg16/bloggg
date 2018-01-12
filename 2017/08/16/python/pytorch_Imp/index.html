@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://www.liuxianggen.com/2017/08/16/python/pytorch_Imp/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
 <meta property="og:description" content="Module 1: compare gradients1234567891011if i==0:	 p_mean = 0	 p_d_mean = 0	 p_num = 0	 for p in self.model.parameters():		 if p.grad is not None:			 p_num+=1			 p_mean += torch.mean(torch.abs(p.data))">
-<meta property="og:updated_time" content="2017-09-25T07:33:36.873Z">
+<meta property="og:updated_time" content="2018-01-08T09:53:34.969Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PyTorch Implements">
 <meta name="twitter:description" content="Module 1: compare gradients1234567891011if i==0:	 p_mean = 0	 p_d_mean = 0	 p_num = 0	 for p in self.model.parameters():		 if p.grad is not None:			 p_num+=1			 p_mean += torch.mean(torch.abs(p.data))">
@@ -141,7 +141,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Module-1-compare-gradients"><span class="toc-text">Module 1: compare gradients</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Module-1-compare-gradients"><span class="toc-text">Module 1: compare gradients</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gradients：None"><span class="toc-text">gradients：None</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#problem"><span class="toc-text">problem</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#solutions"><span class="toc-text">solutions</span></a></li></ol></li></ol>
   </div>
 
 
@@ -176,6 +176,9 @@ var _hmt = _hmt || [];
     
       <h1 id="Module-1-compare-gradients"><a href="#Module-1-compare-gradients" class="headerlink" title="Module 1: compare gradients"></a>Module 1: compare gradients</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> i==<span class="number">0</span>:</div><div class="line">	 p_mean = <span class="number">0</span></div><div class="line">	 p_d_mean = <span class="number">0</span></div><div class="line">	 p_num = <span class="number">0</span></div><div class="line">	 <span class="keyword">for</span> p <span class="keyword">in</span> self.model.parameters():</div><div class="line">		 <span class="keyword">if</span> p.grad <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span>:</div><div class="line">			 p_num+=<span class="number">1</span></div><div class="line">			 p_mean += torch.mean(torch.abs(p.data))</div><div class="line">			 p_d_mean += torch.mean(torch.abs(p.grad.data))</div><div class="line">	 self.logg.logging(<span class="string">'| epoch &#123;:1d&#125; |p_mean &#123;:3.3f&#125; | pd_mean &#123;:3.3f&#125; |'</span>.\</div><div class="line">			 format(self.epoch, p_mean/p_num,p_d_mean/p_num))</div></pre></td></tr></table></figure>
 <p><a href="https://github.com/bharathgs/Awesome-pytorch-list" target="_blank" rel="external">Awesome-pytorch-list</a></p>
+<h1 id="gradients：None"><a href="#gradients：None" class="headerlink" title="gradients：None"></a>gradients：None</h1><h2 id="problem"><a href="#problem" class="headerlink" title="problem"></a>problem</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">def check3():</div><div class="line">    x = Variable( torch.FloatTensor(1).fill_(3), requires_grad=True)</div><div class="line">    y = 2*x</div><div class="line">    y = y + y</div><div class="line">    y.backward()</div><div class="line">    print(f&apos;y.grad=&#123;y.grad&#125;&apos;)</div><div class="line">gives:</div><div class="line">y.grad=None</div></pre></td></tr></table></figure>
+<p>why?</p>
+<h2 id="solutions"><a href="#solutions" class="headerlink" title="solutions"></a>solutions</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">x = Variable( torch.FloatTensor(1).fill_(3), requires_grad=True)</div><div class="line">   y = 2*x</div><div class="line">   y = y + y</div><div class="line">y = Variable(y.data, requires_grad=True)</div><div class="line">   y.backward()</div><div class="line">   <span class="built_in">print</span>(f<span class="string">'y.grad=&#123;y.grad&#125;'</span>)</div></pre></td></tr></table></figure>
 
     
   </div>
