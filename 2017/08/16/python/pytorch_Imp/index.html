@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://www.liuxianggen.com/2017/08/16/python/pytorch_Imp/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
 <meta property="og:description" content="Module 1: compare gradients1234567891011if i==0:	 p_mean = 0	 p_d_mean = 0	 p_num = 0	 for p in self.model.parameters():		 if p.grad is not None:			 p_num+=1			 p_mean += torch.mean(torch.abs(p.data))">
-<meta property="og:updated_time" content="2018-05-18T13:26:54.117Z">
+<meta property="og:updated_time" content="2018-05-20T03:36:23.814Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PyTorch Implements">
 <meta name="twitter:description" content="Module 1: compare gradients1234567891011if i==0:	 p_mean = 0	 p_d_mean = 0	 p_num = 0	 for p in self.model.parameters():		 if p.grad is not None:			 p_num+=1			 p_mean += torch.mean(torch.abs(p.data))">
@@ -141,7 +141,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Module-1-compare-gradients"><span class="toc-text">Module 1: compare gradients</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gradients：None"><span class="toc-text">gradients：None</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#problem"><span class="toc-text">problem</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#solutions"><span class="toc-text">solutions</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Parameters"><span class="toc-text">Parameters</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Module-1-compare-gradients"><span class="toc-text">Module 1: compare gradients</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#gradients：None"><span class="toc-text">gradients：None</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#problem"><span class="toc-text">problem</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#solutions"><span class="toc-text">solutions</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Parameters"><span class="toc-text">Parameters</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Set-Random-Seed"><span class="toc-text">Set Random Seed</span></a></li></ol>
   </div>
 
 
@@ -180,6 +180,7 @@ var _hmt = _hmt || [];
 <p>why?</p>
 <h2 id="solutions"><a href="#solutions" class="headerlink" title="solutions"></a>solutions</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">x = Variable( torch.FloatTensor(1).fill_(3), requires_grad=True)</div><div class="line">   y = 2*x</div><div class="line">   y = y + y</div><div class="line">y = Variable(y.data, requires_grad=True)</div><div class="line">   y.backward()</div><div class="line">   <span class="built_in">print</span>(f<span class="string">'y.grad=&#123;y.grad&#125;'</span>)</div></pre></td></tr></table></figure>
 <h1 id="Parameters"><a href="#Parameters" class="headerlink" title="Parameters"></a>Parameters</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">params= tmodel.model.state_dict()</div><div class="line"><span class="keyword">for</span> k,v <span class="keyword">in</span> params.items():</div><div class="line">	<span class="built_in">print</span> k,torch.sum(v)</div><div class="line"></div><div class="line"><span class="keyword">for</span> p <span class="keyword">in</span> tmodel.model.parameters():</div><div class="line">	<span class="built_in">print</span> torch.sum(p)</div></pre></td></tr></table></figure>
+<h1 id="Set-Random-Seed"><a href="#Set-Random-Seed" class="headerlink" title="Set Random Seed"></a>Set Random Seed</h1><p>import random<br>random.seed(N)<br>torch.manual_seed(N)</p>
 
     
   </div>

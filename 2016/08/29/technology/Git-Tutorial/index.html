@@ -22,7 +22,7 @@
 <meta property="og:url" content="http://www.liuxianggen.com/2016/08/29/technology/Git-Tutorial/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
 <meta property="og:description" content="base1.生成公钥ssh-keygen将.ssh下的isa-pub复制到github上即可2.验证是否匹配：ssh git@github.com如果匹配，则出现以下信息：  Hi CitronMan! You’ve successfully authenticated, but GitHub does not provide shell access.Connection to github.c">
-<meta property="og:updated_time" content="2018-01-19T02:17:16.637Z">
+<meta property="og:updated_time" content="2018-05-22T13:16:30.914Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Git Tutorial">
 <meta name="twitter:description" content="base1.生成公钥ssh-keygen将.ssh下的isa-pub复制到github上即可2.验证是否匹配：ssh git@github.com如果匹配，则出现以下信息：  Hi CitronMan! You’ve successfully authenticated, but GitHub does not provide shell access.Connection to github.c">
@@ -141,7 +141,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#base"><span class="toc-text">base</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#报错"><span class="toc-text">报错</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#modified-xxx-modified-content-untracked-content"><span class="toc-text">modified: xxx(modified content, untracked content)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#not-add-readme"><span class="toc-text">not add readme</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#base"><span class="toc-text">base</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#回滚远程分支"><span class="toc-text">回滚远程分支</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#报错"><span class="toc-text">报错</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#modified-xxx-modified-content-untracked-content"><span class="toc-text">modified: xxx(modified content, untracked content)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#not-add-readme"><span class="toc-text">not add readme</span></a></li></ol></li></ol>
   </div>
 
 
@@ -194,6 +194,8 @@ var _hmt = _hmt || [];
 <p>8.git push免输入账号和密码方法<br>from <a href="http://www.cnblogs.com/zhonghuasong/p/5975952.html" target="_blank" rel="external">清水汪汪</a><br>最近在做些oj，所以需要频繁的git push提交代码，每次都要输入帐号和密码，感觉不舒服，于是乎就做了如下设置，然后就可以开心的提交啦～<br>Linux或者Mac下方法：<br>创建文件，进入文件，输入内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd ~</div><div class="line">touch .git-credentials</div><div class="line">vim .git-credentials</div><div class="line">https://&#123;username&#125;:&#123;password&#125;@github.com</div></pre></td></tr></table></figure></p>
 <p>在终端下输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config --global credential.helper store</div></pre></td></tr></table></figure></p>
 <p>打开~/.gitconfig文件，会发现多了一项:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[credential]</div><div class="line">helper = store</div></pre></td></tr></table></figure></p>
+<h2 id="回滚远程分支"><a href="#回滚远程分支" class="headerlink" title="回滚远程分支"></a>回滚远程分支</h2><p>首先要回退本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git reflog</div><div class="line">git reset --hard Obfafd</div></pre></td></tr></table></figure></p>
+<p>紧接着强制推送到远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push -f</div></pre></td></tr></table></figure></p>
 <h1 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h1><h2 id="modified-xxx-modified-content-untracked-content"><a href="#modified-xxx-modified-content-untracked-content" class="headerlink" title="modified: xxx(modified content, untracked content)"></a>modified: xxx(modified content, untracked content)</h2><p>目录下有.git文件。</p>
 <h2 id="not-add-readme"><a href="#not-add-readme" class="headerlink" title="not add readme"></a>not add readme</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Warning: Permanently added the RSA host key for IP address &apos;192.30.255.113&apos; to the list of known hosts.</div><div class="line">error: src refspec master does not match any.</div><div class="line">error: failed to push some refs to &apos;git@github.com:CitronMan/neuralsymboliclawyer.git&apos;</div></pre></td></tr></table></figure>
 <p>Solution:<br>echo “# neuralsymboliclawyer” &gt;&gt; README.md</p>
