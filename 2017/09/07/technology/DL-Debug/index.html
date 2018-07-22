@@ -12,20 +12,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="work," />
+    <meta name="keywords" content="dl,nn," />
   
 
-  <meta name="description" content="预测概率收敛了，却不接近1softmax前的输入不是$[-\inf,\inf]$">
-<meta name="keywords" content="work">
+  <meta name="description" content="预测概率收敛了，却不接近1softmax前的输入不是$[-\inf,\inf]$ LSTM重复输入某些字符，LSTM可能会挂掉，比如重复输入8个*训练时，因为有batch, 为了维度一致，所有有padding; 如果在测试时， 一个一个测试，没有padding，模型表现会很诡异，performance下降。解决办法很简单，在每个样本上加N个padding即可。">
+<meta name="keywords" content="dl,nn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="DL 模型实现Trick">
 <meta property="og:url" content="http://www.liuxianggen.com/2017/09/07/technology/DL-Debug/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
-<meta property="og:description" content="预测概率收敛了，却不接近1softmax前的输入不是$[-\inf,\inf]$">
-<meta property="og:updated_time" content="2017-09-07T06:55:28.813Z">
+<meta property="og:description" content="预测概率收敛了，却不接近1softmax前的输入不是$[-\inf,\inf]$ LSTM重复输入某些字符，LSTM可能会挂掉，比如重复输入8个*训练时，因为有batch, 为了维度一致，所有有padding; 如果在测试时， 一个一个测试，没有padding，模型表现会很诡异，performance下降。解决办法很简单，在每个样本上加N个padding即可。">
+<meta property="og:updated_time" content="2018-07-21T01:13:48.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="DL 模型实现Trick">
-<meta name="twitter:description" content="预测概率收敛了，却不接近1softmax前的输入不是$[-\inf,\inf]$">
+<meta name="twitter:description" content="预测概率收敛了，却不接近1softmax前的输入不是$[-\inf,\inf]$ LSTM重复输入某些字符，LSTM可能会挂掉，比如重复输入8个*训练时，因为有batch, 为了维度一致，所有有padding; 如果在测试时， 一个一个测试，没有padding，模型表现会很诡异，performance下降。解决办法很简单，在每个样本上加N个padding即可。">
 
   
 
@@ -141,7 +141,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#预测概率收敛了，却不接近1"><span class="toc-text">预测概率收敛了，却不接近1</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#预测概率收敛了，却不接近1"><span class="toc-text">预测概率收敛了，却不接近1</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LSTM重复输入某些字符，LSTM可能会挂掉，比如重复输入8个"><span class="toc-text">LSTM重复输入某些字符，LSTM可能会挂掉，比如重复输入8个*</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#训练时，因为有batch-为了维度一致，所有有padding-如果在测试时，-一个一个测试，没有padding，模型表现会很诡异，performance下降。"><span class="toc-text">训练时，因为有batch, 为了维度一致，所有有padding; 如果在测试时， 一个一个测试，没有padding，模型表现会很诡异，performance下降。</span></a></li></ol>
   </div>
 
 
@@ -175,6 +175,7 @@ var _hmt = _hmt || [];
   <div class="article-content">
     
       <h1 id="预测概率收敛了，却不接近1"><a href="#预测概率收敛了，却不接近1" class="headerlink" title="预测概率收敛了，却不接近1"></a>预测概率收敛了，却不接近1</h1><p>softmax前的输入不是$[-\inf,\inf]$</p>
+<h1 id="LSTM重复输入某些字符，LSTM可能会挂掉，比如重复输入8个"><a href="#LSTM重复输入某些字符，LSTM可能会挂掉，比如重复输入8个" class="headerlink" title="LSTM重复输入某些字符，LSTM可能会挂掉，比如重复输入8个*"></a>LSTM重复输入某些字符，LSTM可能会挂掉，比如重复输入8个*</h1><h1 id="训练时，因为有batch-为了维度一致，所有有padding-如果在测试时，-一个一个测试，没有padding，模型表现会很诡异，performance下降。"><a href="#训练时，因为有batch-为了维度一致，所有有padding-如果在测试时，-一个一个测试，没有padding，模型表现会很诡异，performance下降。" class="headerlink" title="训练时，因为有batch, 为了维度一致，所有有padding; 如果在测试时， 一个一个测试，没有padding，模型表现会很诡异，performance下降。"></a>训练时，因为有batch, 为了维度一致，所有有padding; 如果在测试时， 一个一个测试，没有padding，模型表现会很诡异，performance下降。</h1><p>解决办法很简单，在每个样本上加N个padding即可。</p>
 
     
   </div>
