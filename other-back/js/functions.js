@@ -94,7 +94,7 @@ function startHeartAnimation() {
 function timeElapse(date){
 	var current = Date();
 	var current = new Date();
-	current.setFullYear(2018, 8, 18);
+	current.setFullYear(2018, 7, 19);
 	current.setHours(12);
 	current.setMinutes(8);
 	current.setSeconds(0);
