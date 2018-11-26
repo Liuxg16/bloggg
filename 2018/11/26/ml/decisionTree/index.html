@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Boosting | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="ml,Boosting,decisiontree," />
+  
+
+  <meta name="description" content="Bagging（套袋法）从原始样本集中使用Bootstraping方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集。（k个训练集之间相互独立，元素可以有重复）对于k个训练集，我们训练k个模型（这k个模型可以根据具体问题而定，比如决策树，knn等）对于分类问题：由投票表决产生分类结果；对于回归问题：由k个模型预测结果的均值作为最后预测结果。（所有模型的重要性相同）Boosting（提升法）">
+<meta name="keywords" content="ml,Boosting,decisiontree">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Boosting">
+<meta property="og:url" content="http://www.liuxianggen.com/2018/11/26/ml/decisionTree/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="Bagging（套袋法）从原始样本集中使用Bootstraping方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集。（k个训练集之间相互独立，元素可以有重复）对于k个训练集，我们训练k个模型（这k个模型可以根据具体问题而定，比如决策树，knn等）对于分类问题：由投票表决产生分类结果；对于回归问题：由k个模型预测结果的均值作为最后预测结果。（所有模型的重要性相同）Boosting（提升法）">
+<meta property="og:updated_time" content="2018-11-26T06:31:01.725Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Boosting">
+<meta name="twitter:description" content="Bagging（套袋法）从原始样本集中使用Bootstraping方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集。（k个训练集之间相互独立，元素可以有重复）对于k个训练集，我们训练k个模型（这k个模型可以根据具体问题而定，比如决策树，knn等）对于分类问题：由投票表决产生分类结果；对于回归问题：由k个模型预测结果的均值作为最后预测结果。（所有模型的重要性相同）Boosting（提升法）">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bagging（套袋法）"><span class="toc-text">Bagging（套袋法）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#boosting"><span class="toc-text">boosting</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gradient-Tree-Boosting-gradient-boosting-regression-tree"><span class="toc-text">Gradient Tree Boosting (gradient boosting regression tree)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#tilde-f-x-fM-x-sum-m-1-M-sum-j-1-Jc-mj-I-x-epsilon-R-mj"><span class="toc-text">\tilde{f}(x)=fM(x)=\sum{m=1}^M\sum{j=1}^Jc{mj}I(x \epsilon R_{mj})</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Boosting"><span class="toc-text">Boosting</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#boosted-Tree"><span class="toc-text">boosted Tree</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#算法简要描述："><span class="toc-text">算法简要描述：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带着以下问题来理解这个算法："><span class="toc-text">带着以下问题来理解这个算法：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-ml/decisionTree" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Boosting</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.11.26</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Bagging（套袋法）"><a href="#Bagging（套袋法）" class="headerlink" title="Bagging（套袋法）"></a>Bagging（套袋法）</h1><p>从原始样本集中使用Bootstraping方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集。（k个训练集之间相互独立，元素可以有重复）<br>对于k个训练集，我们训练k个模型（这k个模型可以根据具体问题而定，比如决策树，knn等）<br>对于分类问题：由投票表决产生分类结果；对于回归问题：由k个模型预测结果的均值作为最后预测结果。（所有模型的重要性相同）<br>Boosting（提升法）</p>
+<h1 id="boosting"><a href="#boosting" class="headerlink" title="boosting"></a>boosting</h1><p>对于训练集中的每个样本建立权值wi，表示对每个样本的关注度。当某个样本被误分类的概率很高时，需要加大对该样本的权值。<br>进行迭代的过程中，每一步迭代都是一个弱分类器。我们需要用某种策略将其组合，作为最终模型。（例如AdaBoost给每个弱分类器一个权值，将其线性组合最为最终分类器。误差越小的弱分类器，权值越大）</p>
+<h1 id="Gradient-Tree-Boosting-gradient-boosting-regression-tree"><a href="#Gradient-Tree-Boosting-gradient-boosting-regression-tree" class="headerlink" title="Gradient Tree Boosting (gradient boosting regression tree)"></a>Gradient Tree Boosting (gradient boosting regression tree)</h1><p>梯度树提升（Gradient Tree Boosting）是一种组合算法，也叫做梯度提升回归树（gradient boosting regression tree)<br>对于给定的输入：训练数据集T={(x_1,y_1),(x_2,y_2),…,(x_n,y_n)},损失函数L(y,f(x));<br>输出结果：一棵回归树\tilde{f}(x)<br>（1）首先初始化<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$$</div><div class="line">f_0(x)=arg min_c \sum_&#123;i=1&#125;^&#123;N&#125;L(y_i, c)</div><div class="line">$$</div><div class="line">估计一个使损失函数极小化的常数值，此时它只有一个节点的树；</div></pre></td></tr></table></figure></p>
+<p>（2）迭代的建立M棵提升树<br>for m=1 to M:（第一层循环）<br>for i=1 to N：（第二层循环） 计算损失函数的负梯度在当前模型的值，并将它作为残差的估计值。</p>
+<p>r_{mi} = - \Bigg [ \frac {\partial L(y_i, f (x_i))}{\partial f (x<em>i)}\Bigg ] </em>{f (x) = f <em>{m-1}(x)}<br>对于r</em>{mi}拟合一棵回归树，得到第m棵树的叶节点区域R_{mj},j=1,2,…,J</p>
+<p>for j=1 to J：（第二层循环）,计算：</p>
+<p>c_{mj} = arg min<em>c \sum</em>{x<em>i\epsilon R</em>{mj}}L(y<em>i,f</em>{m-1}(x_i)+c)<br>利用线性搜索估计叶节点区域的值，使损失函数极小化；</p>
+<p>然后，更新f<em>{m}(x) = f</em>{m-1}(x) + \sum<em>{j=1}^Jc</em>{mj}I(x \epsilon R<em>{mj})<br>（3）最后得到的f</em>{m}(x)就是我们最终的模型</p>
+<h2 id="tilde-f-x-fM-x-sum-m-1-M-sum-j-1-Jc-mj-I-x-epsilon-R-mj"><a href="#tilde-f-x-fM-x-sum-m-1-M-sum-j-1-Jc-mj-I-x-epsilon-R-mj" class="headerlink" title="\tilde{f}(x)=fM(x)=\sum{m=1}^M\sum{j=1}^Jc{mj}I(x \epsilon R_{mj})"></a>\tilde{f}(x)=f<em>M(x)=\sum</em>{m=1}^M\sum<em>{j=1}^Jc</em>{mj}I(x \epsilon R_{mj})</h2><p>作者：拾毅者<br>来源：CSDN<br>原文：<br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>
+<h1 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h1><p>Boosting这其实思想相当的简单，大概是，对一份数据，建立M个模型（比如分类），一般这种模型比较简单，称为弱分类器(weak learner)每次分类都将上一次分错的数据权重提高一点再进行分类，这样最终得到的分类器在测试数据与训练数据上都可以得到比较好的成绩。</p>
+<h1 id="boosted-Tree"><a href="#boosted-Tree" class="headerlink" title="boosted Tree"></a>boosted Tree</h1><h2 id="算法简要描述："><a href="#算法简要描述：" class="headerlink" title="算法简要描述："></a>算法简要描述：</h2><p>不断地添加树，不断地进行特征分裂来生长一棵树。</p>
+<p>每次添加一个树，其实是学习一个新函数，去拟合上次预测的残差。</p>
+<p>一个树是这样生长的，挑选一个最佳特征的最佳分裂点，来进行特征分裂。</p>
+<p>训练后会得到的模型是多棵树，每棵树有若干叶子节点，每个叶子节点对一个分数，</p>
+<p>假如来了一个样本，根据这个样本的特征，在每棵树上会落到对应一个叶子节点，</p>
+<p>总分数就是把落到的叶子节点的分数加起来，作为预测值。</p>
+<h2 id="带着以下问题来理解这个算法："><a href="#带着以下问题来理解这个算法：" class="headerlink" title="带着以下问题来理解这个算法："></a>带着以下问题来理解这个算法：</h2><p>1 如何生长一棵树？每次特征分裂怎么寻找最佳特征，怎么寻找最佳分裂点？</p>
+<p>2一棵树什么时候停止生长？</p>
+<p>3 假如一棵树的结构确定了，每个叶子节点的分数怎么求？</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>1）Bagging + 决策树 = 随机森林</p>
+<p>2）AdaBoost + 决策树 = 提升树</p>
+<p>3）Gradient Boosting + 决策树 = GBDT</p>
+<h2 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h2><p>adaboost对于每个样本有一个权重，样本预估误差越大，权重越大。gradient boosting则是直接用梯度拟合残差，没有样本权重的概念。</p>
+<p>GBDT vs AdaBoost</p>
+<p>相同点：<br>加性模型+前向分步算法<br>每一步训练一个弱学习器以弥补前面模型的不足</p>
+<ol>
+<li>不同点</li>
+</ol>
+<p>AdaBoost中当前学习器的“不足”由样本权重来决定<br>GBDT中当前学习器的“不足”由求梯度决定</p>
+<p><a href="https://blog.csdn.net/Dream_angel_Z/article/details/48085889" target="_blank" rel="external">1</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

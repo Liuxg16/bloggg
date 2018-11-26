@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Word2vec | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="dl,nlp," />
+  
+
+  <meta name="description" content="Efficient Estimation of Word Representations in Vector Space Many different types of models were proposed for estimating continuous representations of words,including the well-known Latent Semantic An">
+<meta name="keywords" content="dl,nlp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Word2vec">
+<meta property="og:url" content="http://www.liuxianggen.com/2018/11/05/neuralnetwork/word2vec/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="Efficient Estimation of Word Representations in Vector Space Many different types of models were proposed for estimating continuous representations of words,including the well-known Latent Semantic An">
+<meta property="og:image" content="https://arxiv.org/pdf/1301.3781.pdf">
+<meta property="og:updated_time" content="2018-11-26T03:21:43.001Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Word2vec">
+<meta name="twitter:description" content="Efficient Estimation of Word Representations in Vector Space Many different types of models were proposed for estimating continuous representations of words,including the well-known Latent Semantic An">
+<meta name="twitter:image" content="https://arxiv.org/pdf/1301.3781.pdf">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Efficient-Estimation-of-Word-Representations-in-Vector-Space"><span class="toc-text">Efficient Estimation of Word Representations in Vector Space</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CBOW"><span class="toc-text">CBOW</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Skip-gram"><span class="toc-text">Skip-gram</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Negative-sampling"><span class="toc-text">Negative sampling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Results"><span class="toc-text">Results</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-neuralnetwork/word2vec" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Word2vec</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.11.05</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="Efficient-Estimation-of-Word-Representations-in-Vector-Space"><a href="#Efficient-Estimation-of-Word-Representations-in-Vector-Space" class="headerlink" title="Efficient Estimation of Word Representations in Vector Space"></a>Efficient Estimation of Word Representations in Vector Space</h1><p><img src="https://arxiv.org/pdf/1301.3781.pdf" alt="link"></p>
+<p>Many different types of models were proposed for estimating continuous representations of words,<br>including the well-known Latent Semantic Analysis (LSA) and Latent Dirichlet Allocation (LDA).<br>In this paper, we focus on distributed representations of words learned by neural networks, as it was<br>previously shown that they perform significantly better than LSA for preserving linear regularities<br>among words [20, 31]; LDA moreover becomes computationally very expensive on large data sets.</p>
+<h2 id="CBOW"><a href="#CBOW" class="headerlink" title="CBOW"></a>CBOW</h2><p>The first proposed architecture is similar to the feedforward NNLM, where the non-linear hidden<br>layer is removed and the projection layer is shared for all words (not just the projection matrix);<br>thus, all words get projected into the same position (their vectors are averaged). We call this architecture<br>a bag-of-words model as the order of words in the history does not influence the projection.<br>Furthermore, we also use words from the future; we have obtained the best performance on the task<br>introduced in the next section by building a log-linear classifier with four future and four history<br>words at the input, where the training criterion is to correctly classify the current (middle) word.</p>
+<h2 id="Skip-gram"><a href="#Skip-gram" class="headerlink" title="Skip-gram"></a>Skip-gram</h2><p>The second architecture is similar to CBOW, but instead of predicting the current word based on the<br>context, it tries to maximize classification of a word based on another word in the same sentence.<br>More precisely, we use each current word as an input to a log-linear classifier with continuous<br>projection layer, and predict words within a certain range before and after the current word. We<br>found that increasing the range improves quality of the resulting word vectors, but it also increases<br>the computational complexity. Since the more distant words are usually less related to the current<br>word than those close to it, we give less weight to the distant words by sampling less from those<br>words in our training examples.</p>
+<h2 id="Negative-sampling"><a href="#Negative-sampling" class="headerlink" title="Negative sampling"></a>Negative sampling</h2><p>当模型为实际字词分配高概率，并为噪声字词分配低概率时，此目标被最大化。从技术上而言，这称为负采样，并且使用此损失函数有很好的数学依据：它提议的更新会逼近 softmax 函数在限制情况下的更新。但从计算角度而言，它特别有用，因为计算损失函数这一操作现在只会根据我们选择 (k) 的噪声字词（而非词汇表 (V) 中的所有字词）进行扩展。这样大大提升了训练速度</p>
+<h2 id="Results"><a href="#Results" class="headerlink" title="Results"></a>Results</h2><p>We use recently proposed techniques for measuring the quality of the resulting vector representations,<br>with the expectation that not only will similar words tend to be close to each other, but that<br>words can have multiple degrees of similarity [20]. This has been observed earlier in the context<br>of inflectional languages - for example, nouns can have multiple word endings, and if we search for<br>similar words in a subspace of the original vector space, it is possible to find words that have similar<br>endings [13, 14].</p>
+<p>Somewhat surprisingly, it was found that similarity of word representations goes beyond simple<br>syntactic regularities. Using a word offset technique where simple algebraic operations are performed<br>on the word vectors, it was shown for example that vector(”King”) - vector(”Man”) + vector(”Woman”)<br>results in a vector that is closest to the vector representation of the word Queen [20].</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

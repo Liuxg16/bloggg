@@ -12,21 +12,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="study," />
+    <meta name="keywords" content="ml,bgm,kmeans,lda," />
   
 
-  <meta name="description" content="Basis分布伯努利分布（Bernoulli Distribution）Bernoulli Distribution是最简单的二项式分布，伯努利试验是只有两种可能结果的单次随机试验，即对于一个随机变量Y而言：$$Y \sim Bernoulli(p)$$则概率函数、期望和方差分别是：$$ P(Y=y) = p \text{ or } P(y) = p^y(1-p)^{1-y} \\E[y]=p \">
-<meta name="keywords" content="study">
+  <meta name="description" content="概率图模型（PGM）是用图来表示变量概率依赖关系的理论。自被图灵奖获得者Pearl提出以来，已成为不确定性推理近10年的研究热点，在统计机器学习、计算机视觉和自然语言处理等领域有广阔的应用前景，比如隐马尔可夫模型是语音识别的支柱模型，高斯混合模型及其变种K-means是数据聚类的最基本模型，条件随机场广泛应用于自然语言处理（如词性标注，命名实体识别）等。 Basis分布伯努利分布（Bernoull">
+<meta name="keywords" content="ml,bgm,kmeans,lda">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Probabilistic Graphical Model">
 <meta property="og:url" content="http://www.liuxianggen.com/2016/09/23/ml/ProbabilisticGraphicalModel/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
-<meta property="og:description" content="Basis分布伯努利分布（Bernoulli Distribution）Bernoulli Distribution是最简单的二项式分布，伯努利试验是只有两种可能结果的单次随机试验，即对于一个随机变量Y而言：$$Y \sim Bernoulli(p)$$则概率函数、期望和方差分别是：$$ P(Y=y) = p \text{ or } P(y) = p^y(1-p)^{1-y} \\E[y]=p \">
+<meta property="og:description" content="概率图模型（PGM）是用图来表示变量概率依赖关系的理论。自被图灵奖获得者Pearl提出以来，已成为不确定性推理近10年的研究热点，在统计机器学习、计算机视觉和自然语言处理等领域有广阔的应用前景，比如隐马尔可夫模型是语音识别的支柱模型，高斯混合模型及其变种K-means是数据聚类的最基本模型，条件随机场广泛应用于自然语言处理（如词性标注，命名实体识别）等。 Basis分布伯努利分布（Bernoull">
 <meta property="og:image" content="http://www.liuxianggen.com/images/study/CPDS.png">
-<meta property="og:updated_time" content="2017-07-07T06:34:38.216Z">
+<meta property="og:updated_time" content="2018-11-26T05:14:21.675Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Probabilistic Graphical Model">
-<meta name="twitter:description" content="Basis分布伯努利分布（Bernoulli Distribution）Bernoulli Distribution是最简单的二项式分布，伯努利试验是只有两种可能结果的单次随机试验，即对于一个随机变量Y而言：$$Y \sim Bernoulli(p)$$则概率函数、期望和方差分别是：$$ P(Y=y) = p \text{ or } P(y) = p^y(1-p)^{1-y} \\E[y]=p \">
+<meta name="twitter:description" content="概率图模型（PGM）是用图来表示变量概率依赖关系的理论。自被图灵奖获得者Pearl提出以来，已成为不确定性推理近10年的研究热点，在统计机器学习、计算机视觉和自然语言处理等领域有广阔的应用前景，比如隐马尔可夫模型是语音识别的支柱模型，高斯混合模型及其变种K-means是数据聚类的最基本模型，条件随机场广泛应用于自然语言处理（如词性标注，命名实体识别）等。 Basis分布伯努利分布（Bernoull">
 <meta name="twitter:image" content="http://www.liuxianggen.com/images/study/CPDS.png">
 
   
@@ -176,7 +176,8 @@ var _hmt = _hmt || [];
 
   <div class="article-content">
     
-      <h1 id="Basis"><a href="#Basis" class="headerlink" title="Basis"></a>Basis</h1><h2 id="分布"><a href="#分布" class="headerlink" title="分布"></a>分布</h2><h3 id="伯努利分布（Bernoulli-Distribution）"><a href="#伯努利分布（Bernoulli-Distribution）" class="headerlink" title="伯努利分布（Bernoulli Distribution）"></a>伯努利分布（Bernoulli Distribution）</h3><p>Bernoulli Distribution是最简单的二项式分布，伯努利试验是只有两种可能结果的单次随机试验，即对于一个随机变量Y而言：$$Y \sim Bernoulli(p)$$<br>则概率函数、期望和方差分别是：<br>$$ P(Y=y) = p \text{ or } P(y) = p^y(1-p)^{1-y} \\<br>E[y]=p \times 1+(1-p) \times 0 = p \\<br>Var[y]=p\times (1-E[y])^2 + (1-p)\times (0-E[y])^2 = p(1-p)$$</p>
+      <p>概率图模型（PGM）是用图来表示变量概率依赖关系的理论。自被图灵奖获得者Pearl提出以来，已成为不确定性推理近10年的研究热点，在统计机器学习、计算机视觉和自然语言处理等领域有广阔的应用前景，比如隐马尔可夫模型是语音识别的支柱模型，高斯混合模型及其变种K-means是数据聚类的最基本模型，条件随机场广泛应用于自然语言处理（如词性标注，命名实体识别）等。</p>
+<h1 id="Basis"><a href="#Basis" class="headerlink" title="Basis"></a>Basis</h1><h2 id="分布"><a href="#分布" class="headerlink" title="分布"></a>分布</h2><h3 id="伯努利分布（Bernoulli-Distribution）"><a href="#伯努利分布（Bernoulli-Distribution）" class="headerlink" title="伯努利分布（Bernoulli Distribution）"></a>伯努利分布（Bernoulli Distribution）</h3><p>Bernoulli Distribution是最简单的二项式分布，伯努利试验是只有两种可能结果的单次随机试验，即对于一个随机变量Y而言：$$Y \sim Bernoulli(p)$$<br>则概率函数、期望和方差分别是：<br>$$ P(Y=y) = p \text{ or } P(y) = p^y(1-p)^{1-y} \\<br>E[y]=p \times 1+(1-p) \times 0 = p \\<br>Var[y]=p\times (1-E[y])^2 + (1-p)\times (0-E[y])^2 = p(1-p)$$</p>
 <h3 id="二项分布-Binomial"><a href="#二项分布-Binomial" class="headerlink" title="二项分布(Binomial)"></a>二项分布(Binomial)</h3><p>二项分布(Binomial distribution)是n重伯努利试验成功次数的离散概率分布。<br>如果试验E是一个n重伯努利试验，每次伯努利试验的成功概率为p，X代表成功的次数，则X的概率分布是二项分布，记为$$X \sim B(n,p) \text{  OR} \\X \sim Binomial(n,p)$$其概率密度函数为<br>$$P(X = k) =C_n^k p^k(1-p)^{n-k}$$</p>
 <h4 id="n个独立同分布的Bernoulli分布之和就是二项分布是B-n-p"><a href="#n个独立同分布的Bernoulli分布之和就是二项分布是B-n-p" class="headerlink" title="n个独立同分布的Bernoulli分布之和就是二项分布是B(n,p)"></a>n个独立同分布的Bernoulli分布之和就是二项分布是B(n,p)</h4><p>同朴素贝叶斯一样，高斯判别分析（Gaussian discriminant analysismodel, GDA）也是一种生成学习算法，在该模型中，我们假设y给定的情况下，x服从混合正态分布。通过训练确定参数，新样本通过已建立的模型计算出隶属不同类的概率，选取概率最大为样本所属的类。主要难点在于确定参数的过程。</p>
 <h3 id="正态分布（Normal-Distribution）OR-高斯分布（Gaussian-distribution）"><a href="#正态分布（Normal-Distribution）OR-高斯分布（Gaussian-distribution）" class="headerlink" title="正态分布（Normal Distribution）OR 高斯分布（Gaussian distribution）"></a>正态分布（Normal Distribution）OR 高斯分布（Gaussian distribution）</h3><p>若随机变量$X$服从一个数学期望为$\mu$、标准方差为$\sigma^2$的高斯分布，记为：<br>$$X \sim \mathcal{N}(\mu,\sigma^2)$$其概率密度函数为<br>$$f(x)=\frac{1}{\sqrt{2\pi}\sigma}e^{-\frac{(x-u)^2}{2\sigma^2}}$$</p>
