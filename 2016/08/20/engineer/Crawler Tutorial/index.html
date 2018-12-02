@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Crawler Tutorial | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="crawler,python," />
+  
+
+  <meta name="description" content="创建scapy startproject w3school  项目w3school这时会产生w3school文件夹，文件夹下文件如下：12345678scrapy.cfg  w3school/      __init__.py      items.py      pipelines.py      settings.py      spiders/  	__init__.py   其中scra">
+<meta name="keywords" content="crawler,python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Crawler Tutorial">
+<meta property="og:url" content="http://www.liuxianggen.com/2016/08/20/engineer/Crawler Tutorial/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="创建scapy startproject w3school  项目w3school这时会产生w3school文件夹，文件夹下文件如下：12345678scrapy.cfg  w3school/      __init__.py      items.py      pipelines.py      settings.py      spiders/  	__init__.py   其中scra">
+<meta property="og:image" content="http://www.liuxianggen.com/images/zhizhuwang.jpg">
+<meta property="og:updated_time" content="2018-07-21T01:05:42.268Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Crawler Tutorial">
+<meta name="twitter:description" content="创建scapy startproject w3school  项目w3school这时会产生w3school文件夹，文件夹下文件如下：12345678scrapy.cfg  w3school/      __init__.py      items.py      pipelines.py      settings.py      spiders/  	__init__.py   其中scra">
+<meta name="twitter:image" content="http://www.liuxianggen.com/images/zhizhuwang.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#创建"><span class="toc-text">创建</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#编写爬虫"><span class="toc-text">编写爬虫</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#匹配"><span class="toc-text">匹配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JavaScript"><span class="toc-text">JavaScript</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#html嵌套js示例"><span class="toc-text">html嵌套js示例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Chrome-调试工具"><span class="toc-text">Chrome 调试工具</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Phantomjs"><span class="toc-text">Phantomjs</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义截图"><span class="toc-text">自定义截图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#匹配-1"><span class="toc-text">匹配</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#写文件"><span class="toc-text">写文件</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#模拟浏览器容器"><span class="toc-text">模拟浏览器容器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Selenium"><span class="toc-text">Selenium</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#验证码"><span class="toc-text">验证码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-engineer/Crawler Tutorial" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Crawler Tutorial</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.08.20</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><div align="center"><br><img src="/images/zhizhuwang.jpg" width="500" height="200" alt="图片名称" align="center"><br></div></p>
+<h1 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h1><p><code>scapy startproject w3school</code></p>
+<ul>
+<li>项目w3school<br>这时会产生w3school文件夹，文件夹下文件如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">scrapy.cfg  </div><div class="line">w3school/  </div><div class="line">    __init__.py  </div><div class="line">    items.py  </div><div class="line">    pipelines.py  </div><div class="line">    settings.py  </div><div class="line">    spiders/  </div><div class="line">	__init__.py</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>其中scrapy.cfg目的配置文件。主要改写的是w3school中的三个文件以及其中spiders中需要编写的爬虫。</p>
+<ul>
+<li>在items.py中定义Item容器。<br>也就是编写items.py内容。所谓Item容器就是将在网页中获取的数据结构化保存的数据结构，类似于Python中字典。下面为items.py中代码。<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#project: w3school  </span></div><div class="line"><span class="comment">#file   : items.py  </span></div><div class="line"><span class="comment">#author : younghz  </span></div><div class="line"><span class="comment">#brief  : define W3schoolItem.  </span></div><div class="line">from scrapy.item import Item,Field  </div><div class="line"></div><div class="line">class W3schoolItem(Item):  </div><div class="line">	title = Field()  </div><div class="line">	link = Field()  </div><div class="line">	desc = Field()</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>上面定义了自己的W3schoolItem类，它继承自scrapy的Item（这里没有显示定义W3schoolItem的<strong>init</strong>()方法，也正因为如此，python也会为你自动调用基类的<strong>init</strong>()，否则必须显式在子类的<strong>init</strong>()中调用基类<strong>init</strong>()）。<br>之后声明W3schoolItem中元素并使用Field定义。到此items.py就OK了。</p>
+<ul>
+<li>在pipelines.py中编写W3schoolPipeline实现对item的处理。<br>在其中主要完成数据的查重、丢弃，验证item中数据，将得到的item数据保存等工作。代码如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">import json  </div><div class="line">import codecs    </div><div class="line">class W3SchoolPipeline(object):  </div><div class="line">    def __init__(self):  </div><div class="line">	self.file = codecs.open(<span class="string">'w3school_data_utf8.json'</span>, <span class="string">'wb'</span>, encoding=<span class="string">'utf-8'</span>)  </div><div class="line">  </div><div class="line">    def process_item(self, item, spider):  </div><div class="line">	line = json.dumps(dict(item)) + <span class="string">'\n'</span>  </div><div class="line">	<span class="comment"># print line  </span></div><div class="line">	self.file.write(line.decode(<span class="string">"unicode_escape"</span>))  </div><div class="line">	<span class="built_in">return</span> item</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>其中的process_item方法是必须调用的用来处理item，并且返回值必须为Item类的对象，或者是抛出DropItem异常。并且上述方法将得到的item实现解码，以便正常显示中文，最终保存到json文件中。</p>
+<p>注意：在编写完pipeline后，为了能够启动它，必须将其加入到ITEM_PIPLINES配置中，即在settings.py中加入下面一句：<br>ITEM_PIPELINES = {<br>    ‘w3school.pipelines.W3SchoolPipeline’:300<br>}  </p>
+<h1 id="编写爬虫"><a href="#编写爬虫" class="headerlink" title="编写爬虫"></a>编写爬虫</h1><p>爬虫编写是在spider/文件夹下编写w3cshool_spider.py。<br>先上整个程序在慢慢解释：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python  </span></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-  </span></div><div class="line">from scrapy.spiders import Spider  </div><div class="line">from scrapy.selector import Selector  </div><div class="line">from scrapy import <span class="built_in">log</span>  </div><div class="line"></div><div class="line">from w3school.items import W3schoolItem  </div><div class="line">class W3schoolSpider(Spider):  </div><div class="line"><span class="string">""</span><span class="string">"爬取w3school标签"</span><span class="string">""</span>  </div><div class="line"><span class="comment">#log.start("log",loglevel='INFO')  </span></div><div class="line">name = <span class="string">"w3school"</span>  </div><div class="line">allowed_domains = [<span class="string">"w3school.com.cn"</span>]  </div><div class="line">start_urls = [  </div><div class="line"><span class="string">"http://www.w3school.com.cn/xml/xml_syntax.asp"</span>  </div><div class="line">]  </div><div class="line"></div><div class="line">def parse(self, response):  </div><div class="line">sel = Selector(response)  </div><div class="line">sites = sel.xpath(<span class="string">'//div[@id="navsecond"]/div[@id="course"]/ul[1]/li'</span>)  </div><div class="line">items = []  </div><div class="line"><span class="keyword">for</span> site <span class="keyword">in</span> sites:  </div><div class="line">    item = W3schoolItem()  </div><div class="line"></div><div class="line">    title = site.xpath(<span class="string">'a/text()'</span>).extract()  </div><div class="line">    link = site.xpath(<span class="string">'a/@href'</span>).extract()  </div><div class="line">    desc = site.xpath(<span class="string">'a/@title'</span>).extract()  </div><div class="line"></div><div class="line">    item[<span class="string">'title'</span>] = [t.encode(<span class="string">'utf-8'</span>) <span class="keyword">for</span> t <span class="keyword">in</span> title]  </div><div class="line">    item[<span class="string">'link'</span>] = [l.encode(<span class="string">'utf-8'</span>) <span class="keyword">for</span> l <span class="keyword">in</span> link]  </div><div class="line">    item[<span class="string">'desc'</span>] = [d.encode(<span class="string">'utf-8'</span>) <span class="keyword">for</span> d <span class="keyword">in</span> desc]  </div><div class="line">    items.append(item)  </div><div class="line">    <span class="comment">#记录  </span></div><div class="line">    log.msg(<span class="string">"Appending item..."</span>,level=<span class="string">'INFO'</span>)  </div><div class="line">    log.msg(<span class="string">"Append done."</span>,level=<span class="string">'INFO'</span>)</div><div class="line"><span class="built_in">return</span> items</div></pre></td></tr></table></figure></p>
+<p>（1）需要注意的是编写的spider必须继承自scrapy的Spider类。<br>属性name即spider唯一名字，start_url可以理解为爬取入口。<br>（2）parse方法。<br>parse（）是对scrapy.Spider类的override。<br>（3）网页中的数据提取机制。<br>scrapy使用选择器Selector并通过XPath实现数据的提取。关于XPath 推荐w3school的教程。</p>
+<h1 id="匹配"><a href="#匹配" class="headerlink" title="匹配"></a>匹配</h1><ul>
+<li><ol>
+<li>sites = sel.xpath(‘//div[@id=”navsecond”]/div[@id=”course”]/ul[2]/li’)<br>以下是网页源代码，命令中<code>@id=&quot;navsecond&quot;</code>匹配第一个div，course匹配第二个div，ul匹配下一级<code>&lt;ul&gt;</code>,序号[2]表示第2个<code>&lt;ul&gt;</code>框中内容。</li>
+</ol>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;div id=<span class="string">"navsecond"</span>&gt;</div><div class="line"></div><div class="line">&lt;div id=<span class="string">"course"</span>&gt;&lt;h2&gt;XML 基础&lt;/h2&gt;</div><div class="line">&lt;ul&gt;</div><div class="line">&lt;li class=<span class="string">"currentLink"</span>&gt;&lt;a href=<span class="string">"/xml/index.asp"</span> title=<span class="string">"XML 教程"</span>&gt;XML 教程&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_intro.asp"</span> title=<span class="string">"XML 简介"</span>&gt;XML 简介&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_usedfor.asp"</span> title=<span class="string">"XML 的用途"</span>&gt;XML 用途&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_tree.asp"</span> title=<span class="string">"XML 树结构"</span>&gt;XML 树结构&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_syntax.asp"</span> title=<span class="string">"XML 语法规则"</span>&gt;XML 语法&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_elements.asp"</span> title=<span class="string">"XML 元素"</span>&gt;XML 元素&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_attributes.asp"</span> title=<span class="string">"XML 属性"</span>&gt;XML 属性&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_dtd.asp"</span> title=<span class="string">"XML 验证"</span>&gt;XML 验证&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_validator.asp"</span> title=<span class="string">"XML 验证器"</span>&gt;XML 验证器&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_browsers.asp"</span> title=<span class="string">"XML 浏览器支持"</span>&gt;XML 浏览器&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_view.asp"</span> title=<span class="string">"查看 XML 文件"</span>&gt;XML 查看&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_display.asp"</span> title=<span class="string">"使用 CSS 显示 XML"</span>&gt;XML CSS&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_xsl.asp"</span> title=<span class="string">"使用 XSLT 显示 XML"</span>&gt;XML XSLT&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div><div class="line">&lt;h2&gt;XML JavaScript&lt;/h2&gt;</div><div class="line">&lt;ul&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_http.asp"</span> title=<span class="string">"XMLHttpRequest 对象"</span>&gt;XML HTTP Request&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_parser.asp"</span> title=<span class="string">"XML 解析器"</span>&gt;XML 解析器&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_dom.asp"</span> title=<span class="string">"XML DOM"</span>&gt;XML DOM&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_to_html.asp"</span> title=<span class="string">"XML to HTML"</span>&gt;XML to HTML&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;li&gt;&lt;a href=<span class="string">"/xml/xml_applications.asp"</span> title=<span class="string">"XML 应用程序"</span>&gt;XML 应用程序&lt;/a&gt;&lt;/li&gt;</div><div class="line">&lt;/ul&gt;</div><div class="line">&lt;h2&gt;XML 高级&lt;/h2&gt;</div><div class="line">&lt;ul&gt;</div><div class="line">...</div></pre></td></tr></table></figure>
+<h1 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h1><p>在爬某网站的数据，现在这儿存一下代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span>((<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   <span class="comment">//页面跳转</span></div><div class="line">   <span class="built_in">document</span>.getElementById(<span class="string">"pageNumber"</span>).getElementsByTagName(<span class="string">'a'</span>)[<span class="number">3</span>].click();</div><div class="line">&#125;)())<span class="comment">//closure</span></div><div class="line"></div><div class="line"><span class="comment">//下载文件</span></div><div class="line"><span class="built_in">document</span>.getElementsByClassName(<span class="string">"download"</span>)[i].getElementsByTagName(<span class="string">"img"</span>)[<span class="number">0</span>].onclick()</div></pre></td></tr></table></figure></p>
+<h2 id="html嵌套js示例"><a href="#html嵌套js示例" class="headerlink" title="html嵌套js示例"></a>html嵌套js示例</h2><ol>
+<li>html页面<br>yemian.html<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"Content-Type"</span> <span class="attr">content</span>=<span class="string">"text/html; charset=UTF-8"</span>&gt;</span> <span class="comment">&lt;!--这句话非常重要，不能省略--&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">title</span>&gt;</span>这是LemonMan的主页<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/javascript"</span> <span class="attr">src</span>=<span class="string">"./15.js"</span>&gt;</span><span class="undefined"></span></div><div class="line"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>http-equiv 属性为名称/值对提供了名称。并指示服务器在发送实际的文档之前先在要传送给浏览器的 MIME 文档头部包含名称/值对。当服务器向浏览器发送文档时，会先发送许多名称/值对。虽然有些服务器会发送许多这种名称/值对，但是所有服务器都至少要发送一个：content-type:text/html。这将告诉浏览器准备接受一个 HTML 文档。使用带有 http-equiv 属性的 <meta> 标签时，服务器将把名称/值对添加到发送给浏览器的内容头部。<br>当第一行被注释掉后，那么js的内容不能显示，然而我并不知道为什么，额额。</p>
+<ol>
+<li>js 文件<br>15.js:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//alert("这是被调用的语句。")</span></div><div class="line"><span class="keyword">var</span> o = <span class="built_in">document</span>.body;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">createDIV</span>(<span class="params">text</span>)</span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">var</span> div = <span class="built_in">document</span>.createElement(<span class="string">"div"</span>);</div><div class="line">	div.innerHTML = text;</div><div class="line">	o.appendChild(div);</div><div class="line">&#125;</div><div class="line">createDIV(<span class="string">"2+2=4"</span>);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>当用浏览器打开yemian.html时，会看到2+2=4,但实际的静态页面并不会出现。对，我们要抓取的数据也存储在这样的js中。</p>
+<h1 id="Chrome-调试工具"><a href="#Chrome-调试工具" class="headerlink" title="Chrome 调试工具"></a>Chrome 调试工具</h1><p>console.clear()　//清空</p>
+<h1 id="Phantomjs"><a href="#Phantomjs" class="headerlink" title="Phantomjs"></a>Phantomjs</h1><p>PhantomJS是通过ghostdriver来支持Webdriver API的，所以如果是某个动作有问题的话，可以看看ghostdriver这里有没有issue。PhantomJS虽然是Headless，但是他的“渲染”核心是QtWebkit，JS引擎是JavaScriptCore，而不是FF的Gecko。所以这些差异都可能是造成动作无效的原因。<br>debug：每做一步都用page.render()截图一下，看看到底这个元素有没被PhantomJS渲染出来。</p>
+<h2 id="自定义截图"><a href="#自定义截图" class="headerlink" title="自定义截图"></a>自定义截图</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> page = <span class="built_in">require</span>(<span class="string">'webpage'</span>).create();</div><div class="line"><span class="comment">//viewportSize being the actual size of the headless browser</span></div><div class="line">page.viewportSize = &#123; <span class="attr">width</span>: <span class="number">1024</span>, <span class="attr">height</span>: <span class="number">768</span> &#125;;<span class="comment">//这个我当时把它注释掉了</span></div><div class="line"><span class="comment">//the clipRect is the portion of the page you are taking a screenshot of</span></div><div class="line">page.clipRect = &#123; <span class="attr">top</span>: <span class="number">0</span>, <span class="attr">left</span>: <span class="number">0</span>, <span class="attr">width</span>: <span class="number">1024</span>, <span class="attr">height</span>: <span class="number">768</span> &#125;; <span class="comment">//规定截图常宽</span></div><div class="line"><span class="comment">//the rest of the code is the same as the previous example</span></div><div class="line">page.open(<span class="string">'http://example.com/'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  page.render(<span class="string">'github.png'</span>);</div><div class="line">  phantom.exit();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="匹配-1"><a href="#匹配-1" class="headerlink" title="匹配"></a>匹配</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;a onclick="SaveUrl()" href="/User/RegisterAndLogin?Operate=1"&gt;登录&lt;/a&gt;</div><div class="line">$("a").each(function () &#123;</div><div class="line">            console.log($(this).attr("href"));</div><div class="line">		console.log($(this).text())  //打印text</div><div class="line">          &#125;);</div></pre></td></tr></table></figure>
+<h1 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h1><p>Chrome　extends tools　工具是非常好的前端调试工具，我们甚至一度都想在Chrome console上写爬虫程序，但由于console没有提供写文件操作，很捉急，后来我们选择了phantomjs.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">"fs"</span>);</div><div class="line"> file = fs.open(<span class="string">"main.js"</span>, <span class="string">'a'</span>);</div><div class="line"> file.write(<span class="string">"123"</span>);</div><div class="line"> file.close();</div><div class="line"> setTimeout(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">     phantom.exit(<span class="number">0</span>)</div><div class="line"> &#125;, <span class="number">2000</span>);</div></pre></td></tr></table></figure></p>
+<h2 id="模拟浏览器容器"><a href="#模拟浏览器容器" class="headerlink" title="模拟浏览器容器"></a>模拟浏览器容器</h2><p>网站为了复用框架（C/S 的模式上，后端只提供 API，这样无论 Web 和 APP 都能共用一套 API ）或者是处理异步请求或者精致渲染都需要用js渲染，这为爬虫带来了很多困难。phantomjs可以从行为上模仿浏览器，从而拿到静态网页上拿不到的数据。</p>
+<ol>
+<li>用普通的phantomjs方法，就可以抓到简单的js渲染数据了，比如淘宝之类的。可以通过截图来观察phantomjs渲染了多少出来。</li>
+<li>还有一部分变态的网站通过简单的phatomjs借口无法渲染出来，这就需要等phantomjs渲染，直到渲染完成再进行抓取内容，典型的网站有xx文书网的搜索页面。本来想在这里贴代码的，但博主要切jj,只好作罢，大家可以根据链接找到原文<sup>5</sup>。<br>我更改的代码如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line">page.open(<span class="string">'http://wenshu.court.gov.cn/List/List?sorttype=1&amp;conditions=searchWord+1+AJLX++%E6%A1%88%E4%BB%B6%E7%B1%BB%E5%9E%8B:%E5%88%91%E4%BA%8B%E6%A1%88%E4%BB%B6'</span>, <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">  console.log(<span class="string">'start'</span>);</div><div class="line">  //1</div><div class="line">  waitFor(<span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">      <span class="built_in">return</span> page.evaluate(<span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">        //判断页面加载完成的信号,</div><div class="line">        <span class="built_in">return</span> $(<span class="string">"select"</span>).length &gt; 5;//我算了一下，大概有6条。这个有待改进</div><div class="line">      &#125;);</div><div class="line">    &#125;, <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">      //页面加载完成后我们的DOM操作,</div><div class="line">      //引入外部js库</div><div class="line">      page.includeJs(<span class="string">"http://libs.baidu.com/jquery/2.0.0/jquery.js"</span>, <span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">          page.evaluate(<span class="function"><span class="title">function</span></span> () &#123; //操作页面事件</div><div class="line">          console.log(<span class="string">"jQuery version:"</span> + jQuery.fn.jquery);</div><div class="line">	  <span class="keyword">for</span> (var i=0; i&lt;5; i++)&#123;</div><div class="line">	      console.log(document.getElementsByClassName(<span class="string">"download"</span>)[i].getElementsByTagName(<span class="string">"img"</span>)[0].outerHTML);</div><div class="line">	  &#125;</div><div class="line">	  document.getElementById(<span class="string">"pageNumber"</span>).getElementsByTagName(<span class="string">'a'</span>)[0].click()//报错</div><div class="line">      &#125;);</div><div class="line">        setTimeout(<span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">          page.render(<span class="string">'../snapshot/jietu.png'</span>);</div><div class="line">        &#125;, 2000);</div><div class="line">        //console.log()</div><div class="line">        var t = Date.now() - page.startTime; //页面加载完成后的当前时间减去页面开始加载的时间，为整个页面加载时间</div><div class="line">        console.log(<span class="string">'firstLoadPage time :'</span> + t + <span class="string">'ms'</span>);</div><div class="line"></div><div class="line">        console.log(<span class="string">"end"</span>);</div><div class="line">        setTimeout(<span class="function"><span class="title">function</span></span> () &#123;</div><div class="line">          page.close();</div><div class="line">          phantom.exit();</div><div class="line">        &#125;, 0);</div><div class="line">      &#125;);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="Selenium"><a href="#Selenium" class="headerlink" title="Selenium"></a>Selenium</h1><p>selenium，其在web自动化上应用非常广，上面是一些最基本的操作，启动浏览器，打开网页，前进与后退，定位元素，键盘输入与鼠标点击操作，其中xpath可以在firefox下应用firepath插件来获取，但是局限性比较大，也会有一些兼容性的问题，像上面的代码在chrome下可以运行，但是在firefox下一些元素就找不到。这里做一个简单的示例（定位<div>）:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line">driver = webdriver.PhantomJS(executable_path=<span class="string">'/home/lxg/Downloads/phantomjs-2.1.1-linux-x86_64/bin/phantomjs'</span>)</div><div class="line">driver.get(<span class="string">"http://wenshu.court.gov.cn/List/List?sorttype=1&amp;conditions=searchWord+1+AJLX++%E6%A1%88%E4%BB%B6%E7%B1%BB%E5%9E%8B:%E5%88%91%E4%BA%8B%E6%A1%88%E4%BB%B6"</span>)</div><div class="line"><span class="comment"># r = driver.execute_script("return newsJason")</span></div><div class="line"><span class="comment"># print r</span></div><div class="line"><span class="keyword">print</span> driver.page_source</div><div class="line"><span class="keyword">print</span> driver.find_element_by_tag_name(<span class="string">"div"</span>).text</div><div class="line"><span class="comment"># print driver.find_element_by_csss_selector("#content").text</span></div><div class="line"><span class="comment"># print driver.find_element_by_id("content").text</span></div></pre></td></tr></table></figure></div></p>
+<p>通过这样的方式，我们可以抓取到yemian.html中的2+2=4。</p>
+<h1 id="验证码"><a href="#验证码" class="headerlink" title="验证码"></a>验证码</h1><p>爬虫真是个苦力活，各种坑，下面这个坑叫做验证码。<br>我用的的库是PIL和</p>
+<ol>
+<li>安装<br>pip install pillow<br>pip install pytesseract</li>
+<li><p>使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf_8 -*-</span></div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> requests</div><div class="line"><span class="keyword">import</span> StringIO</div><div class="line"></div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(<span class="string">"utf-8"</span>)</div><div class="line"><span class="keyword">from</span> os.path <span class="keyword">import</span> join, getsize</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">crackVcode</span><span class="params">(name)</span>:</span></div><div class="line"></div><div class="line">    url = <span class="string">'#根据表单填写'</span></div><div class="line"></div><div class="line">    headers = &#123;<span class="comment">#根据表单填写&#125;</span></div><div class="line"></div><div class="line">    response = requests.get(url=url, headers=headers)</div><div class="line"></div><div class="line">    s = StringIO.StringIO()</div><div class="line">    s.write(response.content)</div><div class="line">    file = open(<span class="string">"./123.jpg&#123;&#125;"</span>.format(name),<span class="string">'wb'</span>)</div><div class="line">    file.write(response.content)</div><div class="line">    file.close()</div><div class="line"></div><div class="line">    <span class="keyword">if</span> getsize(<span class="string">"./123.jpg&#123;&#125;"</span>.format(name)) &lt; <span class="number">2000</span>:</div><div class="line">        vcode = recognizeVCode(s,name)</div><div class="line">        result = checkVcode(vcode)</div><div class="line">        <span class="keyword">return</span> vcode, result</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">        <span class="keyword">return</span> <span class="number">1111</span>, <span class="number">1</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">checkVcode</span><span class="params">(vcode)</span>:</span></div><div class="line"></div><div class="line">    url = <span class="string">'http://xxx/Content/CheckVisitCode'</span></div><div class="line"></div><div class="line">    data = &#123;<span class="string">'ValidateCode'</span>: vcode&#125;</div><div class="line"></div><div class="line">    headers = &#123;<span class="comment">#根据表单填写&#125;</span></div><div class="line"></div><div class="line">    response = requests.post(url=url, data=data, headers=headers)</div><div class="line"></div><div class="line">    <span class="keyword">return</span> response.content</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">recognizeVCode</span><span class="params">(picture_url,name)</span>:</span></div><div class="line"></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        <span class="keyword">import</span> pytesseract</div><div class="line">        <span class="keyword">from</span> PIL <span class="keyword">import</span> Image</div><div class="line">    <span class="keyword">except</span> ImportError:</div><div class="line">       <span class="keyword">print</span> <span class="string">"导入失败！检查是否安装PIL or tesseract-ocr"</span></div><div class="line"></div><div class="line">    image = Image.open(<span class="string">"./123.jpg&#123;&#125;"</span>.format(name))</div><div class="line">    <span class="comment"># image.show</span></div><div class="line">    vcode = pytesseract.image_to_string(image)</div><div class="line">    <span class="keyword">return</span> vcode</div><div class="line"></div><div class="line"><span class="keyword">if</span>  __name__== <span class="string">"__main__"</span>:</div><div class="line">    picture_url = <span class="string">'ValidateCode.jpg'</span></div><div class="line">    vcode, result = crackVcode(<span class="string">"ddd"</span>)</div><div class="line">    <span class="keyword">print</span> vcode, <span class="string">'result:'</span>, result</div><div class="line">    <span class="comment"># print recognizeVCode(picture_url)</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>报错</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">File <span class="string">"/usr/lib/python2.7/subprocess.py"</span>, line 1259, <span class="keyword">in</span> _execute_child</div><div class="line">    raise child_exception</div><div class="line">OSError: [Errno 2] No such file or directory</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>文件存在而报没有找到，是因为没有安装tesseract-ocr包：<br><code>sudo apt-get install tesseract-ocr</code></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1]<a href="http://blog.csdn.net/u012150179/article/details/32911511" target="_blank" rel="external">scrapy研究探索（二）——爬w3school</a><br>[2]<a href="http://karez1.com/2013/02/08/use-chromes-console-to-complete-form-autofill/" target="_blank" rel="external">利用chrome的console完成表单自动填充</a><br>[3]<a href="http://www.huoduan.com/jquery-cdn.html" target="_blank" rel="external">国内的Jquery CDN免费服务</a><br>[4]<a href="http://phantomjs.org/screen-capture.html" target="_blank" rel="external">Phantomjs Documents</a><br>[5]<a href="http://www.cnblogs.com/zeusro/p/4185196.html" target="_blank" rel="external">鼓捣phantomjs，做ajax网站的信息采集</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

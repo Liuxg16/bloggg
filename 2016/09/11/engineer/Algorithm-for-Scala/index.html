@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>算法基础 FOR 李达尼 | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="scala," />
+  
+
+  <meta name="description" content="用于对达尼的计算机编程培训展示，所有代码均来自李达尼。 1.找出所有小于给定自然数n的素数，以数组返回。即实现函数prime(n:Int):Array[Int]{}12345678910111213141516171819202122232425262728293031def prime(n:Int): Array[Int]= &amp;#123;	  val A1=n    if (A1&amp;lt;2)">
+<meta name="keywords" content="scala">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法基础 FOR 李达尼">
+<meta property="og:url" content="http://www.liuxianggen.com/2016/09/11/engineer/Algorithm-for-Scala/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="用于对达尼的计算机编程培训展示，所有代码均来自李达尼。 1.找出所有小于给定自然数n的素数，以数组返回。即实现函数prime(n:Int):Array[Int]{}12345678910111213141516171819202122232425262728293031def prime(n:Int): Array[Int]= &amp;#123;	  val A1=n    if (A1&amp;lt;2)">
+<meta property="og:image" content="http://www.liuxianggen.com/images/BrainMatrix/BrainMatrix.jpg">
+<meta property="og:updated_time" content="2018-07-21T01:05:04.185Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法基础 FOR 李达尼">
+<meta name="twitter:description" content="用于对达尼的计算机编程培训展示，所有代码均来自李达尼。 1.找出所有小于给定自然数n的素数，以数组返回。即实现函数prime(n:Int):Array[Int]{}12345678910111213141516171819202122232425262728293031def prime(n:Int): Array[Int]= &amp;#123;	  val A1=n    if (A1&amp;lt;2)">
+<meta name="twitter:image" content="http://www.liuxianggen.com/images/BrainMatrix/BrainMatrix.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-找出所有小于给定自然数n的素数，以数组返回。"><span class="toc-text">1.找出所有小于给定自然数n的素数，以数组返回。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-求解x-y的最小公约数2。"><span class="toc-text">2.求解x,y的最小公约数2。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-找出所有小于给定自然数n的水仙花数，以数组返回。"><span class="toc-text">3.找出所有小于给定自然数n的水仙花数，以数组返回。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-从xxx-info文件中提取doc-id等信息，并整理好，存入xxx-id-txt。"><span class="toc-text">4.从xxx.info文件中提取doc_id等信息，并整理好，存入xxx-id.txt。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-求给定的某一个字符串中的最长重复子串的长度。"><span class="toc-text">5.求给定的某一个字符串中的最长重复子串的长度。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-实现一维卷积。"><span class="toc-text">6.实现一维卷积。</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-zip多个list方法"><span class="toc-text">7. zip多个list方法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-Based-on-7-求数组a-b的卷积r，用zip做："><span class="toc-text">8. Based on 7,求数组a,b的卷积r，用zip做：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9-Based-on-7-利用zip-map，求：四个数组a-b-c-d-求r"><span class="toc-text">9. Based on 7, 利用zip,map，求：四个数组a,b,c,d,求r:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-text">Reference</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-engineer/Algorithm-for-Scala" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">算法基础 FOR 李达尼</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.09.11</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <div align="center"><br><img src="/images/BrainMatrix/BrainMatrix.jpg" width="500" height="200" alt="图片名称" align="center"><br></div>
+
+<p>用于对达尼的计算机编程培训展示，所有代码均来自李达尼。</p>
+<h1 id="1-找出所有小于给定自然数n的素数，以数组返回。"><a href="#1-找出所有小于给定自然数n的素数，以数组返回。" class="headerlink" title="1.找出所有小于给定自然数n的素数，以数组返回。"></a>1.找出所有小于给定自然数n的素数，以数组返回。</h1><p>即实现函数prime(n:Int):Array[Int]{}<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">prime</span></span>(n:<span class="type">Int</span>): <span class="type">Array</span>[<span class="type">Int</span>]= &#123;</div><div class="line">	  <span class="keyword">val</span> <span class="type">A1</span>=n</div><div class="line">    <span class="keyword">if</span> (<span class="type">A1</span>&lt;<span class="number">2</span>) print(<span class="string">"Error"</span>)</div><div class="line">    <span class="keyword">import</span> scala.collection.mutable.<span class="type">ArrayBuffer</span></div><div class="line">    <span class="keyword">val</span> <span class="type">A2</span>=<span class="type">ArrayBuffer</span>[<span class="type">Int</span>]()</div><div class="line">    <span class="keyword">if</span> (<span class="type">A1</span>==<span class="number">2</span>) <span class="type">A2</span>+=<span class="number">2</span></div><div class="line">    <span class="keyword">for</span> (i&lt;<span class="number">-3</span> to <span class="type">A1</span>)</div><div class="line">    &#123;</div><div class="line">      <span class="keyword">if</span> (i%<span class="number">2</span>==<span class="number">1</span>) <span class="type">A2</span>+=i</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">import</span> scala.util.control.<span class="type">Breaks</span>._</div><div class="line">    <span class="keyword">var</span> count=<span class="number">0</span></div><div class="line">    <span class="keyword">for</span> (j&lt;<span class="number">-1</span> until <span class="type">A2</span>.length)</div><div class="line">    &#123;</div><div class="line">      breakable</div><div class="line">      &#123;</div><div class="line">        <span class="keyword">for</span> (k&lt;<span class="number">-0</span> until <span class="type">A2</span>.length)</div><div class="line">        &#123;</div><div class="line">          <span class="keyword">if</span> (<span class="type">A2</span>(k)==<span class="type">A2</span>(j)) <span class="keyword">break</span></div><div class="line">          <span class="keyword">if</span> (<span class="type">A2</span>(j)%<span class="type">A2</span>(k)==<span class="number">0</span>&amp;&amp;<span class="type">A2</span>(k)!=<span class="number">1</span>)</div><div class="line">          &#123;</div><div class="line">            count+=<span class="number">1</span></div><div class="line">            <span class="type">A2</span>(j)=<span class="number">1</span></div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">val</span> <span class="type">A2Sorted</span>=<span class="type">A2</span>.sorted</div><div class="line">    <span class="type">A2Sorted</span>.remove(<span class="number">0</span>,count)</div><div class="line">    <span class="type">A2Sorted</span>.toArray</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<h1 id="2-求解x-y的最小公约数2。"><a href="#2-求解x-y的最小公约数2。" class="headerlink" title="2.求解x,y的最小公约数2。"></a>2.求解x,y的最小公约数<sup>2</sup>。</h1><p>即实现函数gcd(x:Int,y:Int):Int = {}<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">test</span> </span></div><div class="line">&#123;  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">gcd1</span></span>(x:<span class="type">Int</span>,y:<span class="type">Int</span>):<span class="type">Int</span> =</div><div class="line">  &#123;</div><div class="line">    <span class="keyword">if</span> (x &lt; y &amp;&amp; x == <span class="number">0</span>) y</div><div class="line">    <span class="keyword">else</span> gcd1(y % x,x)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args:<span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">  &#123;</div><div class="line">    print(<span class="string">"gcd is:"</span> + gcd1(readLine(<span class="string">"input a small num:"</span>).toInt,readLine(<span class="string">"input a large num:"</span>).toInt))</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="3-找出所有小于给定自然数n的水仙花数，以数组返回。"><a href="#3-找出所有小于给定自然数n的水仙花数，以数组返回。" class="headerlink" title="3.找出所有小于给定自然数n的水仙花数，以数组返回。"></a>3.找出所有小于给定自然数n的水仙花数，以数组返回。</h1><p>即实现函数narcissus(n:Int):Array[Int]{}<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">object</span> <span class="title">test</span></span></div><div class="line">&#123;  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args:<span class="type">Array</span>[<span class="type">String</span>])</div><div class="line">  &#123;</div><div class="line">    <span class="keyword">val</span> num = narc(readLine())<span class="comment">//2147483647 </span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">narc</span></span>(n:<span class="type">String</span>)</div><div class="line">  &#123;</div><div class="line">    <span class="keyword">for</span> (i &lt;- <span class="number">153</span> to n.toInt)</div><div class="line">      narcissus(i.toString).foreach&#123;println&#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">narcissus</span></span>(n:<span class="type">String</span>):<span class="type">Array</span>[<span class="type">Int</span>]=</div><div class="line">  &#123;</div><div class="line">    <span class="keyword">import</span> scala.collection.mutable.<span class="type">ArrayBuffer</span></div><div class="line">    <span class="keyword">val</span> <span class="type">A</span> = <span class="type">ArrayBuffer</span>[<span class="type">Int</span>]()</div><div class="line">    <span class="keyword">val</span> n1 = n.toInt</div><div class="line">    <span class="keyword">for</span> (i &lt;- <span class="number">1</span> to n.length)</div><div class="line">    &#123; </div><div class="line">      <span class="keyword">val</span> m = (n1 % scala.math.pow(<span class="number">10</span>,i).toInt) / scala.math.pow(<span class="number">10</span>,i - <span class="number">1</span>).toInt</div><div class="line">      <span class="type">A</span> += m</div><div class="line">      <span class="comment">//BigInt(10).pow(i)</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (j &lt;- <span class="number">0</span> to n.length - <span class="number">1</span>)</div><div class="line">      <span class="type">A</span>(j) = scala.math.pow(<span class="type">A</span>(j),n.length).toInt</div><div class="line">    <span class="keyword">val</span> <span class="type">A2</span> = <span class="type">ArrayBuffer</span>[<span class="type">Int</span>]()</div><div class="line">    <span class="keyword">if</span> (n1 == <span class="type">A</span>.sum)</div><div class="line">      <span class="type">A2</span> += n1</div><div class="line">    <span class="type">A2</span>.toArray</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h1 id="4-从xxx-info文件中提取doc-id等信息，并整理好，存入xxx-id-txt。"><a href="#4-从xxx-info文件中提取doc-id等信息，并整理好，存入xxx-id-txt。" class="headerlink" title="4.从xxx.info文件中提取doc_id等信息，并整理好，存入xxx-id.txt。"></a>4.从xxx.info文件中提取doc_id等信息，并整理好，存入xxx-id.txt。</h1><p>存入内容按一下格式：docid|title|date<br>例如：<br>2a651b94-479c-4a5c-856c-c8ec2da25d1c|兴义市乡镇建筑工程公司与王朝素、宋纯发、徐炳强、中国太平洋财产保险股份有限公司都安支公司健康权纠纷案二审民事判决书|2012-01-01<br>处理所有文档，形成新标准文档。</p>
+<h1 id="5-求给定的某一个字符串中的最长重复子串的长度。"><a href="#5-求给定的某一个字符串中的最长重复子串的长度。" class="headerlink" title="5.求给定的某一个字符串中的最长重复子串的长度。"></a>5.求给定的某一个字符串中的最长重复子串的长度。</h1><p>例如字符串s为：“abcdrtyytrdetgoogleeeteelgokjaoek”,其最长的重复子串为“drtyytrd”，长度为7。<br>即实现函数longestPald(s:String):Int={}</p>
+<h1 id="6-实现一维卷积。"><a href="#6-实现一维卷积。" class="headerlink" title="6.实现一维卷积。"></a>6.实现一维卷积。</h1><p>例如两个数组（1,2,3)，(3,4,5,2）,则他们的卷积结果为(3,10,22,24,19,6）,卷积的运算规则自己上网查找。有问题在评论中问我就好。即实现函数conv1d(lhs:Array[Int],rhs:Array[Int]):Array[Int] = {}</p>
+<h1 id="7-zip多个list方法"><a href="#7-zip多个list方法" class="headerlink" title="7. zip多个list方法"></a>7. zip多个list方法</h1><p>有三个数组,a,b,c，用函数求r：<br>$$r = \sum \frac{ln(a(i)) e^{b(i)}}{sin(c(i))}$$<br>即实现函数 zip3math(a:Array[Int],b:Array[Int],c:Array[Int]): Double = {}<br><figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> r = ((a zip b) zip c).map(x =&gt;&#123;</div><div class="line">			log10(x._1._1)*exp(x._1._2)/sin(x._2)</div><div class="line">		&#125;).sum</div></pre></td></tr></table></figure></p>
+<p>更加直观的，可以用模式匹配：</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">val</span> r = ((a zip b) zip c).map&#123;<span class="keyword">case</span> ((x,y),z) =&gt;&#123;</div><div class="line">			log10(x)*exp(y)/sin(z)&#125;</div><div class="line">		&#125;.sum</div></pre></td></tr></table></figure>
+<h1 id="8-Based-on-7-求数组a-b的卷积r，用zip做："><a href="#8-Based-on-7-求数组a-b的卷积r，用zip做：" class="headerlink" title="8. Based on 7,求数组a,b的卷积r，用zip做："></a>8. Based on 7,求数组a,b的卷积r，用zip做：</h1><p>$$n = a.length-1\\<br>r = \sum_i ^n a(i)*b(n-i) $$<br>若a=[1,2],b=[2 3],则r=7<br>即实现函数 zip3conv(a:Array[Int],b:Array[Int]): Double = {}</p>
+<h1 id="9-Based-on-7-利用zip-map，求：四个数组a-b-c-d-求r"><a href="#9-Based-on-7-利用zip-map，求：四个数组a-b-c-d-求r" class="headerlink" title="9. Based on 7, 利用zip,map，求：四个数组a,b,c,d,求r:"></a>9. Based on 7, 利用zip,map，求：四个数组a,b,c,d,求r:</h1><p>$$r = \prod_k d(k) \sum_j \frac{\sum_i ln(a(i)) e^{b(i)}}{sin(c(j))}$$<br>即实现函数 zip3math(a:Array[Int],b:Array[Int],c:Array[Int],d:Array[Int]): Double = {}</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1]<a href="http://www.360doc.com/content/13/0326/15/11749330_274030048.shtml" target="_blank" rel="external">Java基础算法题</a><br>[2]<a href="http://www.cnblogs.com/visayafan/archive/2011/08/11/2135345.html" target="_blank" rel="external">最大公约数的算法实现</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

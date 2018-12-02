@@ -15,17 +15,19 @@
     <meta name="keywords" content="ml,Boosting,decisiontree," />
   
 
-  <meta name="description" content="Bagging（套袋法）从原始样本集中使用Bootstraping方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集。（k个训练集之间相互独立，元素可以有重复）对于k个训练集，我们训练k个模型（这k个模型可以根据具体问题而定，比如决策树，knn等）对于分类问题：由投票表决产生分类结果；对于回归问题：由k个模型预测结果的均值作为最后预测结果。（所有模型的重要性相同）Boosting（提升法）">
+  <meta name="description" content="决策树 CART与ID3和C4.5的区别。 CART树是二叉树，而ID3和C4.5可以是多叉树 CART在生成子树时，是选择一个特征一个取值作为切分点，生成两个子树 选择特征和切分点的依据是基尼指数，选择基尼指数最小的特征及切分点生成子树  决策树的剪枝决策树的剪枝主要是为了预防过拟合，过程就不详细介绍了。主要思路是从叶节点向上回溯，尝试对某个节点进行剪枝，比较剪枝前后的决策树的损失函数值。最后我">
 <meta name="keywords" content="ml,Boosting,decisiontree">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Boosting">
 <meta property="og:url" content="http://www.liuxianggen.com/2018/11/26/ml/decisionTree/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
-<meta property="og:description" content="Bagging（套袋法）从原始样本集中使用Bootstraping方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集。（k个训练集之间相互独立，元素可以有重复）对于k个训练集，我们训练k个模型（这k个模型可以根据具体问题而定，比如决策树，knn等）对于分类问题：由投票表决产生分类结果；对于回归问题：由k个模型预测结果的均值作为最后预测结果。（所有模型的重要性相同）Boosting（提升法）">
-<meta property="og:updated_time" content="2018-11-26T06:31:01.725Z">
+<meta property="og:description" content="决策树 CART与ID3和C4.5的区别。 CART树是二叉树，而ID3和C4.5可以是多叉树 CART在生成子树时，是选择一个特征一个取值作为切分点，生成两个子树 选择特征和切分点的依据是基尼指数，选择基尼指数最小的特征及切分点生成子树  决策树的剪枝决策树的剪枝主要是为了预防过拟合，过程就不详细介绍了。主要思路是从叶节点向上回溯，尝试对某个节点进行剪枝，比较剪枝前后的决策树的损失函数值。最后我">
+<meta property="og:image" content="http://www.liuxianggen.com/images/ml/decisiontree.png">
+<meta property="og:updated_time" content="2018-11-27T05:22:48.613Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Boosting">
-<meta name="twitter:description" content="Bagging（套袋法）从原始样本集中使用Bootstraping方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集。（k个训练集之间相互独立，元素可以有重复）对于k个训练集，我们训练k个模型（这k个模型可以根据具体问题而定，比如决策树，knn等）对于分类问题：由投票表决产生分类结果；对于回归问题：由k个模型预测结果的均值作为最后预测结果。（所有模型的重要性相同）Boosting（提升法）">
+<meta name="twitter:description" content="决策树 CART与ID3和C4.5的区别。 CART树是二叉树，而ID3和C4.5可以是多叉树 CART在生成子树时，是选择一个特征一个取值作为切分点，生成两个子树 选择特征和切分点的依据是基尼指数，选择基尼指数最小的特征及切分点生成子树  决策树的剪枝决策树的剪枝主要是为了预防过拟合，过程就不详细介绍了。主要思路是从叶节点向上回溯，尝试对某个节点进行剪枝，比较剪枝前后的决策树的损失函数值。最后我">
+<meta name="twitter:image" content="http://www.liuxianggen.com/images/ml/decisiontree.png">
 
   
 
@@ -141,7 +143,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Bagging（套袋法）"><span class="toc-text">Bagging（套袋法）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#boosting"><span class="toc-text">boosting</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gradient-Tree-Boosting-gradient-boosting-regression-tree"><span class="toc-text">Gradient Tree Boosting (gradient boosting regression tree)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#tilde-f-x-fM-x-sum-m-1-M-sum-j-1-Jc-mj-I-x-epsilon-R-mj"><span class="toc-text">\tilde{f}(x)=fM(x)=\sum{m=1}^M\sum{j=1}^Jc{mj}I(x \epsilon R_{mj})</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Boosting"><span class="toc-text">Boosting</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#boosted-Tree"><span class="toc-text">boosted Tree</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#算法简要描述："><span class="toc-text">算法简要描述：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带着以下问题来理解这个算法："><span class="toc-text">带着以下问题来理解这个算法：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#决策树"><span class="toc-text">决策树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CART与ID3和C4-5的区别。"><span class="toc-text">CART与ID3和C4.5的区别。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#决策树的剪枝"><span class="toc-text">决策树的剪枝</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bagging（套袋法）"><span class="toc-text">Bagging（套袋法）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#boosting"><span class="toc-text">boosting</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gradient-Tree-Boosting-gradient-boosting-regression-tree"><span class="toc-text">Gradient Tree Boosting (gradient boosting regression tree)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Boosting"><span class="toc-text">Boosting</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#boosted-Tree"><span class="toc-text">boosted Tree</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#算法简要描述："><span class="toc-text">算法简要描述：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#带着以下问题来理解这个算法："><span class="toc-text">带着以下问题来理解这个算法：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#区别"><span class="toc-text">区别</span></a></li></ol></li></ol>
   </div>
 
 
@@ -174,15 +176,19 @@ var _hmt = _hmt || [];
 
   <div class="article-content">
     
-      <h1 id="Bagging（套袋法）"><a href="#Bagging（套袋法）" class="headerlink" title="Bagging（套袋法）"></a>Bagging（套袋法）</h1><p>从原始样本集中使用Bootstraping方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集。（k个训练集之间相互独立，元素可以有重复）<br>对于k个训练集，我们训练k个模型（这k个模型可以根据具体问题而定，比如决策树，knn等）<br>对于分类问题：由投票表决产生分类结果；对于回归问题：由k个模型预测结果的均值作为最后预测结果。（所有模型的重要性相同）<br>Boosting（提升法）</p>
+      <h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><p><img src="/images/ml/decisiontree.png" alt=""></p>
+<h2 id="CART与ID3和C4-5的区别。"><a href="#CART与ID3和C4-5的区别。" class="headerlink" title="CART与ID3和C4.5的区别。"></a>CART与ID3和C4.5的区别。</h2><ol>
+<li>CART树是二叉树，而ID3和C4.5可以是多叉树</li>
+<li>CART在生成子树时，是选择一个特征一个取值作为切分点，生成两个子树</li>
+<li>选择特征和切分点的依据是基尼指数，选择基尼指数最小的特征及切分点生成子树</li>
+</ol>
+<h2 id="决策树的剪枝"><a href="#决策树的剪枝" class="headerlink" title="决策树的剪枝"></a>决策树的剪枝</h2><p>决策树的剪枝主要是为了预防过拟合，过程就不详细介绍了。<br>主要思路是从叶节点向上回溯，尝试对某个节点进行剪枝，比较剪枝前后的决策树的损失函数值。最后我们通过动态规划（树形dp，acmer应该懂）就可以得到全局最优的剪枝方案。</p>
+<h1 id="Bagging（套袋法）"><a href="#Bagging（套袋法）" class="headerlink" title="Bagging（套袋法）"></a>Bagging（套袋法）</h1><p>从原始样本集中使用Bootstraping方法随机抽取n个训练样本，共进行k轮抽取，得到k个训练集。（k个训练集之间相互独立，元素可以有重复）<br>对于k个训练集，我们训练k个模型（这k个模型可以根据具体问题而定，比如决策树，knn等）<br>对于分类问题：由投票表决产生分类结果；对于回归问题：由k个模型预测结果的均值作为最后预测结果。（所有模型的重要性相同）<br>Boosting（提升法）</p>
 <h1 id="boosting"><a href="#boosting" class="headerlink" title="boosting"></a>boosting</h1><p>对于训练集中的每个样本建立权值wi，表示对每个样本的关注度。当某个样本被误分类的概率很高时，需要加大对该样本的权值。<br>进行迭代的过程中，每一步迭代都是一个弱分类器。我们需要用某种策略将其组合，作为最终模型。（例如AdaBoost给每个弱分类器一个权值，将其线性组合最为最终分类器。误差越小的弱分类器，权值越大）</p>
-<h1 id="Gradient-Tree-Boosting-gradient-boosting-regression-tree"><a href="#Gradient-Tree-Boosting-gradient-boosting-regression-tree" class="headerlink" title="Gradient Tree Boosting (gradient boosting regression tree)"></a>Gradient Tree Boosting (gradient boosting regression tree)</h1><p>梯度树提升（Gradient Tree Boosting）是一种组合算法，也叫做梯度提升回归树（gradient boosting regression tree)<br>对于给定的输入：训练数据集T={(x_1,y_1),(x_2,y_2),…,(x_n,y_n)},损失函数L(y,f(x));<br>输出结果：一棵回归树\tilde{f}(x)<br>（1）首先初始化<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">$$</div><div class="line">f_0(x)=arg min_c \sum_&#123;i=1&#125;^&#123;N&#125;L(y_i, c)</div><div class="line">$$</div><div class="line">估计一个使损失函数极小化的常数值，此时它只有一个节点的树；</div></pre></td></tr></table></figure></p>
-<p>（2）迭代的建立M棵提升树<br>for m=1 to M:（第一层循环）<br>for i=1 to N：（第二层循环） 计算损失函数的负梯度在当前模型的值，并将它作为残差的估计值。</p>
-<p>r_{mi} = - \Bigg [ \frac {\partial L(y_i, f (x_i))}{\partial f (x<em>i)}\Bigg ] </em>{f (x) = f <em>{m-1}(x)}<br>对于r</em>{mi}拟合一棵回归树，得到第m棵树的叶节点区域R_{mj},j=1,2,…,J</p>
-<p>for j=1 to J：（第二层循环）,计算：</p>
-<p>c_{mj} = arg min<em>c \sum</em>{x<em>i\epsilon R</em>{mj}}L(y<em>i,f</em>{m-1}(x_i)+c)<br>利用线性搜索估计叶节点区域的值，使损失函数极小化；</p>
-<p>然后，更新f<em>{m}(x) = f</em>{m-1}(x) + \sum<em>{j=1}^Jc</em>{mj}I(x \epsilon R<em>{mj})<br>（3）最后得到的f</em>{m}(x)就是我们最终的模型</p>
-<h2 id="tilde-f-x-fM-x-sum-m-1-M-sum-j-1-Jc-mj-I-x-epsilon-R-mj"><a href="#tilde-f-x-fM-x-sum-m-1-M-sum-j-1-Jc-mj-I-x-epsilon-R-mj" class="headerlink" title="\tilde{f}(x)=fM(x)=\sum{m=1}^M\sum{j=1}^Jc{mj}I(x \epsilon R_{mj})"></a>\tilde{f}(x)=f<em>M(x)=\sum</em>{m=1}^M\sum<em>{j=1}^Jc</em>{mj}I(x \epsilon R_{mj})</h2><p>作者：拾毅者<br>来源：CSDN<br>原文：<br>版权声明：本文为博主原创文章，转载请附上博文链接！</p>
+<h1 id="Gradient-Tree-Boosting-gradient-boosting-regression-tree"><a href="#Gradient-Tree-Boosting-gradient-boosting-regression-tree" class="headerlink" title="Gradient Tree Boosting (gradient boosting regression tree)"></a>Gradient Tree Boosting (gradient boosting regression tree)</h1><p>梯度树提升（Gradient Tree Boosting）是一种组合算法，也叫做梯度提升回归树（gradient boosting regression tree)<br>对于给定的输入：训练数据集$T={(x_1,y_1),(x_2,y_2),…,(x_n,y_n)}$,损失函数$L(y,f(x))$;<br>输出结果：一棵回归树$\tilde{f}(x)$<br>（1）首先初始化<br>$$f_0(x)=arg min_c \sum^{N}_i L(y_i, c)$$<br>估计一个使损失函数极小化的常数值，此时它只有一个节点的树；</p>
+<p>（2）迭代的建立M棵提升树<br>for m=1 to M:（第一层循环）<br>for i=1 to N：（第二层循环） 计算损失函数的负梯度在当前模型的值，并将它作为残差的估计值。<br>$$ r_{mi} =-\Bigg [ \frac{\partial L(y_i, f (x_i))}{\partial f (x_i)} \Bigg ]_{f(x) = f_{m-1}(x)}  $$<br>对于$r_{mi}$拟合一棵回归树，得到第m棵树的叶节点区域$R_{mj},j=1,2,…,J$</p>
+<p>for j=1 to J：（第二层循环）,计算：<br>$$<br>c_{mj} = arg min_c \sum_{x_i\epsilon R_{mj}}L(y_i,f_{m-1}(x_i)+c)<br>$$<br>利用线性搜索估计叶节点区域的值，使损失函数极小化；</p>
+<p>然后，更新$f_{m}(x) = f_{m-1}(x) + \sum_{j=1}^Jc_{mj}I(x \epsilon R_{mj})$<br>（3）最后得到的$f_{m}(x)$就是我们最终的模型<br>$$<br>\tilde{f}(x)=f_M(x)=\sum_{m=1}^M\sum_{j=1}^Jc_{mj}I(x \epsilon R_{mj})<br>$$</p>
 <h1 id="Boosting"><a href="#Boosting" class="headerlink" title="Boosting"></a>Boosting</h1><p>Boosting这其实思想相当的简单，大概是，对一份数据，建立M个模型（比如分类），一般这种模型比较简单，称为弱分类器(weak learner)每次分类都将上一次分错的数据权重提高一点再进行分类，这样最终得到的分类器在测试数据与训练数据上都可以得到比较好的成绩。</p>
 <h1 id="boosted-Tree"><a href="#boosted-Tree" class="headerlink" title="boosted Tree"></a>boosted Tree</h1><h2 id="算法简要描述："><a href="#算法简要描述：" class="headerlink" title="算法简要描述："></a>算法简要描述：</h2><p>不断地添加树，不断地进行特征分裂来生长一棵树。</p>
 <p>每次添加一个树，其实是学习一个新函数，去拟合上次预测的残差。</p>
@@ -203,7 +209,10 @@ var _hmt = _hmt || [];
 <li>不同点</li>
 </ol>
 <p>AdaBoost中当前学习器的“不足”由样本权重来决定<br>GBDT中当前学习器的“不足”由求梯度决定</p>
-<p><a href="https://blog.csdn.net/Dream_angel_Z/article/details/48085889" target="_blank" rel="external">1</a></p>
+<p>GBRT的优势有：</p>
+<p>自然而然地处理混合类型的数据<br>预测能力强<br>在输出空间对于异常值的鲁棒性强（通过强大的损失函数）<br>然而，GBRT也有劣势：</p>
+<p>可扩展性方面，由于提升的时序性，不能进行并行处理</p>
+<p><a href="https://blog.csdn.net/Dream_angel_Z/article/details/48085889" target="_blank" rel="external">1</a><br><a href="https://www.cnblogs.com/willnote/p/6801496.html" target="_blank" rel="external">Boosting学习笔记（Adboost、GBDT、Xgboost）</a></p>
 
     
   </div>

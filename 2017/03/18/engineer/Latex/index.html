@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Latex | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="latex," />
+  
+
+  <meta name="description" content="Baselatex\Delta,\delta四个缩进：\quad加入pdf\includegraphics{文件名.pdf} figure123456\begin&amp;#123;figure&amp;#125;[htb]	\centering	\includegraphics[width = 0.6\textwidth]&amp;#123;msd_result.jpg&amp;#125;	\label&amp;#123;fig:m">
+<meta name="keywords" content="latex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Latex">
+<meta property="og:url" content="http://www.liuxianggen.com/2017/03/18/engineer/Latex/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="Baselatex\Delta,\delta四个缩进：\quad加入pdf\includegraphics{文件名.pdf} figure123456\begin&amp;#123;figure&amp;#125;[htb]	\centering	\includegraphics[width = 0.6\textwidth]&amp;#123;msd_result.jpg&amp;#125;	\label&amp;#123;fig:m">
+<meta property="og:image" content="http://pic.58pic.com/58pic/14/63/46/39f58PICUIw_1024.jpg">
+<meta property="og:updated_time" content="2018-07-21T01:15:47.648Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Latex">
+<meta name="twitter:description" content="Baselatex\Delta,\delta四个缩进：\quad加入pdf\includegraphics{文件名.pdf} figure123456\begin&amp;#123;figure&amp;#125;[htb]	\centering	\includegraphics[width = 0.6\textwidth]&amp;#123;msd_result.jpg&amp;#125;	\label&amp;#123;fig:m">
+<meta name="twitter:image" content="http://pic.58pic.com/58pic/14/63/46/39f58PICUIw_1024.jpg">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Base"><span class="toc-text">Base</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#latex"><span class="toc-text">latex</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#figure"><span class="toc-text">figure</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Equation-with-label"><span class="toc-text">Equation with label</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#tabel"><span class="toc-text">tabel</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#大括号"><span class="toc-text">大括号</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#列表"><span class="toc-text">列表</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-engineer/Latex" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Latex</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2017.03.18</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><img src="http://pic.58pic.com/58pic/14/63/46/39f58PICUIw_1024.jpg" alt=""></p>
+<h1 id="Base"><a href="#Base" class="headerlink" title="Base"></a>Base</h1><h1 id="latex"><a href="#latex" class="headerlink" title="latex"></a>latex</h1><p>\Delta,\delta<br>四个缩进：\quad<br>加入pdf<br><code>\includegraphics{文件名.pdf}</code></p>
+<h1 id="figure"><a href="#figure" class="headerlink" title="figure"></a>figure</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">\begin&#123;figure&#125;[htb]</div><div class="line">	\centering</div><div class="line">	\includegraphics[width = 0.6\textwidth]&#123;msd_result.jpg&#125;</div><div class="line">	\label&#123;fig:msd-lstm&#125;</div><div class="line">	\caption&#123;传统与peephole LSTM网络在NMSD和MSD任务上的比较&#125;</div><div class="line">\end&#123;figure&#125;</div></pre></td></tr></table></figure>
+<h1 id="Equation-with-label"><a href="#Equation-with-label" class="headerlink" title="Equation with label"></a>Equation with label</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">\begin&#123;equation&#125;</div><div class="line">f&apos;(t) \equiv f(t+1)-f(t), \quad \max|f&apos;| \equiv \max_t|f&apos;(t)|, \quad \max|f&apos;&apos;| \equiv \max_t|f&apos;(t+1)-f(t)&apos;|</div><div class="line">\end&#123;equation&#125;</div></pre></td></tr></table></figure>
+<h1 id="tabel"><a href="#tabel" class="headerlink" title="tabel"></a>tabel</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">\begin&#123;table&#125;[!hbtp]</div><div class="line">	\centering</div><div class="line">	\begin&#123;tabular&#125;&#123;|c|c|c|c|&#125;</div><div class="line">		\hline</div><div class="line">		\hline</div><div class="line">		</div><div class="line">		hid\_size/emb\_size &amp; 	160 &amp; 	360 &amp;  	720  \\</div><div class="line">		\hline</div><div class="line">		160 &amp; 0.1016  &amp;  0.1003 &amp;  0.0965 \\</div><div class="line">		360 &amp; 0.0950   &amp; 0.904   &amp; 0.0968\\</div><div class="line">		720 &amp; 0.0935  &amp; \bf&#123;0.0820&#125;		   &amp; 0.09577677\\</div><div class="line">		\hline</div><div class="line">	\end&#123;tabular&#125;</div><div class="line">	\label&#123;table:model 1&#125;</div><div class="line">	\caption&#123;Binary style model&#125;</div><div class="line">\end&#123;table&#125;</div></pre></td></tr></table></figure>
+<h1 id="大括号"><a href="#大括号" class="headerlink" title="大括号"></a>大括号</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">f(x)=\left\&#123;</div><div class="line">\begin&#123;aligned&#125;</div><div class="line">x &amp; = &amp; \cos(t) \\</div><div class="line">y &amp; = &amp; \sin(t) \\</div><div class="line">z &amp; = &amp; \frac xy</div><div class="line">\end&#123;aligned&#125;</div><div class="line">\right.</div></pre></td></tr></table></figure>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">\usepackage&#123;paralist&#125;</div><div class="line">\begin&#123;compactenum&#125;</div><div class="line">	\item \texttt&#123;newObject&#125;: new object named \textit&#123;John&#125; and \textit&#123;milk&#125;</div><div class="line">	\item \texttt&#123;newRalation&#125;: new a <span class="string">"is gettable of"</span> relation between  between existed object \textit&#123;milk&#125; and   \textit&#123;John&#125;</div><div class="line">	\item \texttt&#123;newObject&#125;: new object named \textit&#123;Sandra&#125; and \textit&#123;football&#125;</div><div class="line">	\item \texttt&#123;newRalation&#125;: new a <span class="string">"is gettable of"</span> relation between existed object \textit&#123;football&#125; and   \textit&#123;Sandra&#125;</div><div class="line">\end&#123;compactenum&#125;</div></pre></td></tr></table></figure>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>

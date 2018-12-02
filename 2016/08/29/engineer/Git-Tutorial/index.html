@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Git Tutorial | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="tech,git," />
+  
+
+  <meta name="description" content="base1.生成公钥ssh-keygen将.ssh下的isa-pub复制到github上即可2.验证是否匹配：ssh git@github.com如果匹配，则出现以下信息：  Hi CitronMan! You’ve successfully authenticated, but GitHub does not provide shell access.Connection to github.c">
+<meta name="keywords" content="tech,git">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git Tutorial">
+<meta property="og:url" content="http://www.liuxianggen.com/2016/08/29/engineer/Git-Tutorial/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="base1.生成公钥ssh-keygen将.ssh下的isa-pub复制到github上即可2.验证是否匹配：ssh git@github.com如果匹配，则出现以下信息：  Hi CitronMan! You’ve successfully authenticated, but GitHub does not provide shell access.Connection to github.c">
+<meta property="og:updated_time" content="2018-07-21T01:15:05.044Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git Tutorial">
+<meta name="twitter:description" content="base1.生成公钥ssh-keygen将.ssh下的isa-pub复制到github上即可2.验证是否匹配：ssh git@github.com如果匹配，则出现以下信息：  Hi CitronMan! You’ve successfully authenticated, but GitHub does not provide shell access.Connection to github.c">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#base"><span class="toc-text">base</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#回滚远程分支"><span class="toc-text">回滚远程分支</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#报错"><span class="toc-text">报错</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#modified-xxx-modified-content-untracked-content"><span class="toc-text">modified: xxx(modified content, untracked content)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#not-add-readme"><span class="toc-text">not add readme</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-engineer/Git-Tutorial" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Git Tutorial</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.08.29</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="base"><a href="#base" class="headerlink" title="base"></a>base</h1><p>1.生成公钥<br><code>ssh-keygen</code><br>将.ssh下的isa-pub复制到github上即可<br>2.验证是否匹配：<br><code>ssh git@github.com</code><br>如果匹配，则出现以下信息：</p>
+<blockquote>
+<p>Hi CitronMan! You’ve successfully authenticated, but GitHub does not provide shell access.<br>Connection to github.com closed.</p>
+</blockquote>
+<p>如果报错，如：</p>
+<blockquote>
+<p>Agent admitted failure to sign using the key.<br>You should be able to fix this error by loading your keys into your SSH agent with ssh-add[]:<br><code>ssh-add</code></p>
+</blockquote>
+<p>3.新创建repository</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">git init</div><div class="line">git commit -m <span class="string">"first commit"</span></div><div class="line">git remote add origin git@github.com:CitronMan/RL.git</div><div class="line">git push -u origin master</div></pre></td></tr></table></figure>
+<p>4.创建分支<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git branch branchName master</div><div class="line">git checkout branchName</div><div class="line">git add -A</div><div class="line">git commit -m <span class="string">"ddd"</span></div><div class="line">git push origin branchName</div><div class="line">git push --delete origin devel //删除分支</div></pre></td></tr></table></figure></p>
+<p>5.创建tag<br>git标签分为两种类型：轻量标签和附注标签。轻量标签是指向提交对象的引用，附注标签则是仓库中的一个独立对象。建议使用附注标签<sup>[0]</sup>。</p>
+<blockquote>
+<p>创建轻量标签<br><code>git tag v0.1.2-light</code><br>创建附注标签<br><code>git tag -a v0.1.2 -m “0.1.2版本”</code><br>创建轻量标签不需要传递参数，直接指定标签名称即可。<br>创建附注标签时，参数a即annotated的缩写，指定标签类型，后附标签名。参数m指定标签说明，说明信息会保存在标签对象中。<br>把本地tag推送到远程<br><code>git push --tags</code><br>获取远程tag<br><code>git fetch origin tag &lt;tagname&gt;</code><br>查看当前分支下的标签<br><code>git tag</code><br>此时会指向打v0.21标签时的代码状态，（但现在处于一个空的分支上）<br><code>git checkout v0.21</code></p>
+</blockquote>
+<p>6.回退<br><code>git log</code><br>9e710d4a50f391d0fa477db489eed18daece1e44<br><code>git reset --hard 9e710d4a50f391d0fa477db489eed18daece1e44</code></p>
+<p>7.删除远程文件<br><code>git rm --cached ./filename</code><br><code>git commit -m &quot;deletefile&quot;</code><br><code>git push</code></p>
+<p>8.git push免输入账号和密码方法<br>from <a href="http://www.cnblogs.com/zhonghuasong/p/5975952.html" target="_blank" rel="external">清水汪汪</a><br>最近在做些oj，所以需要频繁的git push提交代码，每次都要输入帐号和密码，感觉不舒服，于是乎就做了如下设置，然后就可以开心的提交啦～<br>Linux或者Mac下方法：<br>创建文件，进入文件，输入内容：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd ~</div><div class="line">touch .git-credentials</div><div class="line">vim .git-credentials</div><div class="line">https://&#123;username&#125;:&#123;password&#125;@github.com</div></pre></td></tr></table></figure></p>
+<p>在终端下输入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git config --global credential.helper store</div></pre></td></tr></table></figure></p>
+<p>打开~/.gitconfig文件，会发现多了一项:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">[credential]</div><div class="line">helper = store</div></pre></td></tr></table></figure></p>
+<h2 id="回滚远程分支"><a href="#回滚远程分支" class="headerlink" title="回滚远程分支"></a>回滚远程分支</h2><p>首先要回退本地分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git reflog</div><div class="line">git reset --hard Obfafd</div></pre></td></tr></table></figure></p>
+<p>紧接着强制推送到远程分支：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push -f</div></pre></td></tr></table></figure></p>
+<h1 id="报错"><a href="#报错" class="headerlink" title="报错"></a>报错</h1><h2 id="modified-xxx-modified-content-untracked-content"><a href="#modified-xxx-modified-content-untracked-content" class="headerlink" title="modified: xxx(modified content, untracked content)"></a>modified: xxx(modified content, untracked content)</h2><p>目录下有.git文件。</p>
+<h2 id="not-add-readme"><a href="#not-add-readme" class="headerlink" title="not add readme"></a>not add readme</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Warning: Permanently added the RSA host key for IP address &apos;192.30.255.113&apos; to the list of known hosts.</div><div class="line">error: src refspec master does not match any.</div><div class="line">error: failed to push some refs to &apos;git@github.com:CitronMan/neuralsymboliclawyer.git&apos;</div></pre></td></tr></table></figure>
+<p>Solution:<br>echo “# neuralsymboliclawyer” &gt;&gt; README.md</p>
+<p>[0]<a href="http://blog.csdn.net/wangjia55/article/details/8793577" target="_blank" rel="external">git tag — 标签相关操作</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
