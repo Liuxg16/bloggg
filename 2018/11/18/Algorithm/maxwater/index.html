@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>��ˮ������ | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="algorithm,cs,interview," />
+  
+
+  <meta name="description" content="����һ�����飬Ԫ�ض���������������ǽ�ĸ߶ȣ�������������������ˮ��1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253package a;public class Test &amp;#123;    static in">
+<meta name="keywords" content="algorithm,cs,interview">
+<meta property="og:type" content="article">
+<meta property="og:title" content="��ˮ������">
+<meta property="og:url" content="http://www.liuxianggen.com/2018/11/18/Algorithm/maxwater/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="����һ�����飬Ԫ�ض���������������ǽ�ĸ߶ȣ�������������������ˮ��1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253package a;public class Test &amp;#123;    static in">
+<meta property="og:updated_time" content="2018-12-28T10:38:15.130Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="��ˮ������">
+<meta name="twitter:description" content="����һ�����飬Ԫ�ض���������������ǽ�ĸ߶ȣ�������������������ˮ��1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253package a;public class Test &amp;#123;    static in">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#����һ�����飬Ԫ�ض���������������ae�ĸ߶ou�������������������ˮ��"><span class="toc-text">����һ�����飬Ԫ�ض���������������ǽ�ĸ߶ȣ�������������������ˮ��</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Algorithm/maxwater" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">��ˮ������</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.11.18</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="����һ�����飬Ԫ�ض���������������ae�ĸ߶ou�������������������ˮ��"><a href="#����һ�����飬Ԫ�ض���������������ae�ĸ߶ou�������������������ˮ��" class="headerlink" title="����һ�����飬Ԫ�ض���������������ǽ�ĸ߶ȣ�������������������ˮ��"></a>����һ�����飬Ԫ�ض���������������ǽ�ĸ߶ȣ�������������������ˮ��</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">package a;</div><div class="line">public class Test &#123;</div><div class="line">    static int result = 0; // ���ս���</div><div class="line">    static int[] wallHeights = new int[] &#123; 1, 6, 1, 2, 3, 4, 100, 1, 9 &#125;; // ��ʾ���е�ǽ�ĸ߶�</div><div class="line"></div><div class="line">    public static void process(int start, int end) &#123;</div><div class="line">        // first��start��end֮�����ߵ�ǽ</div><div class="line">        // second��start��end֮���ڶ��ߵ�ǽ</div><div class="line">        int first = 0, second = 0;</div><div class="line">        // firstIndex����һ�ߵ�ǽ��wallHeights�е�����</div><div class="line">        // secondIndex���ڶ��ߵ�ǽ��wallHeights�е�����</div><div class="line">        int firstIndex = 0, secondIndex = 0;</div><div class="line">        // ����ǽ����������һ��ǽ�ľ���</div><div class="line">        <span class="keyword">if</span> (end - start &lt;= 1)</div><div class="line">            <span class="built_in">return</span>;</div><div class="line">        // ��ʼ��ȡ��һ�ߺ͵ڶ���ǽ��ש��</div><div class="line">        <span class="keyword">for</span> (int i = start; i &lt;= end; i++) &#123;</div><div class="line">            <span class="keyword">if</span> (wallHeights[i] &gt; first) &#123;</div><div class="line">                second = first;</div><div class="line">                secondIndex = firstIndex;</div><div class="line">                first = wallHeights[i];</div><div class="line">                firstIndex = i;</div><div class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (wallHeights[i] &gt; second) &#123;</div><div class="line">                second = wallHeights[i];</div><div class="line">                secondIndex = i;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        // ��ȡ����ǽ������</div><div class="line">        int startIndex = Math.min(firstIndex, secondIndex);</div><div class="line">        // ��ȡ�Ҳ�ǽ������</div><div class="line">        int endIndex = Math.max(firstIndex, secondIndex);</div><div class="line">        // ��������</div><div class="line">        int distance = endIndex - startIndex;</div><div class="line">        // ������һ�ߵ�ǽ�͵ڶ��ߵ�ǽ֮��������һ��ǽ����ô��ʼ����������ǽ֮�����ԷŶ��ٸ���λ��ˮ</div><div class="line">        <span class="keyword">if</span> (distance &gt; 1) &#123;</div><div class="line">            result = result + (distance - 1) * second;</div><div class="line">            // ��ȥ������ǽ֮����ש��</div><div class="line">            <span class="keyword">for</span> (int i = startIndex + 1; i &lt; endIndex; i++) &#123;</div><div class="line">                result -= wallHeights[i];</div><div class="line">            &#125;</div><div class="line"></div><div class="line">        &#125;</div><div class="line">        // ��ʼ�ݹ鴦������ǽ���뿪ʼλ���ܷŶ���ˮ</div><div class="line">        process(start, startIndex);</div><div class="line">        // ��ʼ�ݹ鴦���Ҳ�ǽ��������λ���ܷŶ���ˮ</div><div class="line">        process(endIndex, end);</div><div class="line">    &#125;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        process(0, wallHeights.length - 1);</div><div class="line">        System.out.println(result);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
