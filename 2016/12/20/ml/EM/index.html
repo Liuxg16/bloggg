@@ -12,20 +12,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="work,dl,ml," />
+    <meta name="keywords" content="dl,ml,PGM," />
   
 
-  <meta name="description" content="Gaussian Mixed ModelThere is a latent/hidden/unobserved random variable z.So, $x^i$,$z^i$ have a join a distribution:$$P(x^i,z^i) = P(x^i|z^i)P(z^i)  \\z \sim Multinomal(\phi) \\\phi_j \ge 0 \quad \su">
-<meta name="keywords" content="work,dl,ml">
+  <meta name="description" content="香农信息量、信息熵和交叉熵摘抄自生成对抗网络（GANs）系列文章之一：KL散度和JS散度只考虑连续型随机变量的情况。设p为随机变量X的概率分布，即p(x)为随机变量X在X=x处的概率密度函数值，随机变量X在x处的香农信息量定义为：$$-\log p(x)$$其中对数以2为底，这时香农信息量的单位为比特。香农信息量用于刻画消除随机变量X在x处的不确定性所需的信息量的大小。如随机事件“中国足球进不了世">
+<meta name="keywords" content="dl,ml,PGM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Expectation Maximum">
 <meta property="og:url" content="http://www.liuxianggen.com/2016/12/20/ml/EM/index.html">
 <meta property="og:site_name" content="Liu Xianggen">
-<meta property="og:description" content="Gaussian Mixed ModelThere is a latent/hidden/unobserved random variable z.So, $x^i$,$z^i$ have a join a distribution:$$P(x^i,z^i) = P(x^i|z^i)P(z^i)  \\z \sim Multinomal(\phi) \\\phi_j \ge 0 \quad \su">
-<meta property="og:updated_time" content="2017-07-07T06:34:38.419Z">
+<meta property="og:description" content="香农信息量、信息熵和交叉熵摘抄自生成对抗网络（GANs）系列文章之一：KL散度和JS散度只考虑连续型随机变量的情况。设p为随机变量X的概率分布，即p(x)为随机变量X在X=x处的概率密度函数值，随机变量X在x处的香农信息量定义为：$$-\log p(x)$$其中对数以2为底，这时香农信息量的单位为比特。香农信息量用于刻画消除随机变量X在x处的不确定性所需的信息量的大小。如随机事件“中国足球进不了世">
+<meta property="og:updated_time" content="2018-12-29T03:38:10.992Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Expectation Maximum">
-<meta name="twitter:description" content="Gaussian Mixed ModelThere is a latent/hidden/unobserved random variable z.So, $x^i$,$z^i$ have a join a distribution:$$P(x^i,z^i) = P(x^i|z^i)P(z^i)  \\z \sim Multinomal(\phi) \\\phi_j \ge 0 \quad \su">
+<meta name="twitter:description" content="香农信息量、信息熵和交叉熵摘抄自生成对抗网络（GANs）系列文章之一：KL散度和JS散度只考虑连续型随机变量的情况。设p为随机变量X的概率分布，即p(x)为随机变量X在X=x处的概率密度函数值，随机变量X在x处的香农信息量定义为：$$-\log p(x)$$其中对数以2为底，这时香农信息量的单位为比特。香农信息量用于刻画消除随机变量X在x处的不确定性所需的信息量的大小。如随机事件“中国足球进不了世">
 
   
 
@@ -141,7 +141,7 @@ var _hmt = _hmt || [];
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Gaussian-Mixed-Model"><span class="toc-text">Gaussian Mixed Model</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gaussian-Discrimination-Model"><span class="toc-text">Gaussian Discrimination Model</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EM-in-Gaussian-Mixed-Model"><span class="toc-text">EM in Gaussian Mixed Model</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Jensen’s-inequality"><span class="toc-text">Jensen’s inequality</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#p-theta-X"><span class="toc-text">$p(\theta|X)$</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#another-idea"><span class="toc-text">another idea</span></a></li></ol></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#香农信息量、信息熵和交叉熵"><span class="toc-text">香农信息量、信息熵和交叉熵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-KL散度"><span class="toc-text">2.KL散度</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gaussian-Mixed-Model"><span class="toc-text">Gaussian Mixed Model</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gaussian-Discrimination-Model"><span class="toc-text">Gaussian Discrimination Model</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#EM-in-Gaussian-Mixed-Model"><span class="toc-text">EM in Gaussian Mixed Model</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Jensen’s-inequality"><span class="toc-text">Jensen’s inequality</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#p-theta-X"><span class="toc-text">$p(\theta|X)$</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#another-idea"><span class="toc-text">another idea</span></a></li></ol></li></ol>
   </div>
 
 
@@ -174,7 +174,11 @@ var _hmt = _hmt || [];
 
   <div class="article-content">
     
-      <h1 id="Gaussian-Mixed-Model"><a href="#Gaussian-Mixed-Model" class="headerlink" title="Gaussian Mixed Model"></a>Gaussian Mixed Model</h1><p>There is a latent/hidden/unobserved random variable z.So, $x^i$,$z^i$ have a join a distribution:<br>$$<br>P(x^i,z^i) = P(x^i|z^i)P(z^i)  \\<br>z \sim Multinomal(\phi) \\<br>\phi_j \ge 0 \quad \sum \phi_j=1 \\<br>x^i|z^i=j \sim N(\mu_j,\Sigma_j)<br>$$</p>
+      <h1 id="香农信息量、信息熵和交叉熵"><a href="#香农信息量、信息熵和交叉熵" class="headerlink" title="香农信息量、信息熵和交叉熵"></a>香农信息量、信息熵和交叉熵</h1><p>摘抄自<a href="https://baijiahao.baidu.com/s?id=1595106694519834247&amp;wfr=spider&amp;for=pc" target="_blank" rel="external">生成对抗网络（GANs）系列文章之一：KL散度和JS散度</a><br>只考虑连续型随机变量的情况。设p为随机变量X的概率分布，即p(x)为随机变量X在X=x处的概率密度函数值，随机变量X在x处的香农信息量定义为：<br>$$<br>-\log p(x)<br>$$<br>其中对数以2为底，这时香农信息量的单位为比特。香农信息量用于刻画消除随机变量X在x处的不确定性所需的信息量的大小。如随机事件“中国足球进不了世界杯”不需要多少信息量（比如要不要多观察几场球赛的表现）就可以消除不确定性，因此该随机事件的香农信息量就少。再比如“抛一个硬币出现正面”，要消除它的不确定性，通过简单计算，需要1比特信息量，这意味着随机试验完成后才能消除不确定性。</p>
+<p>刚才定义了随机变量在一个点处的香农信息量，那么如何衡量随机变量X（或整个样本空间）的总体香农信息量呢？下面就要引出随机变量X的信息熵的概念，或概率分布p的信息熵。信息熵H(p)是香农信息量-logp(x)的数学期望，即所有X=x处的香农信息量的和，由于每一个x的出现概率不一样（用概率密度函数值p(x)衡量），需要用p(x)加权求和。因此信息熵是用于刻画消除随机变量X的不确定性所需要的总体信息量的大小。其数学定义如下：<br>$$<br>H(p) = E_{x\sim p(x)} [-\log p(x)] = -\int_x p(x)\log p(x)<br>$$</p>
+<p>交叉熵是什么呢？<br>假设q(x)是用来拟合p(x)的概率分布，x属于p的样本空间，交叉熵用于衡量q在拟合p的过程中，用于消除不确定性而充分使用的信息量大小（理解为衡量q为了拟合p所付出的努力，另外注意交叉熵定义里的“充分使用”和信息熵定义里的“所需”的区别，“充分使用”不一定能达到全部，“所需”是指全部）。由于在每一个点X=x处q的香农信息量为-logq(x)，也就是在点X=x处，q消除不确定性而充分使用的信息量为-logq(x)（理解为衡量q在X=x处为了拟合p所作的努力），那么就可以计算出在整个样本空间上q消除不确定性而充分使用的总体信息量，即-logq(x)的数学期望，由于每个x的权重为p(x)，因此交叉熵H(p,q）为：<br>$$<br>H(p,q) = E_{x\sim p(x)} [-\log q(x)] = -\int_x p(x)\log q(x)<br>$$</p>
+<h1 id="2-KL散度"><a href="#2-KL散度" class="headerlink" title="2.KL散度"></a>2.KL散度</h1><p>两个概率分布p和q的KL散度（Kullback–Leibler divergence）也称为相对熵，用于刻画概率分布q拟合概率分布p的程度。在生成对抗网络里，p为真实数据的概率分布，q为随机噪声生成数据的概率分布，对抗的目的是让q充分拟合p。在q拟合概率分布p的过程中，如果q完全拟合p，自然有H(p)=H(p,q)，如果q拟合p不充分，自然产生信息损耗H(p)-H(p,q)，整个信息损耗就是p和q的KL散度。因此p和q的KL散度的定义如下：<br>$$<br>KL(p,q) = H(p)-H(p,q) = E_{p(x)} [-\log p(x)] - E_{p(x)} [-\log q(x)] = \int_x p(x)\log \frac{q(x)}{p(x)    }<br>$$<br>因此散度D(p||q)为信息熵H(p)与交叉熵H(p,q)的差，衡量q拟合p的过程中产生的信息损耗，损耗越少，q拟合p也就越好。很明显散度是不对称的，并不是p和q的距离。</p>
+<h1 id="Gaussian-Mixed-Model"><a href="#Gaussian-Mixed-Model" class="headerlink" title="Gaussian Mixed Model"></a>Gaussian Mixed Model</h1><p>There is a latent/hidden/unobserved random variable z.So, $x^i$,$z^i$ have a join a distribution:<br>$$<br>P(x^i,z^i) = P(x^i|z^i)P(z^i)  \\<br>z \sim Multinomal(\phi) \\<br>\phi_j \ge 0 \quad \sum \phi_j=1 \\<br>x^i|z^i=j \sim N(\mu_j,\Sigma_j)<br>$$</p>
 <h1 id="Gaussian-Discrimination-Model"><a href="#Gaussian-Discrimination-Model" class="headerlink" title="Gaussian Discrimination Model"></a>Gaussian Discrimination Model</h1><p>预设是：x^i可观测，z^i可观测，直接用Maximum Likelyhood Estimation有：<br>$$<br>l(\phi,\mu,\Sigma) = \sum_{i=1}^M log P(x^i,z^i,\phi,\mu,\Sigma) \\<br>\phi_i = \frac{\sum 1\lbrace z^i=j \rbrace}{M} \\<br>\mu_j = \frac{\sum 1\lbrace z^i=j \rbrace x^i}{\sum 1\lbrace z^i=j \rbrace}<br>$$</p>
 <p>但是，通常来说，隐变量z都是不可观测的，所以下面讲解EM算法。</p>
 <h1 id="EM-in-Gaussian-Mixed-Model"><a href="#EM-in-Gaussian-Mixed-Model" class="headerlink" title="EM in Gaussian Mixed Model"></a>EM in Gaussian Mixed Model</h1><p>Repeat {<br>E-step (guess value of $z^i$) :<br>    let<br>$$<br>w_j^i = P(z^i=j|x^i,\phi,\mu,\Sigma) \\<br>=\frac{P(x^i|z^i=j)P(z^i=j)}{\sum P(x^i|z^i=l)P(z^i=l)} \\<br>= \frac{ \frac{e^{-\frac{1}{2}(x^i-u_j)^T\Sigma_j^{-1}(x^i-u_j)}}{(2\pi)^{\frac{n}{2}}|\Sigma|^{\frac{1}{2}}} \phi_j }{\sum_l(\cdots)}<br>$$<br>[注]默认{$z \rightarrow x$}属于高斯混合模型。$w_j^i$可以被理解为第i个x是由第j个高斯分布（z一共有K类，则相当于有K个高斯分布）产生的概率。</p>
