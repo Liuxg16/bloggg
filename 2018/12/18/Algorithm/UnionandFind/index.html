@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Union &amp; Find | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="algorithm,cs,interview," />
+  
+
+  <meta name="description" content="算法题 并查集题目Friend Circles来自linkThere are N students in a class. Some of them are friends, while some are not. Their friendship is transitive in nature. For example, if A is a direct friend of B, and B i">
+<meta name="keywords" content="algorithm,cs,interview">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Union &amp; Find">
+<meta property="og:url" content="http://www.liuxianggen.com/2018/12/18/Algorithm/UnionandFind/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="算法题 并查集题目Friend Circles来自linkThere are N students in a class. Some of them are friends, while some are not. Their friendship is transitive in nature. For example, if A is a direct friend of B, and B i">
+<meta property="og:updated_time" content="2019-01-03T08:24:20.234Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Union &amp; Find">
+<meta name="twitter:description" content="算法题 并查集题目Friend Circles来自linkThere are N students in a class. Some of them are friends, while some are not. Their friendship is transitive in nature. For example, if A is a direct friend of B, and B i">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#并查集"><span class="toc-text">并查集</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#题目"><span class="toc-text">题目</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Friend-Circles"><span class="toc-text">Friend Circles</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法一，并查集"><span class="toc-text">解法一，并查集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#介绍"><span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#操作"><span class="toc-text">操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#解法二，广度优先搜索"><span class="toc-text">解法二，广度优先搜索</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Algorithm/UnionandFind" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Union &amp; Find</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2018.12.18</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><a href="https://www.zhihu.com/question/24964987" target="_blank" rel="external">算法题</a></p>
+<h1 id="并查集"><a href="#并查集" class="headerlink" title="并查集"></a>并查集</h1><h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><h3 id="Friend-Circles"><a href="#Friend-Circles" class="headerlink" title="Friend Circles"></a>Friend Circles</h3><p>来自<a href="https://leetcode.com/problems/friend-circles/submissions/" target="_blank" rel="external">link</a><br>There are N students in a class. Some of them are friends, while some are not. Their friendship is transitive in nature. For example, if A is a direct friend of B, and B is a direct friend of C, then A is an indirect friend of C. And we defined a friend circle is a group of students who are direct or indirect friends.</p>
+<p>Given a N*N matrix M representing the friend relationship between students in the class. If M[i][j] = 1, then the ith and jth students are direct friends with each other, otherwise not. And you have to output the total number of friend circles among all the students.</p>
+<p>Example 1:<br>Input:<br>[[1,1,0],<br> [1,1,0],<br> [0,0,1]]<br>Output: 2<br>Explanation:The 0th and 1st students are direct friends, so they are in a friend circle.<br>The 2nd student himself is in a friend circle. So return 2.</p>
+<h2 id="解法一，并查集"><a href="#解法一，并查集" class="headerlink" title="解法一，并查集"></a>解法一，并查集</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><p>并查集（Union-find Sets）是一种非常精巧而实用的数据结构，它主要用于处理一些不相交集合的合并问题。一些常见的用途有求连通子图、求最小生成树的 Kruskal 算法和求最近公共祖先（Least Common Ancestors, LCA）等。</p>
+<p>使用并查集时，首先会存在一组不相交的动态集合 S={S1,S2,⋯,Sk}，一般都会使用一个整数表示集合中的一个元素。</p>
+<p>每个集合可能包含一个或多个元素，并选出集合中的某个元素作为代表。每个集合中具体包含了哪些元素是不关心的，具体选择哪个元素作为代表一般也是不关心的。我们关心的是，对于给定的元素，可以很快的找到这个元素所在的集合（的代表），以及合并两个元素所在的集合，而且这些操作的时间复杂度都是常数级的。</p>
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><p>并查集，顾名思义，主要分三部分。<br>一：合并：给出两点关系，如果属于同一集合，进行merge<br>二：查：在合并时，需要先写出查，即找到该点的祖先点<br>三：集:merge后，将新加入的点的祖先点更新<br>然后，点集就因为共同的祖先点被分为不同的集合啦 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div></pre></td><td class="code"><pre><div class="line">from collections import deque</div><div class="line">class Solution(object):</div><div class="line">    def findCircleNum(self, M):</div><div class="line">        <span class="string">""</span><span class="string">"</span></div><div class="line">        :type M: List[List[int]]</div><div class="line">        :rtype: int</div><div class="line">        "<span class="string">""</span></div><div class="line">        <span class="keyword">if</span> not M or not M[0]:</div><div class="line">            <span class="built_in">return</span> 0</div><div class="line"></div><div class="line">        n = len(M)</div><div class="line"></div><div class="line">        uf = UnionFind(n)</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> xrange(n):</div><div class="line">                <span class="keyword">if</span> M[i][j] == 1:</div><div class="line">                    uf.union(i, j)</div><div class="line"></div><div class="line">        res = <span class="built_in">set</span>()</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> xrange(n):</div><div class="line">                <span class="keyword">if</span> M[i][j] == 1:</div><div class="line">                    uf.compressed_find(j)</div><div class="line">                    res.add(uf.father[j])</div><div class="line">                    </div><div class="line">        <span class="built_in">return</span> len(res)</div><div class="line">    </div><div class="line">class UnionFind:</div><div class="line">    def __init__(self, n):</div><div class="line">        self.father = &#123;&#125;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> xrange(n):</div><div class="line">            self.father[i] = i</div><div class="line"></div><div class="line">    def compressed_find(self, x):</div><div class="line">        ancestor = self.father[x]</div><div class="line"></div><div class="line">        <span class="keyword">while</span> ancestor != self.father[ancestor]:</div><div class="line">            ancestor = self.father[ancestor]</div><div class="line"></div><div class="line">        <span class="keyword">while</span> x != self.father[x]:</div><div class="line">            next = self.father[x]</div><div class="line">            self.father[x] = ancestor</div><div class="line">            x = next</div><div class="line"></div><div class="line">        <span class="built_in">return</span> ancestor</div><div class="line"></div><div class="line">    def union(self, x, y):</div><div class="line">        fa_x = self.compressed_find(x)</div><div class="line">        fa_y = self.compressed_find(y)</div><div class="line"></div><div class="line">        <span class="keyword">if</span> fa_x != fa_y:</div><div class="line">            self.father[fa_y] = fa_x</div></pre></td></tr></table></figure>
+<h2 id="解法二，广度优先搜索"><a href="#解法二，广度优先搜索" class="headerlink" title="解法二，广度优先搜索"></a>解法二，广度优先搜索</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">from collections import deque</div><div class="line">class Solution(object):</div><div class="line">    def findCircleNum(self, M):</div><div class="line">        <span class="string">""</span><span class="string">"</span></div><div class="line">        :type M: List[List[int]]</div><div class="line">        :rtype: int</div><div class="line">        "<span class="string">""</span></div><div class="line">        </div><div class="line">        <span class="keyword">if</span> not M or not M[0]:</div><div class="line">            <span class="built_in">return</span> 0</div><div class="line">        </div><div class="line">        n = len(M)</div><div class="line">        </div><div class="line">        <span class="comment"># create and fill adjacency list</span></div><div class="line">        adj_list = [<span class="built_in">set</span>() <span class="keyword">for</span> i <span class="keyword">in</span> range(n)]</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">            <span class="keyword">for</span> j <span class="keyword">in</span> range(n):</div><div class="line">                <span class="keyword">if</span> M[i][j]:</div><div class="line">                    adj_list[i].add(j)</div><div class="line">                    adj_list[j].add(i)</div><div class="line">                    </div><div class="line">        count = 0</div><div class="line">        <span class="comment"># use bfs to find the number of connect parts</span></div><div class="line">        seen = <span class="built_in">set</span>()</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</div><div class="line">            <span class="keyword">if</span> i <span class="keyword">in</span> seen:</div><div class="line">                <span class="built_in">continue</span></div><div class="line">            </div><div class="line">            count += 1</div><div class="line">            <span class="comment"># bfs</span></div><div class="line">            q = deque([i])</div><div class="line">            seen.add(i)</div><div class="line">            <span class="keyword">while</span> q:</div><div class="line">                cur = q.popleft()</div><div class="line">                <span class="keyword">for</span> next <span class="keyword">in</span> adj_list[cur]:</div><div class="line">                    <span class="keyword">if</span> next <span class="keyword">in</span> seen:</div><div class="line">                        <span class="built_in">continue</span></div><div class="line">                    q.append(next)</div><div class="line">                    seen.add(next)</div><div class="line">        </div><div class="line">        <span class="built_in">return</span> count</div></pre></td></tr></table></figure>
+<p>Reference:<br>[1]<a href="https://www.jiuzhang.com/solution/friend-circles/#tag-other-lang-python" target="_blank" rel="external">九章</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
