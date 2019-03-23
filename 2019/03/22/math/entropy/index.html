@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Entropy | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Math,Entropy," />
+  
+
+  <meta name="description" content="1.自信息(self-information)也称为信息量，对于事件x，它的自信息(self-information)定义为：$$I(x)=-log p(x)$$当log的底数为e，$I(x)$的单位是奈特(nats)。一奈特是以$1/e$的概率观测到一个事件时获得的信息量。当log的底数为2，单位是比特(bit)或香农(shannons)。香农信息量用于刻画消除随机变量X在x处的不确定性所需的信">
+<meta name="keywords" content="Math,Entropy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Entropy">
+<meta property="og:url" content="http://www.liuxianggen.com/2019/03/22/math/entropy/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="1.自信息(self-information)也称为信息量，对于事件x，它的自信息(self-information)定义为：$$I(x)=-log p(x)$$当log的底数为e，$I(x)$的单位是奈特(nats)。一奈特是以$1/e$的概率观测到一个事件时获得的信息量。当log的底数为2，单位是比特(bit)或香农(shannons)。香农信息量用于刻画消除随机变量X在x处的不确定性所需的信">
+<meta property="og:updated_time" content="2019-03-23T08:18:19.453Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Entropy">
+<meta name="twitter:description" content="1.自信息(self-information)也称为信息量，对于事件x，它的自信息(self-information)定义为：$$I(x)=-log p(x)$$当log的底数为e，$I(x)$的单位是奈特(nats)。一奈特是以$1/e$的概率观测到一个事件时获得的信息量。当log的底数为2，单位是比特(bit)或香农(shannons)。香农信息量用于刻画消除随机变量X在x处的不确定性所需的信">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-自信息-self-information"><span class="toc-text">1.自信息(self-information)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-信息熵-H-p"><span class="toc-text">2.信息熵 H(p)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-交叉熵H-p-q"><span class="toc-text">3. 交叉熵H(p,q)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-联合熵H-X-Y"><span class="toc-text">4. 联合熵H(X,Y)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-相对熵-D-p-q"><span class="toc-text">5.相对熵 D(p||q)</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-JS散度"><span class="toc-text">6.JS散度</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-VAE"><span class="toc-text">7. VAE</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-math/entropy" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Entropy</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.03.22</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="1-自信息-self-information"><a href="#1-自信息-self-information" class="headerlink" title="1.自信息(self-information)"></a>1.自信息(self-information)</h1><p>也称为信息量，对于事件x，它的自信息(self-information)定义为：<br>$$<br>I(x)=-log p(x)<br>$$<br>当log的底数为e，$I(x)$的单位是奈特(nats)。一奈特是以$1/e$的概率观测到一个事件时获得的信息量。当log的底数为2，单位是比特(bit)或香农(shannons)。<br><strong>香农信息量用于刻画消除随机变量X在x处的不确定性所需的信息量的大小。</strong>如随机事件“中国足球进不了世界杯”不需要多少信息量（比如要不要多观察几场球赛的表现）就可以消除不确定性，因此该随机事件的香农信息量就少。再比如“抛一个硬币出现正面”，要消除它的不确定性，通过简单计算，需要1比特信息量，这意味着随机试验完成后才能消除不确定性。熵的本质的另一种解释：最短平均编码长度；编码方案完美时，最短平均编码长度的是多少。</p>
+<p>可以近似地将不确定性视为信息量。一个消息带来的不确定性大，就是带来的信息量大。比如，带来一个信息：x=sun raise in east，其概率p(x）=1，信息量视为0。这个观点与生活中的信息量有所区别。</p>
+<h1 id="2-信息熵-H-p"><a href="#2-信息熵-H-p" class="headerlink" title="2.信息熵 H(p)"></a>2.信息熵 H(p)</h1><p>刚才定义了随机变量在一个点处的香农信息量，那么如何衡量随机变量X（或整个样本空间）的总体香农信息量呢？下面就要引出随机变量X的信息熵的概念，或概率分布p的信息熵。信息熵H(p)是香农信息量-logp(x)的数学期望，即所有X=x处的香农信息量的和：<br>$$<br>H(p) = H(x) = -\int_x p(x)log p(x)dx<br>$$<br><strong>信息熵是用于刻画消除随机变量X的不确定性所需要的总体信息量的大小。</strong></p>
+<h1 id="3-交叉熵H-p-q"><a href="#3-交叉熵H-p-q" class="headerlink" title="3. 交叉熵H(p,q)"></a>3. 交叉熵H(p,q)</h1><p>假设q(x)是用来拟合p(x)的概率分布，x属于p的样本空间，交叉熵用于衡量q在拟合p的过程中，用于消除不确定性而充分使用的信息量大小（理解为衡量q为了拟合p所付出的努力，另外注意交叉熵定义里的“充分使用”和信息熵定义里的“所需”的区别，“充分使用”不一定能达到全部，“所需”是指全部）。由于在每一个点X=x处q的香农信息量为-logq(x)，也就是在点X=x处，q消除不确定性而充分使用的信息量为-logq(x)（理解为衡量q在X=x处为了拟合p所作的努力），那么就可以计算出在整个样本空间上q消除不确定性而充分使用的总体信息量，即-logq(x)的数学期望。<br>$$<br>H(p,q) = -\int_x p(x)log q(x)<br>$$<br>事实上，根据Gibbs’ inequality可知，H(p,q)&gt;=H(p)恒成立，当q为真实分布p时取等号。</p>
+<h1 id="4-联合熵H-X-Y"><a href="#4-联合熵H-X-Y" class="headerlink" title="4. 联合熵H(X,Y)"></a>4. 联合熵H(X,Y)</h1><p>信息熵在联合概率分布的自然推广，就得到了联合熵：<br>$$<br>H(X,Y) = -\int_{x,y} p(x,y)log p(x,y)<br>$$</p>
+<h1 id="5-相对熵-D-p-q"><a href="#5-相对熵-D-p-q" class="headerlink" title="5.相对熵 D(p||q)"></a>5.相对熵 D(p||q)</h1><p>即KL距离。个人观点：相对熵用于衡量q在拟合p的过程中，用于消除不确定性而充分使用的信息量大小（<br>$$<br>D(p||q) = H(p,q) - H(p) = \int_x p(x)log \frac{p(x)}{q(x)}<br>$$<br>由于H(p,q)&gt;=H(p)恒成立，当q为真实分布p时取等号，所以D(p||q)&gt;=0恒成立。</p>
+<p>1）信息熵：编码方案完美时，最短平均编码长度的是多少。<br>2）交叉熵：编码方案不一定完美时（由于对概率分布的估计不一定正确），平均编码长度的是多少。              平均编码长度 = 最短平均编码长度 + 一个增量<br>3）相对熵：编码方案不一定完美时，平均编码长度相对于最小值的增加值。（即上面那个增量）</p>
+<h1 id="6-JS散度"><a href="#6-JS散度" class="headerlink" title="6.JS散度"></a>6.JS散度</h1><p>$$<br>JS(p||q) = \frac{1}{2}KL(p||\frac{p+q}{2})+\frac{1}{2}KL(q||\frac{p+q}{2})<br>$$</p>
+<p>JS散度的值域是[0,1]。并且有一个好处，那就是对称性。</p>
+<h1 id="7-VAE"><a href="#7-VAE" class="headerlink" title="7. VAE"></a>7. VAE</h1><p>For the case of an i.i.d. dataset and continuous latent variables per datapoint, we propose the AutoEncoding VB (AEVB) algorithm. In the AEVB algorithm we make inference and learning especially efficient by using the SGVB estimator to optimize a recognition model that allows us to perform very efficient approximate posterior inference using simple ancestral sampling, which in turn allows us to efficiently learn the model parameters, without the need of expensive iterative inference schemes (such as MCMC) per datapoint. The learned approximate posterior inference model can also be used for a host of tasks such as recognition, denoising, representation and visualization purposes. When a neural network is used for the recognition model, we arrive at the variational auto-encoder.</p>
+<p>The marginal likelihood is composed of a sum over the marginal likelihoods of individual datapoints $log p_\theta(x_{1}, \cdots, x_N) = \sum_{i=1}^N log  p_\theta(x_{i})$, which can each be rewritten as:<br>$$<br>\begin{align}<br>\log p(x_i)\\<br>&amp;=\int_z q(z|x_i) \log p(x_i) dz \\<br>&amp;=\int_z q(z|x) \log\frac{p(x,z)}{p(z|x)} dz \\<br>&amp;=\int_z q(z|x) [\log p(x,z)-p(z|x)] dz \\<br>&amp;=\int_z q(z|x) [\log q(z|x)-\log q(z|x)+\log p(x,z)-p(z|x)] dz \\<br>&amp;=\int_z q(z|x) [\log q(z|x)-p(z|x)] dz + \int_z q(z|x) [-\log q(z|x)+\log p(x,z)] dz \\<br>&amp;=D^{KL}(q(z|x)||p(z|x))+E_q[-\log q(z|x)+\log p(x,z)]\\<br>&amp;\ge E_q[-\log q(z|x)+\log p(x,z)]\\<br>&amp;=\int_z q(z|x) [-\log q(z|x)+\log p(x|z)+\log p(z)] dz \\<br>&amp;=D^{KL}(q(z|x)||p(z))+E_q[\log p(x|z)]<br>\end{align}<br>$$</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
