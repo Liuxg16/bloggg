@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+
+
+  <html class="light page-post">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Neural Text Generation | Liu Xianggen</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="nlp,text," />
+  
+
+  <meta name="description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta name="keywords" content="nlp,text">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neural Text Generation">
+<meta property="og:url" content="http://www.liuxianggen.com/2019/04/19/NLP/bleu/index.html">
+<meta property="og:site_name" content="Liu Xianggen">
+<meta property="og:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+<meta property="og:updated_time" content="2019-04-22T07:26:10.151Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Neural Text Generation">
+<meta name="twitter:description" content="12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576777879808182838485868788899091929394959697989910010110210">
+
+  
+
+  
+    <link rel="icon" href="/images/favicon.jpg">
+  
+
+  <link href="/css/styles.css?v=028c63b1" rel="stylesheet">
+
+
+  
+
+  
+
+  <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?fb0e88cc5bbe470f7877739f0bf6bc4c";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+
+</head>
+
+<body>
+
+
+  
+    <span id="toolbox-mobile" class="toolbox-mobile">盒子</span>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-NLP/bleu" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Neural Text Generation</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2019.04.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>LiuXianggen</span>
+        </span>
+      
+
+      
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/python</span></div><div class="line"><span class="comment"># -*- coding: UTF-8 -*-</span></div><div class="line"><span class="comment"># hyp1 = ['It', 'is', 'a', 'guide', 'to', 'action', 'which',</span></div><div class="line"><span class="comment">#         'ensures', 'that', 'the', 'military', 'always',</span></div><div class="line"><span class="comment">#         'obeys', 'the', 'commands', 'of', 'the', 'party']</span></div><div class="line"><span class="comment"># ref1a = ['It', 'is', 'a', 'guide', 'to', 'action', 'that',</span></div><div class="line"><span class="comment">#          'ensures', 'that', 'the', 'military', 'will', 'forever',</span></div><div class="line"><span class="comment">#          'heed', 'Party', 'commands']</span></div><div class="line"><span class="comment"># ref1b = ['It', 'is', 'the', 'guiding', 'principle', 'which',</span></div><div class="line"><span class="comment">#          'guarantees', 'the', 'military', 'forces', 'always',</span></div><div class="line"><span class="comment">#          'being', 'under', 'the', 'command', 'of', 'the', 'Party']</span></div><div class="line"><span class="comment"># ref1c = ['It', 'is', 'the', 'practical', 'guide', 'for', 'the',</span></div><div class="line"><span class="comment">#          'army', 'always', 'to', 'heed', 'the', 'directions',</span></div><div class="line"><span class="comment">#          'of', 'the', 'party']</span></div><div class="line"><span class="comment"># hyp2 = ['he', 'read', 'the', 'book', 'because', 'he', 'was',</span></div><div class="line"><span class="comment">#         'interested', 'in', 'world', 'history']</span></div><div class="line"><span class="comment"># ref2a = ['he', 'was', 'interested', 'in', 'world', 'history',</span></div><div class="line"><span class="comment">#          'because', 'he', 'read', 'the', 'book']</span></div><div class="line"><span class="keyword">import</span> collections</div><div class="line"><span class="keyword">import</span> math</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_get_ngrams</span><span class="params">(segment, max_order)</span>:</span></div><div class="line">  <span class="string">"""Extracts all n-grams upto a given maximum order from an input segment.</span></div><div class="line">  Args:</div><div class="line">    segment: text segment from which n-grams will be extracted.</div><div class="line">    max_order: maximum length in tokens of the n-grams returned by this</div><div class="line">        methods.</div><div class="line">  Returns:</div><div class="line">    The Counter containing all n-grams upto max_order in segment</div><div class="line">    with a count of how many times each n-gram occurred.</div><div class="line">  """</div><div class="line">  ngram_counts = collections.Counter()</div><div class="line">  <span class="keyword">for</span> order <span class="keyword">in</span> range(<span class="number">1</span>, max_order + <span class="number">1</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, len(segment) - order + <span class="number">1</span>):</div><div class="line">      ngram = tuple(segment[i:i+order])</div><div class="line">      ngram_counts[ngram] += <span class="number">1</span></div><div class="line">  <span class="keyword">return</span> ngram_counts</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">compute_bleu</span><span class="params">(reference_corpus, translation_corpus, max_order=<span class="number">4</span>,</span></span></div><div class="line">                 smooth=False):</div><div class="line">  <span class="string">"""Computes BLEU score of translated segments against one or more references.</span></div><div class="line">  Args:</div><div class="line">    reference_corpus: list of lists of references for each translation. Each</div><div class="line">        reference should be tokenized into a list of tokens.</div><div class="line">    translation_corpus: list of translations to score. Each translation</div><div class="line">        should be tokenized into a list of tokens.</div><div class="line">    max_order: Maximum n-gram order to use when computing BLEU score.</div><div class="line">    smooth: Whether or not to apply Lin et al. 2004 smoothing.</div><div class="line">  Returns:</div><div class="line">    3-Tuple with the BLEU score, n-gram precisions, geometric mean of n-gram</div><div class="line">    precisions and brevity penalty.</div><div class="line">  """</div><div class="line">  matches_by_order = [<span class="number">0</span>] * max_order</div><div class="line">  possible_matches_by_order = [<span class="number">0</span>] * max_order</div><div class="line">  reference_length = <span class="number">0</span></div><div class="line">  translation_length = <span class="number">0</span></div><div class="line">  <span class="keyword">for</span> (references, translation) <span class="keyword">in</span> zip(reference_corpus,</div><div class="line">                                       translation_corpus):</div><div class="line">    reference_length += min(len(r) <span class="keyword">for</span> r <span class="keyword">in</span> references)</div><div class="line">    translation_length += len(translation)</div><div class="line"></div><div class="line">    merged_ref_ngram_counts = collections.Counter()</div><div class="line">    <span class="keyword">for</span> reference <span class="keyword">in</span> references:</div><div class="line">      merged_ref_ngram_counts |= _get_ngrams(reference, max_order)</div><div class="line">    translation_ngram_counts = _get_ngrams(translation, max_order)</div><div class="line">    overlap = translation_ngram_counts &amp; merged_ref_ngram_counts</div><div class="line">    <span class="keyword">for</span> ngram <span class="keyword">in</span> overlap:</div><div class="line">      matches_by_order[len(ngram)<span class="number">-1</span>] += overlap[ngram]</div><div class="line">    <span class="keyword">for</span> order <span class="keyword">in</span> range(<span class="number">1</span>, max_order+<span class="number">1</span>):</div><div class="line">      possible_matches = len(translation) - order + <span class="number">1</span></div><div class="line">      <span class="keyword">if</span> possible_matches &gt; <span class="number">0</span>:</div><div class="line">        possible_matches_by_order[order<span class="number">-1</span>] += possible_matches</div><div class="line"></div><div class="line">  precisions = [<span class="number">0</span>] * max_order</div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, max_order):</div><div class="line">    <span class="keyword">if</span> smooth:</div><div class="line">      precisions[i] = ((matches_by_order[i] + <span class="number">1.</span>) /</div><div class="line">                       (possible_matches_by_order[i] + <span class="number">1.</span>))</div><div class="line">    <span class="keyword">else</span>:</div><div class="line">      <span class="keyword">if</span> possible_matches_by_order[i] &gt; <span class="number">0</span>:</div><div class="line">        precisions[i] = (float(matches_by_order[i]) /</div><div class="line">                         possible_matches_by_order[i])</div><div class="line">      <span class="keyword">else</span>:</div><div class="line">        precisions[i] = <span class="number">0.0</span></div><div class="line"></div><div class="line">  <span class="keyword">if</span> min(precisions) &gt; <span class="number">0</span>:</div><div class="line">    p_log_sum = sum((<span class="number">1.</span> / max_order) * math.log(p) <span class="keyword">for</span> p <span class="keyword">in</span> precisions)</div><div class="line">    geo_mean = math.exp(p_log_sum)</div><div class="line">  <span class="keyword">else</span>:</div><div class="line">    geo_mean = <span class="number">0</span></div><div class="line"></div><div class="line">  ratio = float(translation_length) / reference_length</div><div class="line"></div><div class="line">  <span class="keyword">if</span> ratio &gt; <span class="number">1.0</span>:</div><div class="line">    bp = <span class="number">1.</span></div><div class="line">  <span class="keyword">else</span>:</div><div class="line">    bp = math.exp(<span class="number">1</span> - <span class="number">1.</span> / ratio)</div><div class="line"></div><div class="line">  bleu = geo_mean * bp</div><div class="line"></div><div class="line">  <span class="keyword">return</span> bleu</div><div class="line"></div><div class="line">hyp1 = [<span class="string">'It'</span>, <span class="string">'is'</span>, <span class="string">'a'</span>, <span class="string">'guide'</span>, <span class="string">'to'</span>, <span class="string">'action'</span>, <span class="string">'which'</span>,</div><div class="line">        <span class="string">'ensures'</span>, <span class="string">'that'</span>, <span class="string">'the'</span>, <span class="string">'military'</span>, <span class="string">'always'</span>,</div><div class="line">        <span class="string">'obeys'</span>, <span class="string">'the'</span>, <span class="string">'commands'</span>, <span class="string">'of'</span>, <span class="string">'the'</span>, <span class="string">'party'</span>]</div><div class="line">ref1a = [<span class="string">'It'</span>, <span class="string">'is'</span>, <span class="string">'a'</span>, <span class="string">'guide'</span>, <span class="string">'to'</span>, <span class="string">'action'</span>, <span class="string">'that'</span>,</div><div class="line">         <span class="string">'ensures'</span>, <span class="string">'that'</span>, <span class="string">'the'</span>, <span class="string">'military'</span>, <span class="string">'will'</span>, <span class="string">'forever'</span>,</div><div class="line">         <span class="string">'heed'</span>, <span class="string">'Party'</span>, <span class="string">'commands'</span>]</div><div class="line"></div><div class="line"><span class="keyword">print</span> compute_bleu([[ref1a]],[hyp1])</div><div class="line"></div><div class="line"><span class="keyword">from</span> nltk.translate.bleu_score <span class="keyword">import</span> corpus_bleu</div><div class="line"><span class="keyword">print</span> corpus_bleu([[ref1a]], [hyp1])</div></pre></td></tr></table></figure>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <div class="text-center donation">
+    <div class="inner-donation">
+      <span class="btn-donation">支持一下</span>
+      <div class="donation-body">
+        <div class="tip text-center">挣点熬夜的咖啡钱</div>
+        <ul class="theme.donation.items.length">
+        
+          <li class="item">
+            <img src="/images/wechat_pay.jpg" alt="">
+          </li>
+        
+          <li class="item">
+            <img src="/images/alipay.jpg" alt="">
+          </li>
+        
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal">
+  <span id="cover" class="cover hide"></span>
+  <div id="modal-dialog" class="modal-dialog hide-dialog">
+    <div class="modal-header">
+      <span id="close" class="btn-close">关闭</span>
+    </div>
+    <hr>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?235683', function() {
+      // load success
+    });
+  }
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+</html>
